@@ -22,12 +22,6 @@ class User extends CI_Controller {
          $this->load->view('header');
          $this->load->view('menu',$menu);
     }
-    public function index()
-    {   
-    
-    }
-
-    
     public function manage()
     {   
         $sql =  'SELECT su.su_id,su.username, su.firstname ,su.lastname, su.gender,su.email,su.enable,su.delete_flag, sug.name as name
