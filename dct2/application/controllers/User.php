@@ -14,7 +14,6 @@ class User extends CI_Controller {
     
         $menu['menu'] = $this->model->showmenu();
         $sql =  "select * from sys_menus where order_no != 0 ";
-
         $query = $this->db->query($sql); 
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
          $menu['mg']= $this->model->givemeid($url);
@@ -134,6 +133,23 @@ class User extends CI_Controller {
     }
 
     public function save_user_permission()
+    {
+
+        $su_id =  $this->input->post('su_id');
+  
+        $sp_id =  $this->input->post('sp_id');
+           $this->model->deluser_permission($su_id);
+           if($sp_id != ''){
+            foreach ($sp_id as $sp) {
+         $this->model->insertuser_permission($su_id,$sp);
+     }
+           }
+
+     redirect('user/manage','refresh');
+ 
+    }
+
+    public function kuyraisus()
     {
 
         $su_id =  $this->input->post('su_id');
