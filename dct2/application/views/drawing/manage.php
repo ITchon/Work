@@ -43,7 +43,7 @@
                 echo "<td>" ?>
         <form action="<?php echo base_url()?>part_drawing/manage" method="post">
                     <input type="text" name="d_id" value="<?php echo $r->d_id ?>" hidden>
-                    <input type="text" name="drawing" value="drawing" hidden>
+                    <input type="text" name="name" value="drawing" hidden>
                     <button type="submit" class="btn btn-sm btn-primary">+</button>
                     <?php echo $r->d_no ?>
         </form>
