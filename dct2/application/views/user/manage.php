@@ -28,7 +28,8 @@
                   <table id="demo-datatables-buttons-1" class="table table-striped table-nowrap dataTable" cellspacing="0" width="100%">
                   <thead>
                     <tr>
-                      <th>Username</th>
+                      <th>TaisoulEIEI</th>
+                      <th>HELLO</th>
                       <th>Name</th>
                         <th>Gender</th>
                         <th>Group</th>
