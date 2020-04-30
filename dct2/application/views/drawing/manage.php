@@ -83,7 +83,7 @@
             <form id="form"  method="post"  class="text-center" >
                  
                   <div class="form-group">
-                    <label for="name-1" class="control-label">Add Drawing</label>
+                    <label for="name-1" class="control-label">Drawing</label>
                     <input id="d_no" class="form-control" type="text" name="d_no" required>
                   </div>
                   <div class="form-group">

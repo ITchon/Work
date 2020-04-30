@@ -8,7 +8,7 @@
             <div class="col-md-12  ">
               <div class="demo-form-wrapper card" style="padding-top:8px">
               <h2 class=" text-center text-primary">
-             ADD Relation
+             ADD PART
             </h2><hr>
             <form class="form form-horizontal container" action="<?php echo base_url()?>part_drawing/insert" method="post" data-toggle="validator">
             
