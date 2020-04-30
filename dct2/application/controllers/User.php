@@ -13,11 +13,8 @@ class User extends CI_Controller {
         $this->model->CheckSession();
     
         $menu['menu'] = $this->model->showmenu();
-<<<<<<< HEAD
         $sql =  "select * from sys_menus where order_no != 0 ";
-=======
-        $sql =  "select * from sys_menus where order_no !=0";
->>>>>>> 1ffc97578f645d4b210bb71b287186550bf1261f
+
         $query = $this->db->query($sql); 
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
          $menu['mg']= $this->model->givemeid($url);
