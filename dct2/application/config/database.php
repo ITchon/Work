@@ -75,12 +75,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'port' => '1433',
-	'hostname' => 'Driver={SQL Server};Server=192.168.161.101\PCSDBSV;Database=drawing_center;',
-	'username' => 'sa',
+	'hostname' => 'localhost',
+	'username' => 'root',
 	'password' => 'Te@m1nw',
 	'database' => 'drawing_center',
-	'dbdriver' => 'odbc',
+	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),

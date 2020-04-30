@@ -33,7 +33,6 @@ class User extends CI_Controller {
         $this->load->view('footer');
     }
 
-
     public function add()
     {   
         $sql =  'select * from sys_users';
