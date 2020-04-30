@@ -13,7 +13,7 @@ class User extends CI_Controller {
         $this->model->CheckSession();
     
         $menu['menu'] = $this->model->showmenu();
-        $sql =  "select * from sys_menus ";
+        $sql =  "select * from sys_menus where order_no != 0 ";
         $query = $this->db->query($sql); 
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
          $menu['mg']= $this->model->givemeid($url);
@@ -21,14 +21,14 @@ class User extends CI_Controller {
          $this->load->view('header');
          $this->load->view('menu',$menu);
     }
-	public function index()
-    {	
+    public function index()
+    {   
     
-	}
+    }
 
     
-	public function manage()
-    {	
+    public function manage()
+    {   
         $sql =  'SELECT su.su_id,su.username, su.firstname ,su.lastname, su.gender,su.email,su.enable,su.delete_flag, sug.name as name
     FROM
     sys_users  AS su 
@@ -36,12 +36,12 @@ class User extends CI_Controller {
         $query = $this->db->query($sql); 
        $data['result'] = $query->result(); 
         $this->load->view('user/manage',$data);//bring $data to user_data 
-		$this->load->view('footer');
-	}
+        $this->load->view('footer');
+    }
 
 
-	public function add()
-    {	
+    public function add()
+    {   
         $sql =  'select * from sys_users';
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
@@ -52,8 +52,35 @@ class User extends CI_Controller {
         $data['excLoadG'] = $query->result(); 
 
         $this->load->view('user/add',$data);//bring $data to user_data 
-		$this->load->view('footer');
-	}
+        $this->load->view('footer');
+    }
+
+    public function rule()
+    {   
+        $sql =  'SELECT su.su_id,su.username, su.firstname ,su.lastname, su.gender,su.email,su.enable,su.delete_flag, sug.name as name
+        FROM
+        sys_users  AS su 
+        INNER JOIN sys_user_groups AS sug ON sug.sug_id = su.sug_id where su.delete_flag != 0 ';
+            //$sql =  'select * from sys_users where delete_flag != 0';
+            $query = $this->db->query($sql); 
+            $data['result'] = $query->result(); 
+            $u_id=$this->uri->segment('3');
+
+            $sql =  'select * from sys_users_permissions where su_id = '.$u_id.'';
+            $query = $this->db->query($sql); 
+            $data['result_user']= $query->result(); 
+
+            $sql =  'select * from sys_permissions';
+            $query = $this->db->query($sql); 
+            $data['result_group'] = $query->result(); 
+         $this->load->view('user/manage',$data);//bring $data to user_data 
+         $this->load->view('user/rule_user', $data);//bring $data to user_data 
+     
+            $this->load->view('footer');
+   
+    }
+
+
 
 
     public function insert()
@@ -76,39 +103,56 @@ class User extends CI_Controller {
 
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
-		$result = $this->model->enableUser($uid);
+        $result = $this->model->enableUser($uid);
 
-		if($result!=FALSE){
+        if($result!=FALSE){
             redirect('user/manage','refresh');
 
-		}else{
-		
-		    echo "<script>alert('Simting wrong')</script>";
+        }else{
+        
+            echo "<script>alert('Simting wrong')</script>";
        redirect('user/manage','refresh');
-		}
-	}
+        }
+    }
 
-	public function disable($uid){
+    public function disable($uid){
 
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
-		$result = $this->model->disableUser($uid);
+        $result = $this->model->disableUser($uid);
 
-		if($result!=FALSE){
+        if($result!=FALSE){
             redirect('user/manage','refresh');
-			
+            
 
-		}else{
+        }else{
             echo "<script>alert('Simting wrong')</script>";
             redirect('user/manage','refresh');
 
-		}
-	}
+        }
+    }
 
     public function deleteuser()
     {
         $this->model->delete_user($this->uri->segment('3'));
         redirect('user/manage');
+    }
+
+    public function save_user_permission()
+    {
+
+        $su_id =  $this->input->post('su_id');
+  
+        $sp_id =  $this->input->post('sp_id');
+           $this->model->deluser_permission($su_id);
+           if($sp_id != ''){
+            foreach ($sp_id as $sp) {
+         $this->model->insertuser_permission($su_id,$sp);
+     }
+           }
+
+     redirect('user/manage','refresh');
+ 
     }
 
     

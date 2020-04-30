@@ -61,7 +61,15 @@
                   ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
                   <?php
                 }
-                ?> <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
+                ?> 
+
+
+                <a class='btn-primary' onclick="javascript:window.location='<?php
+                echo base_url() . 'user/rule/' . $r->su_id;
+                ?>';"><i class='btn-info btn-sm fa fa-wrench'> </i></a> &nbsp
+
+
+                <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
                 echo base_url() . 'user/rule_ug/' . $r->su_id;
                 ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
                 <?php 

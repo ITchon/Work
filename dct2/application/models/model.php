@@ -10,7 +10,7 @@ class Model extends CI_Model
         redirect('login','refresh');
      return FALSE;
      
-      }else{	return TRUE; 	}
+      }else{  return TRUE;  }
   }
   public function get_drawing()
   {
@@ -27,29 +27,29 @@ class Model extends CI_Model
      return $query;
   }
   public function CheckPermission($para){
-		
-		$get_url = trim($this->router->fetch_class().'/'.$this->router->fetch_method());
+    
+    $get_url = trim($this->router->fetch_class().'/'.$this->router->fetch_method());
 
-		$sqlChkPerm = "SELECT sp.name,sp.controller
-		FROM
-		sys_users_permissions AS sup
-		INNER JOIN sys_permissions AS sp ON sp.sp_id = sup.sp_id
-		LEFT JOIN sys_permission_groups AS spg ON sp.spg_id = spg.spg_id
-		WHERE
-		sp.enable='1' AND spg.enable='1' AND sup.su_id='{$para}' AND sp.controller='{$get_url}';";
-		
-		$excChkPerm = $this->db->query($sqlChkPerm);
-		$numChkPerm = $excChkPerm->num_rows();
-		
-		if($numChkPerm == 0) {
-			
-			echo '<script language="javascript">';
-			echo 'alert("Permission not found.");';
-			echo 'history.go(-1);';
-			echo '</script>';
-			exit();
-			
-		}
+    $sqlChkPerm = "SELECT sp.name,sp.controller
+    FROM
+    sys_users_permissions AS sup
+    INNER JOIN sys_permissions AS sp ON sp.sp_id = sup.sp_id
+    LEFT JOIN sys_permission_groups AS spg ON sp.spg_id = spg.spg_id
+    WHERE
+    sp.enable='1' AND spg.enable='1' AND sup.su_id='{$para}' AND sp.controller='{$get_url}';";
+    
+    $excChkPerm = $this->db->query($sqlChkPerm);
+    $numChkPerm = $excChkPerm->num_rows();
+    
+    if($numChkPerm == 0) {
+      
+      echo '<script language="javascript">';
+      echo 'alert("Permission not found.");';
+      echo 'history.go(-1);';
+      echo '</script>';
+      exit();
+      
+    }
 
   }
   
@@ -65,7 +65,7 @@ if($query->num_rows()!=0) {
 $result = $query->result_array();
   return $result[0];  
   }
-else{		
+else{   
 return false;
   }
 
@@ -187,9 +187,9 @@ return false;
   
   if ($exc_user){
     
-    return TRUE;	
+    return TRUE;  
     
-  }else{	return FALSE;	}
+  }else{  return FALSE; }
   
 }
 
@@ -212,9 +212,9 @@ public function disableUser($key=''){
   
   if ($exc_user){
     
-    return TRUE;	
+    return TRUE;  
     
-  }else{	return FALSE;	}
+  }else{  return FALSE; }
   
 }
 
@@ -615,6 +615,27 @@ public function num_disablePart($para){
      return false;
    }
    }
+
+   public function deluser_permission($su_id) { 
+
+  $sql1  =  "DELETE FROM sys_users_permissions WHERE su_id = $su_id";
+      $query = $this->db->query($sql1); 
+   }
+
+   public function insertuser_permission($su_id,$sp) { 
+
+
+     $sql  = "
+      INSERT INTO sys_users_permissions(su_id, sp_id, date_created)VALUES('$su_id', '$sp',CURRENT_TIMESTAMP) ";
+      $query = $this->db->query($sql); 
+    if ($query) { 
+         return true; 
+      } 
+      else{
+     return false;
+   }
+ }
+
 
 
 

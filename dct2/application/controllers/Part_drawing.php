@@ -15,7 +15,7 @@ class Part_drawing extends CI_Controller {
         $menu['menu'] = $this->model->showmenu();
          $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
          $menu['mg']= $this->model->givemeid($url);
-         $sql =  "select * from sys_menus ";
+         $sql =  "select * from sys_menus where order_no != 0 ";
          $query = $this->db->query($sql); 
          $menu['submenu']= $query->result(); 
          $this->load->view('header');
