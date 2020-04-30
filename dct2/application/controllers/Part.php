@@ -37,7 +37,7 @@ class Part extends CI_Controller {
 	}
 	public function add()
     {	
-        $sql = "SELECT * FROM drawing where delete_flag != 0 ";
+        $sql = "SELECT * FROM part_drawing pd inner join drawing d on d.d_id = pd.d_id where d.delete_flag != 0 ";
 		$query = $this->db->query($sql);
         $data['result'] = $query->result(); 
         $this->load->view('part/add',$data);//bring $data to user_data 

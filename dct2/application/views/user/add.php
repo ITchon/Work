@@ -36,6 +36,7 @@
           
                       <div class="col-sm-6 col-md-2">
                    <select name="gender" class="form-control" id="" >
+                   <option value="">- - - - - -</option>
                        <option value="Male">Male</option>
                        <option value="Female">Female</option>
                    </select>
@@ -73,7 +74,8 @@
                       <label for="email-2" class="col-sm-3 col-md-2 control-label">Select Group</label>      
           
                       <div class="col-sm-6 col-md-2">
-                   <select name="sug_id" class="form-control" id="" >
+                   <select name="sug_id" class="form-control" id="" required>
+                   <option value="">- - - - - -</option>
                     <?php foreach ($excLoadG as $r) {
                         ?>
                        <option value="<?php echo $r->sug_id ?>"><?php echo $r->name ?></option>
