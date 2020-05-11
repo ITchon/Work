@@ -120,9 +120,9 @@ return false;
  }
 
 
- function insert_part($p_no,$p_name,$d_id,$dcn)
+ function insert_part($p_no,$p_name,$d,$dcn)
  {
-  $sql ="INSERT INTO part (p_no,p_name,d_id,dcn,enable,date_created,delete_flag) VALUES ( '$p_no', '$p_name', '$d_id', '$dcn' ,'1',CURRENT_TIMESTAMP,'1');";
+  $sql ="INSERT INTO part (p_no,p_name,d_id,dcn,enable,date_created,delete_flag) VALUES ( '$p_no', '$p_name', '$d', '$dcn' ,'1',CURRENT_TIMESTAMP,'1');";
     $query = $this->db->query($sql);  
    if($query){
      return true;

@@ -37,25 +37,37 @@ class Part extends CI_Controller {
 	}
 	public function add()
     {	
-        $sql = "SELECT * FROM part_drawing pd inner join drawing d on d.d_id = pd.d_id where d.delete_flag != 0 ";
+        $sql = "SELECT * FROM part_drawing as pd inner join drawing as d on d.d_id = pd.d_id where d.delete_flag != 0 ";
 		$query = $this->db->query($sql);
         $data['result'] = $query->result(); 
+
+        $sql = "SELECT * FROM drawing where delete_flag != 0 ";
+        $query = $this->db->query($sql);
+        $data['result_d'] = $query->result(); 
+
+
         $this->load->view('part/add',$data);//bring $data to user_data 
 		$this->load->view('footer');
 	}
+
     public function insert()
     {
     
-
         $p_no =  $this->input->post('p_no');
         $p_name  =  $this->input->post('p_name');
         $d_id =  $this->input->post('d_id');
         $dcn =  $this->input->post('dcn');
-       $result = $this->model->insert_part($p_no,$p_name,$d_id ,$dcn );
-       echo "<script>alert('Inserted Data Success')</script>";
-       redirect('part/add','refresh');
 
+     foreach ($d_id as $d) {
+        $result = $this->model->insert_part($p_no,$p_name,$d,$dcn);
     }
+
+        echo "<script>alert('Add Data Success')</script>";
+        redirect('part/add','refresh');
+  
+    }
+
+
     public function enable($uid){
 
         //$this->model->CheckPermission($this->session->userdata('su_id'));

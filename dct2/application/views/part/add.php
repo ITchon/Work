@@ -15,7 +15,9 @@
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Part Number</label>
                     <div class="col-sm-6 col-md-4">
+
                     <input id="part" class="form-control " type="text" name="p_no" placeholder="Part Number" required>
+
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
                     </span>
@@ -35,10 +37,9 @@
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Drawing Number</label>      
           
                       <div class="col-sm-6 col-md-4">
-                   <select name="d_id" class="form-control select2" required>
-                   <option value="">- - - - - - </option>
+                   <select name="d_id[]" class="form-control select2" multiple="multiple" required>
                    <?php
-                      foreach($result as $r){?>
+                      foreach($result_d as $r){?>
              
                      <option value="<?php  echo $r->d_id ?>"><?php echo $r->d_no ?></option>
                     <?php
