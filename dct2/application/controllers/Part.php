@@ -39,7 +39,7 @@ class Part extends CI_Controller {
     {	
         $sql = "SELECT * FROM part_drawing as pd inner join drawing as d on d.d_id = pd.d_id where d.delete_flag != 0 ";
 		$query = $this->db->query($sql);
-        $data['result'] = $query->result(); 
+        $data['result'] = $query->result();  
 
         $sql = "SELECT * FROM drawing where delete_flag != 0 ";
         $query = $this->db->query($sql);
