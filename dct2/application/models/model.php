@@ -162,7 +162,7 @@ return false;
      return false;
    }
  }
- function insert_drawing($d_no,$dcn_id)
+ function insert_drawing($d_no)
  {
 
   $sql ="INSERT INTO drawing (d_no,dcn_id,enable,date_created,delete_flag,version) VALUES ( '$d_no','$dcn_id', '1', CURRENT_TIMESTAMP,  '1' ,'00');";
