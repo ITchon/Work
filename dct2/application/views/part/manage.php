@@ -51,7 +51,6 @@
                     <?php
                 echo"</td>";
                 echo "<td>".$r->p_name."</td>";
-                echo "<td>".$r->d_id."</td>"; 
                 
                 if($r->enable!=1 ){?>
                   
