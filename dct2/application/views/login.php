@@ -43,7 +43,7 @@
               <label class="md-control-label">Username</label>
             </div>
             <div class="md-form-group md-label-floating">
-              <input class="md-form-control" type="password" name="password" minlength="4" data-msg-minlength="Password must be 6 characters or more." data-msg-required="Please enter your password." required>
+              <input class="md-form-control" type="password" name="password" autocomplete="off" minlength="4" data-msg-minlength="Password must be 6 characters or more." data-msg-required="Please enter your password." required>
               <label class="md-control-label">Password</label>
             </div>
             <div class="md-form-group md-custom-controls">

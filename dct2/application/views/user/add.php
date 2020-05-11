@@ -15,7 +15,7 @@
                 <div class="form-group has-feedback">
                     <label for="username" class="col-sm-3 col-md-2 control-label">Username</label>
                     <div class="col-sm-6 col-md-8">
-                    <input id="username" class="form-control" type="text" name="username" placeholder="Username" required>
+                    <input id="username" class="form-control" type="text" autocomplete="off" name="username" placeholder="Username" required>
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
                     </span>
@@ -24,7 +24,7 @@
                 <div class="form-group has-feedback">
                     <label for="password" class="col-sm-3 col-md-2 control-label">Password</label>
                     <div class="col-sm-6 col-md-8">
-                    <input id="password" class="form-control" type="password" name="password" placeholder="Password" required>
+                    <input id="password" class="form-control" type="password" autocomplete="off" name="password" placeholder="Password" required>
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
                     </span>
@@ -45,7 +45,7 @@
                     <div class="form-group has-feedback">
                     <label for="password" class="col-sm-3 col-md-2 control-label">Firstname</label>
                     <div class="col-sm-6 col-md-3">
-                    <input id="password" class="form-control" type="text" name="fname"  placeholder="Firstname" required>
+                    <input id="password" class="form-control" type="text" autocomplete="off" name="fname"  placeholder="Firstname" required>
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
                     </span>
@@ -54,7 +54,7 @@
                     <div class="form-group has-feedback">
                     <label for="Lastname" class="col-sm-3 col-md-2 control-label">Lastname</label>
                     <div class="col-sm-6 col-md-3">
-                    <input id="Lastname" class="form-control" type="text" name="lname"  placeholder="Lastname" required>
+                    <input id="Lastname" class="form-control" type="text" autocomplete="off" name="lname"  placeholder="Lastname" required>
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
                     </span>
@@ -63,7 +63,7 @@
                     <div class="form-group has-feedback">
                     <label for="Email" class="col-sm-3 col-md-2 control-label">Email</label>
                     <div class="col-sm-6 col-md-8">
-                    <input id="Email" class="form-control" type="email" name="email"  placeholder="Email" required>
+                    <input id="Email" class="form-control" type="email" autocomplete="off" name="email"  placeholder="Email" required>
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
                     </span>
