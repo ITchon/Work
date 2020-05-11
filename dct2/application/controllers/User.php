@@ -148,23 +148,6 @@ class User extends CI_Controller {
  
     }
 
-    public function kuyraisus()
-    {
-
-        $su_id =  $this->input->post('su_id');
-  
-        $sp_id =  $this->input->post('sp_id');
-           $this->model->deluser_permission($su_id);
-           if($sp_id != ''){
-            foreach ($sp_id as $sp) {
-         $this->model->insertuser_permission($su_id,$sp);
-     }
-           }
-
-     redirect('user/manage','refresh');
- 
-    }
-
     
 }
 
