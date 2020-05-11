@@ -30,7 +30,6 @@
                     <tr>
                       <th>P/NO</th>
                       <th>Part Name</th>
-                        <th>Drawing Number</th>
                         <th width="10%">Manage</th>
                        
                       </tr>
