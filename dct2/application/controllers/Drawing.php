@@ -13,7 +13,7 @@ class Drawing extends CI_Controller {
         $menu['menu'] = $this->model->showmenu();
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
          $menu['mg']= $this->model->givemeid($url);
-         $sql =  "select * from sys_menus ";
+         $sql =  "select * from sys_menus where order_no != 0  and enable != 0";
          $query = $this->db->query($sql); 
          $menu['submenu']= $query->result(); 
          $this->load->view('header');
@@ -26,11 +26,26 @@ class Drawing extends CI_Controller {
     }
     	public function manage()
     {	
-      
-  
-        $sql =  'select * from drawing where delete_flag != 0';
+
+        $dcn_id =  $this->input->post('dcn_id');
+        $name =  $this->input->post('name');
+
+        if($name == 'dcn'){
+          $sql =  'select * from drawing as d inner join dcn on dcn.dcn_id = d.dcn_id where d.delete_flag != 0' AND d.dcn_id = $dcn_id;
+        }
+        else{
+          $sql =  'select * from drawing d inner join dcn on dcn.dcn_id = d.dcn_id where d.delete_flag != 0';
+        }
+
+
+        
         $query = $this->db->query($sql); 
        $data['result'] = $query->result(); 
+       $sql =  'select * from dcn where delete_flag != 0';
+       $query = $this->db->query($sql); 
+      $data['result_dcn'] = $query->result(); 
+
+
         $this->load->view('drawing/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
         
@@ -41,9 +56,9 @@ class Drawing extends CI_Controller {
     {
     
 
-        $gname =  $this->input->post('d_no');
-             $result = $this->model->insert_drawing($gname);
-    
+        $d_no =  $this->input->post('d_no');
+        $dcn_id =  $this->input->post('dcn_id');
+             $result = $this->model->insert_drawing($d_no,$dcn_id);
   
     }
 
