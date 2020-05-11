@@ -61,7 +61,6 @@ class Part extends CI_Controller {
      foreach ($d_id as $d) {
         $this->model->insert_part2($d);
     }
-        exit();
         echo "<script>alert('Add Data Success')</script>";
         redirect('part/add','refresh');
   
