@@ -48,19 +48,8 @@
                    </select>
                     </div>
                     </div>
-<<<<<<< HEAD
-=======
                     
-                    <div class="form-group has-feedback">
-                    <label for="password" class="col-sm-3 col-md-4 control-label">DCN</label>
-                    <div class="col-sm-6 col-md-3">
-                    <input id="password" class="form-control" type="text" name="dcn"  placeholder="DCN" required>
-                    <span class="form-control-feedback" aria-hidden="true">
-                    <span class="icon"></span>
-                    </span>
-                    </div>
-                </div>
->>>>>>> 4032de28c05971594b24ae4e858f44fe1b3e4e04
+                  
             
                   <div class="form-group">
                 <br>
