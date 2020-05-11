@@ -13,7 +13,7 @@ class Dcn extends CI_Controller {
         $menu['menu'] = $this->model->showmenu();
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
          $menu['mg']= $this->model->givemeid($url);
-         $sql =  "select * from sys_menus where order_no != 0 ";
+         $sql =  "select * from sys_menus where order_no != 0 and enable != 0";
          $query = $this->db->query($sql); 
          $menu['submenu']= $query->result(); 
          $this->load->view('header');
@@ -31,7 +31,7 @@ class Dcn extends CI_Controller {
         $sql =  'select * from dcn where delete_flag != 0';
         $query = $this->db->query($sql); 
        $data['result'] = $query->result(); 
-        $this->load->view('drawing/manage',$data);//bring $data to user_data 
+        $this->load->view('dcn/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
         
     }
@@ -41,8 +41,8 @@ class Dcn extends CI_Controller {
     {
     
 
-        $gname =  $this->input->post('dcn_no');
-             $result = $this->model->insert_drawing($gname);
+        $dcn =  $this->input->post('dcn_no');
+             $result = $this->model->insert_dcn($dcn);
     
   
     }

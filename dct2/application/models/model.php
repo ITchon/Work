@@ -153,6 +153,17 @@ return false;
      return false;
    }
  }
+ function insert_dcn($dcn_no)
+ {
+  $sql ="INSERT INTO dcn (dcn_no,enable,date_created,delete_flag) VALUES ( '$dcn_no', '1', CURRENT_TIMESTAMP,  '1');";
+    $query = $this->db->query($sql);  
+   if($query){
+     return true;
+   }
+   else{
+     return false;
+   }
+ }
 
  function insert_permission($gname, $controller, $spg_id)
  {

@@ -13,7 +13,7 @@ class Part extends CI_Controller {
         $this->model->CheckSession();
     
         $menu['menu'] = $this->model->showmenu();
-        $sql =  "select * from sys_menus where order_no != 0 ";
+        $sql =  "select * from sys_menus where order_no != 0 and enable != 0";
         $query = $this->db->query($sql); 
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
          $menu['mg']= $this->model->givemeid($url);
