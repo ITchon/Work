@@ -32,6 +32,7 @@
                         <th>Drawing id</th>
                         <th>Part name</th>
                         <th>Drawing no</th>
+                        <th>Part no</th>
                         <th width="15%">Manage</th>
     
                       </tr>
@@ -44,6 +45,7 @@
                 echo "<td>".$r->d_id."</td>";
                 echo "<td>".$r->p_name."</td>";
                 echo "<td>".$r->d_no."</td>";
+                echo "<td>".$r->p_no."</td>";
                 if($r->enable!=1 ){?>
                   
                   <td><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php

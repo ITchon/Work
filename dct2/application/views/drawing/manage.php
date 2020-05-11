@@ -28,9 +28,8 @@
                 <table id="demo-datatables-buttons-1" class="table table-bordered table-striped table-nowrap dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
-                        <th>Drawing id</th>
                         <th>Drawing no</th>
-                        <th width="20%">Manage</th>
+                        <th>Manage</th>
                        
                       </tr>
                     </thead>
@@ -39,13 +38,12 @@
                       <?php
                     foreach($result as $r){
              echo "<tr>";
-                echo "<td>".$r->d_id."</td>"; 
                 echo "<td>" ?>
         <form action="<?php echo base_url()?>part_drawing/manage" method="post">
                     <input type="text" name="d_id" value="<?php echo $r->d_id ?>" hidden>
                     <input type="text" name="name" value="drawing" hidden>
                     <button type="submit" class="btn btn-sm btn-primary">+</button>
-                    <?php echo $r->d_no ?>
+                    <?php echo "<b>".$r->d_no."</b>" ?>
         </form>
 
                     <?php

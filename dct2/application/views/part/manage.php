@@ -31,7 +31,6 @@
                       <th>P/NO</th>
                       <th>Part Name</th>
                         <th>Drawing Number</th>
-              
                         <th>DCN</th>
                         <th width="10%">Manage</th>
                        
@@ -42,18 +41,17 @@
                     <?php
                     foreach($result as $r){
             echo "<tr>";
-                echo "<td>".$r->p_no."</td>";
-                echo "<td>".$r->p_name."</td>";
-                echo "<td>" ?>
+            echo "<td>" ?>
         <form action="<?php echo base_url()?>part_drawing/manage" method="post">
                     <input type="text" name="p_id" value="<?php echo $r->p_id ?>" hidden>
                     <input type="text" name="name" value="part" hidden>
                     <button type="submit" class="btn btn-sm btn-primary">+</button>
-                    <?php echo $r->p_no ?>
+                    <?php echo "<b>".$r->p_no."</b>" ?>
         </form>
 
                     <?php
                 echo"</td>";
+                echo "<td>".$r->p_name."</td>";
                 echo "<td>".$r->d_id."</td>"; 
                 echo "<td>".$r->dcn."</td>";
                 
