@@ -31,7 +31,6 @@
                       <th>P/NO</th>
                       <th>Part Name</th>
                         <th>Drawing Number</th>
-                        <th>DCN</th>
                         <th width="10%">Manage</th>
                        
                       </tr>
@@ -53,7 +52,6 @@
                 echo"</td>";
                 echo "<td>".$r->p_name."</td>";
                 echo "<td>".$r->d_id."</td>"; 
-                echo "<td>".$r->dcn."</td>";
                 
                 if($r->enable!=1 ){?>
                   

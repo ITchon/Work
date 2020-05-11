@@ -56,12 +56,12 @@ class Part extends CI_Controller {
         $p_no =  $this->input->post('p_no');
         $p_name  =  $this->input->post('p_name');
         $d_id =  $this->input->post('d_id');
-        $dcn =  $this->input->post('dcn');
 
+        $this->model->insert_part($p_no,$p_name);
      foreach ($d_id as $d) {
-        $result = $this->model->insert_part($p_no,$p_name,$d,$dcn);
+        $this->model->insert_part2($d);
     }
-
+        exit();
         echo "<script>alert('Add Data Success')</script>";
         redirect('part/add','refresh');
   

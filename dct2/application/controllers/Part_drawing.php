@@ -72,7 +72,7 @@ $sql =  "SELECT pd.pd_id as pd_id, pd.p_id as p_id , d.d_id as d_id, p.p_name as
 
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
-        $this->load->view('part_drawing/manage',$data);//bring $data to user_data 
+        $this->load->view('part_drawing/manage',$data,$name);//bring $data to user_data 
         $this->load->view('footer');
         
     }

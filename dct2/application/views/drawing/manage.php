@@ -108,15 +108,14 @@
 
     $("#btn").on("click",function(){
       chk = $("#d_no").val();
-  
       if(chk != ''){
         $.ajax({
            url: "<?php echo base_url(); ?>drawing/insert",
            type: 'POST',
-           data: $("#form").serialize(),
+           data: chk,
            success: function() {
             $('#demo-datatables-fixedheader-2').DataTable().ajax.reload();
-            alert('Insert Drawing success');
+            alert(data);
            }
         });
       }else{

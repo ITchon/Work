@@ -106,10 +106,23 @@ return false;
  }
 
 
- function insert_part_drawing($p,$d)
- {
+//function insert_part_drawing($p,$d)
+//{
 
-  $sql ="INSERT INTO part_drawing (p_id,d_id,enable,date_created,delete_flag) VALUES ('$p','$d','1',CURRENT_TIMESTAMP,'1');";
+// $sql ="INSERT INTO part_drawing (p_id,d_id,enable,date_created,delete_flag) VALUES ('$p','$d','1',CURRENT_TIMESTAMP,'1');";
+//   $query = $this->db->query($sql);  
+//  if($query){
+//    return true;
+//  }
+//  else{
+//    return false;
+//  }
+//}
+
+
+ function insert_part($p_no,$p_name)
+ {
+  $sql ="INSERT INTO part (p_no,p_name,enable,date_created,delete_flag) VALUES ( '$p_no', '$p_name', '1', CURRENT_TIMESTAMP,'1');";
     $query = $this->db->query($sql);  
    if($query){
      return true;
@@ -120,9 +133,16 @@ return false;
  }
 
 
- function insert_part($p_no,$p_name,$d,$dcn)
+ function insert_part2($d)
  {
-  $sql ="INSERT INTO part (p_no,p_name,d_id,dcn,enable,date_created,delete_flag) VALUES ( '$p_no', '$p_name', '$d', '$dcn' ,'1',CURRENT_TIMESTAMP,'1');";
+  $maxid=0;
+  $gg ="SELECT MAX(p_id) as maxid from part";
+  $row = $this->db->query($gg)->row();
+ if($row){
+  $maxid = $row->maxid;
+ }
+
+  $sql ="INSERT INTO part_drawing (p_id,d_id,enable,date_created,delete_flag) VALUES ( '$maxid', '$d', '1', CURRENT_TIMESTAMP,'1');";
     $query = $this->db->query($sql);  
    if($query){
      return true;
@@ -144,7 +164,7 @@ return false;
  }
  function insert_drawing($d_no)
  {
-  $sql ="INSERT INTO drawing (d_no,enable,date_created,delete_flag,version) VALUES ( '$d_no', '1', CURRENT_TIMESTAMP,  '1' ,'00');";
+  $sql ="INSERT INTO drawing (d_no,enable,date_created,delete_flag) VALUES ( '$d_no', '1', CURRENT_TIMESTAMP,  '1');";
     $query = $this->db->query($sql);  
    if($query){
      return true;

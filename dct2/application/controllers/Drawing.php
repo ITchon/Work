@@ -41,9 +41,8 @@ class Drawing extends CI_Controller {
     {
     
 
-        $gname =  $this->input->post('d_no');
-             $result = $this->model->insert_drawing($gname);
-    
+        $d_no =  $this->input->post('d_no');
+        $result = $this->model->insert_drawing($gname);
   
     }
 
