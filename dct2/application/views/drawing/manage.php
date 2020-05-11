@@ -29,7 +29,6 @@
                   <thead>
                       <tr>
                         <th>Drawing no</th>
-                        <th>DCN</th>
                         <th>Manage</th>
                        
                       </tr>
@@ -49,7 +48,6 @@
 
                     <?php
                 echo"</td>";
-                echo "<td>$r->dcn_no</td>";
                 if($r->enable!=1 ){?>
                   
                   <td><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
@@ -83,27 +81,9 @@
             <form id="form"  method="post"  class="text-center" >
                  
                   <div class="form-group">
-                    <label for="name-1" class="control-label">Add Drawing No</label>
+                    <label for="name-1" class="control-label">Add Drawing</label>
                     <input id="d_no" class="form-control" type="text" name="d_no" required>
                   </div>
-                  
-                  <div class="form-group">
-                  <label for="name-1" class="control-label">DCN Number</label>      
-          
-                     
-                   <select name="dcn_id" class="form-control select2"  required>
-                   <option value=""> - - - Select DCN- - - </option>
-                   <?php
-                   
-                      foreach($result_dcn as $dcn){?>
-             
-                     <option value="<?php  echo $dcn->dcn_id ?>"><?php echo $dcn->dcn_no ?></option>
-                    <?php
-                      }
-                      ?> 
-                   </select>
-             
-                    </div>
                   <div class="form-group">
                     <button  id="btn" class="btn btn-primary ">Save Changes</button>
                   </div>
@@ -116,10 +96,7 @@
       <script type="text/javascript">
       
       $(document).ready(function() {
-  
-    $('.select2').select2();
-
-
+        
         $('#table').DataTable({
           dom: 'Bfrtip',
         buttons: [
