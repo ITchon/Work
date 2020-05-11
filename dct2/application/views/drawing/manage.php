@@ -99,24 +99,6 @@
     });
 
 
-    $("#btn").on("click",function(){
-      chk = $("#d_no").val();
-  
-      if(chk != ''){
-        $.ajax({
-           url: "<?php echo base_url(); ?>drawing/insert",
-           type: 'POST',
-           data: $("#form").serialize(),
-           success: function() {
-            $('#demo-datatables-fixedheader-2').DataTable().ajax.reload();
-            alert('Insert Drawing success');
-           }
-        });
-      }else{
-
-      }
-       });
-     
     });
 
 
