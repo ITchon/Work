@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 11, 2020 at 07:04 AM
+-- Generation Time: May 11, 2020 at 09:06 AM
 -- Server version: 5.7.17-log
 -- PHP Version: 5.6.26
 
@@ -36,6 +36,14 @@ CREATE TABLE `dcn` (
   `date_deleted` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `dcn`
+--
+
+INSERT INTO `dcn` (`dcn_id`, `dcn_no`, `enable`, `date_created`, `date_updated`, `delete_flag`, `date_deleted`) VALUES
+(1, '897664-4910', 1, '2020-05-11 14:20:19', '0000-00-00 00:00:00', 1, '0000-00-00 00:00:00'),
+(2, '3131323213', 1, '2020-05-11 14:21:24', '0000-00-00 00:00:00', 1, '0000-00-00 00:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -45,28 +53,32 @@ CREATE TABLE `dcn` (
 CREATE TABLE `drawing` (
   `d_id` int(11) NOT NULL,
   `d_no` varchar(50) DEFAULT NULL,
+  `dcn_id` varchar(40) NOT NULL,
   `enable` varchar(1) DEFAULT NULL,
   `date_created` datetime DEFAULT NULL,
   `date_updated` datetime DEFAULT NULL,
   `delete_flag` varchar(1) DEFAULT NULL,
-  `date_deleted` datetime DEFAULT NULL
+  `date_deleted` datetime DEFAULT NULL,
+  `version` int(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `drawing`
 --
 
-INSERT INTO `drawing` (`d_id`, `d_no`, `enable`, `date_created`, `date_updated`, `delete_flag`, `date_deleted`) VALUES
-(9, '1300A126', '1', '2020-04-29 16:46:57', NULL, '1', NULL),
-(10, 'J107-11820', '1', '2020-04-29 16:47:10', NULL, '1', NULL),
-(11, 'J107-11820-RM', '1', '2020-04-29 16:47:28', NULL, '1', NULL),
-(12, 'MSX3-4912', '1', '2020-04-29 16:47:43', NULL, '1', NULL),
-(13, 'J109-09810', '1', '2020-04-29 16:47:53', NULL, '1', NULL),
-(14, 'J145-00600', '1', '2020-04-29 16:48:02', NULL, '1', NULL),
-(15, 'MF140209', '1', '2020-04-29 16:48:13', NULL, '1', NULL),
-(16, 'J100-21860', '1', '2020-04-29 16:48:22', NULL, '1', NULL),
-(17, 'JD105-39240', '1', '2020-04-29 16:50:00', NULL, '1', NULL),
-(18, 'J115-16410', '1', '2020-04-29 16:59:22', NULL, '1', NULL);
+INSERT INTO `drawing` (`d_id`, `d_no`, `dcn_id`, `enable`, `date_created`, `date_updated`, `delete_flag`, `date_deleted`, `version`) VALUES
+(1, 'hahaha', '1', '1', '2020-05-11 15:00:43', NULL, '1', NULL, 0),
+(2, '$d_no', '$dcn_id', '1', '2020-05-11 15:09:43', NULL, '1', NULL, 0),
+(9, '1300A126', '1', '1', '2020-04-29 16:46:57', NULL, '1', NULL, 0),
+(10, 'J107-11820', '2', '1', '2020-04-29 16:47:10', NULL, '1', NULL, 0),
+(11, 'J107-11820-RM', '1', '1', '2020-04-29 16:47:28', NULL, '1', NULL, 0),
+(12, 'MSX3-4912', '2', '1', '2020-04-29 16:47:43', NULL, '1', NULL, 0),
+(13, 'J109-09810', '1', '1', '2020-04-29 16:47:53', NULL, '1', NULL, 0),
+(14, 'J145-00600', '2', '1', '2020-04-29 16:48:02', NULL, '1', NULL, 0),
+(15, 'MF140209', '1', '1', '2020-04-29 16:48:13', NULL, '1', NULL, 0),
+(16, 'J100-21860', '1', '1', '2020-04-29 16:48:22', NULL, '1', NULL, 0),
+(17, 'JD105-39240', '1', '1', '2020-04-29 16:50:00', NULL, '1', NULL, 0),
+(18, 'J115-16410', '2', '1', '2020-04-29 16:59:22', NULL, '1', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -101,8 +113,6 @@ CREATE TABLE `part` (
   `p_id` int(11) NOT NULL,
   `p_no` varchar(24) DEFAULT NULL,
   `p_name` varchar(44) DEFAULT NULL,
-  `d_id` int(11) DEFAULT NULL,
-  `dcn` varchar(14) DEFAULT NULL,
   `enable` varchar(1) DEFAULT NULL,
   `date_created` datetime DEFAULT NULL,
   `date_updated` datetime DEFAULT NULL,
@@ -114,16 +124,21 @@ CREATE TABLE `part` (
 -- Dumping data for table `part`
 --
 
-INSERT INTO `part` (`p_id`, `p_no`, `p_name`, `d_id`, `dcn`, `enable`, `date_created`, `date_updated`, `delete_flag`, `date_deleted`) VALUES
-(6, '1300A126', 'WATER PUMP ASSY', 9, '32', '1', '2020-04-29 16:49:34', NULL, '1', NULL),
-(7, 'J107-11820', 'COVER, WATER PUMP', 10, '55', '1', '2020-04-29 16:50:53', NULL, '1', NULL),
-(8, 'J107-11820-RM', 'COVER, WATER PUMP', 11, '1', '1', '2020-04-29 16:51:15', NULL, '1', NULL),
-(9, 'MS471104', 'BUSHING, KNOCK', 12, '11', '1', '2020-04-29 16:55:31', NULL, '1', NULL),
-(10, 'J109-09810', 'GASKET', 13, '11', '1', '2020-04-29 16:59:39', NULL, '1', NULL),
-(11, 'J145-00600', 'PIPE', 14, '11', '1', '2020-04-30 08:43:49', NULL, '1', NULL),
-(12, 'MF140209', 'BOLT', 15, '11', '1', '2020-04-30 08:44:14', NULL, '1', NULL),
-(13, 'J100-21860', 'WATER PUMP', 16, '1', '1', '2020-04-30 08:44:41', NULL, '1', NULL),
-(14, 'J105-39240', 'CASE, WATER PUMP', 18, '11', '1', '2020-04-30 08:45:17', NULL, '1', NULL);
+INSERT INTO `part` (`p_id`, `p_no`, `p_name`, `enable`, `date_created`, `date_updated`, `delete_flag`, `date_deleted`) VALUES
+(1, '3213', '213213', '1', '2020-05-11 15:54:19', NULL, '1', NULL),
+(6, '1300A126', 'WATER PUMP ASSY', '1', '2020-04-29 16:49:34', NULL, '1', NULL),
+(7, 'J107-11820', 'COVER, WATER PUMP', '1', '2020-04-29 16:50:53', NULL, '1', NULL),
+(8, 'J107-11820-RM', 'COVER, WATER PUMP', '1', '2020-04-29 16:51:15', NULL, '1', NULL),
+(9, 'MS471104', 'BUSHING, KNOCK', '1', '2020-04-29 16:55:31', NULL, '1', NULL),
+(10, 'J109-09810', 'GASKET', '1', '2020-04-29 16:59:39', NULL, '1', NULL),
+(11, 'J145-00600', 'PIPE', '1', '2020-04-30 08:43:49', NULL, '1', NULL),
+(12, 'MF140209', 'BOLT', '1', '2020-04-30 08:44:14', NULL, '1', NULL),
+(13, 'J100-21860', 'WATER PUMP', '1', '2020-04-30 08:44:41', NULL, '1', NULL),
+(14, 'J105-39240', 'CASE, WATER PUMP', '1', '2020-04-30 08:45:17', NULL, '1', NULL),
+(15, '3213', '213213', '1', '2020-05-11 15:54:37', NULL, '1', NULL),
+(16, '3213', '213213', '1', '2020-05-11 15:54:48', NULL, '1', NULL),
+(17, '412323', 'Manage god', '1', '2020-05-11 15:55:18', NULL, '1', NULL),
+(18, '412323', 'Manage god', '1', '2020-05-11 15:55:35', NULL, '1', NULL);
 
 -- --------------------------------------------------------
 
@@ -147,6 +162,7 @@ CREATE TABLE `part_drawing` (
 --
 
 INSERT INTO `part_drawing` (`pd_id`, `p_id`, `d_id`, `enable`, `date_created`, `date_updated`, `delete_flag`, `date_deleted`) VALUES
+(1, 14, 9, '1', '2020-05-11 15:54:19', NULL, '1', NULL),
 (130, 6, 9, '1', '2020-04-30 08:30:54', '2020-04-30 08:31:27', '1', '2020-04-30 08:31:18'),
 (131, 6, 10, '1', '2020-04-30 08:30:54', NULL, '1', NULL),
 (132, 6, 9, '1', '2020-04-30 08:45:44', NULL, '1', NULL),
@@ -173,7 +189,13 @@ INSERT INTO `part_drawing` (`pd_id`, `p_id`, `d_id`, `enable`, `date_created`, `
 (153, 6, 13, '1', '2020-04-30 11:45:03', NULL, '1', NULL),
 (154, 8, 10, '1', '2020-04-30 11:45:03', NULL, '1', NULL),
 (155, 8, 12, '1', '2020-04-30 11:45:03', NULL, '1', NULL),
-(156, 8, 13, '1', '2020-04-30 11:45:03', NULL, '1', NULL);
+(156, 8, 13, '1', '2020-04-30 11:45:03', NULL, '1', NULL),
+(157, 17, 1, '1', '2020-05-11 15:55:18', NULL, '1', NULL),
+(158, 17, 2, '1', '2020-05-11 15:55:18', NULL, '1', NULL),
+(159, 17, 10, '1', '2020-05-11 15:55:18', NULL, '1', NULL),
+(160, 18, 1, '1', '2020-05-11 15:55:35', NULL, '1', NULL),
+(161, 18, 2, '1', '2020-05-11 15:55:35', NULL, '1', NULL),
+(162, 18, 10, '1', '2020-05-11 15:55:35', NULL, '1', NULL);
 
 -- --------------------------------------------------------
 
@@ -522,7 +544,22 @@ ALTER TABLE `sys_user_groups`
 -- AUTO_INCREMENT for table `dcn`
 --
 ALTER TABLE `dcn`
-  MODIFY `dcn_id` int(12) NOT NULL AUTO_INCREMENT;
+  MODIFY `dcn_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `drawing`
+--
+ALTER TABLE `drawing`
+  MODIFY `d_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+--
+-- AUTO_INCREMENT for table `part`
+--
+ALTER TABLE `part`
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+--
+-- AUTO_INCREMENT for table `part_drawing`
+--
+ALTER TABLE `part_drawing`
+  MODIFY `pd_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'part drawing', AUTO_INCREMENT=163;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
