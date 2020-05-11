@@ -14,7 +14,7 @@
           </div>
 
           <div class="row gutter-xs">
-            <div class="col-xs-8">
+            <div class="col-xs-7">
               <div class="card">
                 <div class="card-header">
                   <div class="card-actions">
@@ -28,9 +28,8 @@
                 <table id="demo-datatables-buttons-1" class="table table-bordered table-striped table-nowrap dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
-                        <th>Drawing id</th>
-                        <th>Drawing no</th>
-                        <th width="20%">Manage</th>
+                        <th>DCN no</th>
+                        <th width="">Manage</th>
                        
                       </tr>
                     </thead>
@@ -39,10 +38,10 @@
                       <?php
                     foreach($result as $r){
              echo "<tr>";
-                echo "<td>".$r->dcn_id."</td>"; 
+              
                 echo "<td>" ?>
         <form action="<?php echo base_url()?>part_drawing/manage" method="post">
-                    <input type="text" name="d_id" value="<?php echo $r->d_id ?>" hidden>
+                    <input type="text" name="dcn_id" value="<?php echo $r->dcn_id ?>" hidden>
                     <input type="text" name="name" value="drawing" hidden>
                     <button type="submit" class="btn btn-sm btn-primary">+</button>
                     <?php echo $r->dcn_no ?>
@@ -53,21 +52,21 @@
                 if($r->enable!=1 ){?>
                   
                   <td><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
-                  echo base_url() . 'drawing/enable/' . $r->d_id;
+                  echo base_url() . 'drawing/enable/' . $r->dcn_id;
                   ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
                   <?php
                 }
                 else{?>
                   <td><a type="button"  data-original-title='Rule' onclick="javascript:window.location='<?php
-                  echo base_url() . 'drawing/disable/' . $r->d_id;
+                  echo base_url() . 'drawing/disable/' . $r->dcn_id;
                   ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
                   <?php
                 }
                 ?> <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
-                echo base_url() . 'drawing/edit_permissiongroup/' . $r->d_id;
+                echo base_url() . 'drawing/edit_permissiongroup/' . $r->dcn_id;
                 ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
                 <?php 
-                echo "<a type='button' href='".base_url()."drawing/deletedrawing/".$r->d_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
+                echo "<a type='button' href='".base_url()."drawing/deletedrawing/".$r->dcn_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
             echo "</tr>";
         }
     ?>
@@ -78,7 +77,7 @@
               </div>
             </div>
   
-            <div class="col-xs-4  card" >
+            <div class="col-xs-5  card" >
             
             <form id="form"  method="post"  class="text-center" >
                  
@@ -110,7 +109,6 @@
 
     $("#btn").on("click",function(){
       chk = $("#dcn_no").val();
-  alert(chk);
       if(chk != ''){
         $.ajax({
            url: "<?php echo base_url(); ?>dcn/insert",
