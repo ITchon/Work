@@ -48,8 +48,18 @@ class Usergroup extends CI_Controller {
 
         $gname =  $this->input->post('gname');
        $result = $this->model->insert_group($gname);
-
-       redirect('Usergroup/manage','refresh');
+       if($result == true){
+        echo "<script>alert('Inserted Data Success')</script>";
+        redirect('user/add','refresh'); 
+       }
+       if($result == false){
+        echo "<script>alert('Name already exist')</script>";
+        redirect('user/add','refresh'); 
+       }
+       if($result == 3){
+        echo "<script>alert('Error')</script>";
+        redirect('user/add','refresh'); 
+       }
 
     }
 

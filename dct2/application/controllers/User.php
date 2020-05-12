@@ -88,8 +88,19 @@ class User extends CI_Controller {
         $email  =  $this->input->post('email');
         $sug_id =  $this->input->post('sug_id');
        $result = $this->model->insert($fname,$lname,$username,$password,$gender,$email,$sug_id);
-       echo "<script>alert('Inserted Data Success')</script>";
-       redirect('user/add','refresh');
+       if($result == true){
+        echo "<script>alert('Inserted Data Success')</script>";
+        redirect('user/add','refresh'); 
+       }
+       if($result == false){
+        echo "<script>alert('Username already exist')</script>";
+        redirect('user/add','refresh'); 
+       }
+       if($result == 3){
+        echo "<script>alert('Error')</script>";
+        redirect('user/add','refresh'); 
+       }
+       
 
     }
     public function enable($uid){
