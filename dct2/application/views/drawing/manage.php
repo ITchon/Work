@@ -22,7 +22,7 @@
                 <div class="card-body">
                 <table id="demo-datatables-buttons-1" class="table table-bordered table-striped table-nowrap dataTable " cellspacing="0" width="100%">
                   <thead>
-                      <tr style="text-align: center">
+                      <tr>
                         <th>Drawing</th>
                         <th>DCN</th>
                         <th>Version</th>
@@ -38,7 +38,7 @@
                     foreach($result as $r){
              echo "<tr>";
                 echo "<td> " ?>
-            
+                
         <form action="<?php echo base_url()?>part_drawing/manage" method="post">
                     <input type="text" name="d_id" value="<?php echo $r->d_id ?>" hidden>
                     <input type="text" name="title" value="<?php echo $r->d_no ?>" hidden>
@@ -50,10 +50,8 @@
                     <?php
                 echo"</td>";
                 echo "<td>$r->dcn_no</td>";
-                echo "<td>$r->version</td>";
-                
-
-                
+                ?><td><a href="<?php echo base_url() . 'drawing/manage/' . $r->d_id ?>"><?php echo $r->version ?></a></td>
+                <?php 
                 if($r->enable!=1 ){?>
                   
                   <td class="text-center"><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
@@ -72,7 +70,7 @@
                 ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
 
                 <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
-                echo base_url() . 'drawing/edit_form/' . $r->d_id;
+                echo base_url() . 'drawing/version_form/' . $r->d_id;
                 ?>';"><i class='btn-danger btn-sm fa fa-odnoklassniki'> </i> </a>
 
 
@@ -125,12 +123,14 @@
         </div>
       </div>
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-          
       <script type="text/javascript">
       
       $(document).ready(function() {
-        
+           $('.select2').select2();  
         $('#table').DataTable({
+     
+
+
           dom: 'Bfrtip',
         buttons: [
             'colvis'
@@ -138,32 +138,27 @@
        
     });
 
+
+    $("#btn").on("click",function(){
+      chk = $("#d_no").val();
+      if(chk != ''){
+        $.ajax({
+           url: "<?php echo base_url(); ?>drawing/insert",
+           type: 'POST',
+           data: $("#form").serialize(),
+           success: function() {
+            $('#demo-datatables-buttons-1').DataTable().ajax.reload();
+            alert('Insert Drawing success');
+           }
+        });
+      }else{
+
+      }
+       });
      
     });
 
 
 </script>
-     
-        <script type="text/javascript">
 
-      $("#btn").on("click",function(){
-        chk = $("#d_no").val();
-        if(chk != ''){
-          $.ajax({
-             url: "<?php echo base_url(); ?>drawing/insert",
-             type: 'POST',
-             data: $("#form").serialize(),
-             success: function() {
-              $('#demo-datatables-buttons-1').DataTable().ajax.reload();
-              alert('Insert Drawing success');
-             }
-          });
-        }else{
-
-        }
-         });
-       
-
-  </script>
-
-
+    
