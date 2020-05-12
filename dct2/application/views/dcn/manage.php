@@ -39,11 +39,11 @@
                     foreach($result as $r){
              echo "<tr>";
                 echo "<td>" ?>
-        <form action="<?php echo base_url()?>part_drawing/manage" method="post">
+        <form action="<?php echo base_url()?>drawing/manage" method="post">
                     <input type="text" name="dcn_id" value="<?php echo $r->dcn_id ?>" hidden>
-                    <input type="text" name="name" value="drawing" hidden>
+                    <input type="text" name="name" value="dcn" hidden>
                     <button type="submit" class="btn btn-sm btn-primary">+</button>
-                    <?php echo $r->dcn_no ?>
+                    <?php echo"<b>".$r->dcn_no."</b>" ?>
         </form>
 
                     <?php

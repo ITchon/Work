@@ -10,7 +10,7 @@ class Model extends CI_Model
         redirect('login','refresh');
      return FALSE;
      
-      }else{  return TRUE;  }
+      }else{	return TRUE; 	}
   }
   public function get_drawing()
   {
@@ -27,29 +27,29 @@ class Model extends CI_Model
      return $query;
   }
   public function CheckPermission($para){
-    
-    $get_url = trim($this->router->fetch_class().'/'.$this->router->fetch_method());
+		
+		$get_url = trim($this->router->fetch_class().'/'.$this->router->fetch_method());
 
-    $sqlChkPerm = "SELECT sp.name,sp.controller
-    FROM
-    sys_users_permissions AS sup
-    INNER JOIN sys_permissions AS sp ON sp.sp_id = sup.sp_id
-    LEFT JOIN sys_permission_groups AS spg ON sp.spg_id = spg.spg_id
-    WHERE
-    sp.enable='1' AND spg.enable='1' AND sup.su_id='{$para}' AND sp.controller='{$get_url}';";
-    
-    $excChkPerm = $this->db->query($sqlChkPerm);
-    $numChkPerm = $excChkPerm->num_rows();
-    
-    if($numChkPerm == 0) {
-      
-      echo '<script language="javascript">';
-      echo 'alert("Permission not found.");';
-      echo 'history.go(-1);';
-      echo '</script>';
-      exit();
-      
-    }
+		$sqlChkPerm = "SELECT sp.name,sp.controller
+		FROM
+		sys_users_permissions AS sup
+		INNER JOIN sys_permissions AS sp ON sp.sp_id = sup.sp_id
+		LEFT JOIN sys_permission_groups AS spg ON sp.spg_id = spg.spg_id
+		WHERE
+		sp.enable='1' AND spg.enable='1' AND sup.su_id='{$para}' AND sp.controller='{$get_url}';";
+		
+		$excChkPerm = $this->db->query($sqlChkPerm);
+		$numChkPerm = $excChkPerm->num_rows();
+		
+		if($numChkPerm == 0) {
+			
+			echo '<script language="javascript">';
+			echo 'alert("Permission not found.");';
+			echo 'history.go(-1);';
+			echo '</script>';
+			exit();
+			
+		}
 
   }
   
@@ -65,7 +65,7 @@ if($query->num_rows()!=0) {
 $result = $query->result_array();
   return $result[0];  
   }
-else{   
+else{		
 return false;
   }
 
@@ -106,23 +106,10 @@ return false;
  }
 
 
-//function insert_part_drawing($p,$d)
-//{
-
-// $sql ="INSERT INTO part_drawing (p_id,d_id,enable,date_created,delete_flag) VALUES ('$p','$d','1',CURRENT_TIMESTAMP,'1');";
-//   $query = $this->db->query($sql);  
-//  if($query){
-//    return true;
-//  }
-//  else{
-//    return false;
-//  }
-//}
-
-
- function insert_part($p_no,$p_name)
+ function insert_part_drawing($p,$d)
  {
-  $sql ="INSERT INTO part (p_no,p_name,enable,date_created,delete_flag) VALUES ( '$p_no', '$p_name', '1', CURRENT_TIMESTAMP,'1');";
+
+  $sql ="INSERT INTO part_drawing (p_id,d_id,enable,date_created,delete_flag) VALUES ('$p','$d','1',CURRENT_TIMESTAMP,'1');";
     $query = $this->db->query($sql);  
    if($query){
      return true;
@@ -133,16 +120,9 @@ return false;
  }
 
 
- function insert_part2($d)
+ function insert_part($p_no,$p_name,$d_id,$dcn)
  {
-  $maxid=0;
-  $gg ="SELECT MAX(p_id) as maxid from part";
-  $row = $this->db->query($gg)->row();
- if($row){
-  $maxid = $row->maxid;
- }
-
-  $sql ="INSERT INTO part_drawing (p_id,d_id,enable,date_created,delete_flag) VALUES ( '$maxid', '$d', '1', CURRENT_TIMESTAMP,'1');";
+  $sql ="INSERT INTO part (p_no,p_name,d_id,dcn,enable,date_created,delete_flag) VALUES ( '$p_no', '$p_name', '$d_id', '$dcn' ,'1',CURRENT_TIMESTAMP,'1');";
     $query = $this->db->query($sql);  
    if($query){
      return true;
@@ -162,21 +142,10 @@ return false;
      return false;
    }
  }
- function insert_drawing($d_no,$dcn_id)
- {
 
-  $sql ="INSERT INTO drawing (d_no,dcn_id,enable,date_created,delete_flag,version) VALUES ( '$d_no','$dcn_id', '1', CURRENT_TIMESTAMP,  '1' ,'00');";
-    $query = $this->db->query($sql);  
-   if($query){
-     return true;
-   }
-   else{
-     return false;
-   }
- }
- function insert_dcn($dcn_no)
+ function insert_drawing($d_no)
  {
-  $sql ="INSERT INTO dcn (dcn_no,enable,date_created,delete_flag) VALUES ( '$dcn_no', '1', CURRENT_TIMESTAMP,  '1');";
+  $sql ="INSERT INTO drawing (d_no,enable,date_created,delete_flag,version) VALUES ( '$d_no', '1', CURRENT_TIMESTAMP,  '1' ,'00');";
     $query = $this->db->query($sql);  
    if($query){
      return true;
@@ -185,6 +154,35 @@ return false;
      return false;
    }
  }
+
+  function select_version($d_id)
+ {
+  $sql ="SELECT * FROM drawing WHERE d_id = $d_id ;";
+  $query = $this->db->query($sql);
+  $data = $query->result();
+
+  $d_id =  $data[0]->d_id;
+  $version =  $data[0]->version;
+  $file_name =  $data[0]->file_name;
+  $gg ="INSERT INTO version (d_id, version, enable, date_created, status, file_name) VALUES ( '$d_id', '$version', '1', CURRENT_TIMESTAMP, 'disable', '$file_name');";
+  $query = $this->db->query($gg); 
+
+
+ }
+
+ function update_version($d_id, $d_no, $dcn_id, $version, $file_name)
+ {
+  $v = $version+1;
+  $sql ="UPDATE drawing SET d_no = '$d_no' , date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id', version = '$v', file_name = '$file_name' WHERE d_id = '$d_id'";
+    $query = $this->db->query($sql);  
+   if($query){
+     return true;
+   }
+   else{
+     return false;
+   }
+ }
+
 
  function insert_permission($gname, $controller, $spg_id)
  {
@@ -219,9 +217,9 @@ return false;
   
   if ($exc_user){
     
-    return TRUE;  
+    return TRUE;	
     
-  }else{  return FALSE; }
+  }else{	return FALSE;	}
   
 }
 
@@ -244,9 +242,9 @@ public function disableUser($key=''){
   
   if ($exc_user){
     
-    return TRUE;  
+    return TRUE;	
     
-  }else{  return FALSE; }
+  }else{	return FALSE;	}
   
 }
 
@@ -647,27 +645,6 @@ public function num_disablePart($para){
      return false;
    }
    }
-
-   public function deluser_permission($su_id) { 
-
-  $sql1  =  "DELETE FROM sys_users_permissions WHERE su_id = $su_id";
-      $query = $this->db->query($sql1); 
-   }
-
-   public function insertuser_permission($su_id,$sp) { 
-
-
-     $sql  = "
-      INSERT INTO sys_users_permissions(su_id, sp_id, date_created)VALUES('$su_id', '$sp',CURRENT_TIMESTAMP) ";
-      $query = $this->db->query($sql); 
-    if ($query) { 
-         return true; 
-      } 
-      else{
-     return false;
-   }
- }
-
 
 
 

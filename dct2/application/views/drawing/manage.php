@@ -30,7 +30,9 @@
                       <tr>
                         <th>Drawing no</th>
                         <th>DCN</th>
+                        <th>Version</th>
                         <th>Manage</th>
+                        <th>Status</th>
                        
                       </tr>
                     </thead>
@@ -50,6 +52,10 @@
                     <?php
                 echo"</td>";
                 echo "<td>$r->dcn_no</td>";
+                echo "<td>$r->version</td>";
+                echo "<td>$r->status</td>";
+
+                
                 if($r->enable!=1 ){?>
                   
                   <td><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
@@ -66,6 +72,12 @@
                 ?> <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
                 echo base_url() . 'drawing/edit_permissiongroup/' . $r->d_id;
                 ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
+
+                <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
+                echo base_url() . 'drawing/version_form/' . $r->d_id;
+                ?>';"><i class='btn-danger btn-sm fa fa-odnoklassniki'> </i> </a>
+
+
                 <?php 
                 echo "<a type='button' href='".base_url()."drawing/deletedrawing/".$r->d_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
             echo "</tr>";
