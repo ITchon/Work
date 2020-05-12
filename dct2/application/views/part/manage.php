@@ -3,8 +3,7 @@
         <div class="layout-content-body">
           <div class="title-bar">
             <h1 class="title-bar-title">
-              <span class="d-ib">DataTables
-              </span>
+          
 
             </h1>
             <p class="title-bar-description">
@@ -38,7 +37,8 @@
             echo "<td>" ?>
         <form action="<?php echo base_url()?>part_drawing/manage" method="post">
                     <input type="text" name="p_id" value="<?php echo $r->p_id ?>" hidden>
-                    <input type="text" name="name" value="part" hidden>
+                    <input type="text" name="title" value="<?php echo $r->p_no ?>" hidden>
+                    <input type="text" name="name" value="Part" hidden>
                     <button type="submit" class="btn btn-sm btn-primary">+</button>
                     <?php echo "<b>".$r->p_no."</b>" ?>
         </form>

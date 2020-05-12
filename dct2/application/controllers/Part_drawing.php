@@ -40,26 +40,29 @@ class Part_drawing extends CI_Controller {
         $p_id =  $this->input->post('p_id');
         $d_id =  $this->input->post('d_id');
         $name =  $this->input->post('name');
+        $title =  $this->input->post('title');
 
-        if($name == 'drawing'){
+        if($name == 'Drawing'){
     $sql =  "SELECT pd.pd_id as pd_id, pd.d_id as d_id, d.d_id as d_id, p.p_name as p_name, d.d_no as d_no, p.p_no as p_no, pd.enable as enable
         FROM
         part_drawing AS pd
         INNER JOIN part AS p ON p.p_id = pd.p_id
         LEFT JOIN drawing AS d ON d.d_id = pd.d_id where pd.delete_flag != 0 AND pd.d_id = $d_id
         ";
-
+         $data['title'] = $title ;
+         $data['name'] = $name ;
         }
 
 
-    else if($name =='part'){
+    else if($name =='Part'){
 $sql =  "SELECT pd.pd_id as pd_id, pd.p_id as p_id , d.d_id as d_id, p.p_name as p_name, d.d_no as d_no, p.p_no as p_no, pd.enable as enable
         FROM
         part_drawing AS pd
         INNER JOIN part AS p ON p.p_id = pd.p_id
         LEFT JOIN drawing AS d ON d.d_id = pd.d_id where pd.delete_flag != 0 AND pd.p_id=$p_id
         ";
-
+    $data['title'] = $title ;
+    $data['name'] = $name ;
     }
     else{
         $sql =  "SELECT pd.pd_id as pd_id, pd.p_id as p_id , d.d_id as d_id, p.p_name as p_name, d.d_no as d_no, p.p_no as p_no, pd.enable as enable

@@ -13,19 +13,21 @@
               <div class="card">
                 <div class="card-header">
             
-                  <h3>Drawing Table</h3>
-                  <small>The tables presented below use <a href="https://datatables.net/extensions/responsive/" target="_blank">DataTables Responsive Extension</a>, the styling of which is completely rewritten in SASS, without modifying however anything in JavaScript.</small>
-
+                  <h3><a href="">Drawing Table</a> <?php if(isset($title)){?>
+                  >
+                <a class=""> </a><a  onClick="history.go(-1)"style="cursor: pointer;">Back </a> > <?php echo $name ?>  <?php echo $title ?>
+                <?php  }?> 
+                </h3>
                 </div>
                 <div class="card-body">
                 <table id="demo-datatables-buttons-1" class="table table-bordered table-striped table-nowrap dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
-                        <th>Drawing no</th>
+                        <th>Drawing</th>
                         <th>DCN</th>
                         <th>Version</th>
                         <th>Manage</th>
-                        <th>Status</th>
+              
                        
                       </tr>
                     </thead>
@@ -37,7 +39,8 @@
                 echo "<td>" ?>
         <form action="<?php echo base_url()?>part_drawing/manage" method="post">
                     <input type="text" name="d_id" value="<?php echo $r->d_id ?>" hidden>
-                    <input type="text" name="name" value="drawing" hidden>
+                    <input type="text" name="title" value="<?php echo $r->d_no ?>" hidden>
+                    <input type="text" name="name" value="Drawing" hidden>
                     <button type="submit" class="btn btn-sm btn-primary">+</button>
                     <?php echo "<b>".$r->d_no."</b>" ?>
         </form>
@@ -46,7 +49,7 @@
                 echo"</td>";
                 echo "<td>$r->dcn_no</td>";
                 echo "<td>$r->version</td>";
-                echo "<td>$r->status</td>";
+
 
                 
                 if($r->enable!=1 ){?>
