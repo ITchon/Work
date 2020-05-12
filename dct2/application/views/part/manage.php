@@ -28,7 +28,7 @@
                         <th width="10%">Manage</th>
                        
                       </tr>
-                    </thead
+                    </thead>
                     <tbody>
                     <?php
                     foreach($result as $r){

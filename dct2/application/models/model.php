@@ -532,7 +532,7 @@ public function num_disablePartD($para){
 
 public function enablePart($key=''){
 
-  $sqlEdt = "UPDATE part_drawing SET enable='1', date_updated=CURRENT_TIMESTAMP WHERE p_id={$key};";
+  $sqlEdt = "UPDATE part SET enable='1', date_updated=CURRENT_TIMESTAMP WHERE p_id={$key};";
   $exc_user = $this->db->query($sqlEdt);
   
   if ($exc_user){
