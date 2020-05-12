@@ -29,7 +29,7 @@ class Part extends CI_Controller {
     
 	public function manage()
     {	
-        $sql =  'select * from part where delete_flag != 0';
+        $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0';
         $query = $this->db->query($sql); 
        $data['result'] = $query->result(); 
         $this->load->view('part/manage',$data);//bring $data to user_data 

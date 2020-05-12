@@ -31,15 +31,14 @@ class Drawing extends CI_Controller {
         $name =  $this->input->post('name');
         $title =  $this->input->post('title');
         if($name == 'DCN'){
-          $sql =  "SELECT * from drawing as d
+          $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
-          LEFT JOIN version AS v ON v.d_id = d.d_id
           where d.delete_flag != 0 AND d.dcn_id = $dcn_id";
                $data['title'] = $title ;
                $data['name'] = $name ;
         }
         else{
-          $sql =  'select * from drawing d inner join dcn on dcn.dcn_id = d.dcn_id where d.delete_flag != 0';
+          $sql =  'SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version from drawing d inner join dcn as dc on dc.dcn_id = d.dcn_id where d.delete_flag != 0';
         }
 
 
