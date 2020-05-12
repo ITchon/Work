@@ -3,13 +3,10 @@
         <div class="layout-content-body">
           <div class="title-bar">
             <h1 class="title-bar-title">
-              <span class="d-ib">DataTables
-                <small>Responsive Extension</small>
-              </span>
+        
 
             </h1>
             <p class="title-bar-description">
-              <small>The tables presented below use <a href="https://datatables.net/extensions/responsive/" target="_blank">DataTables Responsive Extension</a>, the styling of which is completely rewritten in SASS, without modifying however anything in JavaScript.</small>
             </p>
           </div>
        
@@ -17,12 +14,9 @@
             <div class="col-xs-12">
               <div class="card">
                 <div class="card-header">
-                  <div class="card-actions">
-                    <button type="button" class="card-action card-toggler" title="Collapse"></button>
-                    <button type="button" class="card-action card-reload" title="Reload"></button>
-                    <button type="button" class="card-action card-remove" title="Remove"></button>
-                  </div>
-                  <strong>Responsive Table</strong>
+
+                  <h3>Part-Drawing Table</h3>
+                  <small>The tables presented below use <a href="https://datatables.net/extensions/responsive/" target="_blank">DataTables Responsive Extension</a>, the styling of which is completely rewritten in SASS, without modifying however anything in JavaScript.</small>
   
                 </div>
                 <div class="card-body">

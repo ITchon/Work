@@ -95,14 +95,22 @@ return false;
 
  function insert($fname,$lname,$username,$password,$gender,$email,$sug_id)
  {
-  $sql ="INSERT INTO sys_users (sug_id, username, password, firstname, lastname, gender, email, enable, date_created, date_updated,delete_flag) VALUES ( '$sug_id', '$username', '$password', '$fname', '$lname', '$gender', '$email', '1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '1' );";
-    $query = $this->db->query($sql);  
-   if($query){
-     return true;
-   }
-   else{
-     return false;
-   }
+
+
+  $num= $this->db->query("SELECT * FROM sys_users where username = '$username'"); 
+  $chk= $num->num_rows();
+ if($chk!=1){
+    $sql1 ="INSERT INTO sys_users (sug_id, username, password, firstname, lastname, gender, email, enable, date_created, date_updated,delete_flag) VALUES ( '$sug_id', '$username', '$password', '$fname', '$lname', '$gender', '$email', '1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '1' )";
+  $query= $this->db->query($sql1); 
+  if($query){
+      return true;
+  }else{
+    return 3;
+  }
+ }
+ return false;
+
+   
  }
 
 
@@ -133,14 +141,19 @@ return false;
  }
  function insert_group($gname)
  {
+  $num= $this->db->query("SELECT * FROM sys_user_groups where name = '$gname'"); 
+  $chk= $num->num_rows();
+ if($chk!=1){
   $sql ="INSERT INTO sys_user_groups (name,enable,date_created,delete_flag) VALUES ( '$gname', '1', CURRENT_TIMESTAMP,  '1' );";
     $query = $this->db->query($sql);  
    if($query){
      return true;
    }
    else{
-     return false;
+     return 3;
    }
+  }
+  return false;
  }
 
  function insert_drawing($d_no)

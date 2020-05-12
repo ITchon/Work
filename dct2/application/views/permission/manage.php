@@ -6,11 +6,6 @@
             <div class="col-xs-12">
               <div class="card">
                 <div class="card-header">
-                  <div class="card-actions">
-                    <button type="button" class="card-action card-toggler" title="Collapse"></button>
-                    <button type="button" class="card-action card-reload" title="Reload"></button>
-                    <button type="button" class="card-action card-remove" title="Remove"></button>
-                  </div>
                   <h4>Permission Table</h4>
                 </div>
                 <div class="card-body">
