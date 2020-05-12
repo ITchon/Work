@@ -72,7 +72,7 @@
                 ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
 
                 <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
-                echo base_url() . 'drawing/version_form/' . $r->d_id;
+                echo base_url() . 'drawing/edit_form/' . $r->d_id;
                 ?>';"><i class='btn-danger btn-sm fa fa-odnoklassniki'> </i> </a>
 
 
@@ -125,11 +125,11 @@
         </div>
       </div>
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+          
       <script type="text/javascript">
       
       $(document).ready(function() {
-           $('.select2').select2();  
-
+        
         $('#table').DataTable({
           dom: 'Bfrtip',
         buttons: [
@@ -138,26 +138,32 @@
        
     });
 
-    $("#btn").on("click",function(){
-      chk = $("#d_no").val();
-      if(chk != ''){
-        $.ajax({
-           url: "<?php echo base_url(); ?>drawing/insert",
-           type: 'POST',
-           data: $("#form").serialize(),
-           success: function() {
-            $('#demo-datatables-buttons-1').DataTable().ajax.reload();
-            alert('Insert Drawing success');
-           }
-        });
-      }else{
-
-      }
-       });
      
     });
 
 
 </script>
+     
+        <script type="text/javascript">
 
-    
+      $("#btn").on("click",function(){
+        chk = $("#d_no").val();
+        if(chk != ''){
+          $.ajax({
+             url: "<?php echo base_url(); ?>drawing/insert",
+             type: 'POST',
+             data: $("#form").serialize(),
+             success: function() {
+              $('#demo-datatables-buttons-1').DataTable().ajax.reload();
+              alert('Insert Drawing success');
+             }
+          });
+        }else{
+
+        }
+         });
+       
+
+  </script>
+
+
