@@ -11,7 +11,7 @@ backdrop: 'static'
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="bg-primary modal-header">
-        
+        <h1><?php echo "string"; ?></h1>
       </div>
       <div class="modal-body">
       <?php  echo form_open('user/save_user_permission'); ?>

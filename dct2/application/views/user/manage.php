@@ -29,7 +29,7 @@
                         <th>Gender</th>
                         <th>Group</th>
                         <th>Email</th>
-                        <th width="10%">Manage</th>
+                        <th width="20%">Manage</th>
                        
                       </tr>
                     </thead>
