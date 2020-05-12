@@ -15,12 +15,15 @@
               <div class="card">
                 <div class="card-header">
 
-                  <h3>Part-Drawing Table</h3>
-                  <small>The tables presented below use <a href="https://datatables.net/extensions/responsive/" target="_blank">DataTables Responsive Extension</a>, the styling of which is completely rewritten in SASS, without modifying however anything in JavaScript.</small>
+                  <h3><a href=""> Part-Drawing Table </a> <?php if(isset($title)){?>
+                  >
+                <a class=""> </a><a  onClick="history.go(-1)"style="cursor: pointer;">Back </a> > <?php echo $name ?>  <?php echo $title ?>
+                <?php  }?> 
+                </h3>
   
                 </div>
                 <div class="card-body">
-                <table id="demo-datatables-buttons-1" class="table table-bordered table-striped table-nowrap dataTable" cellspacing="0" width="100%">
+                <table id="demo-datatables-buttons-1" class="table table-bordered table-striped dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
                         <th>Drawing id</th>
