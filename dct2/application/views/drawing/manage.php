@@ -49,7 +49,7 @@
                 echo"</td>";
                 echo "<td>$r->dcn_no</td>";
                 echo "<td>$r->version</td>";
-
+                
 
                 
                 if($r->enable!=1 ){?>
@@ -76,6 +76,9 @@
 
                 <?php 
                 echo "<a type='button' href='".base_url()."drawing/deletedrawing/".$r->d_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
+                ?>
+                <td class="text-center"><b><font color="green">active</font></b></td>
+                <?php
             echo "</tr>";
         }
     ?>
@@ -158,3 +161,4 @@
 
 </script>
 
+    
