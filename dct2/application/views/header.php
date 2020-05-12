@@ -49,3 +49,7 @@
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/select2.min.css'; ?>">
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
   </head>
+  <style>
+.table th {
+  text-align: center;
+}</style>

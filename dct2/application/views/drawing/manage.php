@@ -20,12 +20,13 @@
                 </h3>
                 </div>
                 <div class="card-body">
-                <table id="demo-datatables-buttons-1" class="table table-bordered table-striped table-nowrap dataTable" cellspacing="0" width="100%">
+                <table id="demo-datatables-buttons-1" class="table table-bordered table-striped table-nowrap dataTable " cellspacing="0" width="100%">
                   <thead>
-                      <tr>
+                      <tr style="text-align: center">
                         <th>Drawing</th>
                         <th>DCN</th>
                         <th>Version</th>
+                        <th>Manage</th>
                         <th>Manage</th>
               
                        
@@ -36,12 +37,13 @@
                       <?php
                     foreach($result as $r){
              echo "<tr>";
-                echo "<td>" ?>
+                echo "<td> " ?>
+            
         <form action="<?php echo base_url()?>part_drawing/manage" method="post">
                     <input type="text" name="d_id" value="<?php echo $r->d_id ?>" hidden>
                     <input type="text" name="title" value="<?php echo $r->d_no ?>" hidden>
                     <input type="text" name="name" value="Drawing" hidden>
-                    <button type="submit" class="btn btn-sm btn-primary">+</button>
+                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
                     <?php echo "<b>".$r->d_no."</b>" ?>
         </form>
 
@@ -127,17 +129,14 @@
       
       $(document).ready(function() {
            $('.select2').select2();  
+
         $('#table').DataTable({
-     
-
-
           dom: 'Bfrtip',
         buttons: [
             'colvis'
         ]
        
     });
-
 
     $("#btn").on("click",function(){
       chk = $("#d_no").val();

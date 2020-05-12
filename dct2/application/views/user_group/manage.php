@@ -25,7 +25,7 @@
                   <strong>Responsive Table</strong>
                 </div>
                 <div class="card-body">
-                  <table id="demo-datatables-buttons-1" class="table table-striped table-nowrap dataTable" cellspacing="0" width="100%">
+                  <table id="demo-datatables-buttons-1" class="table table-bordered table-striped dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
                         <th>Group id</th>

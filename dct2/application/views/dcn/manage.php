@@ -20,7 +20,7 @@
 
                 </div>
                 <div class="card-body">
-                <table id="demo-datatables-buttons-1" class="table table-bordered table-striped table-nowrap dataTable" cellspacing="0" width="100%">
+                <table id="demo-datatables-buttons-1" class="table table-bordered table-striped dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
                       <th>DCN no</th>
@@ -38,7 +38,7 @@
                     <input type="text" name="dcn_id" value="<?php echo $r->dcn_id ?>" hidden>
                     <input type="text" name="title" value="<?php echo $r->dcn_no ?>" hidden>
                     <input type="text" name="name" value="DCN" hidden>
-                    <button type="submit" class="btn btn-sm btn-primary">+</button>
+                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
                     <?php echo"<b>".$r->dcn_no."</b>" ?>
         </form>
 
