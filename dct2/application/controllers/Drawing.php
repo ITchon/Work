@@ -9,7 +9,6 @@ class Drawing extends CI_Controller {
         $this->load->helper('form');
         $this->load->database(); 
         $this->load->model('model');
-        $this->load->library('form_validation');
         $this->model->CheckSession();
         $menu['menu'] = $this->model->showmenu();
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
@@ -103,7 +102,7 @@ class Drawing extends CI_Controller {
     }
 
 
-    public function version_form()
+    public function edit_form()
     {
 
 
