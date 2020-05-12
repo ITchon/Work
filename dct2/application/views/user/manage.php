@@ -45,14 +45,14 @@
                 echo "<td>".$r->email."</td>";
                 if($r->enable!=1 ){?>
                   <!-- <td><a href='".base_url()."index.php/user/permission/".$r->user_id."' class='btn btn-danger'>Disable</a>"; -->
-                  <td><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <td class="text-center"><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
                   echo base_url() . 'user/enable/' . $r->su_id;
                   ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
                   <?php
                 }
                 else{?>
                   <!-- echo "<td><a href='".base_url()."index.php/user/permission/".$r->user_id."' class='btn btn-success'>Enable</a>"; -->
-                  <td><a type="button"  data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <td class="text-center"><a type="button"  data-original-title='Rule' onclick="javascript:window.location='<?php
                   echo base_url() . 'user/disable/' . $r->su_id;
                   ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
                   <?php

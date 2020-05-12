@@ -47,14 +47,15 @@
                 echo "<td>".$r->p_name."</td>";
                 
                 if($r->enable!=1 ){?>
-                  <td><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
+                  
+                  <td class="text-center"><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
                   echo base_url() . 'part/enable/' . $r->p_id;
                   ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
                   <?php
                 }
                 else{?>
 
-                  <td><a type="button"  data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <td class="text-center"><a type="button"  data-original-title='Rule' onclick="javascript:window.location='<?php
                   echo base_url() . 'part/disable/' . $r->p_id;
                   ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
                   <?php
