@@ -13,7 +13,7 @@ class Part extends CI_Controller {
         $this->model->CheckSession();
     
         $menu['menu'] = $this->model->showmenu();
-        $sql =  "select * from sys_menus where order_no != 0 and enable != 0";
+        $sql =  "select * from sys_menus where order_no != 0 and enable != 0 ORDER BY order_no";
         $query = $this->db->query($sql); 
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
          $menu['mg']= $this->model->givemeid($url);
@@ -40,7 +40,9 @@ class Part extends CI_Controller {
         $sql = "SELECT * FROM part_drawing as pd inner join drawing as d on d.d_id = pd.d_id where d.delete_flag != 0 ";
 		$query = $this->db->query($sql);
         $data['result'] = $query->result();  
-
+        $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0';
+        $query = $this->db->query($sql); 
+       $data['result_p'] = $query->result(); 
         $sql = "SELECT * FROM drawing where delete_flag != 0 ";
         $query = $this->db->query($sql);
         $data['result_d'] = $query->result(); 
@@ -50,17 +52,23 @@ class Part extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+
     public function insert()
     {
     
         $p_no =  $this->input->post('p_no');
         $p_name  =  $this->input->post('p_name');
         $d_id =  $this->input->post('d_id');
+       $d_no =  $this->input->post('d_no');
+       $master =  $this->input->post('master');
+       $lv = 2;
+       $master =0;
+       if(isset($master)){
+       $lv = 3;
+       $master =  $this->input->post('master');
+       }
+        $this->model->insert_part($p_no,$p_name, $d_no,$lv,$master);
 
-        $this->model->insert_part($p_no,$p_name);
-     foreach ($d_id as $d) {
-        $this->model->insert_part2($d);
-    }
         echo "<script>alert('Add Data Success')</script>";
         redirect('part/add','refresh');
   
