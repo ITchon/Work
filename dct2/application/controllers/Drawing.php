@@ -38,20 +38,27 @@ class Drawing extends CI_Controller {
                $data['name'] = $name ;
         }
         else if(isset($id)){
-            $sql =  "SELECT * from drawing as d
-            inner join dcn as dc on dc.dcn_id = d.dcn_id
-            LEFT JOIN version AS v ON v.d_id = d.d_id
-            where d.delete_flag != 0 AND d.dcn_id = $id";
+            $sql =  "SELECT d.d_id, d.d_no,  d.enable, d.file_name, d.version,dcn.dcn_no,'v_id'
+            from drawing as d
+         inner join dcn on dcn.dcn_id = d.dcn_id
+            where d.delete_flag != 0 AND d.d_id = $id
+            UNION
+    SELECT v.d_id, v.d_no, v.enable, v.file_name, v.version, dcn.dcn_no, v.v_id
+    from version as v
+    inner join dcn on dcn.dcn_id = v.dcn_id
+    where v.d_id = $id
+    ORDER by version DESC";
                  $data['title'] = $title ;
                  $data['name'] = $name ;
         }
         else{
-          $sql =  'SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version from drawing d inner join dcn as dc on dc.dcn_id = d.dcn_id where d.delete_flag != 0';
+          $sql =  'SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version from drawing d 
+          inner join dcn as dc on dc.dcn_id = d.dcn_id where d.delete_flag != 0';
         }
 
 
-        
-        $query = $this->db->query($sql); 
+       
+       $query = $this->db->query($sql); 
        $data['result'] = $query->result(); 
 
 
@@ -74,11 +81,12 @@ class Drawing extends CI_Controller {
     public function enable($uid){
 
         //$this->model->CheckPermission($this->session->userdata('sp_id'));
-
         $result = $this->model->enableDrawing($uid);
 
         if($result!=FALSE){
-            redirect('drawing/manage','refresh');
+            echo '<script language="javascript">';
+            echo 'history.go(-1);';
+            echo '</script>';
 
         }else{
         
@@ -94,7 +102,47 @@ class Drawing extends CI_Controller {
         $result = $this->model->disableDrawing($uid);
 
         if($result!=FALSE){
+                echo '<script language="javascript">';
+        
+            echo 'history.go(-1);';
+            echo '</script>';
+            
+
+        }else{
+            echo "<script>alert('Simting wrong')</script>";
             redirect('drawing/manage','refresh');
+
+        }
+    }
+
+    public function enable_v($uid){
+
+        //$this->model->CheckPermission($this->session->userdata('sp_id'));
+        $result = $this->model->enableDrawing_v($uid);
+
+        if($result!=FALSE){
+            echo '<script language="javascript">';
+            echo 'history.go(-1);';
+            echo '</script>';
+
+        }else{
+        
+            echo "<script>alert('Simting wrong')</script>";
+       redirect('drawing/manage','refresh');
+        }
+    }
+
+    public function disable_v($uid){
+
+        //$this->model->CheckPermission($this->session->userdata('sp_id'));
+
+        $result = $this->model->disableDrawing_v($uid);
+
+        if($result!=FALSE){
+                echo '<script language="javascript">';
+        
+            echo 'history.go(-1);';
+            echo '</script>';
             
 
         }else{
@@ -113,11 +161,9 @@ class Drawing extends CI_Controller {
 
     public function edit_form()
     {
-
-
         $id = $this->uri->segment('3');
 
-        $sql =  "SELECT d.d_id, d.d_no, dc.dcn_no, d.file_name as file, dc.dcn_id, d.version from drawing as d
+        $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, d.file_name as file, dc.dcn_no, d.version from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
           where d.d_id = $id";
 

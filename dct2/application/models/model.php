@@ -177,7 +177,11 @@ return false;
   $d_id =  $data[0]->d_id;
   $version =  $data[0]->version;
   $file_name =  $data[0]->file_name;
-  $gg ="INSERT INTO version (d_id, version, enable, date_created, status, file_name) VALUES ( '$d_id', '$version', '1', CURRENT_TIMESTAMP, 'disable', '$file_name');";
+  $d_no =  $data[0]->d_no;
+  $dcn_id =  $data[0]->dcn_id;
+
+  $gg ="INSERT INTO version (d_id, d_no, dcn_id, enable, date_created, file_name, version) VALUES ( '$d_id', '$d_no', '$dcn_id', '0',
+   CURRENT_TIMESTAMP, '$file_name', '$version');";
   $query = $this->db->query($gg); 
 
 
@@ -236,17 +240,6 @@ return false;
   
 }
 
-public function num_enableUser($para){
-  
-  for($i=0;$i<count($para);$i++){
-    
-    $this->enableUser($para[$i]);
-    
-  }
-  
-  return TRUE;
-  
-}
 
 public function disableUser($key=''){
 
@@ -261,17 +254,7 @@ public function disableUser($key=''){
   
 }
 
-public function num_disableUser($para){
 
-  for($i=0;$i<count($para);$i++){
-    
-    $this->disableUser($para[$i]);
-    
-  }
-  
-  return TRUE;
-  
-}
 
 
 
@@ -288,17 +271,7 @@ public function num_disableUser($para){
   
 }
 
-public function num_enableGroup($para){
-  
-  for($i=0;$i<count($para);$i++){
-    
-    $this->enableGroup($para[$i]);
-    
-  }
-  
-  return TRUE;
-  
-}
+
 
 public function disableGroup($key=''){
 
@@ -313,17 +286,7 @@ public function disableGroup($key=''){
   
 }
 
-public function num_disableGroup($para){
 
-  for($i=0;$i<count($para);$i++){
-    
-    $this->disableGroup($para[$i]);
-    
-  }
-  
-  return TRUE;
-    
-}
 
 public function enablePermission($key=''){
 
@@ -338,17 +301,6 @@ public function enablePermission($key=''){
   
 }
 
-public function num_enablePermission($para){
-  
-  for($i=0;$i<count($para);$i++){
-    
-    $this->enablePermission($para[$i]);
-    
-  }
-  
-  return TRUE;
-  
-}
 
 public function disablePermission($key=''){
 
@@ -363,17 +315,7 @@ public function disablePermission($key=''){
   
 }
 
-public function num_disablePermission($para){
 
-  for($i=0;$i<count($para);$i++){
-    
-    $this->disableGroup($para[$i]);
-    
-  }
-  
-  return TRUE;
-  
-}
 
 public function enablePermission_Group($key=''){
 
@@ -388,17 +330,7 @@ public function enablePermission_Group($key=''){
   
 }
 
-public function num_enablePermission_Group($para){
-  
-  for($i=0;$i<count($para);$i++){
-    
-    $this->enablePermission_Group($para[$i]);
-    
-  }
-  
-  return TRUE;
-  
-}
+
 
 public function disablePermission_Group($key=''){
 
@@ -413,17 +345,7 @@ public function disablePermission_Group($key=''){
   
 }
 
-public function num_disablePermission_Group($para){
 
-  for($i=0;$i<count($para);$i++){
-    
-    $this->disableGroup_Group($para[$i]);
-    
-  }
-  
-  return TRUE;
-  
-}
 
 
 public function enableDrawing($key=''){
@@ -439,17 +361,6 @@ public function enableDrawing($key=''){
   
 }
 
-public function num_enableDrawing($para){
-  
-  for($i=0;$i<count($para);$i++){
-    
-    $this->enableDrawing($para[$i]);
-    
-  }
-  
-  return TRUE;
-  
-}
 
 public function disableDrawing($key=''){
 
@@ -464,17 +375,35 @@ public function disableDrawing($key=''){
   
 }
 
-public function num_disableDrawing($para){
 
-  for($i=0;$i<count($para);$i++){
-    
-    $this->disableDrawing($para[$i]);
-    
-  }
+public function enableDrawing_v($key=''){
+
+  $sqlEdt = "UPDATE version SET enable='1', date_updated=CURRENT_TIMESTAMP WHERE v_id={$key};";
+  $exc_user = $this->db->query($sqlEdt);
   
-  return TRUE;
+  if ($exc_user){
+    
+    return TRUE;  
+    
+  }else{  return FALSE; }
   
 }
+
+
+
+public function disableDrawing_v($key=''){
+
+  $sqlEdt = "UPDATE version SET enable='0', date_updated=CURRENT_TIMESTAMP WHERE v_id={$key};";
+  $exc_user = $this->db->query($sqlEdt);
+  
+  if ($exc_user){
+    
+    return TRUE;  
+    
+  }else{  return FALSE; }
+  
+}
+
 
 
 
@@ -491,17 +420,6 @@ public function num_disableDrawing($para){
   
 }
 
-public function num_enablePartD($para){
-  
-  for($i=0;$i<count($para);$i++){
-    
-    $this->enablePartD($para[$i]);
-    
-  }
-  
-  return TRUE;
-  
-}
 
 public function disablePartD($key=''){
 
@@ -516,17 +434,6 @@ public function disablePartD($key=''){
   
 }
 
-public function num_disablePartD($para){
-
-  for($i=0;$i<count($para);$i++){
-    
-    $this->disablePartD($para[$i]);
-    
-  }
-  
-  return TRUE;
-  
-}
 
 
 
@@ -543,17 +450,6 @@ public function enablePart($key=''){
   
 }
 
-public function num_enablePart($para){
-  
-  for($i=0;$i<count($para);$i++){
-    
-    $this->enablePart($para[$i]);
-    
-  }
-  
-  return TRUE;
-  
-}
 
 public function disablePart($key=''){
 
@@ -568,17 +464,7 @@ public function disablePart($key=''){
   
 }
 
-public function num_disablePart($para){
 
-  for($i=0;$i<count($para);$i++){
-    
-    $this->disablePart($para[$i]);
-    
-  }
-  
-  return TRUE;
-  
-}
 
 
 

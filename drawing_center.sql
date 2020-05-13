@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 12, 2020 at 08:31 AM
+-- Generation Time: May 13, 2020 at 08:11 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.30
 
@@ -70,14 +70,14 @@ CREATE TABLE `drawing` (
 
 INSERT INTO `drawing` (`d_id`, `d_no`, `dcn_id`, `enable`, `date_created`, `date_updated`, `delete_flag`, `date_deleted`, `file_name`, `version`) VALUES
 (9, '1300A126', '1', '1', '2020-04-29 16:46:57', NULL, '1', NULL, 'test', 0),
-(10, 'J107-11820', '2', '1', '2020-04-29 16:47:10', NULL, '1', NULL, 'asd', 0),
+(10, 'J107-11820', '2', '1', '2020-04-29 16:47:10', '2020-05-12 15:58:25', '1', NULL, 'asd', 0),
 (11, 'J107-11820-RM', '1', '1', '2020-04-29 16:47:28', NULL, '1', NULL, 'zxc', 0),
-(12, 'MSX3-4912', '1', '1', '2020-04-29 16:47:43', '2020-05-12 12:12:15', '1', NULL, 'DyFkOBZVAAAkOm_.jpg', 4),
+(12, 'MSX3-4912', '1', '1', '2020-04-29 16:47:43', '2020-05-13 11:20:30', '1', NULL, 'tpadmin-20200512T090211Z-001.zip', 2),
 (13, 'J109-09810', '1', '1', '2020-04-29 16:47:53', NULL, '1', NULL, 'eeee', 0),
 (14, 'J145-00600', '2', '1', '2020-04-29 16:48:02', NULL, '1', NULL, 'dddd', 0),
-(15, 'MF140209', '1', '1', '2020-04-29 16:48:13', NULL, '1', NULL, 'cccc', 0),
+(15, 'MF140209', '1', '1', '2020-04-29 16:48:13', '2020-05-13 11:26:18', '1', NULL, 'RobloxPlayerLauncher.exe', 2),
 (16, 'J100-21860', '1', '1', '2020-04-29 16:48:22', NULL, '1', NULL, 'bbbb', 0),
-(17, 'JD105-39240', '1', '1', '2020-04-29 16:50:00', NULL, '1', NULL, 'aaaaa', 0),
+(17, 'JD105-39240', '1', '1', '2020-04-29 16:50:00', '2020-05-13 09:56:03', '1', NULL, 'aaaaa', 0),
 (18, 'J115-16410', '2', '1', '2020-04-29 16:59:22', NULL, '1', NULL, 'ffff', 0);
 
 -- --------------------------------------------------------
@@ -129,7 +129,7 @@ INSERT INTO `part` (`p_id`, `p_no`, `p_name`, `enable`, `date_created`, `date_up
 (6, '1300A126', 'WATER PUMP ASSY', '1', '2020-04-29 16:49:34', NULL, '1', NULL),
 (7, 'J107-11820', 'COVER, WATER PUMP', '1', '2020-04-29 16:50:53', NULL, '1', NULL),
 (8, 'J107-11820-RM', 'COVER, WATER PUMP', '1', '2020-04-29 16:51:15', NULL, '1', NULL),
-(9, 'MS471104', 'BUSHING, KNOCK', '1', '2020-04-29 16:55:31', NULL, '1', NULL),
+(9, 'MS471104', 'BUSHING, KNOCK', '1', '2020-04-29 16:55:31', '2020-05-12 16:19:13', '1', NULL),
 (10, 'J109-09810', 'GASKET', '1', '2020-04-29 16:59:39', NULL, '1', NULL),
 (11, 'J145-00600', 'PIPE', '1', '2020-04-30 08:43:49', NULL, '1', NULL),
 (12, 'MF140209', 'BOLT', '1', '2020-04-30 08:44:14', NULL, '1', NULL),
@@ -163,7 +163,7 @@ CREATE TABLE `part_drawing` (
 
 INSERT INTO `part_drawing` (`pd_id`, `p_id`, `d_id`, `enable`, `date_created`, `date_updated`, `delete_flag`, `date_deleted`) VALUES
 (1, 14, 9, '1', '2020-05-11 15:54:19', NULL, '1', NULL),
-(130, 6, 9, '1', '2020-04-30 08:30:54', '2020-04-30 08:31:27', '1', '2020-04-30 08:31:18'),
+(130, 6, 9, '1', '2020-04-30 08:30:54', '2020-05-12 15:42:24', '1', '2020-04-30 08:31:18'),
 (131, 6, 10, '1', '2020-04-30 08:30:54', NULL, '1', NULL),
 (132, 6, 9, '1', '2020-04-30 08:45:44', NULL, '1', NULL),
 (133, 6, 10, '1', '2020-04-30 08:45:44', NULL, '1', NULL),
@@ -171,10 +171,10 @@ INSERT INTO `part_drawing` (`pd_id`, `p_id`, `d_id`, `enable`, `date_created`, `
 (135, 7, 10, '1', '2020-04-30 08:45:44', NULL, '1', NULL),
 (136, 8, 9, '1', '2020-04-30 08:45:44', NULL, '1', NULL),
 (137, 8, 10, '1', '2020-04-30 08:45:44', NULL, '1', NULL),
-(138, 9, 9, '1', '2020-04-30 08:45:44', NULL, '1', NULL),
-(139, 9, 10, '1', '2020-04-30 08:45:44', NULL, '1', NULL),
+(138, 9, 9, '1', '2020-04-30 08:45:44', '2020-05-12 15:55:24', '1', NULL),
+(139, 9, 10, '1', '2020-04-30 08:45:44', '2020-05-12 15:55:24', '1', NULL),
 (140, 10, 9, '1', '2020-04-30 08:45:44', NULL, '1', NULL),
-(141, 10, 10, '1', '2020-04-30 08:45:44', NULL, '1', NULL),
+(141, 10, 10, '1', '2020-04-30 08:45:44', '2020-05-12 15:38:10', '1', NULL),
 (142, 11, 9, '1', '2020-04-30 08:45:44', NULL, '1', NULL),
 (143, 11, 10, '1', '2020-04-30 08:45:44', NULL, '1', NULL),
 (144, 12, 9, '1', '2020-04-30 08:45:44', NULL, '1', NULL),
@@ -186,7 +186,7 @@ INSERT INTO `part_drawing` (`pd_id`, `p_id`, `d_id`, `enable`, `date_created`, `
 (150, 7, 10, NULL, NULL, NULL, NULL, NULL),
 (151, 6, 10, '1', '2020-04-30 11:45:03', NULL, '1', NULL),
 (152, 6, 12, '1', '2020-04-30 11:45:03', NULL, '1', NULL),
-(153, 6, 13, '1', '2020-04-30 11:45:03', NULL, '1', NULL),
+(153, 6, 13, '1', '2020-04-30 11:45:03', '2020-05-12 15:38:05', '1', NULL),
 (154, 8, 10, '1', '2020-04-30 11:45:03', NULL, '1', NULL),
 (155, 8, 12, '1', '2020-04-30 11:45:03', NULL, '1', NULL),
 (156, 8, 13, '1', '2020-04-30 11:45:03', NULL, '1', NULL),
@@ -207,7 +207,7 @@ INSERT INTO `part_drawing` (`pd_id`, `p_id`, `d_id`, `enable`, `date_created`, `
 --
 
 CREATE TABLE `sys_menus` (
-  `m_id` varchar(255) DEFAULT NULL,
+  `m_id` varchar(255) NOT NULL,
   `mg_id` varchar(255) DEFAULT NULL,
   `sp_id` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -224,6 +224,13 @@ CREATE TABLE `sys_menus` (
 
 INSERT INTO `sys_menus` (`m_id`, `mg_id`, `sp_id`, `name`, `method`, `link`, `enable`, `order_no`, `date_created`) VALUES
 ('1', '3', '1', 'Edit Profile', 'editprofile/manage', 'editprofile/manage', '1', '1', '20/3/2015 00:00:00'),
+('10', '7', '19', 'Add Part', 'part/add', 'part/add', '1', '2', '20/3/2015 00:00:00'),
+('11', '7', '19', 'Manage Part', 'part/manage', 'part/manage', '1', '2', '20/3/2015 00:00:00'),
+('13', '9', '19', 'Manage Part-Drawing', 'part_drawing/manage', 'part_drawing/manage', '1', '2', '20/3/2015 00:00:00'),
+('14', '9', '19', 'Add Part-Drawing', 'part_drawing/add', 'part_drawing/add', '0', '2', '20/3/2015 00:00:00'),
+('15', '2', '17', 'Rule', 'user/rule', 'user/rule', '0', '1', '20/3/2015 00:00:00'),
+('16', '10', '16', 'Manage Dcn', 'dcn/manage', 'dcn/manage', '1', '1', NULL),
+('17', '6', '19', 'Add Version', 'drawing/edit_form', 'drawing/edit_form', '0', '2', NULL),
 ('2', '3', '1', 'Change Password', 'changepassword/account', 'changepassword/account', '1', '2', '20/3/2015 00:00:00'),
 ('3', '4', '16', 'Permission', 'permission/manage', 'permission/manage', '1', '1', '20/3/2015 00:00:00'),
 ('4', '4', '15', 'Permission Group', 'permissiongroup/manage', 'permissiongroup/manage', '1', '2', '20/3/2015 00:00:00'),
@@ -231,14 +238,7 @@ INSERT INTO `sys_menus` (`m_id`, `mg_id`, `sp_id`, `name`, `method`, `link`, `en
 ('6', '2', '17', 'Manage User', 'user/manage', 'user/manage', '1', '2', '20/3/2015 00:00:00'),
 ('7', '5', '18', 'User Group', 'usergroup/manage', 'usergroup/manage', '1', '1', '20/3/2015 00:00:00'),
 ('8', '1', '19', 'Home', 'manage', 'manage', '1', '1', '20/3/2015 00:00:00'),
-('9', '6', '19', 'Manage Drawing', 'drawing/manage', 'drawing/manage', '1', '2', '20/3/2015 00:00:00'),
-('10', '7', '19', 'Add Part', 'part/add', 'part/add', '1', '1', '20/3/2015 00:00:00'),
-('11', '7', '19', 'Manage Part', 'part/manage', 'part/manage', '1', '1', '20/3/2015 00:00:00'),
-('14', '9', '19', 'Add Part-Drawing', 'part_drawing/add', 'part_drawing/add', '0', '2', '20/3/2015 00:00:00'),
-('15', '2', '17', 'Rule', 'user/rule', 'user/rule', '1', '0', '20/3/2015 00:00:00'),
-('13', '9', '19', 'Manage Part-Drawing', 'part_drawing/manage', 'part_drawing/manage', '1', '2', '20/3/2015 00:00:00'),
-('16', '10', '16', 'Manage Dcn', 'dcn/manage', 'dcn/manage', '1', '1', NULL),
-('17', '6', '19', 'Add Version', 'drawing/version_form', 'drawing/version_form', '1', '1', NULL);
+('9', '6', '19', 'Manage Drawing', 'drawing/manage', 'drawing/manage', '1', '2', '20/3/2015 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -479,22 +479,24 @@ INSERT INTO `sys_user_groups` (`sug_id`, `name`, `enable`, `date_created`, `dele
 CREATE TABLE `version` (
   `v_id` int(11) NOT NULL,
   `d_id` int(11) NOT NULL,
-  `version` int(50) NOT NULL,
+  `d_no` varchar(50) NOT NULL,
+  `dcn_id` varchar(40) NOT NULL,
   `enable` int(11) NOT NULL,
   `date_created` datetime NOT NULL,
-  `status` varchar(25) NOT NULL,
-  `file_name` varchar(100) NOT NULL
+  `date_updated` datetime NOT NULL,
+  `file_name` varchar(100) NOT NULL,
+  `version` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `version`
 --
 
-INSERT INTO `version` (`v_id`, `d_id`, `version`, `enable`, `date_created`, `status`, `file_name`) VALUES
-(12, 12, 0, 1, '2020-05-12 12:09:14', 'disable', 'Taisoul'),
-(13, 12, 1, 1, '2020-05-12 12:09:39', 'disable', 'King002'),
-(14, 12, 2, 1, '2020-05-12 12:10:30', 'disable', 'Tainaja'),
-(15, 12, 3, 1, '2020-05-12 12:12:15', 'disable', 'drawing_center (4).sql');
+INSERT INTO `version` (`v_id`, `d_id`, `d_no`, `dcn_id`, `enable`, `date_created`, `date_updated`, `file_name`, `version`) VALUES
+(24, 12, 'MSX3-4912', '1', 0, '2020-05-13 09:02:11', '2020-05-13 11:20:27', 'appserv-x64-9.3.0.exe', 0),
+(25, 12, 'MSX3-4912', '1', 0, '2020-05-13 09:02:17', '2020-05-13 11:21:10', 'xampp-windows-x64-7.2.30-0-VC15-installer.exe', 1),
+(26, 15, 'MF140209', '1', 0, '2020-05-13 11:23:41', '0000-00-00 00:00:00', 'gan-qing-woip-mete-harehareya-ge-tsutemita-ver-sou.mp3', 0),
+(27, 15, 'MF140209', '1', 0, '2020-05-13 11:26:18', '0000-00-00 00:00:00', 'DiscordSetup.exe', 1);
 
 --
 -- Indexes for dumped tables
@@ -529,6 +531,12 @@ ALTER TABLE `part`
 --
 ALTER TABLE `part_drawing`
   ADD PRIMARY KEY (`pd_id`);
+
+--
+-- Indexes for table `sys_menus`
+--
+ALTER TABLE `sys_menus`
+  ADD PRIMARY KEY (`m_id`);
 
 --
 -- Indexes for table `sys_menu_groups`
@@ -616,7 +624,7 @@ ALTER TABLE `sys_users`
 -- AUTO_INCREMENT for table `version`
 --
 ALTER TABLE `version`
-  MODIFY `v_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `v_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
