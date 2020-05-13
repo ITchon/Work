@@ -3,7 +3,7 @@
         <div class="layout-content-body">
         
           <div class="row gutter-xs">
-            <div class="col-xs-12">
+            <div class="col-xs-8">
               <div class="card">
                 <div class="card-header">
                   <h4>Permission Table</h4>
@@ -62,9 +62,9 @@
                 </div>
               </div>
             </div>
-      <div class="col-xs-12 card" >
+      <div class="col-xs-4 card" >
             
-            <form id="form"  method="post"  class="text-center" >
+            <form id="form"  method="post"  class="text-center conta" >
                  
                   <div class="form-group">
                     <br>

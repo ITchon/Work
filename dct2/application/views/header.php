@@ -50,6 +50,9 @@
     <!-- Select 2 -->
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/select2.min.css'; ?>">
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+    <!-- ยืนยันการส่งแบบฟรอ์มอีกครั้ง -->
+    <?php header("Cache-Control: public, max-age=60, s-maxage=60");?> 
   </head>
   <style>
 .table th {

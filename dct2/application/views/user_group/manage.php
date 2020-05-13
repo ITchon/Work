@@ -30,12 +30,12 @@
                       <tr>
                         <th>Group id</th>
                         <th>Group name</th>
-                        <th width="10%">Manage</th>
+                        <th width="20%">Manage</th>
                        
                       </tr>
                     </thead>
                     <tbody>
-                      
+                      tr
                     <?php
                     foreach($result as $r){
             echo "<tr>";
