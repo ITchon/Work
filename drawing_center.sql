@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 13, 2020 at 03:55 AM
+-- Generation Time: May 13, 2020 at 08:11 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.30
 
@@ -72,12 +72,12 @@ INSERT INTO `drawing` (`d_id`, `d_no`, `dcn_id`, `enable`, `date_created`, `date
 (9, '1300A126', '1', '1', '2020-04-29 16:46:57', NULL, '1', NULL, 'test', 0),
 (10, 'J107-11820', '2', '1', '2020-04-29 16:47:10', '2020-05-12 15:58:25', '1', NULL, 'asd', 0),
 (11, 'J107-11820-RM', '1', '1', '2020-04-29 16:47:28', NULL, '1', NULL, 'zxc', 0),
-(12, 'MSX3-4912', '1', '1', '2020-04-29 16:47:43', '2020-05-13 08:45:09', '1', NULL, 'appserv-x64-9.3.0.exe', 2),
+(12, 'MSX3-4912', '1', '1', '2020-04-29 16:47:43', '2020-05-13 11:20:30', '1', NULL, 'tpadmin-20200512T090211Z-001.zip', 2),
 (13, 'J109-09810', '1', '1', '2020-04-29 16:47:53', NULL, '1', NULL, 'eeee', 0),
 (14, 'J145-00600', '2', '1', '2020-04-29 16:48:02', NULL, '1', NULL, 'dddd', 0),
-(15, 'MF140209', '1', '1', '2020-04-29 16:48:13', '2020-05-13 08:54:15', '1', NULL, 'gan-qing-woip-mete-harehareya-ge-tsutemita-ver-sou.mp3', 2),
+(15, 'MF140209', '1', '1', '2020-04-29 16:48:13', '2020-05-13 11:26:18', '1', NULL, 'RobloxPlayerLauncher.exe', 2),
 (16, 'J100-21860', '1', '1', '2020-04-29 16:48:22', NULL, '1', NULL, 'bbbb', 0),
-(17, 'JD105-39240', '1', '1', '2020-04-29 16:50:00', NULL, '1', NULL, 'aaaaa', 0),
+(17, 'JD105-39240', '1', '1', '2020-04-29 16:50:00', '2020-05-13 09:56:03', '1', NULL, 'aaaaa', 0),
 (18, 'J115-16410', '2', '1', '2020-04-29 16:59:22', NULL, '1', NULL, 'ffff', 0);
 
 -- --------------------------------------------------------
@@ -482,8 +482,8 @@ CREATE TABLE `version` (
   `d_no` varchar(50) NOT NULL,
   `dcn_id` varchar(40) NOT NULL,
   `enable` int(11) NOT NULL,
-  `status` varchar(25) NOT NULL,
   `date_created` datetime NOT NULL,
+  `date_updated` datetime NOT NULL,
   `file_name` varchar(100) NOT NULL,
   `version` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -492,11 +492,11 @@ CREATE TABLE `version` (
 -- Dumping data for table `version`
 --
 
-INSERT INTO `version` (`v_id`, `d_id`, `d_no`, `dcn_id`, `enable`, `status`, `date_created`, `file_name`, `version`) VALUES
-(20, 12, 'MSX3-4912', '1', 1, 'disable', '2020-05-13 08:40:35', 'dct3.rar', 0),
-(21, 12, 'MSX3-4912', '1', 1, 'disable', '2020-05-13 08:40:48', 'Synapse-X.zip', 1),
-(22, 15, 'MF140209', '1', 1, 'disable', '2020-05-13 08:54:05', 'drawing_center.sql', 0),
-(23, 15, 'MF140209', '1', 1, 'disable', '2020-05-13 08:54:15', 'dct3.rar', 1);
+INSERT INTO `version` (`v_id`, `d_id`, `d_no`, `dcn_id`, `enable`, `date_created`, `date_updated`, `file_name`, `version`) VALUES
+(24, 12, 'MSX3-4912', '1', 0, '2020-05-13 09:02:11', '2020-05-13 11:20:27', 'appserv-x64-9.3.0.exe', 0),
+(25, 12, 'MSX3-4912', '1', 0, '2020-05-13 09:02:17', '2020-05-13 11:21:10', 'xampp-windows-x64-7.2.30-0-VC15-installer.exe', 1),
+(26, 15, 'MF140209', '1', 0, '2020-05-13 11:23:41', '0000-00-00 00:00:00', 'gan-qing-woip-mete-harehareya-ge-tsutemita-ver-sou.mp3', 0),
+(27, 15, 'MF140209', '1', 0, '2020-05-13 11:26:18', '0000-00-00 00:00:00', 'DiscordSetup.exe', 1);
 
 --
 -- Indexes for dumped tables
@@ -624,7 +624,7 @@ ALTER TABLE `sys_users`
 -- AUTO_INCREMENT for table `version`
 --
 ALTER TABLE `version`
-  MODIFY `v_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `v_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

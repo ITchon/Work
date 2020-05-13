@@ -27,7 +27,7 @@
                         <th>DCN</th>
                         <th>Version</th>
                         <th>Manage</th>
-                        <th>Manage</th>
+                        <th>Status</th>
               
                        
                       </tr>
@@ -36,6 +36,7 @@
 
                       <?php
                     foreach($result as $r){
+
              echo "<tr>";
                 echo "<td> " ?>
                 
@@ -47,11 +48,30 @@
                     <?php echo "<b>".$r->d_no."</b>" ?>
         </form>
 
+                    
                     <?php
                 echo"</td>";
                 echo "<td>$r->dcn_no</td>";
                 ?><td><a href="<?php echo base_url() . 'drawing/manage/' . $r->d_id ?>"><?php echo $r->version ?></a></td>
                 <?php 
+                if(isset($r->v_id)){
+                    if($r->v_id != 'v_id'){
+              if($r->enable!=1 ){?>
+                  
+                  <td class="text-center"><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
+                  echo base_url() . 'drawing/enable_v/' . $r->v_id;
+                  ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
+                  <?php
+                }
+                else{?>
+                  <td class="text-center"><a type="button"  data-original-title='Rule' onclick="javascript:window.location='<?php
+                  echo base_url() . 'drawing/disable_v/' . $r->v_id;
+                  ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
+                  <?php
+                }
+                }else{
+
+
                 if($r->enable!=1 ){?>
                   
                   <td class="text-center"><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
@@ -65,7 +85,33 @@
                   ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
                   <?php
                 }
+                }
+                 if($r->v_id != 'v_id'){ ?>
+              <input type="text" name="v_id" value="<?php echo $r->v_id ?>" hidden >
+              <?php
+                }
+              }
+
+              else{
+                   if($r->enable!=1 ){?>
+                  
+                  <td class="text-center"><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
+                  echo base_url() . 'drawing/enable/' . $r->d_id;
+                  ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
+                  <?php
+                }
+                else{?>
+                  <td class="text-center"><a type="button"  data-original-title='Rule' onclick="javascript:window.location='<?php
+                  echo base_url() . 'drawing/disable/' . $r->d_id;
+                  ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
+                  <?php
+                }
+              }
+              
                 ?>
+
+
+
                 <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
                 echo base_url() . 'drawing/edit_form/' . $r->d_id;
                 ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
@@ -74,9 +120,23 @@
                 <?php 
                 echo "<a type='button' href='".base_url()."drawing/deletedrawing/".$r->d_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
                 ?>
-                <td class="text-center"><b><font color="green">active</font></b></td>
+                
+                <?php 
+                if($r->enable!=1 ){?>
+                  
+                  <td class="text-center"><b><font color="red">disable</font></b></td>
+                  <?php
+                }
+                else{?>
+                  <td class="text-center"><b><font color="lightgreen">active</font></b></td>                   
+                  <?php
+                }
+                ?>
+                      
                 <?php
             echo "</tr>";
+
+
         }
     ?>
             
