@@ -19,7 +19,7 @@ class Part extends CI_Controller {
          $menu['mg']= $this->model->givemeid($url);
          $menu['submenu']= $query->result(); 
          $this->load->view('header');
-         $this->load->view('menu',$menu);
+        //  $this->load->view('menu',$menu);
     }
 	public function index()
     {	
@@ -51,6 +51,30 @@ class Part extends CI_Controller {
         $this->load->view('part/add',$data);//bring $data to user_data 
 		$this->load->view('footer');
 	}
+	public function add_sub()
+    {	
+  
+        $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0';
+        $query = $this->db->query($sql); 
+       $data['result_p'] = $query->result(); 
+
+
+
+        $this->load->view('part/subpart',$data);//bring $data to user_data 
+		$this->load->view('footer');
+	}
+	public function show()
+    {	
+  
+        $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0';
+        $query = $this->db->query($sql); 
+       $data['result_p'] = $query->result(); 
+
+
+
+        $this->load->view('part/show',$data);//bring $data to user_data 
+		$this->load->view('footer');
+	}
 
 
     public function insert()
@@ -71,6 +95,22 @@ class Part extends CI_Controller {
 
         echo "<script>alert('Add Data Success')</script>";
         redirect('part/add','refresh');
+  
+    }
+    public function insert_sub()
+    {
+    
+        $p_no =  $this->input->post('p_no');
+       
+        $p_id =  $this->input->post('p_id');
+     
+     
+            foreach ($p_id as $p_id) {
+              $this->model->insert_sub_part($p_no,$p_id);
+           }
+     
+        echo "<script>alert('Add Data Success')</script>";
+        redirect('part/add_sub','refresh');
   
     }
 

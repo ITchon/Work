@@ -124,6 +124,20 @@ return false;
    }
    else{
      return false;
+   }  
+ }
+
+ function insert_sub_part($p,$d)
+ {
+
+  // $sql ="INSERT INTO sub_part (p_id,sub_p_id,enable,date_created,delete_flag) VALUES ('$p','$d','1',CURRENT_TIMESTAMP,'1');";
+  $sql ="INSERT INTO sub_part (m_id,s_id) VALUES ('$p','$d');";
+    $query = $this->db->query($sql);  
+   if($query){
+     return true;
+   }
+   else{
+     return false;
    }
  }
 
