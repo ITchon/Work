@@ -12,7 +12,7 @@
              <a href="<?php echo base_url()?>part/show">test</a>
             </h2><hr>
             
-            <form class="form form-horizontal container" action="<?php echo base_url()?>bom/insert_bom" method="post" data-toggle="validator">
+            <form class="form form-horizontal container" action="<?php echo base_url()?>bom/show_bom" method="post" data-toggle="validator">
             <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Bom Master</label>      
           
@@ -20,26 +20,9 @@
                    <select name="bm" class="form-control select2"  required>
                    <option value="">- - - Select Part Master - - -</option>
                    <?php
-                      foreach($result_p as $r){?>
+                      foreach($result as $r){?>
              
-                     <option value="<?php  echo $r->p_id ?>"><?php echo $r->p_no ?></option>
-                    <?php
-                      }
-                      ?> 
-                   </select>
-                    </div>
-                    </div> 
-            
-    
-                  <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Secondary Part</label>      
-          
-                      <div class="col-sm-6 col-md-4">
-                   <select name="p_id[]" class="form-control select2" multiple="multiple" required>
-                   <?php
-                      foreach($result_p as $r){?>
-             
-                     <option value="<?php  echo $r->p_id ?>"><?php echo $r->p_no ?></option>
+                     <option value="<?php  echo $r->p_id ?>"><?php echo $r->p_name ?></option>
                     <?php
                       }
                       ?> 

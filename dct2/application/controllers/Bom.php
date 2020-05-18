@@ -26,46 +26,65 @@ class Bom extends CI_Controller {
     }
     	public function manage()
     {	
-        $id = $this->uri->segment('3');
-        $dcn_id =  $this->input->post('dcn_id');
-        $name =  $this->input->post('name');
-        $title =  $this->input->post('title');
-        if($name == 'DCN'){
-          $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version from drawing as d
-          inner join dcn as dc on dc.dcn_id = d.dcn_id
-          where d.delete_flag != 0 AND d.dcn_id = $dcn_id";
-               $data['title'] = $title ;
-               $data['name'] = $name ;
-        }
-        else if(isset($id)){
-            $sql =  "SELECT d.d_id, d.d_no,  d.enable, d.file_name, d.version,dcn.dcn_no,'v_id'
-            from drawing as d
-         inner join dcn on dcn.dcn_id = d.dcn_id
-            where d.delete_flag != 0 AND d.d_id = $id
-            UNION
-    SELECT v.d_id, v.d_no, v.enable, v.file_name, v.version, dcn.dcn_no, v.v_id
-    from version as v
-    inner join dcn on dcn.dcn_id = v.dcn_id
-    where v.d_id = $id
-    ORDER by version DESC";
-                 $data['title'] = $title ;
-                 $data['name'] = $name ;
-        }
-        else{
-          $sql =  'SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version from drawing d 
-          inner join dcn as dc on dc.dcn_id = d.dcn_id where d.delete_flag != 0';
-        }
-
+          $sql =  'SELECT DISTINCT part.`p_id`,`p_name` FROM `part` inner join bom on bom.b_master = part.p_id';
 
        
        $query = $this->db->query($sql); 
        $data['result'] = $query->result(); 
 
 
-        $this->load->view('drawing/manage',$data);//bring $data to user_data 
+        $this->load->view('bom/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
         
     }
+
+    public function show_bom()
+    {	
+        $bm =  $this->input->post('bm');
+        $data =$this->model->hook_bom($bm);
+        echo "| ".$data[0]->b_master." | <hr>";
+        foreach($data as $r){
+         $data =$this->model->sub_part($r->p_id);
+         echo "| 2 |".$r->p_id."<br>";
+         foreach($data as $r){
+             $data =$this->model->sub_part($r->s_id);
+             echo "| 3 | ".$r->s_id."<br>";
+             
+         }
+         foreach($data as $r){
+             $data =$this->model->sub_part($r->s_id);
+             echo "| 4 | ".$r->s_id."<br>";
+         }
+         foreach($data as $r){
+             $data =$this->model->sub_part($r->s_id);
+              echo "| 5 | ".$r->s_id."<br>";
+         }
+         foreach($data as $r){
+             $data =$this->model->sub_part($r->s_id);
+              echo "| 6 | ".$r->s_id."<br>";
+         }
+         foreach($data as $r){
+             $data =$this->model->sub_part($r->s_id);
+              echo "| 7 | ".$r->s_id."<br>";
+         }
+         foreach($data as $r){
+             $data =$this->model->sub_part($r->s_id);
+              echo "| 8 | ".$r->s_id."<br>";
+         }
+         foreach($data as $r){
+             $data =$this->model->sub_part($r->s_id);
+              echo "| 9 | ".$r->s_id."<br>";
+         }
+         foreach($data as $r){
+             $data =$this->model->sub_part($r->s_id);
+              echo "| 10 | ".$r->s_id."<br>";
+         }
+         
+     echo "<hr>";
+     }
+        $this->load->view('part/show');//bring $data to user_data 
+		$this->load->view('footer');
+	}
 
     
     public function add()
@@ -187,6 +206,21 @@ class Bom extends CI_Controller {
         redirect('drawing/manage');
 
 
+  
+    }
+
+
+    public function insert_bom()
+    {
+        $bm =  $this->input->post('bm');
+        $p_id =  $this->input->post('p_id');
+        
+     foreach ($p_id as $p) {
+        $result = $this->model->insert_bom($bm,$p);
+    }
+
+        echo "<script>alert('Add Data Success')</script>";
+        redirect('bom/add','refresh');
   
     }
 

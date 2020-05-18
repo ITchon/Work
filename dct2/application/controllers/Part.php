@@ -66,13 +66,48 @@ class Part extends CI_Controller {
 	public function show()
     {	
   
-        $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0';
-        $query = $this->db->query($sql); 
-       $data['result_p'] = $query->result(); 
-
-
-
-        $this->load->view('part/show',$data);//bring $data to user_data 
+        $data =$this->model->hook_bom(1);
+        echo "| ".$data[0]->b_master." | <hr>";
+        foreach($data as $r){
+         $data =$this->model->sub_part($r->p_id);
+         echo "| 2 |".$r->p_id."<br>";
+         foreach($data as $r){
+             $data =$this->model->sub_part($r->s_id);
+             echo "| 3 | ".$r->s_id."<br>";
+             
+         }
+         foreach($data as $r){
+             $data =$this->model->sub_part($r->s_id);
+             echo "| 4 | ".$r->s_id."<br>";
+         }
+         foreach($data as $r){
+             $data =$this->model->sub_part($r->s_id);
+              echo "| 5 | ".$r->s_id."<br>";
+         }
+         foreach($data as $r){
+             $data =$this->model->sub_part($r->s_id);
+              echo "| 6 | ".$r->s_id."<br>";
+         }
+         foreach($data as $r){
+             $data =$this->model->sub_part($r->s_id);
+              echo "| 7 | ".$r->s_id."<br>";
+         }
+         foreach($data as $r){
+             $data =$this->model->sub_part($r->s_id);
+              echo "| 8 | ".$r->s_id."<br>";
+         }
+         foreach($data as $r){
+             $data =$this->model->sub_part($r->s_id);
+              echo "| 9 | ".$r->s_id."<br>";
+         }
+         foreach($data as $r){
+             $data =$this->model->sub_part($r->s_id);
+              echo "| 10 | ".$r->s_id."<br>";
+         }
+         
+     echo "<hr>";
+     }
+        $this->load->view('part/show');//bring $data to user_data 
 		$this->load->view('footer');
 	}
 
@@ -106,12 +141,17 @@ class Part extends CI_Controller {
      
      
             foreach ($p_id as $p_id) {
-              $this->model->insert_sub_part($p_no,$p_id);
+             $chk= $this->model->insert_sub_part($p_no,$p_id);
            }
-     
-        echo "<script>alert('Add Data Success')</script>";
+     if($chk==true){
+            echo "<script>alert('Add Data Success')</script>";
         redirect('part/add_sub','refresh');
   
+     }
+     else{
+        echo "<script>alert('Error')</script>";
+        redirect('part/add_sub','refresh');
+     }
     }
 
 
