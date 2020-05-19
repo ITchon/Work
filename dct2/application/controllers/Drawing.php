@@ -43,9 +43,8 @@ class Drawing extends CI_Controller {
          inner join dcn on dcn.dcn_id = d.dcn_id
             where d.delete_flag != 0 AND d.d_id = $id
             UNION
-    SELECT v.d_id, v.d_no, v.enable, v.file_name, v.version, dcn.dcn_no, v.v_id
+    SELECT v.d_id, v.d_id, v.enable, v.file_name, v.version, v.status, v.v_id
     from version as v
-    inner join dcn on dcn.dcn_id = v.dcn_id
     where v.d_id = $id
     ORDER by version DESC";
                  $data['title'] = $title ;

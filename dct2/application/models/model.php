@@ -26,12 +26,12 @@ class Model extends CI_Model
     return $query->result(); 
   }
 
-  public function hook_bom($bm)
-  {
-    $sql =  'SELECT * FROM bom where b_master = '.$bm.' ';
-    $query = $this->db->query($sql); 
-    return $query->result(); 
-  }
+//  public function hook_bom($bm)
+//  {
+//    $sql =  'SELECT * FROM bom where b_master = '.$bm.' ';
+//    $query = $this->db->query($sql); 
+//    return $query->result(); 
+//  }
   public function get_part_drawing()
   {
     $sql ="   SELECT pd.pd_id,p.p_name,d.d_no FROM part_drawing  pd 
@@ -159,8 +159,8 @@ return false;
     return false;
     echo "Same";
   }else{
-  $num= $this->db->query("  SELECT * FROM `sub_part` where `m_id` = $p and `s_id`= $d "); 
-  $num1= $this->db->query("  SELECT * FROM `sub_part` where `m_id` = $d and `s_id`= $p "); 
+  $num= $this->db->query("  SELECT * FROM `sub_part` where `m_id` = $p and `p_id`= $d "); 
+  $num1= $this->db->query("  SELECT * FROM `sub_part` where `m_id` = $d and `p_id`= $p "); 
   // $num2= $this->db->query("  SELECT * FROM `sub_part` where `m_id` = $d "); 
   $chk= $num->num_rows();
   $chk1= $num1->num_rows();
@@ -168,7 +168,7 @@ return false;
   }
   if($chk!=1  && $chk1 != 1){
   // $sql ="INSERT INTO sub_part (p_id,sub_p_id,enable,date_created,delete_flag) VALUES ('$p','$d','1',CURRENT_TIMESTAMP,'1');";
-  $sql ="INSERT INTO sub_part (m_id,s_id) VALUES ('$p','$d');";
+  $sql ="INSERT INTO sub_part (m_id,p_id) VALUES ('$p','$d');";
     $query = $this->db->query($sql);  
    if($query){
      return true;

@@ -38,53 +38,6 @@ class Bom extends CI_Controller {
         
     }
 
-    public function show_bom()
-    {	
-        $bm =  $this->input->post('bm');
-        $data =$this->model->hook_bom($bm);
-        echo "| ".$data[0]->b_master." | <hr>";
-        foreach($data as $r){
-         $data =$this->model->sub_part($r->p_id);
-         echo "| 2 |".$r->p_id."<br>";
-         foreach($data as $r){
-             $data =$this->model->sub_part($r->s_id);
-             echo "| 3 | ".$r->s_id."<br>";
-             
-         }
-         foreach($data as $r){
-             $data =$this->model->sub_part($r->s_id);
-             echo "| 4 | ".$r->s_id."<br>";
-         }
-         foreach($data as $r){
-             $data =$this->model->sub_part($r->s_id);
-              echo "| 5 | ".$r->s_id."<br>";
-         }
-         foreach($data as $r){
-             $data =$this->model->sub_part($r->s_id);
-              echo "| 6 | ".$r->s_id."<br>";
-         }
-         foreach($data as $r){
-             $data =$this->model->sub_part($r->s_id);
-              echo "| 7 | ".$r->s_id."<br>";
-         }
-         foreach($data as $r){
-             $data =$this->model->sub_part($r->s_id);
-              echo "| 8 | ".$r->s_id."<br>";
-         }
-         foreach($data as $r){
-             $data =$this->model->sub_part($r->s_id);
-              echo "| 9 | ".$r->s_id."<br>";
-         }
-         foreach($data as $r){
-             $data =$this->model->sub_part($r->s_id);
-              echo "| 10 | ".$r->s_id."<br>";
-         }
-         
-     echo "<hr>";
-     }
-        $this->load->view('part/show');//bring $data to user_data 
-		$this->load->view('footer');
-	}
 
     
     public function add()
