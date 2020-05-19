@@ -17,7 +17,7 @@ class Bom extends CI_Controller {
          $query = $this->db->query($sql); 
          $menu['submenu']= $query->result(); 
          $this->load->view('header');
-         $this->load->view('menu',$menu);
+        //  $this->load->view('menu',$menu);
 
     }
 	public function index()
@@ -38,6 +38,31 @@ class Bom extends CI_Controller {
         
     }
 
+
+    public function show_bom()
+    {	
+        $bm =  $this->input->post('bm');
+        if(isset($bm)){
+            $i=2;
+            $data= $this->model->hook_bom($bm) ;
+            $result=[];
+    do{
+
+     $data= $this->model->sort_bom($i,$data) ;  
+     $i++;
+     }
+   while($data!=false);
+echo "<hr>";
+
+foreach($result as $t){
+    echo $t->p_id."<br>";
+
+}
+    
+    }
+
+    exit;
+	}
 
     
     public function add()

@@ -18,20 +18,39 @@ class Model extends CI_Model
     $query = $this->db->query($sql); 
    return $query;
   }
+
   public function sub_part($id)
-  {
-      
+  { 
     $sql =  'SELECT * FROM sub_part where m_id = '.$id.' ';
     $query = $this->db->query($sql); 
     return $query->result(); 
   }
 
-//  public function hook_bom($bm)
-//  {
-//    $sql =  'SELECT * FROM bom where b_master = '.$bm.' ';
-//    $query = $this->db->query($sql); 
-//    return $query->result(); 
-//  }
+
+
+  public function sort_bom($i,$res)
+  {
+      $result=[];
+    if($res!=null){
+      foreach($res as $r){
+     $data= $this->model->sub_part($r->p_id) ;
+     $result= $result+$data;
+      echo "Lv ".$i." | ".$r->p_id."<br>";
+     }
+     return $result;
+    }
+    else{
+    return false;
+    }
+  }
+  
+  public function hook_bom($bm)
+  {
+    $sql =  'SELECT * FROM bom where b_master = '.$bm.' ';
+    $query = $this->db->query($sql); 
+    return $query->result(); 
+  }
+
   public function get_part_drawing()
   {
     $sql ="   SELECT pd.pd_id,p.p_name,d.d_no FROM part_drawing  pd 
