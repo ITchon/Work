@@ -8,8 +8,9 @@
             <div class="col-md-12  ">
               <div class="demo-form-wrapper card" style="padding-top:8px">
               <h2 class=" text-center text-primary">
-             ADD PART////
-            </h2><hr>
+         BOM////
+             <a href="<?php echo base_url()?>part/show">BOOM</a>
+    </h2><hr>
             
             <form class="form form-horizontal container" action="<?php echo base_url()?>bom/show_bom" method="post" data-toggle="validator">
             <div class="form-group">
@@ -20,6 +21,7 @@
                    <option value="">- - - Select Part Master - - -</option>
                    <?php
                       foreach($result as $r){?>
+                        <?php  echo $r->p_id ?>
              
                      <option value="<?php  echo $r->p_id ?>"><?php echo $r->p_name ?></option>
                     <?php
@@ -35,7 +37,7 @@
             
                   <div class="form-group">
                 <br>
-                    <button type="submit" id="btn" class="btn btn-primary btn-block">Save Changes</button>
+                    <button type="submit" id="btn" class="btn btn-primary btn-block">BOOOOOOM!</button>
                   </div>
                 </form>
 

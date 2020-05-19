@@ -26,6 +26,8 @@ class Model extends CI_Model
     return $query->result(); 
   }
 
+
+
   public function sort_bom($i,$res)
   {
       $result=[];
@@ -49,6 +51,7 @@ class Model extends CI_Model
     $query = $this->db->query($sql); 
     return $query->result(); 
   }
+
   public function get_part_drawing()
   {
     $sql ="   SELECT pd.pd_id,p.p_name,d.d_no FROM part_drawing  pd 

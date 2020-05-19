@@ -38,6 +38,7 @@ class Bom extends CI_Controller {
         
     }
 
+
     public function show_bom()
     {	
         $bm =  $this->input->post('bm');
