@@ -19,7 +19,7 @@ class Part extends CI_Controller {
          $menu['mg']= $this->model->givemeid($url);
          $menu['submenu']= $query->result(); 
          $this->load->view('header');
-        //  $this->load->view('menu',$menu);
+         $this->load->view('menu',$menu);
     }
 	public function index()
     {	
@@ -63,53 +63,7 @@ class Part extends CI_Controller {
         $this->load->view('part/subpart',$data);//bring $data to user_data 
 		$this->load->view('footer');
 	}
-	public function show()
-    {	
-  
-        $data =$this->model->hook_bom(1);
-        echo "| ".$data[0]->b_master." | <hr>";
-        foreach($data as $r){
-         $data =$this->model->sub_part($r->p_id);
-         echo "| 2 |".$r->p_id."<br>";
-         foreach($data as $r){
-             $data =$this->model->sub_part($r->s_id);
-             echo "| 3 | ".$r->s_id."<br>";
-             
-         }
-         foreach($data as $r){
-             $data =$this->model->sub_part($r->s_id);
-             echo "| 4 | ".$r->s_id."<br>";
-         }
-         foreach($data as $r){
-             $data =$this->model->sub_part($r->s_id);
-              echo "| 5 | ".$r->s_id."<br>";
-         }
-         foreach($data as $r){
-             $data =$this->model->sub_part($r->s_id);
-              echo "| 6 | ".$r->s_id."<br>";
-         }
-         foreach($data as $r){
-             $data =$this->model->sub_part($r->s_id);
-              echo "| 7 | ".$r->s_id."<br>";
-         }
-         foreach($data as $r){
-             $data =$this->model->sub_part($r->s_id);
-              echo "| 8 | ".$r->s_id."<br>";
-         }
-         foreach($data as $r){
-             $data =$this->model->sub_part($r->s_id);
-              echo "| 9 | ".$r->s_id."<br>";
-         }
-         foreach($data as $r){
-             $data =$this->model->sub_part($r->s_id);
-              echo "| 10 | ".$r->s_id."<br>";
-         }
-         
-     echo "<hr>";
-     }
-        $this->load->view('part/show');//bring $data to user_data 
-		$this->load->view('footer');
-	}
+
 
 
     public function insert()
