@@ -36,9 +36,10 @@ class Model extends CI_Model
       foreach($res as $r){
      $data= $this->model->sub_part($r->p_id) ;
      $result= $result+$data;
-    array_push($a,$i,$r->p_id);
+     $b=array('lv'=>$i,'id'=>$r->p_id);
+    array_push($a,$b);
      }
-     return array("res" => $result, "gg" => $a);
+     return array("res" => $result, "data" => $a);
     }
     else{
     return false;
