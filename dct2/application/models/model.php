@@ -30,18 +30,19 @@ class Model extends CI_Model
   {
       $result=[];
     if($res!=null){
+      $a=array();
       foreach($res as $r){
      $data= $this->model->sub_part($r->p_id) ;
      $result= $result+$data;
-      echo "Lv ".$i." | ".$r->p_id."<br>";
+    array_push($a,$i,$r->p_id);
      }
-     return $result;
+     return array("res" => $result, "gg" => $a);
     }
     else{
     return false;
     }
   }
-  
+
   public function hook_bom($bm)
   {
     $sql =  'SELECT * FROM bom where b_master = '.$bm.' ';

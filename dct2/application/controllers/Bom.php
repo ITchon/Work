@@ -46,18 +46,16 @@ class Bom extends CI_Controller {
             $data= $this->model->hook_bom($bm) ;
             $result=[];
     do{
-
-     $data= $this->model->sort_bom($i,$data) ;  
+     $r= $this->model->sort_bom($i,$data) ;  
+     $data=$r['res'];
+     $a=$r['gg'];
+     foreach($a as $r ){
+         echo $r."<br>";
+     }
      $i++;
+
      }
    while($data!=false);
-echo "<hr>";
-
-foreach($result as $t){
-    echo $t->p_id."<br>";
-
-}
-    
     }
 
     exit;
