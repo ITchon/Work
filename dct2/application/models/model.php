@@ -32,14 +32,14 @@ class Model extends CI_Model
   {
       $result=[];
     if($res!=null){
-      $a=array();
+      $array=array();
       foreach($res as $r){
      $data= $this->model->sub_part($r->p_id) ;
      $result= $result+$data;
-     $b=array('lv'=>$i,'id'=>$r->p_id);
-    array_push($a,$b);
+     $result_part=array('lv'=>$i,'id'=>$r->p_id);
+    array_push($array,$result_part);
      }
-     return array("res" => $result, "data" => $a);
+     return array("res" => $result, "data" => $array);
     }
     else{
     return false;
