@@ -3,7 +3,8 @@ foreach($result_bom as $row){
 foreach($row as $r){
   }
 }
-  $maxlv = (max(array($r['lv']))); 
+ $maxlv = (max(array($r['lv']))); 
+
 ?>
 
 
@@ -25,15 +26,26 @@ foreach($row as $r){
 
     </div>
                 <div class="card-body">
-      <table id="demo-datatables-buttons-2" class="table table-bordered dataTable text-center" cellspacing="0" width="100%"  >
+      <table id="" class="table table-bordered dataTable text-center" cellspacing="0" width="100%"  >
       <thead> 
        <tr>
-         <?php for($i=1;$i<=$maxlv;$i++) { ?>
-         <th width="25px" style="pointer-events: none;">lv <?php echo $i ?></th>
-         <?php } ?>
-        <th width="" style="pointer-events: none;">Part No</th>
-        <th width="" style="pointer-events: none;">Part name</th>
-        <th width="" style="pointer-events: none;">Unit</th>               
+         <?php 
+        //  for($i=1;$i<=$maxlv;$i++) { 
+           ?>
+         <th width="25px">lv 1</th>
+         <th width="25px">lv 2</th>
+         <th width="25px">lv 3</th>
+         <th width="25px">lv 4</th>
+         <th width="25px">lv 5</th>
+         <th width="25px">lv 6</th>
+         <th width="25px">lv 8</th>
+         <th width="25px">lv 9</th>
+         <th width="25px">lv 10</th>
+    
+
+        <th width="">Part No</th>
+        <th width="">Part name</th>
+        <th width="">Unit</th>               
        </tr>
      </thead>
        <tbody>
@@ -45,7 +57,7 @@ foreach($row as $r){
                   foreach($row_p as $rs){
                     if($r['id']==$rs->p_id){//  [id]==[id] ?>
                           <tr>  
-                             <?php for($i=1;$i<=$maxlv;$i++) { 
+                             <?php for($i=1;$i<=10;$i++) { 
                                if($i== $r['lv']){
                                   echo "<td>".$r['lv']."</td>";
                                 }else{
@@ -54,7 +66,7 @@ foreach($row as $r){
                               }
                                ?>
                               
-                              <td><?php echo $rs->p_no ?></td>
+                              <td><?php echo $rs->p_no ?></td>   
                               <td><?php echo $rs->p_name ?></td>
                               <td><?php echo $rs->p_id ?></td>
                           </tr>                         

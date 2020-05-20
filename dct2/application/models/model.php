@@ -21,29 +21,32 @@ class Model extends CI_Model
 
   public function sub_part($id)
   { 
-    $sql =  'SELECT * FROM sub_part where m_id = '.$id.' ';
+    $sql =  'SELECT p_id FROM sub_part where m_id = '.$id.' ';
     $query = $this->db->query($sql); 
-    return $query->result(); 
+    if($query){
+      $result= $query->result();
+      return $result;
+    }else{
+      return false;
+    }
+    
   }
 
 
 
-  public function sort_bom($i,$res)
+  public function sort_bom($lv,$p_id)
   {
-      $result=[];
-    if($res!=null){
-      $array=array();
-      foreach($res as $r){
-     $data= $this->model->sub_part($r->p_id) ;
-     $result= $result+$data;
-     $result_part=array('lv'=>$i,'id'=>$r->p_id);
-    array_push($array,$result_part);
-     }
-     return array("res" => $result, "data" => $array);
-    }
-    else{
-    return false;
-    }
+    $array=[];
+     do{
+      $a= array('lv'=>$lv,'id'=>$p_id);
+      array_push($array,$a);
+      $result= $this->model->sub_part($p_id);
+      foreach($result as $r){
+        $p_id= $r->p_id;
+      }
+      $lv++;
+     }while($result!=false);
+    return $array;
   }
 
   public function hook_bom($bm)

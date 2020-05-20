@@ -36,17 +36,15 @@ class Bom extends CI_Controller {
         if(isset($bm)){
             $i=2;
             $data= $this->model->hook_bom($bm) ;
-            $result=[];
             $array_sub_part=[];
-        do{
-         $r= $this->model->sort_bom($i,$data) ;  
-         $data=$r['res'];
-         array_push($array_sub_part, $r['data']);
-        $i++;
-
-     }
-   while($data!=false);
-   
+      foreach($data as $r){
+          $lv =2;
+         $result= $this->model->sort_bom($lv,$r->p_id);
+         array_push($array_sub_part,$result);
+         echo "<br>";
+       
+      }
+// print_r($array_sub_part);
    $data['result_bom'] = $array_sub_part;  
    $array_part =[] ;
         foreach($array_sub_part as $row){
@@ -56,7 +54,7 @@ class Bom extends CI_Controller {
             array_push($array_part,  $data_part);
              }
             }
-
+ 
     $data['result_part'] = $array_part;  
 
     $this->load->view('bom/show',$data);//bring $data to user_data 
