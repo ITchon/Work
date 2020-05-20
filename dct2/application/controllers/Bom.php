@@ -26,34 +26,28 @@ class Bom extends CI_Controller {
     }
     	public function manage()
     {	
-        $name =  $this->input->post('name');
-        if($name == 'eiei'){
-            $bm =  $this->input->post('bm');
-       if(isset($bm)){
-           $i=2;
-           $data= $this->model->hook_bom($bm) ;
-           $result=[];
-           $a=[];
-       do{
-        $r= $this->model->sort_bom($i,$data) ;  
-        $data=$r['res'];
-        array_push($a, $r['data']);
-       $i++;
-
-    }
-  while($data!=false);
-  $data['result'] = $a; 
-   }
-        }else{
-            $sql =  'SELECT DISTINCT part.`p_id`,`p_name` FROM `part` inner join bom on bom.b_master = part.p_id';
-        }
-          
+          $sql =  'SELECT DISTINCT part.`p_id`,`p_name` FROM `part` inner join bom on bom.b_master = part.p_id';
 
        
        $query = $this->db->query($sql); 
        $data['result'] = $query->result(); 
 
-       
+  $bm =  $this->input->post('bm');
+        if(isset($bm)){
+            $i=2;
+            $data= $this->model->hook_bom($bm) ;
+            $result=[];
+            $a=[];
+        do{
+         $r= $this->model->sort_bom($i,$data) ;  
+         $data=$r['res'];
+         array_push($a, $r['data']);
+        $i++;
+
+     }
+   while($data!=false);
+   $data['result'] = $a; 
+    }
         $this->load->view('bom/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
         
