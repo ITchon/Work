@@ -46,6 +46,7 @@ class Bom extends CI_Controller {
 
      }
    while($data!=false);
+   
    $data['result_bom'] = $array_sub_part;  
    $array_part =[] ;
         foreach($array_sub_part as $row){

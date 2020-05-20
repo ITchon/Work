@@ -25,15 +25,15 @@ foreach($row as $r){
 
     </div>
                 <div class="card-body">
-      <table id="" class="table table-bordered dataTable text-center" cellspacing="0" width="100%"  >
+      <table id="demo-datatables-buttons-2" class="table table-bordered dataTable text-center" cellspacing="0" width="100%"  >
       <thead> 
        <tr>
          <?php for($i=1;$i<=$maxlv;$i++) { ?>
-         <th width="25px">lv <?php echo $i ?></th>
+         <th width="25px" style="pointer-events: none;">lv <?php echo $i ?></th>
          <?php } ?>
-        <th width="">Part No</th>
-        <th width="">Part name</th>
-        <th width="">Unit</th>               
+        <th width="" style="pointer-events: none;">Part No</th>
+        <th width="" style="pointer-events: none;">Part name</th>
+        <th width="" style="pointer-events: none;">Unit</th>               
        </tr>
      </thead>
        <tbody>
