@@ -26,13 +26,34 @@ class Bom extends CI_Controller {
     }
     	public function manage()
     {	
-          $sql =  'SELECT DISTINCT part.`p_id`,`p_name` FROM `part` inner join bom on bom.b_master = part.p_id';
+        $name =  $this->input->post('name');
+        if($name == 'eiei'){
+            $bm =  $this->input->post('bm');
+       if(isset($bm)){
+           $i=2;
+           $data= $this->model->hook_bom($bm) ;
+           $result=[];
+           $a=[];
+       do{
+        $r= $this->model->sort_bom($i,$data) ;  
+        $data=$r['res'];
+        array_push($a, $r['data']);
+       $i++;
+
+    }
+  while($data!=false);
+  $data['result'] = $a; 
+   }
+        }else{
+            $sql =  'SELECT DISTINCT part.`p_id`,`p_name` FROM `part` inner join bom on bom.b_master = part.p_id';
+        }
+          
 
        
        $query = $this->db->query($sql); 
        $data['result'] = $query->result(); 
 
-
+       
         $this->load->view('bom/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
         
@@ -41,23 +62,9 @@ class Bom extends CI_Controller {
 
     public function show_bom()
     {	
-        $bm =  $this->input->post('bm');
-        if(isset($bm)){
-            $i=2;
-            $data= $this->model->hook_bom($bm) ;
-            $result=[];
-            $a=[];
-        do{
-         $r= $this->model->sort_bom($i,$data) ;  
-         $data=$r['res'];
-         array_push($a, $r['data']);
-        $i++;
-
-     }
-   while($data!=false);
-    }
-    $gg['data'] = $a; 
-    $this->load->view('bom/show',$gg);//bring $data to user_data 
+      
+    
+    $tis->load->view('bom/show',$data);//bring $data to user_data 
     $this->load->view('footer');
 
 	}
