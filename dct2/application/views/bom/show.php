@@ -1,9 +1,12 @@
  <?php 
+ if($result_bom!=null){
 foreach($result_bom as $row){
 foreach($row as $r){
   }
 }
  $maxlv = (max(array($r['lv']))); 
+
+ }
 
 ?>
 
