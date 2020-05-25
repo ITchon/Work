@@ -46,11 +46,26 @@ foreach($row as $r){
        <tbody>
 <?php
 
+foreach($bom as $row){
+
+
+      echo "<td>1</td>";
+      for($i=1;$i<=$maxlv[0]-1;$i++) { 
+        echo "<td></td>";
+      }
+      echo "<td>$row->p_no</td>";
+      echo "<td>$row->p_name</td>";
+      echo "<td>$row->d_no</td>";
+    }
        foreach($result_bom as $row){
         foreach($row as $r){
+          
           echo "<tr>";
+          
           for($i=1;$i<=$maxlv[0];$i++) { 
+            
             if($i== $r['lv']){
+              
                echo "<td>".$r['lv']."</td>";
              }else{
               echo "<td></td>";
