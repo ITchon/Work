@@ -37,13 +37,17 @@ class Bom extends CI_Controller {
             $i=2;
             $data= $this->model->hook_bom($bm) ;
             $array_sub_part=[];
+            
       foreach($data as $r){
           $lv =2;
+
          $result= $this->model->sort_bom($lv,$r->p_id);
          array_push($array_sub_part,$result);
+    
          echo "<br>";
-       
+        
       }
+   
 // print_r($array_sub_part);
    $data['result_bom'] = $array_sub_part;  
    $array_part =[] ;
@@ -54,7 +58,7 @@ class Bom extends CI_Controller {
             array_push($array_part,  $data_part);
              }
             }
- 
+         
     $data['result_part'] = $array_part;  
 
     $this->load->view('bom/show',$data);//bring $data to user_data 
@@ -71,7 +75,7 @@ class Bom extends CI_Controller {
     public function add()
     {
 
-        $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 and p_master =0';
+        $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 ';
         $query = $this->db->query($sql); 
        $data['result_p'] = $query->result(); 
         $this->load->view('bom/add',$data);//bring $data to user_data 

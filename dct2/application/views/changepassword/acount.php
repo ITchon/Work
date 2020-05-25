@@ -24,7 +24,7 @@
                    <div class="form-group has-feedback">
                       <label for="password" class="col-sm-3 col-md-2 control-label">Current Password</label>
                       <div class="col-sm-6 col-md-3">
-                      <input id="password" class="form-control" type="text" autocomplete="off" name="cur_password" placeholder="Enter your Current Password" />
+                      <input id="password" class="form-control" type="password" autocomplete="off" name="cur_password" placeholder="Enter your Current Password" />
                       <span class="form-control-feedback" aria-hidden="true">
                       <span class="icon"></span>
                       </span>
@@ -33,7 +33,7 @@
                    <div class="form-group has-feedback">
                       <label for="password" class="col-sm-3 col-md-2 control-label">New Password</label>
                       <div class="col-sm-6 col-md-3">
-                      <input id="password" class="form-control" type="text" autocomplete="off" name="new_password" placeholder="Enter your New Password" />
+                      <input id="password" class="form-control" type="password" autocomplete="off" name="new_password" placeholder="Enter your New Password" />
                       <span class="form-control-feedback" aria-hidden="true">
                       <span class="icon"></span>
                       </span>
@@ -42,7 +42,7 @@
                    <div class="form-group has-feedback">
                       <label for="password" class="col-sm-3 col-md-2 control-label">Confirm New Password</label>
                       <div class="col-sm-6 col-md-3">
-                      <input id="password" class="form-control" type="text" autocomplete="off" name="con_password" placeholder="Enter your Confirm Password" />
+                      <input id="password" class="form-control" type="password" autocomplete="off" name="con_password" placeholder="Enter your Confirm Password" />
                       <span class="form-control-feedback" aria-hidden="true">
                       <span class="icon"></span>
                       </span>
