@@ -15,7 +15,6 @@ class Model extends CI_Model
   }
 
 
-
   public function get_drawing()
   {
     $sql ="SELECT * FROM drawing";
@@ -35,7 +34,6 @@ class Model extends CI_Model
     }
     
   }
-
 
 
   public function sort_bom($lv,$p_id)
@@ -650,6 +648,7 @@ public function disablePart($key=''){
     $exc_user = $this->db->query($sql1);
     if ($exc_user ){ return true; }else{ return false; }
   }
+  
    public  function fetch_pass($session_id)
       {
         $fetch_pass=$this->db->query("SELECT * from sys_users where su_id='$session_id'");
