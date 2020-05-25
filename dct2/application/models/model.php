@@ -3,15 +3,19 @@
 class Model extends CI_Model
 {
 
+
   public function CheckSession()        
   {
-      if($this->session->userdata('login')!="OK") {
+      if($this->session->userdata('su_id')=="") {
         echo "<script>alert('Please Login')</script>";
         redirect('login','refresh');
      return FALSE;
      
       }else{	return TRUE; 	}
   }
+
+
+
   public function get_drawing()
   {
     $sql ="SELECT * FROM drawing";
@@ -96,7 +100,7 @@ class Model extends CI_Model
   
   public function getuser($user,$pass) {  
     $pass = base64_encode(trim($pass));
-    $sql ="SELECT u.su_id as su_id , u.enable as u_enable ,ug.enable as sug_enable ,u.username as username, ug.sug_id  FROM sys_users as u
+    $sql ="SELECT u.su_id as su_id , u.enable as u_enable ,ug.enable as sug_enable ,u.username as username,u.password as password, ug.sug_id  FROM sys_users as u
     inner join sys_user_groups ug on u.sug_id = ug.sug_id
     
     WHERE username='$user' and password='$pass' ";
@@ -621,18 +625,46 @@ public function disablePart($key=''){
    }
 
    public function delete_partD($id) {
-   $sql ="UPDATE part_drawing SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE pd_id = '$id'";
-   $query = $this->db->query($sql);
-      if ($query) { 
-         return true; 
-      } 
-      else{
-     return false;
+    $sql ="UPDATE part_drawing SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE pd_id = '$id'";
+    $query = $this->db->query($sql);
+    if ($query) { 
+      return true; 
+    } 
+    else{
+       return false;
+    }
    }
-   }
 
+ 
 
+   public function updated_profile_data($fname,$lname,$username,$password,$gender,$email,$sug_id,$su_id)
+  {
+     $sql1 ="UPDATE sys_users SET 
+                      sug_id         = '$sug_id',
+                      firstname      = '$fname',
+                      lastname       = '$lname',
+                      gender         = '$gender',
+                      email          = '$email',
+                      enable         = '1',
+                      date_updated   = CURRENT_TIMESTAMP,
+                      delete_flag    = '1' 
 
+                       WHERE su_id          = '$su_id' ";
+                      
+
+    $exc_user = $this->db->query($sql1);
+    if ($exc_user ){ return true; }else{ return false; }
+  }
+   public  function fetch_pass($session_id)
+      {
+        $fetch_pass=$this->db->query("SELECT * from sys_users where su_id='$session_id'");
+        $res=$fetch_pass->result();
+      }
+   public function change_pass($session_id,$new_password)
+      {
+        $new_password = base64_encode(trim($new_password));
+        $update_pass=$this->db->query("UPDATE sys_users set password='$new_password'  where su_id='$session_id'");
+      }
 
 
 

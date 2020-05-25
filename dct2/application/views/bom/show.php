@@ -41,6 +41,7 @@ foreach($row as $r){
          <th width="25px">lv 4</th>
          <th width="25px">lv 5</th>
          <th width="25px">lv 6</th>
+         <th width="25px">lv 7</th>
          <th width="25px">lv 8</th>
          <th width="25px">lv 9</th>
          <th width="25px">lv 10</th>
