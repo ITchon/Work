@@ -8,17 +8,17 @@
             <div class="col-md-12  ">
               <div class="demo-form-wrapper card" style="padding-top:8px">
               <h2 class=" text-center text-primary">
-         BOM////
-             <a href="<?php echo base_url()?>part/show">BOOM</a>
+         BOM
+  
     </h2><hr>
             
-            <form class="form form-horizontal container" action="<?php echo base_url()?>bom/show_bom" method="post" data-toggle="validator">
+            <form class="form form-horizontal container" action="<?php echo base_url()?>bom/manage" method="post" data-toggle="validator">
             <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Bom Master</label>      
           
                       <div class="col-sm-6 col-md-4">
                    <select name="bm" class="form-control select2"  required>
-                   <option value="">- - - Select Part Master - - -</option>
+                   <option value="">- - - Select Bom - - -</option>
                    <?php
                       foreach($result as $r){?>
                         <?php  echo $r->p_id ?>
