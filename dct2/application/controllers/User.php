@@ -23,6 +23,7 @@ class User extends CI_Controller {
     }
     public function manage()
     {   
+     
         $sql =  'SELECT su.su_id,su.username, su.firstname ,su.lastname, su.gender,su.email,su.enable,su.delete_flag, sug.name as name
     FROM
     sys_users  AS su 

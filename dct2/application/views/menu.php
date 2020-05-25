@@ -1,4 +1,4 @@
-
+   
 
   <body class="layout layout-header-fixed ">
     <div class="layout-header">
@@ -321,8 +321,9 @@
                   <li class="navbar-upgrade-version">Version: 1.0.0</li>
                   <li class="divider"></li>
                   <li><a href="contacts.html">Contacts</a></li>
-                  <li><a href="profile.html">Profile</a></li>
-                  
+                  <li><a href="<?php echo base_url()?>/editprofile/manage">Profile</a></li>
+                  <li><a href="<?php echo base_url()?>/changepassword/account">Change Password</a></li>
+                  <li class="divider"></li>
                   <li><a onclick="return confirm('Do you want to logout?')" href="<?php echo base_url()?>/logout">Sign out</a></li>
                 </ul>
               </li>
@@ -350,7 +351,7 @@
       </div>
     </div>
     <div class="layout-main">
- 
+
       <div class="layout-sidebar" style="">
         <div class="layout-sidebar-backdrop"></div>
         <div class="layout-sidebar-body">
