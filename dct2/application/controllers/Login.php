@@ -22,7 +22,7 @@ class Login extends CI_Controller {
   
         $data= $this->model->getuser($user,$pass);
          if($data==true) {
-            $arrData = array('status'=> $data['u_enable'], 'su_id'=>$data['su_id'],'password'=> $data['password'],'username'=> $data['username'],'sug_id'=>$data['sug_id'],'login' => "OK");	
+            $arrData = array('status'=> $data['u_enable'], 'su_id'=>$data['su_id'], 'password'=> $data['password'],'username'=> $data['username'],'sug_id'=>$data['sug_id'],'login' => "OK");	
              $this->session->set_userdata($arrData);
              $username = $this->session->userdata('username');
              if($data['u_enable'] != 1){

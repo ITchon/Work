@@ -15,6 +15,7 @@ class Model extends CI_Model
   }
 
 
+
   public function get_drawing()
   {
     $sql ="SELECT * FROM drawing";
@@ -35,13 +36,13 @@ class Model extends CI_Model
     
   }
 
-
   public function sort_bom($lv,$p_id)
   {
     $array=[];
+    $a= array('lv'=>$lv,'id'=>$p_id);
+    array_push($array,$a);
      do{
-      $a= array('lv'=>$lv,'id'=>$p_id);
-      array_push($array,$a);
+      $lv++;
       $result= $this->model->sub_part($p_id);
       foreach($result as $r){
         $p_id= $r->p_id;
@@ -52,6 +53,7 @@ class Model extends CI_Model
  
 
      }while($result!=false);
+ 
     return $array;
   }
 
@@ -222,10 +224,12 @@ return false;
 }
 
 
- function insert_part($p_no,$p_name,$d_no, $lv ,$master)
+ function insert_part($p_no,$p_name,$d_no,$master )
  {
-  $sql ="INSERT INTO part (p_no,p_name,d_id,p_lv,p_master,enable,date_created,delete_flag) VALUES ( '$p_no', '$p_name', '$d_no', '$lv','$master' ,'1',CURRENT_TIMESTAMP,'1');";
+  $sql ="INSERT INTO part (p_no,p_name,d_id,enable,date_created,delete_flag) VALUES ( '$p_no', '$p_name', '$d_no','1',CURRENT_TIMESTAMP,'1');";
+  $sql1 ="INSERT INTO sub_part (m_id,p_id) VALUES ( '$master','$p_no' );";
     $query = $this->db->query($sql);  
+    $query = $this->db->query($sql1);  
    if($query){
      return true;
    }
@@ -659,7 +663,6 @@ public function disablePart($key=''){
     $exc_user = $this->db->query($sql1);
     if ($exc_user ){ return true; }else{ return false; }
   }
-  
    public  function fetch_pass($session_id)
       {
         $fetch_pass=$this->db->query("SELECT * from sys_users where su_id='$session_id'");
