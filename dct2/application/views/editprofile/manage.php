@@ -35,7 +35,7 @@
                       <label for="email-2" class="col-sm-3 col-md-2 control-label">Select</label>      
           
                       <div class="col-sm-6 col-md-2">
-                   <select name="gender" class="form-control" id="" >
+                   <select name="gender" class="form-control"  >
                    <option value="<?php echo $result[0]->gender ?>"><?php echo $result[0]->gender ?></option>
                        <option value="Male" >Male</option>
                        <option value="Female">Female</option>
@@ -57,7 +57,7 @@
                       <label for="email-2" class="col-sm-3 col-md-2 control-label">Select Group</label>      
           
                       <div class="col-sm-6 col-md-2">
-                   <select name="sug_id" class="form-control" id="" required>
+                   <select name="sug_id" class="form-control"  required>
                    <option value="<?php echo $result[0]->sug_id ?>"><?php echo $result[0]->name ?></option>
                     <?php foreach ($excLoadG as $r) {
                         ?>
