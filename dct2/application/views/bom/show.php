@@ -1,15 +1,14 @@
- <?php 
+<?php 
  if($result_bom!=null){
 foreach($result_bom as $row){
 foreach($row as $r){
+   $max[] = array($r['lv']); 
   }
 }
- $maxlv = (max(array($r['lv']))); 
-
+ $maxlv = max($max);
  }
 
 ?>
-
 
 <div class="layout-content">
     <div class="layout-content-body">
@@ -33,20 +32,12 @@ foreach($row as $r){
       <thead> 
        <tr>
          <?php 
-        //  for($i=1;$i<=$maxlv;$i++) { 
+          for($i=1;$i<=$maxlv[0];$i++) { 
            ?>
-         <th width="25px">lv 1</th>
-         <th width="25px">lv 2</th>
-         <th width="25px">lv 3</th>
-         <th width="25px">lv 4</th>
-         <th width="25px">lv 5</th>
-         <th width="25px">lv 6</th>
-         <th width="25px">lv 7</th>
-         <th width="25px">lv 8</th>
-         <th width="25px">lv 9</th>
-         <th width="25px">lv 10</th>
+         <th width="25px">lv <?php echo $i ?></th>
+        
+          <?php } ?>
     
-
         <th width="">Part No</th>
         <th width="">Part name</th>
         <th width="">Unit</th>               
@@ -61,7 +52,7 @@ foreach($row as $r){
                   foreach($row_p as $rs){
                     if($r['id']==$rs->p_id){//  [id]==[id] ?>
                           <tr>  
-                             <?php for($i=1;$i<=10;$i++) { 
+                             <?php for($i=1;$i<=$maxlv[0];$i++) { 
                                if($i== $r['lv']){
                                   echo "<td>".$r['lv']."</td>";
                                 }else{
