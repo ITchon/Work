@@ -40,38 +40,32 @@ foreach($row as $r){
     
         <th width="">Part No</th>
         <th width="">Part name</th>
-        <th width="">Unit</th>               
+        <th width="">Drawing_no</th>               
        </tr>
      </thead>
        <tbody>
+<?php
 
- <?php 
-            foreach($result_bom as $row){
-              foreach($row as $r){
-                foreach($result_part as $row_p){
-                  foreach($row_p as $rs){
-                    if($r['id']==$rs->p_id){//  [id]==[id] ?>
-                          <tr>  
-                             <?php for($i=1;$i<=$maxlv[0];$i++) { 
-                               if($i== $r['lv']){
-                                  echo "<td>".$r['lv']."</td>";
-                                }else{
-                                 echo "<td></td>";
-                                }
-                              }
-                               ?>
-                              
-                              <td><?php echo $rs->p_no ?></td>   
-                              <td><?php echo $rs->p_name ?></td>
-                              <td><?php echo $rs->p_id ?></td>
-                          </tr>                         
-            <?php
-                      }
-                    }
-                }// End $result_part
-              }
-            }//End $result_bom
-            ?>
+       foreach($result_bom as $row){
+        foreach($row as $r){
+          echo "<tr>";
+          for($i=1;$i<=$maxlv[0];$i++) { 
+            if($i== $r['lv']){
+               echo "<td>".$r['lv']."</td>";
+             }else{
+              echo "<td></td>";
+             }
+           }
+           $p_id= $r['id'];
+           $sql =  'SELECT * FROM part inner join drawing on drawing.d_id = part.d_id where p_id = '.$p_id.' ';
+           $query = $this->db->query($sql); 
+           $data = $query->result(); 
+         echo "<td>".$data[0]->p_no."</td>";
+         echo "<td>".$data[0]->p_name."</td>";
+         echo "<td>".$data[0]->d_no."</td>";
+        echo "</tr>";
+       }
+       } ?>
   </tbody>
 </table>
  <script>
@@ -83,3 +77,34 @@ foreach($row as $r){
 
 
 </script>
+
+
+<!-- <?php 
+
+
+foreach($result_bom as $row){
+  foreach($row as $r){
+    foreach($result_part as $row_p){
+      foreach($row_p as $rs){
+        if($r['id']==$rs->p_id){//  [id]==[id] ?>
+              <tr>  
+                 <?php for($i=1;$i<=$maxlv[0];$i++) { 
+                   if($i== $r['lv']){
+                      echo "<td>".$r['lv']."</td>";
+                    }else{
+                     echo "<td></td>";
+                    }
+                  }
+                   ?>
+                  
+                  <td><?php echo $rs->p_no ?></td>   
+                  <td><?php echo $rs->p_name ?></td>
+                  <td><?php echo $rs->p_id ?></td>
+              </tr>                         
+<?php
+          }
+        }
+    }// End $result_part
+  }
+}//End $result_bom
+?> -->
