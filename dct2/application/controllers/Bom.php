@@ -27,40 +27,24 @@ class Bom extends CI_Controller {
     	public function manage()
     {	
           $sql =  'SELECT DISTINCT part.`p_id`,`p_name` FROM `part` inner join bom on bom.b_master = part.p_id';
-
-       
        $query = $this->db->query($sql); 
        $data['result'] = $query->result(); 
 
      $bm =  $this->input->post('bm');
         if(isset($bm)){
-            $i=2;
+       
             $data= $this->model->hook_bom($bm) ;
             $array_sub_part=[];
-            
       foreach($data as $r){
           $lv =2;
-
          $result= $this->model->sort_bom($lv,$r->p_id);
          array_push($array_sub_part,$result);
-    
-         echo "<br>";
-        
       }
    
 // print_r($array_sub_part);
-   $data['result_bom'] = $array_sub_part;  
-   $array_part =[] ;
-        foreach($array_sub_part as $row){
-             foreach($row as $r){
-            $query1 = $this->db->query('SELECT * FROM `part` where p_id = '.$r['id'].' '); 
-            $data_part= $query1->result(); 
-            array_push($array_part,  $data_part);
-             }
-            }
-         
-    $data['result_part'] = $array_part;  
-
+    $data['result_bom'] = $array_sub_part;  
+    $query = $this->db->query('SELECT * FROM `part` inner join drawing on drawing.d_id = part.d_id where p_id='.$bm.''); 
+    $data['bom'] = $query->result(); 
     $this->load->view('bom/show',$data);//bring $data to user_data 
    $this->load->view('footer');
     }else{
