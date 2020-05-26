@@ -40,7 +40,37 @@
                       <div class="col-sm-6 col-md-4">
                    <input class="form-control" type="text" readonly value="<?php echo $result[0]->file ?>">
                     </div>
-                    </div>  
+                    </div> 
+
+                    <div class="form-group">
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Version</label>      
+                      <div class="col-sm-6 col-md-4">
+                   <input class="form-control" type="text" readonly value="<?php echo $result[0]->version ?>">
+
+                    </div>
+                    </div> 
+
+                    <div class="form-group">
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Status</label>  
+                      <div class="col-sm-6 col-md-4">
+                   <?php 
+                   foreach ($result as $r) {
+                     if($r->enable!=1 ){?>
+                 <b><font color="red">
+                 <label class="control-label">disable</label> 
+                 </font></b>
+                  <?php
+                }
+                else{?>
+                  <b><font color="lightgreen">
+                 <label class="control-label">active</label> 
+                 </font></b>
+                  <?php
+                   }
+                }
+                ?>
+                   </div>
+                    </div> 
                     
 
                     <div class="form-group">

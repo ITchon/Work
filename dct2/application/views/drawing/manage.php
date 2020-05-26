@@ -110,11 +110,26 @@
               
                 ?>
 
-
-
-                <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
+                <?php 
+                if(isset($r->v_id)){
+                  if($r->v_id != 'v_id'){ ?>
+                  <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
+                echo base_url() . 'drawing/version_form_v/' . $r->v_id;
+                ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
+                <?php
+                }else{ ?>
+                  <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
                 echo base_url() . 'drawing/version_form/' . $r->d_id;
                 ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
+                <?php 
+                }
+                }else{ ?>
+                  <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
+                echo base_url() . 'drawing/version_form/' . $r->d_id;
+                ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
+                <?php } ?>
+
+
 
 
                 <?php 

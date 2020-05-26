@@ -171,7 +171,7 @@ class Drawing extends CI_Controller {
     {
         $id = $this->uri->segment('3');
 
-        $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, d.file_name as file, dc.dcn_no, d.version from drawing as d
+        $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, d.enable, d.file_name as file, dc.dcn_no, d.version from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
           where d.d_id = $id";
 
@@ -182,6 +182,24 @@ class Drawing extends CI_Controller {
         $this->load->view('footer');
   
     }
+
+    public function version_form_v()
+    {
+        $id = $this->uri->segment('3');
+
+        $sql =  "SELECT v.v_id, d.d_id, d.d_no, v.dcn_id, dc.dcn_no, v.enable, v.file_name as file, v.version from version as v
+        inner join drawing as d on d.d_id = v.d_id
+        inner join dcn as dc on dc.dcn_id = d.dcn_id
+          where v.v_id = $id";
+
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+
+        $this->load->view('drawing/add_version',$data);
+        $this->load->view('footer');
+  
+    }
+
 
     public function update_v()
     {
