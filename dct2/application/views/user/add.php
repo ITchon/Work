@@ -35,7 +35,7 @@
                       <label for="email-2" class="col-sm-3 col-md-2 control-label">Select</label>      
           
                       <div class="col-sm-6 col-md-2">
-                   <select name="gender" class="form-control" id="" >
+                   <select name="gender" class="form-control" >
                    <option value="">- - - - - -</option>
                        <option value="Male">Male</option>
                        <option value="Female">Female</option>
@@ -45,7 +45,7 @@
                     <div class="form-group has-feedback">
                     <label for="password" class="col-sm-3 col-md-2 control-label">Firstname</label>
                     <div class="col-sm-6 col-md-3">
-                    <input id="password" class="form-control" type="text" autocomplete="off" name="fname"  placeholder="Firstname" required>
+                    <input id="firstname" class="form-control" type="text" autocomplete="off" name="fname"  placeholder="Firstname" required>
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
                     </span>

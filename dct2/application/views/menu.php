@@ -318,7 +318,7 @@
                     </a>
                   </li>
                   <li class="divider"></li>
-                  <li class="navbar-upgrade-version">Version: 1.0.0</li>
+                  <li class="navbar-upgrade-version">User: <?php echo $this->session->userdata('username') ?></li>
                   <li class="divider"></li>
                   <li><a href="contacts.html">Contacts</a></li>
                   <li><a href="<?php echo base_url()?>/editprofile/manage">Profile</a></li>
@@ -405,7 +405,7 @@
                 ?>
                 <li class="sidenav-item has-subnav " >
                   <a href="<?php echo base_url()?>fullcalendar" aria-haspopup="true">
-                    <span class="sidenav-icon fa "></span>
+                    <span class="sidenav-icon fa fa-calendar"></span>
                     <span class="sidenav-label">Calendar</span>
                   </a>
  

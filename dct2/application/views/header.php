@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Dashboard &middot; Elephant Template &middot; The fastest way to build Modern Admin APPS for any platform, browser, or device.</title>
+      <link rel="icon" href="<?php echo base_url('') ?>assets/img/logo.jpg" type="image/icon type">
+    <title>DRAWING</title>
+    <!-- <title>Dashboard &middot; Elephant Template &middot; The fastest way to build Modern Admin APPS for any platform, browser, or device.</title> -->
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
     <meta name="description" content="Elephant is an admin template that helps you build modern Admin Applications, professionally fast! Built on top of Bootstrap, it includes a large collection of HTML, CSS and JS components that are simple to use and easy to customize.">
     <meta property="og:url" content="http://demo.madebytilde.com/elephant">
@@ -18,8 +20,8 @@
     <meta name="twitter:description" content="Elephant is an admin template that helps you build modern Admin Applications, professionally fast! Built on top of Bootstrap, it includes a large collection of HTML, CSS and JS components that are simple to use and easy to customize.">
     <meta name="twitter:image" content="">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
+    <!-- <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16"> -->
   
     <link rel="mask-icon" href="safari-pinned-tab.svg" color="#0288d1">
     <meta name="theme-color" content="#ffffff">
