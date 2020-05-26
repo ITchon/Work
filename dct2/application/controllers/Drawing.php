@@ -38,14 +38,16 @@ class Drawing extends CI_Controller {
                $data['name'] = $name ;
         }
         else if(isset($id)){
-            $sql =  "SELECT d.d_id, d.d_no,  d.enable, d.file_name, d.version,dcn.dcn_no,'v_id'
+            $sql =  "SELECT d.d_id, d.d_no, d.enable, d.file_name, d.version, dcn.dcn_no,'v_id'
             from drawing as d
          inner join dcn on dcn.dcn_id = d.dcn_id
             where d.delete_flag != 0 AND d.d_id = $id
             UNION
-    SELECT v.d_id, v.d_id, v.enable, v.file_name, v.version, v.status, v.v_id
+    SELECT v.d_id, d.d_no, v.enable, v.file_name, v.version, dc.dcn_no, v.v_id
     from version as v
-    where v.d_id = $id
+    inner join drawing as d on d.d_id = v.d_id
+    inner join dcn as dc on dc.dcn_id = d.dcn_id
+    where v.delete_flag != 0 AND v.d_id = $id
     ORDER by version DESC";
                  $data['title'] = $title ;
                  $data['name'] = $name ;
@@ -101,8 +103,7 @@ class Drawing extends CI_Controller {
         $result = $this->model->disableDrawing($uid);
 
         if($result!=FALSE){
-                echo '<script language="javascript">';
-        
+            echo '<script language="javascript">';
             echo 'history.go(-1);';
             echo '</script>';
             
@@ -154,11 +155,19 @@ class Drawing extends CI_Controller {
     public function deletedrawing()
     {
         $this->model->delete_drawing($this->uri->segment('3'));
-        redirect('drawing/manage');
+        redirect('drawing/manage','refresh');
+    }
+
+    public function deletedrawing_v()
+    {
+        $this->model->delete_drawing_v($this->uri->segment('3'));
+        echo '<script language="javascript">';
+            echo 'history.go(-1);';
+            echo '</script>';
     }
 
 
-    public function edit_form()
+    public function version_form()
     {
         $id = $this->uri->segment('3');
 

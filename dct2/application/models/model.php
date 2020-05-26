@@ -278,8 +278,8 @@ return false;
   $d_no =  $data[0]->d_no;
   $dcn_id =  $data[0]->dcn_id;
 
-  $gg ="INSERT INTO version (d_id, d_no, dcn_id, enable, date_created, file_name, version) VALUES ( '$d_id', '$d_no', '$dcn_id', '0',
-   CURRENT_TIMESTAMP, '$file_name', '$version');";
+  $gg ="INSERT INTO version (d_id, d_no, dcn_id, enable, date_created, delete_flag, file_name, version) VALUES ( '$d_id', '$d_no', '$dcn_id', '0',
+   CURRENT_TIMESTAMP, '1', '$file_name', '$version');";
   $query = $this->db->query($gg); 
 
 
@@ -612,6 +612,17 @@ public function disablePart($key=''){
 
    public function delete_drawing($id) {
    $sql ="UPDATE drawing SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE d_id = '$id'";
+   $query = $this->db->query($sql);
+      if ($query) { 
+         return true; 
+      } 
+      else{
+     return false;
+   }
+   }
+
+   public function delete_drawing_v($id) {
+   $sql ="UPDATE version SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE v_id = '$id'";
    $query = $this->db->query($sql);
       if ($query) { 
          return true; 
