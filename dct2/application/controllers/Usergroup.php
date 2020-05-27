@@ -42,6 +42,28 @@ class Usergroup extends CI_Controller {
         $this->load->view('footer');
         
     }
+
+    public function rule_ug($id)
+    {       
+            $sql =  "SELECT * from sys_users_groups_permissions where sug_id = $id";
+            $query = $this->db->query($sql); 
+            $data['result_user']= $query->result(); 
+
+            $sql =  "SELECT sug.sug_id, sug.name as sug_name from sys_user_groups as sug where sug.sug_id = $id";
+            $query = $this->db->query($sql); 
+            $data['result']= $query->result(); 
+
+            $sql =  "SELECT * from sys_permission_groups";
+            $query = $this->db->query($sql); 
+            $data['result_group']= $query->result(); 
+
+         $this->load->view('user_group/rule_userg', $data);//bring $data to user_data 
+     
+            $this->load->view('footer');
+   
+    }
+
+
     public function insert()
     {
     
@@ -65,7 +87,7 @@ class Usergroup extends CI_Controller {
 
     public function enable($uid){
 
-        $this->model->CheckPermission($this->session->userdata('su_id'));
+        //$this->model->CheckPermission($this->session->userdata('su_id'));
         $result = $this->model->enableGroup($uid);
 
         if($result!=FALSE){
@@ -80,7 +102,7 @@ class Usergroup extends CI_Controller {
 
     public function disable($uid){
 
-        $this->model->CheckPermission($this->session->userdata('su_id'));
+        //$this->model->CheckPermission($this->session->userdata('su_id'));
         $result = $this->model->disableGroup($uid);
 
         if($result!=FALSE){

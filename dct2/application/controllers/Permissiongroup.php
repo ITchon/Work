@@ -83,6 +83,32 @@ class Permissiongroup extends CI_Controller {
         redirect('permissiongroup/manage');
     }
 
+    public function edit_permissiongroup()
+    {
+        $id = $this->uri->segment('3');
+
+        $sql =  "SELECT spg.spg_id, spg.name as spg_name from sys_permission_groups as spg  where delete_flag !=0";
+
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+
+        $this->load->view('permission_group/edit',$data);
+        $this->load->view('footer');
+  
+    }
+
+    public function save_edit()
+    {
+        $spg_id =  $this->input->post('spg_id');
+        $spg_name =  $this->input->post('spg_name');
+
+        $this->model->save_edit_pg($spg_id, $spg_name);
+        redirect('permissiongroup/manage');
+
+
+  
+    }
+
 
 }
 

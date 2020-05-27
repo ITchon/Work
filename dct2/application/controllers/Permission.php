@@ -66,7 +66,9 @@ class Permission extends CI_Controller {
         $result = $this->model->enablePermission($uid);
 
         if($result!=FALSE){
-            redirect('permission/manage','refresh');
+            echo '<script language="javascript">';
+            echo 'history.go(-1);';
+            echo '</script>';
 
         }else{
         
@@ -82,7 +84,9 @@ class Permission extends CI_Controller {
         $result = $this->model->disablePermission($uid);
 
         if($result!=FALSE){
-            redirect('permission/manage','refresh');
+            echo '<script language="javascript">';
+            echo 'history.go(-1);';
+            echo '</script>';
             
 
         }else{
@@ -90,6 +94,39 @@ class Permission extends CI_Controller {
             redirect('permission/manage','refresh');
 
         }
+    }
+
+    public function edit_permission()
+    {
+        $id = $this->uri->segment('3');
+
+        $sql =  'select * from sys_permission_groups where delete_flag !=0';
+        $query = $this->db->query($sql); 
+        $data['result_g'] = $query->result(); 
+
+        $sql =  "SELECT sp.sp_id, sp.name as sp_name, spg.spg_id, spg.name as spg_name, sp.controller from sys_permissions as sp
+          inner join sys_permission_groups as spg on spg.spg_id = sp.spg_id
+          where sp.sp_id = $id";
+
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+
+        $this->load->view('permission/edit',$data);
+        $this->load->view('footer');
+  
+    }
+
+    public function save_edit()
+    {
+        $sp_id =  $this->input->post('sp_id');
+        $sp_name =  $this->input->post('sp_name');
+        $spg_id =  $this->input->post('spg_id');
+
+        $this->model->save_edit_p($sp_id, $spg_id, $sp_name);
+        redirect('permission/manage');
+
+
+  
     }
 
 }

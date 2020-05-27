@@ -686,6 +686,19 @@ public function disablePart($key=''){
       }
 
 
+ public function save_edit_p($sp_id, $spg_id, $sp_name)
+  {
+     $sql1 ="UPDATE sys_permissions SET name = '$sp_name', spg_id = '$spg_id', date_updated = CURRENT_TIMESTAMP WHERE sp_id = '$sp_id'";
+    $exc_user = $this->db->query($sql1);
+    if ($exc_user ){ return true; }else{ return false; }
+  }
+
+  public function save_edit_pg($spg_id, $spg_name)
+  {
+     $sql1 ="UPDATE sys_permission_groups SET name = '$spg_name', date_updated = CURRENT_TIMESTAMP WHERE spg_id = '$spg_id'";
+    $exc_user = $this->db->query($sql1);
+    if ($exc_user ){ return true; }else{ return false; }
+  }
 
 
 }
