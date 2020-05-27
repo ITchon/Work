@@ -35,7 +35,6 @@
                       </tr>
                     </thead>
                     <tbody>
-                      tr
                     <?php
                     foreach($result as $r){
             echo "<tr>";
