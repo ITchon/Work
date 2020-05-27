@@ -166,6 +166,42 @@ class User extends CI_Controller {
  
     }
 
+    public function edit_u()
+    {
+        $id = $this->uri->segment('3');
+
+        $sql =  "SELECT * from sys_users as su
+        inner join sys_user_groups as sug on sug.sug_id = su.sug_id
+          where su_id = $id";
+
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+
+        $sql =  "SELECT * from sys_user_groups ";
+
+        $query = $this->db->query($sql); 
+        $data['result_group'] = $query->result(); 
+
+        $this->load->view('user/edit',$data);
+        $this->load->view('footer');
+  
+    }
+
+    public function save_edit()
+    {
+        $su_id =  $this->input->post('su_id');
+        $username =  $this->input->post('username');
+        $password =  $this->input->post('password');
+        $gender =  $this->input->post('gender');
+        $fname =  $this->input->post('fname');
+        $lname =  $this->input->post('lname');
+        $email =  $this->input->post('email');
+        $sug_id =  $this->input->post('sug_id');
+
+        $this->model->save_edit_u($su_id, $username, $password,$gender, $fname, $lname, $email, $sug_id);
+        redirect('User/manage');
+    }
+
     
 }
 
