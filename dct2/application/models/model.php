@@ -746,7 +746,7 @@ public function disablePart($key=''){
 
    public function save_edit_ug($sug_id, $sug_name)
   {
-     $sql1 ="UPDATE sys_user_groups SET name = '$sug_name', date_updated = CURRENT_TIMESTAMP WHERE sug_id = '$su_id'";
+     $sql1 ="UPDATE sys_user_groups SET name = '$sug_name', date_updated = CURRENT_TIMESTAMP WHERE sug_id = '$sug_id'";
     $exc_user = $this->db->query($sql1);
     if ($exc_user ){ return true; }else{ return false; }
   }
@@ -774,6 +774,14 @@ public function disablePart($key=''){
     else{
        return false;
     }
+  }
+
+  public function save_edit_u($su_id, $username, $password,$gender, $fname, $lname, $email, $sug_id)
+  {
+     $sql ="UPDATE sys_users SET sug_id = '$sug_id', username = '$username', password = '$password', firstname = '$fname', lastname = '$lname',
+      gender = '$gender', email = '$email', date_updated = CURRENT_TIMESTAMP WHERE su_id = '$su_id'";
+    $exc_user = $this->db->query($sql);
+    if ($exc_user ){ return true; }else{ return false; }
   }
 
 }
