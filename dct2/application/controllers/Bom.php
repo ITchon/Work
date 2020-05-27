@@ -26,74 +26,85 @@ class Bom extends CI_Controller {
     }
     	public function manage()
     {	
-          $sql =  'SELECT DISTINCT part.`p_id`,`p_name` FROM `part` inner join bom on bom.b_master = part.p_id';
+          $sql =  'SELECT DISTINCT part.`p_id`,`p_name` FROM `part` inner join bom on bom.b_master = part.p_id where bom.delete_flag !=0';
        $query = $this->db->query($sql); 
        $data['result'] = $query->result(); 
-
-     $bm =  $this->input->post('bm');
+        
+      
+       if( $this->input->post('bm')){
+          $bm =  $this->input->post('bm'); 
+       }else{
+        $bm = $this->uri->segment('3');
+       }
+       
         if(isset($bm)){
             $array=[];
             $data= $this->model->hook_bom($bm) ;
          foreach($data as $r){
-   
+      
              $data= $this->model->sub_part($r->p_id) ;
-             $a=array('lv'=>2,'id'=>$r->p_id);
-             
+             $a=array('lv'=>2,'id'=>$r->p_id,'m_id'=>$r->b_id );
+                $origin = $r->p_id;
              array_push($array,$a);
              if($data != false){  
+                $m_id =$r->p_id;
                 foreach($data as $r){
-   
                     $data= $this->model->sub_part($r->p_id) ;
-                    $a=array('lv'=>3,'id'=>$r->p_id);
-                    
+                    $a=array('lv'=>3,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                     array_push($array,$a);
                     if($data != false){  
+        
                         foreach($data as $r){
    
                             $data= $this->model->sub_part($r->p_id) ;
-                            $a=array('lv'=>4,'id'=>$r->p_id);
+                            $a=array('lv'=>4,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                             
                             array_push($array,$a);
                             if($data != false){  
+                    
                                 foreach($data as $r){
    
                                     $data= $this->model->sub_part($r->p_id) ;
-                                    $a=array('lv'=>5,'id'=>$r->p_id);
+                                    $a=array('lv'=>5,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                     
                                     array_push($array,$a);
                                     if($data != false){  
+                            
                                         foreach($data as $r){
    
                                             $data= $this->model->sub_part($r->p_id) ;
-                                            $a=array('lv'=>6,'id'=>$r->p_id);
+                                            $a=array('lv'=>6,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                             
                                             array_push($array,$a);
                                             if($data != false){  
+                                    
                                                 foreach($data as $r){
    
                                                     $data= $this->model->sub_part($r->p_id) ;
-                                                    $a=array('lv'=>7,'id'=>$r->p_id);
+                                                    $a=array('lv'=>7,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                                     
                                                     array_push($array,$a);
                                                     if($data != false){  
+                                            
                                                         foreach($data as $r){
    
                                                             $data= $this->model->sub_part($r->p_id) ;
-                                                            $a=array('lv'=>8,'id'=>$r->p_id);
+                                                            $a=array('lv'=>8,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                                             
                                                             array_push($array,$a);
                                                             if($data != false){  
+                                                    
                                                                 foreach($data as $r){
    
                                                                     $data= $this->model->sub_part($r->p_id) ;
-                                                                    $a=array('lv'=>9,'id'=>$r->p_id);
+                                                                    $a=array('lv'=>9,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                                                     
                                                                     array_push($array,$a);
-                                                                    if($data != false){  
+                                                                    if($data != false){                                                             
                                                                         foreach($data as $r){
    
                                                                             $data= $this->model->sub_part($r->p_id) ;
-                                                                            $a=array('lv'=>10,'id'=>$r->p_id);
+                                                                            $a=array('lv'=>10,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                                                             
                                                                             array_push($array,$a);
                                                                      
@@ -115,8 +126,9 @@ class Bom extends CI_Controller {
          }
     }
 
+  
 // print_r($array_sub_part);
-print_r($array);
+
    $data['result_bom'] = $array;  
 
    $array_part =[] ;
@@ -130,6 +142,7 @@ print_r($array);
     $data['result_part'] = $array_part;  
     $query=$this->db->query("SELECT * from part as p inner join drawing as d on d.d_id = p.d_id where p.p_id = $bm");
     $data['bom']=$query->result();
+    $data['bm']=$bm;
     $this->load->view('bom/show',$data);//bring $data to user_data 
    $this->load->view('footer');
     }else{
@@ -151,132 +164,26 @@ print_r($array);
 		$this->load->view('footer');
     }
 
-    public function enable($uid){
 
-        //$this->model->CheckPermission($this->session->userdata('sp_id'));
-        $result = $this->model->enableDrawing($uid);
-
-        if($result!=FALSE){
-            echo '<script language="javascript">';
-            echo 'history.go(-1);';
-            echo '</script>';
-
-        }else{
-        
-            echo "<script>alert('Simting wrong')</script>";
-       redirect('drawing/manage','refresh');
-        }
-    }
-
-    public function disable($uid){
-
-        //$this->model->CheckPermission($this->session->userdata('sp_id'));
-
-        $result = $this->model->disableDrawing($uid);
-
-        if($result!=FALSE){
-                echo '<script language="javascript">';
-        
-            echo 'history.go(-1);';
-            echo '</script>';
-            
-
-        }else{
-            echo "<script>alert('Simting wrong')</script>";
-            redirect('drawing/manage','refresh');
-
-        }
-    }
-
-    public function enable_v($uid){
-
-        //$this->model->CheckPermission($this->session->userdata('sp_id'));
-        $result = $this->model->enableDrawing_v($uid);
-
-        if($result!=FALSE){
-            echo '<script language="javascript">';
-            echo 'history.go(-1);';
-            echo '</script>';
-
-        }else{
-        
-            echo "<script>alert('Simting wrong')</script>";
-       redirect('drawing/manage','refresh');
-        }
-    }
-
-    public function disable_v($uid){
-
-        //$this->model->CheckPermission($this->session->userdata('sp_id'));
-
-        $result = $this->model->disableDrawing_v($uid);
-
-        if($result!=FALSE){
-                echo '<script language="javascript">';
-        
-            echo 'history.go(-1);';
-            echo '</script>';
-            
-
-        }else{
-            echo "<script>alert('Simting wrong')</script>";
-            redirect('drawing/manage','refresh');
-
-        }
-    }
-
-    public function deletedrawing()
+    public function delete()
     {
-        $this->model->delete_drawing($this->uri->segment('3'));
-        redirect('drawing/manage');
+
+        $bm =  $this->input->post('bm'); 
+        $m_id =  $this->input->post('m_id'); 
+        $this->model->delete_bom($m_id);
+        redirect('bom/manage/'.$bm.'','refresh');
     }
-
-
-    public function edit_form()
+    public function delete_sub()
     {
-        $id = $this->uri->segment('3');
 
-        $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, d.file_name as file, dc.dcn_no, d.version from drawing as d
-          inner join dcn as dc on dc.dcn_id = d.dcn_id
-          where d.d_id = $id";
-
-        $query = $this->db->query($sql); 
-        $data['result'] = $query->result(); 
-
-        $this->load->view('drawing/add_version',$data);
-        $this->load->view('footer');
-  
+        $bm =  $this->input->post('bm'); 
+        $m_id =  $this->input->post('m_id'); 
+        $this->model->delete_sub($m_id);
+        redirect('bom/manage/'.$bm.'','refresh');
     }
-
-    public function update_v()
-    {
-        $d_id =  $this->input->post('d_id');
-        $d_no =  $this->input->post('d_no');
-        $dcn_id =  $this->input->post('dcn_id');
-        $version =  $this->input->post('version');
-        $file_name =  $this->input->post('file_name');
-        $this->model->select_version($d_id);
-        $this->model->update_version($d_id, $d_no, $dcn_id, $version, $file_name);
-        redirect('drawing/manage');
 
 
   
-    }
-
-
-    public function insert_bom()
-    {
-        $bm =  $this->input->post('bm');
-        $p_id =  $this->input->post('p_id');
-        
-     foreach ($p_id as $p) {
-        $result = $this->model->insert_bom($bm,$p);
-    }
-
-        echo "<script>alert('Add Data Success')</script>";
-        redirect('bom/add','refresh');
-  
-    }
 
 }
 

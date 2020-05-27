@@ -5,7 +5,7 @@
       <div class="navbar navbar-default">
         <div class="navbar-header ">
           <a class="navbar-brand navbar-brand-center" href="index.html">
-            <h4 class="navbar-brand-logo"  alt="Elephant"> </h4>
+           DRAWING CENTER
           </a>
           <button class="navbar-toggler visible-xs-block collapsed" type="button" data-toggle="collapse" data-target="#sidenav">
             <span class="sr-only">Toggle navigation</span>
@@ -387,7 +387,7 @@
                     <?php foreach($submenu as $s)  { 
 
                              if($r->mg == $s->mg_id) { ?>
-                          <li class="<?php echo($url == $s->method)? " active ":"" ?>"><a  href="<?php echo base_url()?><?php echo $s->link ?>"><?php echo $s->name ?></a></li>
+                          <li class="<?php echo($url == $s->method)? " active ":"" ?>"><a  href="<?php echo base_url()?><?php echo $s->link ?>"><?php echo " - ".$s->name ?></a></li>
                              <?php }
                     }
                     ?>
