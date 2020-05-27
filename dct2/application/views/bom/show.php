@@ -1,9 +1,9 @@
 <?php 
  if($result_bom!=null){
 foreach($result_bom as $row){
-foreach($row as $r){
-   $max[] = array($r['lv']); 
-  }
+
+   $max[] = array($row['lv']); 
+  
 }
  $maxlv = max($max);
  }
@@ -40,47 +40,47 @@ foreach($row as $r){
     
         <th width="">Part No</th>
         <th width="">Part name</th>
-        <th width="">Drawing_no</th>               
+        <th width="">Drawing No</th>               
        </tr>
      </thead>
        <tbody>
-<?php
 
-foreach($bom as $row){
-
-
-      echo "<td>1</td>";
-      for($i=1;$i<=$maxlv[0]-1;$i++) { 
-        echo "<td></td>";
-      }
-      echo "<td>$row->p_no</td>";
-      echo "<td>$row->p_name</td>";
-      echo "<td>$row->d_no</td>";
+ <?php  foreach($bom as $row){
+    echo "<td>1</td>";
+   for($i=1;$i<=$maxlv[0]-1;$i++) { 
+    echo "<td></td>";
     }
-       foreach($result_bom as $row){
-        foreach($row as $r){
-          
-          echo "<tr>";
-          
-          for($i=1;$i<=$maxlv[0];$i++) { 
-            
-            if($i== $r['lv']){
-              
-               echo "<td>".$r['lv']."</td>";
-             }else{
-              echo "<td></td>";
-             }
-           }
-           $p_id= $r['id'];
-           $sql =  'SELECT * FROM part inner join drawing on drawing.d_id = part.d_id where p_id = '.$p_id.' ';
-           $query = $this->db->query($sql); 
-           $data = $query->result(); 
-         echo "<td>".$data[0]->p_no."</td>";
-         echo "<td>".$data[0]->p_name."</td>";
-         echo "<td>".$data[0]->d_no."</td>";
-        echo "</tr>";
-       }
-       } ?>
+    echo "<td>$row->p_no</td>";
+    echo "<td>$row->p_name</td>";
+    echo "<td>$row->d_no</td>";
+ }
+            foreach($result_bom as $row){
+                 ?>
+                          <tr>  
+                             <?php for($i=1;$i<=$maxlv[0];$i++) { 
+                               if($i== $row['lv']){
+                                  echo "<td>".$row['lv']."</td>";
+                                }else{
+                                 echo "<td></td>";
+                                }
+                              }
+                          
+                              $p_id=$row['id'];
+                              $query=$this->db->query("SELECT p.p_no,p.p_name,d.d_no from part as p inner join drawing as d on d.d_id = p.d_id where p.p_id = $p_id");
+                              $data= $query->result();
+                            foreach($data as $row){
+                              echo "<td>".$row->p_no."</td>";
+                              echo "<td>".$row->p_name."</td>";
+                              echo "<td>".$row->d_no."</td>";
+                            }
+                               ?>
+                              
+                             
+                          </tr>                         
+            <?php
+   
+            }//End $result_bom
+            ?>
   </tbody>
 </table>
  <script>
@@ -92,34 +92,3 @@ foreach($bom as $row){
 
 
 </script>
-
-
-<!-- <?php 
-
-
-foreach($result_bom as $row){
-  foreach($row as $r){
-    foreach($result_part as $row_p){
-      foreach($row_p as $rs){
-        if($r['id']==$rs->p_id){//  [id]==[id] ?>
-              <tr>  
-                 <?php for($i=1;$i<=$maxlv[0];$i++) { 
-                   if($i== $r['lv']){
-                      echo "<td>".$r['lv']."</td>";
-                    }else{
-                     echo "<td></td>";
-                    }
-                  }
-                   ?>
-                  
-                  <td><?php echo $rs->p_no ?></td>   
-                  <td><?php echo $rs->p_name ?></td>
-                  <td><?php echo $rs->p_id ?></td>
-              </tr>                         
-<?php
-          }
-        }
-    }// End $result_part
-  }
-}//End $result_bom
-?> -->

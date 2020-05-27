@@ -17,7 +17,7 @@ class Bom extends CI_Controller {
          $query = $this->db->query($sql); 
          $menu['submenu']= $query->result(); 
          $this->load->view('header');
-         $this->load->view('menu',$menu);
+        $this->load->view('menu',$menu);
 
     }
 	public function index()
@@ -32,19 +32,104 @@ class Bom extends CI_Controller {
 
      $bm =  $this->input->post('bm');
         if(isset($bm)){
-       
+            $array=[];
             $data= $this->model->hook_bom($bm) ;
-            $array_sub_part=[];
-      foreach($data as $r){
-          $lv =2;
-         $result= $this->model->sort_bom($lv,$r->p_id);
-         array_push($array_sub_part,$result);
-      }
+         foreach($data as $r){
    
+             $data= $this->model->sub_part($r->p_id) ;
+             $a=array('lv'=>2,'id'=>$r->p_id);
+             
+             array_push($array,$a);
+             if($data != false){  
+                foreach($data as $r){
+   
+                    $data= $this->model->sub_part($r->p_id) ;
+                    $a=array('lv'=>3,'id'=>$r->p_id);
+                    
+                    array_push($array,$a);
+                    if($data != false){  
+                        foreach($data as $r){
+   
+                            $data= $this->model->sub_part($r->p_id) ;
+                            $a=array('lv'=>4,'id'=>$r->p_id);
+                            
+                            array_push($array,$a);
+                            if($data != false){  
+                                foreach($data as $r){
+   
+                                    $data= $this->model->sub_part($r->p_id) ;
+                                    $a=array('lv'=>5,'id'=>$r->p_id);
+                                    
+                                    array_push($array,$a);
+                                    if($data != false){  
+                                        foreach($data as $r){
+   
+                                            $data= $this->model->sub_part($r->p_id) ;
+                                            $a=array('lv'=>6,'id'=>$r->p_id);
+                                            
+                                            array_push($array,$a);
+                                            if($data != false){  
+                                                foreach($data as $r){
+   
+                                                    $data= $this->model->sub_part($r->p_id) ;
+                                                    $a=array('lv'=>7,'id'=>$r->p_id);
+                                                    
+                                                    array_push($array,$a);
+                                                    if($data != false){  
+                                                        foreach($data as $r){
+   
+                                                            $data= $this->model->sub_part($r->p_id) ;
+                                                            $a=array('lv'=>8,'id'=>$r->p_id);
+                                                            
+                                                            array_push($array,$a);
+                                                            if($data != false){  
+                                                                foreach($data as $r){
+   
+                                                                    $data= $this->model->sub_part($r->p_id) ;
+                                                                    $a=array('lv'=>9,'id'=>$r->p_id);
+                                                                    
+                                                                    array_push($array,$a);
+                                                                    if($data != false){  
+                                                                        foreach($data as $r){
+   
+                                                                            $data= $this->model->sub_part($r->p_id) ;
+                                                                            $a=array('lv'=>10,'id'=>$r->p_id);
+                                                                            
+                                                                            array_push($array,$a);
+                                                                     
+                                                                       }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+         }
+    }
+
 // print_r($array_sub_part);
-    $data['result_bom'] = $array_sub_part;  
-    $query = $this->db->query('SELECT * FROM `part` inner join drawing on drawing.d_id = part.d_id where p_id='.$bm.''); 
-    $data['bom'] = $query->result(); 
+print_r($array);
+   $data['result_bom'] = $array;  
+
+   $array_part =[] ;
+        foreach($array as $row){
+          
+            $query1 = $this->db->query('SELECT * FROM `part` where p_id = '.$row['id'].' '); 
+            $data_part= $query1->result(); 
+            array_push($array_part,  $data_part);
+            }
+        
+    $data['result_part'] = $array_part;  
+    $query=$this->db->query("SELECT * from part as p inner join drawing as d on d.d_id = p.d_id where p.p_id = $bm");
+    $data['bom']=$query->result();
     $this->load->view('bom/show',$data);//bring $data to user_data 
    $this->load->view('footer');
     }else{

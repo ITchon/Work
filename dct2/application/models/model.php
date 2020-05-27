@@ -25,7 +25,7 @@ class Model extends CI_Model
 
   public function sub_part($id)
   { 
-    $sql =  'SELECT * FROM sub_part  where m_id = '.$id.' ';
+    $sql =  'SELECT * FROM sub_part where m_id = '.$id.' ';
     $query = $this->db->query($sql); 
     if($query){
       $result= $query->result();
@@ -33,29 +33,36 @@ class Model extends CI_Model
     }else{
       return false;
     }
-    
+      
   }
+
 
   public function sort_bom($lv,$p_id)
   {
+    
+    echo "<hr>";
     $array=[];
-    $a= array('lv'=>$lv,'id'=>$p_id);
-    array_push($array,$a);
-     do{
-      $lv++;
-      $result= $this->model->sub_part($p_id);
-      foreach($result as $r){
-        $p_id= $r->p_id;
-        $a= array('lv'=>$lv,'id'=>$p_id);
-        array_push($array,$a);
-        
-      }
- 
 
-     }while($result!=false);
- 
-    return $array;
-  }
+      do{ 
+        $res= $this->model->sub_part($p_id) ;
+        if($res!=false){
+          $lv++;
+          $res2= $res;
+          foreach($res2 as $r){
+            $a=array('lv'=>$lv,'id'=>$r->p_id);
+        
+            array_push($array,$a);
+           $res= $this->model->sort_bom($lv,$r->p_id) ;
+          }
+     
+        }    
+     
+      }while($res!= false);
+  
+    
+    }
+
+
 
   public function hook_bom($bm)
   {
@@ -63,13 +70,6 @@ class Model extends CI_Model
     $query = $this->db->query($sql); 
     return $query->result(); 
   }
-
-  // public function hook_part($p_id)
-  // {
-  //   $sql =  'SELECT *  FROM part where p_id = '.$p_id.' ';
-  //   $query = $this->db->query($sql); 
-  //   return $query->result(); 
-  // }
 
   public function get_part_drawing()
   {
