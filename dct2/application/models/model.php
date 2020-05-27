@@ -726,10 +726,36 @@ public function disablePart($key=''){
 
    public function save_edit_ug($sug_id, $sug_name)
   {
-     $sql1 ="UPDATE sys_user_groups SET name = '$sug_name', date_updated = CURRENT_TIMESTAMP WHERE sug_id = '$sug_id'";
+     $sql1 ="UPDATE sys_user_groups SET name = '$sug_name', date_updated = CURRENT_TIMESTAMP WHERE sug_id = '$su_id'";
     $exc_user = $this->db->query($sql1);
     if ($exc_user ){ return true; }else{ return false; }
   }
+
+
+  public function deluser_permission($su_id)
+  {
+    $sql  =  "DELETE FROM sys_users_permissions WHERE su_id = $su_id";
+    $query = $this->db->query($sql); 
+    if ($query) { 
+      return true; 
+    } 
+    else{
+       return false;
+    } 
+  }
+
+  public function insertuser_permission($su_id,$sp)
+  {
+     $sql  = "INSERT INTO sys_users_permissions(su_id, sp_id, date_created) VALUES  ('$su_id','$sp',CURRENT_TIMESTAMP)";
+     $query = $this->db->query($sql);
+    if ($query) { 
+      return true; 
+    } 
+    else{
+       return false;
+    }
+  }
+
 }
 
 ?>

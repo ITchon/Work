@@ -11,7 +11,7 @@ backdrop: 'static'
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="bg-primary modal-header">
-        <h1><?php echo "string"; ?></h1>
+        <h1><?php echo $result_name[0]->su_name; ?></h1>
       </div>
       <div class="modal-body">
       <?php  echo form_open('user/save_user_permission'); ?>
@@ -24,17 +24,17 @@ backdrop: 'static'
             <input type="text" name="su_id"  value="<?php echo $id ?> " hidden>
             <input type="text"  value="<?php echo $id ?> " hidden>
             <?php
-                 foreach($result_group as $rg){          
+                 foreach($result_group as $r){          
           ?>
 
                 <div class="col-xs-6" style="padding-top: 20px;">
-              <input type="checkbox" value="<?php echo $rg->sp_id ?>" name="sp_id[]" id="sp_id" <?php
+              <input type="checkbox" value="<?php echo $r->sp_id ?>" name="sp_id[]" id="sp_id" <?php
               foreach($result_user as $rs ){
-                    if($rs ->sp_id == $rg->sp_id){
+                    if($r ->sp_id == $rs->sp_id){
                     echo 'checked';
                   }
                   }?>  > 
-          <?php echo $rg->name ?>
+          <?php echo $r->name ?>
               
  </div>
             <?php

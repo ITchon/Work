@@ -51,22 +51,28 @@ class User extends CI_Controller {
 
     public function rule()
     {   
-        $sql =  'SELECT su.su_id,su.username, su.firstname ,su.lastname, su.gender,su.email,su.enable,su.delete_flag, sug.name as name
+        $id = $this->uri->segment('3');
+        $sql =  "SELECT su.su_id,su.username, su.firstname ,su.lastname, su.gender,su.email,su.enable,su.delete_flag, sug.name as name
         FROM
         sys_users  AS su 
-        INNER JOIN sys_user_groups AS sug ON sug.sug_id = su.sug_id where su.delete_flag != 0 ';
+        INNER JOIN sys_user_groups AS sug ON sug.sug_id = su.sug_id where su.delete_flag != 0";
             //$sql =  'select * from sys_users where delete_flag != 0';
             $query = $this->db->query($sql); 
             $data['result'] = $query->result(); 
-            $u_id=$this->uri->segment('3');
+            
 
-            $sql =  'select * from sys_users_permissions where su_id = '.$u_id.'';
+            $sql =  'select * from sys_users_permissions where su_id = '.$id.'';
             $query = $this->db->query($sql); 
             $data['result_user']= $query->result(); 
 
             $sql =  'select * from sys_permissions';
             $query = $this->db->query($sql); 
-            $data['result_group'] = $query->result(); 
+            $data['result_group'] = $query->result();
+
+            $sql =  "SELECT su.su_id, su.firstname as su_name from sys_users as su where su.su_id = $id";
+            $query = $this->db->query($sql); 
+            $data['result_name']= $query->result(); 
+
          $this->load->view('user/manage',$data);//bring $data to user_data 
          $this->load->view('user/rule_user', $data);//bring $data to user_data 
      
