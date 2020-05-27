@@ -3,7 +3,7 @@
 <h3></h3>
           
          <?php 
-            echo form_open('usergroup/save_group_permission');
+            echo form_open('usergroup/save_userg_permission');
        ?>
    
 

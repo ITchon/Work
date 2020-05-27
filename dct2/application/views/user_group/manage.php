@@ -57,6 +57,11 @@
                 ?> <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
                 echo base_url() . 'usergroup/rule_ug/' . $r->sug_id;
                 ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
+
+                <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
+                echo base_url() . 'usergroup/edit_ug/' . $r->sug_id;
+                ?>';"><i class='btn-info btn-sm fa fa-child'></i></a>
+
                 <?php 
                 echo "<a type='button' href='".base_url()."usergroup/deletegroup/".$r->sug_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
             echo "</tr>";

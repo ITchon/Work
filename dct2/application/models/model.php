@@ -700,7 +700,36 @@ public function disablePart($key=''){
     if ($exc_user ){ return true; }else{ return false; }
   }
 
+  public function deluserg_permission($sug_id)
+  {
+    $sql  =  "DELETE FROM sys_users_groups_permissions WHERE sug_id = $sug_id";
+    $query = $this->db->query($sql); 
+    if ($query) { 
+      return true; 
+    } 
+    else{
+       return false;
+    } 
+  }
 
+  public function insertuserg_permission($sug_id,$spg)
+  {
+     $sql  = "INSERT INTO sys_users_groups_permissions(sug_id, spg_id, date_created) VALUES  ('$sug_id','$spg',CURRENT_TIMESTAMP)";
+     $query = $this->db->query($sql);
+    if ($query) { 
+      return true; 
+    } 
+    else{
+       return false;
+    }
+  }
+
+   public function save_edit_ug($sug_id, $sug_name)
+  {
+     $sql1 ="UPDATE sys_user_groups SET name = '$sug_name', date_updated = CURRENT_TIMESTAMP WHERE sug_id = '$sug_id'";
+    $exc_user = $this->db->query($sql1);
+    if ($exc_user ){ return true; }else{ return false; }
+  }
 }
 
 ?>

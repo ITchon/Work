@@ -122,6 +122,47 @@ class Usergroup extends CI_Controller {
         redirect('Usergroup/manage');
     }
 
+    public function save_userg_permission()
+    {
+
+        $sug_id =  $this->input->post('sug_id');
+  
+        $spg_id =  $this->input->post('spg_id');
+           $this->model->deluserg_permission($sug_id);
+           if($spg_id != ''){
+            foreach ($spg_id as $spg) {
+         $this->model->insertuserg_permission($sug_id,$spg);
+     }
+           }
+
+     redirect('Usergroup/manage','refresh');
+ 
+    }
+
+    public function edit_ug()
+    {
+        $id = $this->uri->segment('3');
+
+        $sql =  "SELECT sug.sug_id, sug.name as sug_name from sys_user_groups as sug
+          where sug.sug_id = $id";
+
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+
+        $this->load->view('user_group/edit',$data);
+        $this->load->view('footer');
+  
+    }
+
+    public function save_edit()
+    {
+        $sug_id =  $this->input->post('sug_id');
+        $sug_name =  $this->input->post('sug_name');
+
+        $this->model->save_edit_ug($sug_id, $sug_name);
+        redirect('Usergroup/manage');
+    }
+
 
 
 
