@@ -51,15 +51,15 @@ class Dcn extends CI_Controller {
 
         //$this->model->CheckPermission($this->session->userdata('sp_id'));
 
-        $result = $this->model->enableDrawing($uid);
+        $result = $this->model->enableDcn($uid);
 
         if($result!=FALSE){
-            redirect('drawing/manage','refresh');
+            redirect('dcn/manage','refresh');
 
         }else{
         
             echo "<script>alert('Simting wrong')</script>";
-       redirect('drawing/manage','refresh');
+       redirect('dcn/manage','refresh');
         }
     }
 
@@ -67,23 +67,51 @@ class Dcn extends CI_Controller {
 
         //$this->model->CheckPermission($this->session->userdata('sp_id'));
 
-        $result = $this->model->disableDrawing($uid);
+        $result = $this->model->disableDcn($uid);
 
         if($result!=FALSE){
-            redirect('drawing/manage','refresh');
+            redirect('dcn/manage','refresh');
             
 
         }else{
             echo "<script>alert('Simting wrong')</script>";
-            redirect('drawing/manage','refresh');
+            redirect('dcn/manage','refresh');
 
         }
     }
 
     public function deletedcn()
     {
-        $this->model->delete_drawing($this->uri->segment('3'));
-        redirect('drawing/manage');
+        $this->model->delete_dcn($this->uri->segment('3'));
+        redirect('dcn/manage');
+    }
+
+
+    public function edit_dcn()   
+    {
+        $id = $this->uri->segment('3');
+
+        $sql =  "SELECT * from dcn
+        where dcn_id = $id";
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+
+        
+        $this->load->view('dcn/edit',$data);
+        $this->load->view('footer');
+  
+    }
+
+    public function save_edit_dcn()
+    {
+    
+        $dcn_id =  $this->input->post('dcn_id');
+        $dcn_no  =  $this->input->post('dcn_no');
+       $this->model->save_dcn($dcn_id,$dcn_no);
+
+        echo "<script>alert('Add Data Success')</script>";
+        redirect('dcn/manage','refresh');
+  
     }
 
 }

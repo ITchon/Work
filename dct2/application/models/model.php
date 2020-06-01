@@ -20,12 +20,12 @@ class Model extends CI_Model
   {
     $sql ="SELECT * FROM drawing";
     $query = $this->db->query($sql); 
-    return $query;
+   return $query;
   }
 
   public function sub_part($id)
   { 
-    $sql =  'SELECT * FROM sub_part where m_id = '.$id.' AND delete_flag !=0';
+    $sql =  'SELECT * FROM sub_part where m_id = '.$id.' ';
     $query = $this->db->query($sql); 
     if($query){
       $result= $query->result();
@@ -66,7 +66,7 @@ class Model extends CI_Model
 
   public function hook_bom($bm)
   {
-    $sql =  'SELECT * FROM bom where b_master = '.$bm.' AND delete_flag !=0 ';
+    $sql =  'SELECT * FROM bom where b_master = '.$bm.' ';
     $query = $this->db->query($sql); 
     return $query->result(); 
   }
@@ -254,9 +254,10 @@ return false;
   return false;
  }
 
- function insert_drawing($d_no, $dcn_id)
+ function insert_drawing($d_no, $dcn_id,$file_name)
  {
-  $sql ="INSERT INTO drawing (d_no,enable, dcn_id, date_created,delete_flag,version) VALUES ( '$d_no', '1', '$dcn_id, CURRENT_TIMESTAMP,  '1' ,'00');";
+  $sql ="INSERT INTO drawing (d_no,enable, dcn_id, date_created,delete_flag,file_name,version) VALUES ( '$d_no', '1', '$dcn_id', CURRENT_TIMESTAMP,  '1' 
+  ,'$file_name','00');";
     $query = $this->db->query($sql);  
    if($query){
      return true;
@@ -443,6 +444,33 @@ public function disablePermission_Group($key=''){
   
 }
 
+public function enableDcn($key=''){
+
+  $sqlEdt = "UPDATE dcn SET enable='1', date_updated=CURRENT_TIMESTAMP WHERE dcn_id={$key};";
+  $exc_user = $this->db->query($sqlEdt);
+  
+  if ($exc_user){
+    
+    return TRUE;  
+    
+  }else{  return FALSE; }
+  
+}
+
+
+public function disableDcn($key=''){
+
+  $sqlEdt = "UPDATE dcn SET enable='0', date_updated=CURRENT_TIMESTAMP WHERE dcn_id={$key};";
+  $exc_user = $this->db->query($sqlEdt);
+  
+  if ($exc_user){
+    
+    return TRUE;  
+    
+  }else{  return FALSE; }
+  
+}
+
 
 
 
@@ -605,33 +633,13 @@ public function disablePart($key=''){
       if ($query) { 
          return true; 
       } 
-     else{
+      else{
      return false;
    }
    }
 
    public function delete_drawing($id) {
    $sql ="UPDATE drawing SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE d_id = '$id'";
-   $query = $this->db->query($sql);
-      if ($query) { 
-         return true; 
-      } 
-      else{
-     return false;
-   }
-   }
-   public function delete_bom($id) {
-   $sql ="UPDATE bom SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE b_id = '$id'";
-   $query = $this->db->query($sql);
-      if ($query) { 
-         return true; 
-      } 
-      else{
-     return false;
-   }
-   }
-   public function delete_sub($id) {
-   $sql ="UPDATE sub_part SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE sub_id = '$id'";
    $query = $this->db->query($sql);
       if ($query) { 
          return true; 
@@ -652,8 +660,9 @@ public function disablePart($key=''){
    }
    }
 
-   public function delete_drawing($id) {
-   $sql ="UPDATE drawing SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE d_id = '$id'";
+
+   public function delete_dcn($id) {
+   $sql ="UPDATE DCN SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE dcn_id = '$id'";
    $query = $this->db->query($sql);
       if ($query) { 
          return true; 
@@ -662,6 +671,7 @@ public function disablePart($key=''){
      return false;
    }
    }
+
 
    public function delete_part($id) {
    $sql ="UPDATE part SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE p_id = '$id'";
@@ -794,9 +804,11 @@ public function disablePart($key=''){
     $exc_user = $this->db->query($sql);
     if ($exc_user ){ return true; }else{ return false; }
   }
-  public function insert_dcn($dcn)
+
+
+  public function insert_dcn($dcn_no)
   {
-     $sql  = "INSERT INTO dcn(dcn_no, date_created, delete_flag, enable) VALUES  ('$dcn', CURRENT_TIMESTAMP, '1', '1')";
+     $sql  = "INSERT INTO dcn(dcn_no, date_created, delete_flag, enable) VALUES  ('$dcn_no', CURRENT_TIMESTAMP, '1', '1')";
      $query = $this->db->query($sql);
     if ($query) { 
       return true; 
@@ -804,6 +816,13 @@ public function disablePart($key=''){
     else{
        return false;
     }
+  }
+
+  public function save_dcn($dcn_id,$dcn_no)
+  {
+     $sql ="UPDATE dcn SET dcn_no = '$dcn_no', date_updated = CURRENT_TIMESTAMP WHERE dcn_id = '$dcn_id'";
+    $exc_user = $this->db->query($sql);
+    if ($exc_user ){ return true; }else{ return false; }
   }
 
 }

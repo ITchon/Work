@@ -60,5 +60,8 @@
 .table th {
   text-align: center;
 }
+a {
+ cursor: pointer;
+}
 
 </style>
