@@ -175,7 +175,7 @@ class Bom extends CI_Controller {
     {
 
         $bm =  $this->input->post('bm'); 
-        $m_id =  $this->input->post('m_id'); 
+        $m_id =  $this->input->post('m_id');
         $this->model->delete_sub($m_id);
         redirect('bom/manage/'.$bm.'','refresh');
     }

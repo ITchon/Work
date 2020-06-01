@@ -25,7 +25,7 @@ class Model extends CI_Model
 
   public function sub_part($id)
   { 
-    $sql =  'SELECT * FROM sub_part where m_id = '.$id.' ';
+    $sql =  'SELECT * FROM sub_part where m_id = '.$id.'  AND delete_flag != 0';
     $query = $this->db->query($sql); 
     if($query){
       $result= $query->result();
@@ -66,7 +66,7 @@ class Model extends CI_Model
 
   public function hook_bom($bm)
   {
-    $sql =  'SELECT * FROM bom where b_master = '.$bm.' ';
+    $sql =  'SELECT * FROM bom where b_master = '.$bm.'   AND delete_flag != 0';
     $query = $this->db->query($sql); 
     return $query->result(); 
   }
@@ -75,7 +75,8 @@ class Model extends CI_Model
   {
     $sql ="   SELECT pd.pd_id,p.p_name,d.d_no FROM part_drawing  pd 
     inner join part p on pd.p_id=p.p_id 
-    inner join drawing d on pd.d_id=d.d_id";
+    inner join drawing d on pd.d_id=d.d_id
+    AND delete_flag != 0 ";
     $query = $this->db->query($sql); 
      return $query;
   }
@@ -652,7 +653,13 @@ public function disablePart($key=''){
    }
    public function delete_sub($id) {
    $sql ="UPDATE sub_part SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE sub_id = '$id'";
-
+   $query = $this->db->query($sql);
+   if ($query) { 
+    return true; 
+ } 
+ else{
+return false;
+}
    }
 
    public function delete_drawing($id) {
