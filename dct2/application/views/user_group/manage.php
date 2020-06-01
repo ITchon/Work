@@ -36,7 +36,7 @@
                     </thead>
                     <tbody>
                     <?php
-                    foreach($result as $r){
+                    foreach($result_all as $r){
             echo "<tr>";
                 echo "<td>".$r->sug_id."</td>";
                 echo "<td>".$r->name."</td>";
@@ -54,7 +54,7 @@
                   ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
                   <?php
                 }
-                ?> <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
+                ?> <a class='' onclick="javascript:window.location='<?php
                 echo base_url() . 'usergroup/rule_ug/' . $r->sug_id;
                 ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
 

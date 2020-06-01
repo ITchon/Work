@@ -743,7 +743,7 @@ public function disablePart($key=''){
 
   public function deluserg_permission($sug_id)
   {
-    $sql  =  "DELETE FROM sys_users_groups_permissions WHERE sug_id = $sug_id";
+    $sql  =  "DELETE FROM sys_users_groups_permissions WHERE sug_id = '$sug_id'";
     $query = $this->db->query($sql); 
     if ($query) { 
       return true; 
