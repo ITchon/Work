@@ -31,9 +31,6 @@
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/application.min.css'; ?>">
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/demo.min.css'; ?>">
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/login-3.min.css';?>">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
-
     <link rel="stylesheet" type="text/css" href="<?php echo base_url().'assets/font-awesome/css/font-awesome.min.css'; ?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url().'assets/plugins/fullcalendar/fullcalendar.css'; ?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url().'assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'; ?>">    
@@ -60,5 +57,12 @@
 .table th {
   text-align: center;
 }
-
+a{ 
+  cursor: pointer;
+}
+  .not-active {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+}
 </style>

@@ -40,33 +40,24 @@ class Drawing extends CI_Controller {
         else if(isset($id)){
             $sql =  "SELECT d.d_id, d.d_no, d.enable, d.file_name, d.version, dcn.dcn_no,'v_id'
             from drawing as d
-         inner join dcn on dcn.dcn_id = d.dcn_id
+            inner join dcn on dcn.dcn_id = d.dcn_id
             where d.delete_flag != 0 AND d.d_id = $id
             UNION
-    SELECT v.d_id, d.d_no, v.enable, v.file_name, v.version, dc.dcn_no, v.v_id
-    from version as v
-    inner join drawing as d on d.d_id = v.d_id
-    inner join dcn as dc on dc.dcn_id = d.dcn_id
-    where v.delete_flag != 0 AND v.d_id = $id
-    ORDER by version DESC";
+            SELECT v.d_id, d.d_no, v.enable, v.file_name, v.version, dc.dcn_no, v.v_id
+            from version as v
+            inner join drawing as d on d.d_id = v.d_id
+            inner join dcn as dc on dc.dcn_id = d.dcn_id
+            where v.delete_flag != 0 AND v.d_id = $id
+            ORDER by version DESC";
                  $data['title'] = $title ;
                  $data['name'] = $name ;
         }
         else{
           $sql =  'SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version from drawing d 
           inner join dcn as dc on dc.dcn_id = d.dcn_id where d.delete_flag != 0';
-
-
         }
-
-        
-
-
-       
-       $query = $this->db->query($sql); 
-       $data['result'] = $query->result(); 
-
-
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
         $this->load->view('drawing/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
         
@@ -91,11 +82,9 @@ class Drawing extends CI_Controller {
             echo '<script language="javascript">';
             echo 'history.go(-1);';
             echo '</script>';
-
         }else{
-        
             echo "<script>alert('Simting wrong')</script>";
-       redirect('drawing/manage','refresh');
+            redirect('drawing/manage','refresh');
         }
     }
 
@@ -155,11 +144,7 @@ class Drawing extends CI_Controller {
         }
     }
 
-    public function deletedrawing()
-    {
-        $this->model->delete_drawing($this->uri->segment('3'));
-        redirect('drawing/manage','refresh');
-    }
+  
 
     public function deletedrawing_v()
     {
