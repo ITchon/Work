@@ -11,7 +11,7 @@
              Add User
             </h2><hr>
             <form class="form form-horizontal container" action="<?php echo base_url()?>user/insert" method="post" data-toggle="validator">
-            
+                  <?php echo $this->session->flashdata("error"); ?>
                 <div class="form-group has-feedback">
                     <label for="username" class="col-sm-3 col-md-2 control-label">Username</label>
                     <div class="col-sm-6 col-md-8">
