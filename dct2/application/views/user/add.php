@@ -35,7 +35,7 @@
                       <label for="email-2" class="col-sm-3 col-md-2 control-label">Select</label>      
           
                       <div class="col-sm-6 col-md-2">
-                   <select name="gender" class="form-control" >
+                   <select name="gender" class="form-control select2" >
                    <option value="">- - - - - -</option>
                        <option value="Male">Male</option>
                        <option value="Female">Female</option>
@@ -74,8 +74,8 @@
                       <label for="email-2" class="col-sm-3 col-md-2 control-label">Select Group</label>      
           
                       <div class="col-sm-6 col-md-2">
-                   <select name="sug_id" class="form-control" id="" required>
-                   <option value="">- - - - - -</option>
+                   <select name="sug_id" class="form-control select2" id="" required>
+                   <option value="" hidden>- - - - - -</option>
                     <?php foreach ($excLoadG as $r) {
                         ?>
                        <option value="<?php echo $r->sug_id ?>"><?php echo $r->name ?></option>
@@ -97,8 +97,14 @@
          
         </div>
       </div>
-      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-      <script type="text/javascript">
+             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+            <script>
+        $(document).ready(function() {
+    $('.select2').select2();
+});
+      </script>
+
+      <!--<script type="text/javascript">
     $("#form").submit(function(){
         $.ajax({
            url: "<?php echo base_url(); ?>user/insert",
