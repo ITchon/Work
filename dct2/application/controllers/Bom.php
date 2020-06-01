@@ -26,17 +26,15 @@ class Bom extends CI_Controller {
     }
     	public function manage()
     {	
-          $sql =  'SELECT DISTINCT part.`p_id`,`p_name` FROM `part` inner join bom on bom.b_master = part.p_id where bom.delete_flag !=0';
+          $sql =  'SELECT DISTINCT part.p_id,part.p_name FROM part inner join bom on bom.b_master = part.p_id where bom.delete_flag !=0';
        $query = $this->db->query($sql); 
        $data['result'] = $query->result(); 
-        
-      
+
        if( $this->input->post('bm')){
           $bm =  $this->input->post('bm'); 
        }else{
         $bm = $this->uri->segment('3');
        }
-       
         if(isset($bm)){
             $array=[];
             $data= $this->model->hook_bom($bm) ;
@@ -44,7 +42,6 @@ class Bom extends CI_Controller {
       
              $data= $this->model->sub_part($r->p_id) ;
              $a=array('lv'=>2,'id'=>$r->p_id,'m_id'=>$r->b_id );
-                $origin = $r->p_id;
              array_push($array,$a);
              if($data != false){  
                 $m_id =$r->p_id;
@@ -126,9 +123,7 @@ class Bom extends CI_Controller {
          }
     }
 
-  
 // print_r($array_sub_part);
-
    $data['result_bom'] = $array;  
 
    $array_part =[] ;
@@ -143,6 +138,9 @@ class Bom extends CI_Controller {
     $query=$this->db->query("SELECT * from part as p inner join drawing as d on d.d_id = p.d_id where p.p_id = $bm");
     $data['bom']=$query->result();
     $data['bm']=$bm;
+    $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
+       $query = $this->db->query($sql); 
+       $data['result_sub'] = $query->result(); 
     $this->load->view('bom/show',$data);//bring $data to user_data 
    $this->load->view('footer');
     }else{
@@ -180,6 +178,20 @@ class Bom extends CI_Controller {
         $m_id =  $this->input->post('m_id'); 
         $this->model->delete_sub($m_id);
         redirect('bom/manage/'.$bm.'','refresh');
+    }
+    public function insert_bom()
+    {
+        $bm =  $this->input->post('bm');
+        $p_id =  $this->input->post('p_id');
+        
+     foreach ($p_id as $p) {
+        $result = $this->model->insert_bom($bm,$p);
+    }
+
+        echo "<script>alert('Add Data Success')</script>";
+        redirect('bom/manage/'.$bm.'','refresh');
+
+  
     }
 
 

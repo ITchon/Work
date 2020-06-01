@@ -18,7 +18,7 @@
           
                       <div class="col-sm-6 col-md-4">
                    <select name="bm" class="form-control select2"  required>
-                   <option value="">- - - Select Part Master - - -</option>
+                   <option value="">- - - Select Bom Master - - -</option>
                    <?php
                       foreach($result_p as $r){?>
              
@@ -32,7 +32,7 @@
             
     
                   <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Secondary Part</label>      
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Part</label>      
           
                       <div class="col-sm-6 col-md-4">
                    <select name="p_id[]" class="form-control select2" multiple="multiple" required>

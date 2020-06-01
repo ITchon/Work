@@ -182,7 +182,7 @@ return false;
 
  function insert_bom($bm,$p)
  {
-  $sql ="INSERT INTO bom (b_master,p_id) VALUES ('$bm','$p');";
+  $sql ="INSERT INTO bom (b_master,p_id,date_created,delete_flag) VALUES ('$bm','$p',CURRENT_TIMESTAMP,'1');";
     $query = $this->db->query($sql);  
    if($query){
      return true;
@@ -633,9 +633,26 @@ public function disablePart($key=''){
       if ($query) { 
          return true; 
       } 
+     else{
+     return false;  
+   }
+   }
+
+
+   
+   public function delete_bom($id) {
+   $sql ="UPDATE bom SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE b_id = '$id'";
+   $query = $this->db->query($sql);
+      if ($query) { 
+         return true; 
+      } 
       else{
      return false;
    }
+   }
+   public function delete_sub($id) {
+   $sql ="UPDATE sub_part SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE sub_id = '$id'";
+
    }
 
    public function delete_drawing($id) {
