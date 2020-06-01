@@ -10,15 +10,16 @@
               <h2 class=" text-center text-primary">
              EDIT PART
             </h2><hr>
-            <input type="text" name="p_id" value="<?php echo $result[0]->p_id ?>" hidden>
-            <form class="form form-horizontal container" action="<?php echo base_url()?>part/insert" method="post" data-toggle="validator">
+            
+            <form class="form form-horizontal container" action="<?php echo base_url()?>part/save_edit" method="post" data-toggle="validator">
+              <input type="text" name="p_id" value="<?php echo $result[0]->p_id ?>" hidden>
             
 
 
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Part Number</label>
                     <div class="col-sm-6 col-md-4">
-
+                    <input hidden type="text" name="p_id " value="<?php echo $result[0]->p_id ?>" >
                     <input id="part" class="form-control " type="text" name="p_no" value="<?php echo $result[0]->p_no ?>">
 
                     <span class="form-control-feedback" aria-hidden="true">
@@ -40,7 +41,7 @@
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Drawing</label>      
           
                       <div class="col-sm-6 col-md-4">
-                   <select name="d_no" class="form-control select2" >
+                   <select name="d_id" class="form-control select2" >
                    <option selected value="<?php echo $result[0]->d_no ?>"><?php echo $result[0]->d_no ?></option>
                    <?php
                       foreach($result_g as $rg){?>

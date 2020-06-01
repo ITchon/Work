@@ -158,8 +158,9 @@ class Part extends CI_Controller {
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
 
+        $d =  $data['result'][0]->d_id;
 
-        $sql1 =  'SELECT * from drawing';
+        $sql1 =  "SELECT * from drawing where d_id != '$d'";
         $query = $this->db->query($sql1); 
         $data['result_g'] = $query->result(); 
 
@@ -168,5 +169,17 @@ class Part extends CI_Controller {
         $this->load->view('footer');
   
     }
+
+    public function save_edit()
+    {
+        $p_id =  $this->input->post('p_id');
+        $p_no =  $this->input->post('p_no');
+        $p_name =  $this->input->post('p_name');
+        $d_id =  $this->input->post('d_id');
+
+        $this->model->save_edit_part($p_id, $p_no, $p_name,$d_id);
+        redirect('part/manage');
+    }
+
 }
 
