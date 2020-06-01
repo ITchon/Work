@@ -61,7 +61,7 @@
                 echo base_url() . 'drawing/edit_permissiongroup/' . $r->dcn_id;
                 ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
                 <?php 
-                echo "<a type='button' href='".base_url()."drawing/deletedrawing/".$r->dcn_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
+                echo "<a type='button' href='".base_url()."dcn/deleteddcn/".$r->dcn_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
             echo "</tr>";
         }
     ?>

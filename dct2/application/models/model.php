@@ -254,9 +254,9 @@ return false;
   return false;
  }
 
- function insert_drawing($d_no)
+ function insert_drawing($d_no, $dcn_id)
  {
-  $sql ="INSERT INTO drawing (d_no,enable,date_created,delete_flag,version) VALUES ( '$d_no', '1', CURRENT_TIMESTAMP,  '1' ,'00');";
+  $sql ="INSERT INTO drawing (d_no,enable, dcn_id, date_created,delete_flag,version) VALUES ( '$d_no', '1', '$dcn_id, CURRENT_TIMESTAMP,  '1' ,'00');";
     $query = $this->db->query($sql);  
    if($query){
      return true;
@@ -632,6 +632,17 @@ public function disablePart($key=''){
    }
    }
 
+   public function delete_drawing($id) {
+   $sql ="UPDATE drawing SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE d_id = '$id'";
+   $query = $this->db->query($sql);
+      if ($query) { 
+         return true; 
+      } 
+      else{
+     return false;
+   }
+   }
+
    public function delete_part($id) {
    $sql ="UPDATE part SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE p_id = '$id'";
    $query = $this->db->query($sql);
@@ -762,6 +773,17 @@ public function disablePart($key=''){
       gender = '$gender', email = '$email', date_updated = CURRENT_TIMESTAMP WHERE su_id = '$su_id'";
     $exc_user = $this->db->query($sql);
     if ($exc_user ){ return true; }else{ return false; }
+  }
+  public function insert_dcn($dcn)
+  {
+     $sql  = "INSERT INTO dcn(dcn_no, date_created, delete_flag, enable) VALUES  ('$dcn', CURRENT_TIMESTAMP, '1', '1')";
+     $query = $this->db->query($sql);
+    if ($query) { 
+      return true; 
+    } 
+    else{
+       return false;
+    }
   }
 
 }

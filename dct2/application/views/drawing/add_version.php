@@ -8,7 +8,7 @@
             <div class="col-md-12  ">
               <div class="demo-form-wrapper card" style="padding-top:8px">
               <h2 class=" text-center text-primary">
-             EDIT DRAWING
+             ADD VERSION
             </h2><hr>
             <form class="form form-horizontal container" action="<?php echo base_url()?>drawing/update_v" method="post" data-toggle="validator">
             
@@ -16,7 +16,7 @@
                     <label for="part" class="col-sm-5 col-md-4 control-label">Drawing No</label>
                     <div class="col-sm-6 col-md-4">
                       <input type="text" name="d_id" value="<?php echo $result[0]->d_id?>" hidden>
-                    <input id="d_no" class="form-control " type="text" name="d_no" placeholder="Drawing No" readonly value="<?php echo $result[0]->d_no ?>">
+                    <input id="d_no" class="form-control " type="text" name="d_no" placeholder="Drawing No"  value="<?php echo $result[0]->d_no ?>">
 
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
@@ -27,7 +27,7 @@
                     <label for="dcn" class="col-sm-3 col-md-4 control-label">DCN</label>
                     <div class="col-sm-6 col-md-5">
                     <input type="text" name="dcn_id" value="<?php echo $result[0]->dcn_id?>" hidden>
-                    <input id="dcn" class="form-control" type="text" placeholder="DCN" readonly value="<?php echo $result[0]->dcn_no ?>">
+                    <input id="dcn" class="form-control" type="text" placeholder="DCN"  value="<?php echo $result[0]->dcn_no ?>">
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
                     </span>
@@ -38,7 +38,7 @@
                   <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">File</label>      
                       <div class="col-sm-6 col-md-4">
-                   <input class="form-control" type="text" readonly value="<?php echo $result[0]->file ?>">
+                   <input class="form-control" type="text"  value="<?php echo $result[0]->file ?>">
                     </div>
                     </div> 
 
@@ -76,7 +76,14 @@
                     <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Change</label>  
                       <div class="col-sm-6 col-md-4">
-                   <input type="file" name="file_name" class="form-control" id="file_name">
+                        <?php if($result[0]->file){ ?>
+                          <input type="text" name="file_name" value="<?php echo $result[0]->file ?>">
+                   <input type="file" name="file_name" class="form-control" id="file_name" value="<?php echo $result[0]->file ?>">
+                      <?php }else{ ?>
+                          <input type="file" name="file_name" class="form-control" id="file_name">
+
+                      <?php } ?>
+
                    </div>
                     </div>
             </div>

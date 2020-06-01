@@ -55,7 +55,11 @@ class Drawing extends CI_Controller {
         else{
           $sql =  'SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version from drawing d 
           inner join dcn as dc on dc.dcn_id = d.dcn_id where d.delete_flag != 0';
+
+
         }
+
+        
 
 
        
@@ -72,7 +76,6 @@ class Drawing extends CI_Controller {
     public function insert()
     {
     
-
         $d_no =  $this->input->post('d_no');
         $dcn_id =  $this->input->post('dcn_id');
         $result = $this->model->insert_drawing($d_no,$dcn_id);

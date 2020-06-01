@@ -181,12 +181,11 @@
                   <label for="name-1" class="control-label">DCN Number</label>      
           
                      
-                   <select name="dcn_id" class="form-control select2"  required>
+                   <select name="dcn_id" class="form-control select2" id="dcn_id"  required>
                    <option value=""> - - - Select DCN- - - </option>
                    <?php
                    
                       foreach($result_dcn as $dcn){?>
-             
                      <option value="<?php  echo $dcn->dcn_id ?>"><?php echo $dcn->dcn_no ?></option>
                     <?php
                       }
@@ -195,7 +194,7 @@
              
                     </div>
                   <div class="form-group">
-                    <button  id="btn" class="btn btn-primary ">Save Changes</button>
+                    <button type="submit" id="btn" class="btn btn-primary ">Save Changes</button>
                   </div>
                 </form>
           </div>
@@ -219,21 +218,19 @@
     });
 
 
-    $("#btn").on("click",function(){
-      chk = $("#d_no").val();
-      if(chk != ''){
+    $("#btn").on("submit",function(){
+      data = $("#form").serialize();
+      alert(data);
         $.ajax({
            url: "<?php echo base_url(); ?>drawing/insert",
            type: 'POST',
-           data: $("#form").serialize(),
+           data: data,
            success: function() {
             $('#demo-datatables-buttons-1').DataTable().ajax.reload();
             alert('Insert Drawing success');
            }
         });
-      }else{
 
-      }
        });
      
     });

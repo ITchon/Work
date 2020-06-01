@@ -177,7 +177,7 @@ class User extends CI_Controller {
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
 
-        $sql =  "SELECT * from sys_user_groups ";
+        $sql =  "SELECT * from sys_user_groups as sug where sug.delete_flag != 0 ";
 
         $query = $this->db->query($sql); 
         $data['result_group'] = $query->result(); 

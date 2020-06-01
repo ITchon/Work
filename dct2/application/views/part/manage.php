@@ -61,7 +61,7 @@
                   <?php
                 }
                 ?> <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
-                echo base_url() . 'part/edit_permission/' . $r->p_id;
+                echo base_url() . 'part/edit_part/' . $r->p_id;
                 ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
                 <?php 
                 echo "<a type='button' href='".base_url()."part/deletepart/".$r->p_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";  

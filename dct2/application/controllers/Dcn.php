@@ -42,7 +42,7 @@ class Dcn extends CI_Controller {
     
 
         $dcn =  $this->input->post('dcn_no');
-             $result = $this->model->insert_dcn($dcn);
+        $result = $this->model->insert_dcn($dcn);
     
   
     }
@@ -80,7 +80,7 @@ class Dcn extends CI_Controller {
         }
     }
 
-    public function deletedrawing()
+    public function deletedcn()
     {
         $this->model->delete_drawing($this->uri->segment('3'));
         redirect('drawing/manage');

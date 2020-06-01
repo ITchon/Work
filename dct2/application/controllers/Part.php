@@ -147,5 +147,26 @@ class Part extends CI_Controller {
         $this->model->delete_part($this->uri->segment('3'));
         redirect('part/manage');
     }
+
+    public function edit_part()   
+    {
+        $id = $this->uri->segment('3');
+
+        $sql =  "SELECT p.p_id, p.p_no, p.p_name,p.d_id, d.d_no from part as p
+        inner join drawing as d on d.d_id = p.d_id
+        where p.p_id = $id";
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+
+
+        $sql1 =  'SELECT * from drawing';
+        $query = $this->db->query($sql1); 
+        $data['result_g'] = $query->result(); 
+
+        
+        $this->load->view('part/edit',$data);
+        $this->load->view('footer');
+  
+    }
 }
 
