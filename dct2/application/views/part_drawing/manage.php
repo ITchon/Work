@@ -43,24 +43,9 @@
                 echo "<td>".$r->p_name."</td>";
                 echo "<td>".$r->d_no."</td>";
                 echo "<td>".$r->p_no."</td>";
-                if($r->enable!=1 ){?>
                   
-                  <td class="text-center"><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
-                  echo base_url() . 'part_drawing/enable/' . $r->pd_id;
-                  ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
-                  <?php
-                }
-                else{?>
+                  ?><td class="text-center"><?php
 
-                  <td class="text-center"><a type="button"  data-original-title='Rule' onclick="javascript:window.location='<?php
-                  echo base_url() . 'part_drawing/disable/' . $r->pd_id;
-                  ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
-                  <?php
-                }
-                ?> <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
-                echo base_url() . 'part_drawing/edit_permission/' . $r->pd_id;
-                ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
-                <?php 
                 echo "<a type='button' href='".base_url()."part_drawing/deletePartD/".$r->pd_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";   
 
             echo "</tr>";

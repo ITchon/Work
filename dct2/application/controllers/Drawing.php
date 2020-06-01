@@ -43,21 +43,30 @@ class Drawing extends CI_Controller {
             inner join dcn on dcn.dcn_id = d.dcn_id
             where d.delete_flag != 0 AND d.d_id = $id
             UNION
-            SELECT v.d_id, d.d_no, v.enable, v.file_name, v.version, dc.dcn_no, v.v_id
-            from version as v
-            inner join drawing as d on d.d_id = v.d_id
-            inner join dcn as dc on dc.dcn_id = d.dcn_id
-            where v.delete_flag != 0 AND v.d_id = $id
-            ORDER by version DESC";
+    SELECT v.d_id, v.d_no, v.enable, v.file_name, v.version, dc.dcn_no, v.v_id
+    from version as v
+    inner join drawing as d on d.d_id = v.d_id
+    inner join dcn as dc on dc.dcn_id = v.dcn_id
+    where v.delete_flag != 0 AND v.d_id = $id
+    ORDER by version DESC";
                  $data['title'] = $title ;
                  $data['name'] = $name ;
+
+
         }
         else{
           $sql =  'SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version from drawing d 
           inner join dcn as dc on dc.dcn_id = d.dcn_id where d.delete_flag != 0';
         }
-        $query = $this->db->query($sql); 
-        $data['result'] = $query->result(); 
+
+        $sql1 =  'SELECT * from dcn where delete_flag != 0';
+        $query = $this->db->query($sql1); 
+        $data['result_dcn'] = $query->result(); 
+
+       $query = $this->db->query($sql); 
+       $data['result'] = $query->result(); 
+
+
         $this->load->view('drawing/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
         
@@ -69,7 +78,15 @@ class Drawing extends CI_Controller {
     
         $d_no =  $this->input->post('d_no');
         $dcn_id =  $this->input->post('dcn_id');
-        $result = $this->model->insert_drawing($d_no,$dcn_id);
+
+        if($this->input->post('file_name') == null){
+            $file_name =  $this->input->post('file_name2');
+        }else{
+            $file_name =  $this->input->post('file_name');
+        }
+        $result = $this->model->insert_drawing($d_no, $dcn_id, $file_name);
+
+        redirect('drawing/manage','refresh');
   
     }
 
@@ -166,6 +183,13 @@ class Drawing extends CI_Controller {
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
 
+        $dcn =  $data['result'][0]->dcn_id;
+
+
+        $sql1 =  "SELECT * from dcn where delete_flag != 0 AND dcn_id != $dcn ";
+        $query = $this->db->query($sql1); 
+        $data['result_dcn'] = $query->result(); 
+
         $this->load->view('drawing/add_version',$data);
         $this->load->view('footer');
   
@@ -179,6 +203,10 @@ class Drawing extends CI_Controller {
         inner join drawing as d on d.d_id = v.d_id
         inner join dcn as dc on dc.dcn_id = d.dcn_id
           where v.v_id = $id";
+
+          $sql1 =  'SELECT * from dcn where delete_flag != 0';
+        $query = $this->db->query($sql1); 
+        $data['result_dcn'] = $query->result(); 
 
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 

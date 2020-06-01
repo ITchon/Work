@@ -35,7 +35,7 @@
              echo "<tr>";
                 echo "<td>" ?>
         <form action="<?php echo base_url()?>drawing/manage" method="post">
-                    <input type="text" name="dcn_Tid" value="<?php echo $r->dcn_id ?>" hidden>
+                    <input type="text" name="dcn_id" value="<?php echo $r->dcn_id ?>" hidden>
                     <input type="text" name="title" value="<?php echo $r->dcn_no ?>" hidden>
                     <input type="text" name="name" value="DCN" hidden>
                     <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -47,21 +47,21 @@
                 if($r->enable!=1 ){?>
                   
                   <td class="text-center"><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
-                  echo base_url() . 'drawing/enable/' . $r->dcn_id;
+                  echo base_url() . 'dcn/enable/' . $r->dcn_id;
                   ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
                   <?php
                 }
                 else{?>
                   <td class="text-center"><a type="button"  data-original-title='Rule' onclick="javascript:window.location='<?php
-                  echo base_url() . 'drawing/disable/' . $r->dcn_id;
+                  echo base_url() . 'dcn/disable/' . $r->dcn_id;
                   ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
                   <?php
                 }
                 ?> <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
-                echo base_url() . 'drawing/edit_permissiongroup/' . $r->dcn_id;
+                echo base_url() . 'dcn/edit_dcn/' . $r->dcn_id;
                 ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
                 <?php 
-                echo "<a type='button' href='".base_url()."dcn/deleteddcn/".$r->dcn_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
+                echo "<a type='button' href='".base_url()."dcn/deletedcn/".$r->dcn_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
             echo "</tr>";
         }
     ?>

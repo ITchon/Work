@@ -37,7 +37,7 @@ class Usergroup extends CI_Controller {
       
         $sql =  'select * from sys_user_groups where delete_flag != 0';
         $query = $this->db->query($sql); 
-       $data['result'] = $query->result();
+       $data['result_all'] = $query->result();
         $this->load->view('user_group/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
         
@@ -45,21 +45,25 @@ class Usergroup extends CI_Controller {
 
     public function rule_ug($id)
     {       
-            $sql =  "SELECT * from sys_users_groups_permissions where sug_id = $id";
-            $query = $this->db->query($sql); 
+            $sql1 =  "SELECT * from sys_users_groups_permissions where sug_id = $id";
+            $query = $this->db->query($sql1); 
             $data['result_user']= $query->result(); 
 
-            $sql =  "SELECT sug.sug_id, sug.name as sug_name from sys_user_groups as sug where sug.sug_id = $id";
-            $query = $this->db->query($sql); 
+            $sql2 =  "SELECT sug.sug_id, sug.enable, sug.name, sug.name as sug_name from sys_user_groups as sug where sug.sug_id = $id";
+            $query = $this->db->query($sql2); 
             $data['result']= $query->result(); 
 
-            $sql =  "SELECT * from sys_permission_groups";
-            $query = $this->db->query($sql); 
+            $sql2 =  "SELECT * from sys_user_groups where delete_flag != 0 ";
+            $query = $this->db->query($sql2); 
+            $data['result_all']= $query->result(); 
+
+            $sql3 =  "SELECT * from sys_permission_groups";
+            $query = $this->db->query($sql3); 
             $data['result_group']= $query->result(); 
 
+         $this->load->view('user_group/manage',$data);
          $this->load->view('user_group/rule_userg', $data);//bring $data to user_data 
-     
-            $this->load->view('footer');
+         $this->load->view('footer');
    
     }
 
@@ -72,7 +76,7 @@ class Usergroup extends CI_Controller {
        $result = $this->model->insert_group($gname);
        if($result == true){
         echo "<script>alert('Inserted Data Success')</script>";
-        redirect('user/add','refresh'); 
+        redirect('user/manage','refresh'); 
        }
        if($result == false){
         echo "<script>alert('Name already exist')</script>";

@@ -171,18 +171,18 @@
   
             <div class="col-xs-4  card" >
             
-            <form id="form"  method="post"  class="text-center" >
+            <form id="form" action="<?php echo base_url()?>drawing/insert" method="post" class="text-center" >
                  
                   <div class="form-group">
                   <label for="name-1" class="control-label">Add Drawing No</label>
                     <input id="d_no" class="form-control" type="text" name="d_no" required>
                   </div>
                   <div class="form-group">
-                  <label for="name-1" class="control-label">DCN Number</label>      
+                  <label for="name-2" class="control-label">DCN Number</label>      
           
                      
                    <select name="dcn_id" class="form-control select2" id="dcn_id"  required>
-                   <option value=""> - - - Select DCN- - - </option>
+                   <option value="" hidden> - - - Select DCN- - - </option>
                    <?php
                    
                       foreach($result_dcn as $dcn){?>
@@ -191,10 +191,15 @@
                       }
                       ?> 
                    </select>
-             
                     </div>
+                   <div class="form-group">
+                  <label for="name-1" class="control-label">File</label>
+                    <input id="file_name" class="form-control" type="file" name="file_name" required>
+                  </div>
+                    
+
                   <div class="form-group">
-                    <button type="submit" id="btn" class="btn btn-primary ">Save Changes</button>
+                    <button  id="btn" class="btn btn-primary ">Save Changes</button>
                   </div>
                 </form>
           </div>
@@ -202,40 +207,11 @@
         </div>
       </div>
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-      <script type="text/javascript">
-      
-      $(document).ready(function() {
-           $('.select2').select2();  
-        $('#table').DataTable({
-     
+                <script>
+        $(document).ready(function() {
+    $('.select2').select2();
+});
+      </script>
 
-
-          dom: 'Bfrtip',
-        buttons: [
-            'colvis'
-        ]
-       
-    });
-
-
-    $("#btn").on("submit",function(){
-      data = $("#form").serialize();
-      alert(data);
-        $.ajax({
-           url: "<?php echo base_url(); ?>drawing/insert",
-           type: 'POST',
-           data: data,
-           success: function() {
-            $('#demo-datatables-buttons-1').DataTable().ajax.reload();
-            alert('Insert Drawing success');
-           }
-        });
-
-       });
-     
-    });
-
-
-</script>
 
     
