@@ -16,6 +16,9 @@ th, td {
   font-size: 1.17em;
   font-weight: bold;
 }
+#form {
+  display: inline-block;
+}
 </style>
 <div class="layout-content">
     <div class="layout-content-body">
@@ -51,6 +54,7 @@ th, td {
                     <input type="hidden" name="bm" value="<?php echo $bm ?>" hidden>
                     <input type="submit" class="btn btn-outline-primary" value="Add part">
         </form>          
+        
             </div>      
               </div>
        <div class="card-body">
@@ -96,20 +100,30 @@ th, td {
                               echo "<td style='border-right: 1px groove '>".$r->p_name."</td>";
                               echo "<td style='border-right: 1px groove '>".$r->d_no."</td>";
                           if($row['lv']!=2){?>
-                            <form action="<?php echo base_url()?>bom/delete_sub" method="post">
+                            <form id="form" action="<?php echo base_url()?>bom/delete_sub" method="post">
                             <input type="hidden" name="m_id" value="<?php echo $row['m_id'] ?>" hidden>
                             <input type="hidden" name="bm" value="<?php echo $bm ?>" hidden>
-                           <td><button type="submit" onclick='return confirm("Confirm Delete Item")' class="btn-danger btn-sm fa fa-trash"></button></td> 
+                           <td><button type="submit" onclick='return confirm("Confirm Delete Item")' class="btn-danger btn-sm fa fa-trash"></button>
+                           
                            </form>
+                   <form id="form" action="<?php echo base_url()."part/add_sub/$bm"?>" method="post">
+                   <input type="hidden" name="id" value="<?php echo $row['id'] ?>" hidden>
+                   <button type="submit"  class="btn-success btn-sm fa fa-wrench"></button>
+                   </form> 
+
                        <?php   }else{?>
-                    <form action="<?php echo base_url()?>bom/delete" method="post">
+                    <form id="form" action="<?php echo base_url()?>bom/delete" method="post">
                     <input type="hidden" name="m_id" value="<?php echo $row['m_id'] ?>" hidden>
                     <input type="hidden" name="bm" value="<?php echo $bm ?>" hidden>
-                   <td><button type="submit" onclick='return confirm("Confirm Delete Item")' class="btn-danger btn-sm fa fa-trash"></button></td> 
+                   <td><button type="submit" onclick='return confirm("Confirm Delete Item")' class="btn-danger btn-sm fa fa-trash"></button>
                    </form>
+                   <form id="form" action="<?php echo base_url()."part/add_sub/$bm"?>" method="post">
+                   <input type="hidden" name="id" value="<?php echo $row['id'] ?>" hidden>
+                   <button type="submit"  class="btn-success btn-sm fa fa-wrench"></button>
+                   </form>  
                           <?php
                       
-                          }           
+                          }                     
                             }
                                ?>
                               

@@ -9,27 +9,13 @@
               <div class="demo-form-wrapper card" style="padding-top:8px">
               <h2 class=" text-center text-primary">
              ADD PART
-          
+             <?php echo anchor(base_url().'bom/manage/'.$bm.'', 'Back',array('class'=>'btn btn-primary')); ?>
             </h2><hr>
-            
-            <form class="form form-horizontal container" action="<?php echo base_url()?>part/insert_sub" method="post" data-toggle="validator">
-            <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Part Master</label>      
-          
-                      <div class="col-sm-6 col-md-4">
-                   <select name="p_no" class="form-control select2"  required>
-                   <option value="">- - - Select Part Master - - -</option>
-                   <?php
-                      foreach($result_p as $r){?>
-             
-                     <option value="<?php  echo $r->p_id ?>"><?php echo $r->p_no ?></option>
-                    <?php
-                      }
-                      ?> 
-                   </select>
-                    </div>
-                    </div> 
-            
+         
+            <form class="form form-horizontal container" action="<?php echo base_url()."part/insert_sub/$bm"?>" method="post" data-toggle="validator">
+            <input type="hidden" name="bm" value="<?php echo $bm ?>">
+            <input type="hidden" name="p_no" value="<?php echo $p_id ?>">
+       
     
                   <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Secondary Part</label>      

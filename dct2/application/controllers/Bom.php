@@ -38,22 +38,23 @@ class Bom extends CI_Controller {
         if(isset($bm)){
             $array=[];
             $data= $this->model->hook_bom($bm) ;
+        
          foreach($data as $r){
       
-             $data= $this->model->sub_part($r->p_id) ;
+             $data= $this->model->sub_part($r->p_id,$bm) ;
              $a=array('lv'=>2,'id'=>$r->p_id,'m_id'=>$r->b_id );
              array_push($array,$a);
              if($data != false){  
                 $m_id =$r->p_id;
                 foreach($data as $r){
-                    $data= $this->model->sub_part($r->p_id) ;
+                    $data= $this->model->sub_part($r->p_id,$bm) ;
                     $a=array('lv'=>3,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                     array_push($array,$a);
                     if($data != false){  
         
                         foreach($data as $r){
    
-                            $data= $this->model->sub_part($r->p_id) ;
+                            $data= $this->model->sub_part($r->p_id,$bm) ;
                             $a=array('lv'=>4,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                             
                             array_push($array,$a);
@@ -61,7 +62,7 @@ class Bom extends CI_Controller {
                     
                                 foreach($data as $r){
    
-                                    $data= $this->model->sub_part($r->p_id) ;
+                                    $data= $this->model->sub_part($r->p_id,$bm) ;
                                     $a=array('lv'=>5,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                     
                                     array_push($array,$a);
@@ -69,7 +70,7 @@ class Bom extends CI_Controller {
                             
                                         foreach($data as $r){
    
-                                            $data= $this->model->sub_part($r->p_id) ;
+                                            $data= $this->model->sub_part($r->p_id,$bm) ;
                                             $a=array('lv'=>6,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                             
                                             array_push($array,$a);
@@ -77,7 +78,7 @@ class Bom extends CI_Controller {
                                     
                                                 foreach($data as $r){
    
-                                                    $data= $this->model->sub_part($r->p_id) ;
+                                                    $data= $this->model->sub_part($r->p_id,$bm) ;
                                                     $a=array('lv'=>7,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                                     
                                                     array_push($array,$a);
@@ -85,7 +86,7 @@ class Bom extends CI_Controller {
                                             
                                                         foreach($data as $r){
    
-                                                            $data= $this->model->sub_part($r->p_id) ;
+                                                            $data= $this->model->sub_part($r->p_id,$bm) ;
                                                             $a=array('lv'=>8,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                                             
                                                             array_push($array,$a);
@@ -93,14 +94,14 @@ class Bom extends CI_Controller {
                                                     
                                                                 foreach($data as $r){
    
-                                                                    $data= $this->model->sub_part($r->p_id) ;
+                                                                    $data= $this->model->sub_part($r->p_id,$bm) ;
                                                                     $a=array('lv'=>9,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                                                     
                                                                     array_push($array,$a);
                                                                     if($data != false){                                                             
                                                                         foreach($data as $r){
    
-                                                                            $data= $this->model->sub_part($r->p_id) ;
+                                                                            $data= $this->model->sub_part($r->p_id,$bm) ;
                                                                             $a=array('lv'=>10,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                                                             
                                                                             array_push($array,$a);
