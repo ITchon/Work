@@ -23,9 +23,9 @@ class Model extends CI_Model
    return $query;
   }
 
-  public function sub_part($id)
+  public function sub_part($id,$bm)
   { 
-    $sql =  'SELECT * FROM sub_part where m_id = '.$id.'  AND delete_flag != 0';
+    $sql =  'SELECT * FROM sub_part where m_id = '.$id.'  AND delete_flag != 0 and b_master = '.$bm.'';
     $query = $this->db->query($sql); 
     if($query){
       $result= $query->result();
@@ -35,33 +35,6 @@ class Model extends CI_Model
     }
       
   }
-
-
-  public function sort_bom($lv,$p_id)
-  {
-    
-    echo "<hr>";
-    $array=[];
-
-      do{ 
-        $res= $this->model->sub_part($p_id) ;
-        if($res!=false){
-          $lv++;
-          $res2= $res;
-          foreach($res2 as $r){
-            $a=array('lv'=>$lv,'id'=>$r->p_id);
-        
-            array_push($array,$a);
-           $res= $this->model->sort_bom($lv,$r->p_id) ;
-          }
-     
-        }    
-     
-      }while($res!= false);
-  
-    
-    }
-
 
 
   public function hook_bom($bm)
@@ -193,35 +166,16 @@ return false;
    }  
  }
 
- function insert_sub_part($p,$d)
+ function insert_sub_part($p,$d,$bm)
  {
   if($p == $d){
     return false;
-    echo "Same";
-  }else{
-  $num= $this->db->query("  SELECT * FROM `sub_part` where `m_id` = $p and `p_id`= $d "); 
-  $num1= $this->db->query("  SELECT * FROM `sub_part` where `m_id` = $d and `p_id`= $p "); 
-  // $num2= $this->db->query("  SELECT * FROM `sub_part` where `m_id` = $d "); 
-  $chk= $num->num_rows();
-  $chk1= $num1->num_rows();
-  // $chk2= $num2->num_rows();
-  }
-  if($chk!=1  && $chk1 != 1){
-  // $sql ="INSERT INTO sub_part (p_id,sub_p_id,enable,date_created,delete_flag) VALUES ('$p','$d','1',CURRENT_TIMESTAMP,'1');";
-  $sql ="INSERT INTO sub_part (m_id,p_id) VALUES ('$p','$d');";
-    $query = $this->db->query($sql);  
-   if($query){
-     return true;
-   }
-   else{
-     return false;
-   }
-  }
-  else{
-    echo "????";
-    return false;
-  }
 
+  }else{
+
+  $sql ="INSERT INTO sub_part (b_master,m_id,p_id,delete_flag) VALUES ('$bm','$p','$d',1);";
+  $query = $this->db->query($sql);  
+    }
 }
 
 
