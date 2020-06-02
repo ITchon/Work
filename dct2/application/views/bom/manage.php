@@ -14,16 +14,15 @@
             
             <form class="form form-horizontal container" action="<?php echo base_url()?>bom/manage" method="post" data-toggle="validator">
             <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Bom Master</label>      
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select BOM</label>      
           
                       <div class="col-sm-6 col-md-4">
                    <select name="bm" class="form-control select2"  required>
                    <option value="">- - - Select Bom - - -</option>
                    <?php
                       foreach($result as $r){?>
-                        <?php  echo $r->p_id ?>
              
-                     <option value="<?php  echo $r->p_id ?>"><?php echo $r->p_name ?></option>
+                     <option value="<?php  echo $r->b_id ?>"><?php echo $r->p_no ?></option>
                     <?php
                       }
                       ?> 

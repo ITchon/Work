@@ -2,33 +2,25 @@
         <div class="layout-content-body">
           <div class="title-bar">
        
-           
+
           </div>
           <div class="row">
             <div class="col-md-12  ">
               <div class="demo-form-wrapper card" style="padding-top:8px">
               <h2 class=" text-center text-primary">
              ADD PART
-             <a class="btn btn-default" onclick="window.history.go(-1); return false;"> Back </a>
+              <?php  
+               $bm = $this->uri->segment('3');
+              if(isset($bm)){
+                echo '<a class="btn btn-default" href="javascript:window.history.go(-1);">Back</a>';
+              }else{
+                 echo '<a class="btn btn-default" href="'.base_url().'part/manage">Back</a>';
+              }
+              ?>
+            
             </h2><hr>
             <form class="form form-horizontal container" action="<?php echo base_url()?>part/insert" method="post" data-toggle="validator">
-            
-            <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Part Master</label>      
-          
-                      <div class="col-sm-6 col-md-4">
-                   <select name="master" class="form-control select2"  >
-                   <option value="">- - - Select Part Master - - -</option>
-                   <?php
-                      foreach($result_p as $p){?>
-             
-                     <option value="<?php  echo $p->p_id ?>"><?php echo $p->p_no ?></option>
-                    <?php
-                      }
-                      ?> 
-                   </select>
-                    </div>
-                    </div> 
+                <input type="hidden" name="bm" value="<?php echo $bm ?>">
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Part Number</label>
                     <div class="col-sm-6 col-md-4">

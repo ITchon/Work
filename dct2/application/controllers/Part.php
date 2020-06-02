@@ -38,15 +38,13 @@ class Part extends CI_Controller {
 		$this->load->view('footer');
 	}
 	public function add()
+
     {	
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $sql = "SELECT * FROM part_drawing as pd inner join drawing as d on d.d_id = pd.d_id where d.delete_flag != 0 ";
 		$query = $this->db->query($sql);
         $data['result'] = $query->result();  
-        $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0';
-        $query = $this->db->query($sql); 
-       $data['result_p'] = $query->result(); 
         $sql = "SELECT * FROM drawing where delete_flag != 0 ";
         $query = $this->db->query($sql);
         $data['result_d'] = $query->result(); 
@@ -61,7 +59,9 @@ class Part extends CI_Controller {
         $p_id =  $this->input->post('id');
         $data['bm'] =$id;
         $data['p_id'] =$p_id;
+
         $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 and p.p_id = '$p_id.'";
+
         $query = $this->db->query($sql); 
         $res = $query->result(); 
         $data['result_p'] =$res;
@@ -75,6 +75,7 @@ class Part extends CI_Controller {
     public function insert()
     {
     
+        $bm =  $this->input->post('bm');
         $p_no =  $this->input->post('p_no');
         $p_name  =  $this->input->post('p_name');
         $d_id =  $this->input->post('d_id');
@@ -89,7 +90,12 @@ class Part extends CI_Controller {
         $this->model->insert_part($p_no,$p_name, $d_no,$lv,$master);
 
         echo "<script>alert('Add Data Success')</script>";
-        redirect('part/add','refresh');
+        if(!$bm){
+            redirect('part/add','refresh'); 
+        }else{
+            redirect('part/add/'.$bm.'','refresh'); 
+        }
+       
   
     }
     public function insert_sub()

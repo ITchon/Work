@@ -22,13 +22,13 @@ class Bom extends CI_Controller {
     }
 	public function index()
     {	
-
+        
     }
     	public function manage()
     {	
-          $sql =  'SELECT DISTINCT part.p_id,part.p_name FROM part inner join bom on bom.b_master = part.p_id where bom.delete_flag !=0';
-       $query = $this->db->query($sql); 
-       $data['result'] = $query->result(); 
+        $sql =  'SELECT * From bom inner join part p on p.p_id = bom.b_master where bom.delete_flag !=0';
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
 
        if( $this->input->post('bm')){
           $bm =  $this->input->post('bm'); 
@@ -37,25 +37,19 @@ class Bom extends CI_Controller {
        }
         if(isset($bm)){
             $array=[];
-            $data= $this->model->hook_bom($bm) ;
-        
-         foreach($data as $r){
-      
-             $data= $this->model->sub_part($r->p_id,$bm) ;
-             $a=array('lv'=>2,'id'=>$r->p_id,'m_id'=>$r->b_id );
-             array_push($array,$a);
-             if($data != false){  
-                $m_id =$r->p_id;
+            $res_bom= $this->model->hook_bom($bm) ;
+            $data= $this->model->sub_part($res_bom[0]->b_master,$res_bom[0]->b_id) ;
+            $bm =  $res_bom[0]->b_id;
+            if($data != false){  
+                $m_id =$data[0]->p_id;
                 foreach($data as $r){
                     $data= $this->model->sub_part($r->p_id,$bm) ;
-                    $a=array('lv'=>3,'id'=>$r->p_id,'m_id'=>$r->sub_id );
+                    $a=array('lv'=>2,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                     array_push($array,$a);
                     if($data != false){  
-        
                         foreach($data as $r){
-   
                             $data= $this->model->sub_part($r->p_id,$bm) ;
-                            $a=array('lv'=>4,'id'=>$r->p_id,'m_id'=>$r->sub_id );
+                            $a=array('lv'=>3,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                             
                             array_push($array,$a);
                             if($data != false){  
@@ -63,7 +57,7 @@ class Bom extends CI_Controller {
                                 foreach($data as $r){
    
                                     $data= $this->model->sub_part($r->p_id,$bm) ;
-                                    $a=array('lv'=>5,'id'=>$r->p_id,'m_id'=>$r->sub_id );
+                                    $a=array('lv'=>4,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                     
                                     array_push($array,$a);
                                     if($data != false){  
@@ -122,7 +116,6 @@ class Bom extends CI_Controller {
                 }
             }
          }
-    }
 
 // print_r($array_sub_part);
    $data['result_bom'] = $array;  
@@ -136,7 +129,7 @@ class Bom extends CI_Controller {
             }
         
     $data['result_part'] = $array_part;  
-    $query=$this->db->query("SELECT * from part as p inner join drawing as d on d.d_id = p.d_id where p.p_id = $bm");
+    $query=$this->db->query("SELECT * from bom inner join part on part.p_id=bom.b_master inner join drawing d on d.d_id=part.d_id where b_id = $bm");
     $data['bom']=$query->result();
     $data['bm']=$bm;
     $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
@@ -167,27 +160,40 @@ class Bom extends CI_Controller {
     public function delete()
     {
 
-        $bm =  $this->input->post('bm'); 
-        $m_id =  $this->input->post('m_id'); 
-        $this->model->delete_bom($m_id);
-        redirect('bom/manage/'.$bm.'','refresh');
-    }
-    public function delete_sub()
-    {
-
-        $bm =  $this->input->post('bm'); 
+        $bm =  $this->input->post('bm');
         $m_id =  $this->input->post('m_id');
         $this->model->delete_sub($m_id);
         redirect('bom/manage/'.$bm.'','refresh');
     }
+
     public function insert_bom()
     {
         $bm =  $this->input->post('bm');
         $p_id =  $this->input->post('p_id');
-        
-     foreach ($p_id as $p) {
-        $result = $this->model->insert_bom($bm,$p);
+        $result = $this->model->insert_bom($bm);
+        $sql =  'SELECT * FROM bom where b_master = '.$bm.'   AND delete_flag != 0';
+        $query = $this->db->query($sql);
+        $res_bom= $query->result();
+        $b_id = $res_bom[0]->b_id;
+         foreach ($p_id as $p) {
+        $chk= $this->model->insert_sub_part($bm,$p, $b_id);
+        }
+
+        redirect('bom/manage/'.$b_id.'','refresh');
+
+  
     }
+    public function insert_sub()
+    {
+        $bm =  $this->input->post('bm');
+        $p_id =  $this->input->post('p_id');
+        $sql =  'SELECT * FROM bom where b_id = '.$bm.'   AND delete_flag != 0';
+        $query = $this->db->query($sql);
+        $res_bom= $query->result();
+        $b_id = $res_bom[0]->b_master;
+         foreach ($p_id as $p) {
+        $chk= $this->model->insert_sub_part($b_id,$p, $bm);
+        }
         redirect('bom/manage/'.$bm.'','refresh');
 
   
