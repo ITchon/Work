@@ -598,6 +598,7 @@ public function disablePart($key=''){
    public function delete_bom($id) {
    $sql ="UPDATE bom SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE b_id = '$id'";
    $query = $this->db->query($sql);
+   $query = $this->db->query("UPDATE sub_part SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE b_id = '$id'");
       if ($query) { 
          return true; 
       } 

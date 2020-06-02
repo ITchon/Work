@@ -87,7 +87,7 @@ th, td {
                 echo "<td class='text-danger' style='border-right: 1px groove '>$row->p_no</td>";
                 echo "<td class='text-danger' style='border-right: 1px groove '>$row->p_name</td>";
                 echo "<td class='text-danger' style='border-right: 1px groove '>$row->d_no</td>";
-                echo "<td class='text-danger'><a type='button' href='".base_url()."bom/delete/".$row->p_id."' onclick='return confirm(\"Confirm Delete Item\")' ><button class='btn-danger btn-sm fa fa-trash'></button></a>";
+                echo "<td class='text-danger'><a type='button' href='".base_url()."bom/delete_bom/".$bm."' onclick='return confirm(\"Confirm Delete Item\")' ><button class='btn-danger btn-sm fa fa-trash'></button></a>";
                 ?>
                 <form id="form" action="<?php echo base_url()?>part/edit_part" method="post">
                   <?php $bm = $row->b_id; ?>

@@ -118,17 +118,7 @@ class Bom extends CI_Controller {
          }
 
 // print_r($array_sub_part);
-   $data['result_bom'] = $array;  
-
-   $array_part =[] ;
-        foreach($array as $row){
-          
-            $query1 = $this->db->query('SELECT * FROM `part` where p_id = '.$row['id'].' '); 
-            $data_part= $query1->result(); 
-            array_push($array_part,  $data_part);
-            }
-        
-    $data['result_part'] = $array_part;  
+    $data['result_bom'] = $array;  
     $query=$this->db->query("SELECT * from bom inner join part on part.p_id=bom.b_master inner join drawing d on d.d_id=part.d_id where b_id = $bm");
     $data['bom']=$query->result();
     $data['bm']=$bm;
@@ -164,6 +154,12 @@ class Bom extends CI_Controller {
         $m_id =  $this->input->post('m_id');
         $this->model->delete_sub($m_id);
         redirect('bom/manage/'.$bm.'','refresh');
+    }
+    public function delete_bom()
+    {
+        $bm = $this->uri->segment('3');
+        $this->model->delete_bom($bm);
+        redirect('bom/manage','refresh');
     }
 
     public function insert_bom()
