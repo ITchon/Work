@@ -8,8 +8,7 @@
             <div class="col-md-12  ">
               <div class="demo-form-wrapper card" style="padding-top:8px">
               <h2 class=" text-center text-primary">
-             ADD PART////
-             <a href="<?php echo base_url()?>part/show">test</a>
+             ADD BOM
             </h2><hr>
             
             <form class="form form-horizontal container" action="<?php echo base_url()?>bom/insert_bom" method="post" data-toggle="validator">

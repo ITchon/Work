@@ -54,17 +54,67 @@ class Part extends CI_Controller {
 	public function add_sub()
     {	
         $this->model->CheckPermission($this->session->userdata('su_id'));
-
         $id = $this->uri->segment('3');
         $p_id =  $this->input->post('id');
+        $m_id =  $this->input->post('m_id');
+        $sql =  'SELECT * FROM sub_part where sub_id = '.$m_id.'  AND delete_flag != 0';
+        $query = $this->db->query($sql); 
+        $test= $query->result();
+        $query = $this->db->query('SELECT * FROM sub_part where p_id = '.$test[0]->p_id.'  AND delete_flag != 0'); 
+        $data= $query->result();
+        $array=[];
+        foreach($data as $r){
+            $query = $this->db->query('SELECT * FROM sub_part where p_id = '.$r->m_id.'  AND delete_flag != 0'); 
+            $data= $query->result();
+            $a=array('m_id'=>$r->m_id);                                       
+            array_push($array,$a);
+            foreach($data as $r){
+
+                $query = $this->db->query('SELECT * FROM sub_part where p_id = '.$r->m_id.'  AND delete_flag != 0'); 
+                $data= $query->result();
+                $a=array('m_id'=>$r->m_id);                                       
+                array_push($array,$a);
+                foreach($data as $r){
+    
+                    $query = $this->db->query('SELECT * FROM sub_part where p_id = '.$r->m_id.'  AND delete_flag != 0'); 
+                    $data= $query->result();
+                    $a=array('m_id'=>$r->m_id);                                       
+                    array_push($array,$a);
+                    foreach($data as $r){
+        
+                        $query = $this->db->query('SELECT * FROM sub_part where p_id = '.$r->m_id.'  AND delete_flag != 0'); 
+                        $data= $query->result();
+                        $a=array('m_id'=>$r->m_id);                                       
+                        array_push($array,$a);
+                        foreach($data as $r){
+                            $query = $this->db->query('SELECT * FROM sub_part where p_id = '.$r->m_id.'  AND delete_flag != 0'); 
+                            $data= $query->result();
+                            $a=array('m_id'=>$r->m_id);                                       
+                            array_push($array,$a);
+                            foreach($data as $r){
+                
+                                $a=array('m_id'=>$r->m_id);                                       
+                                array_push($array,$a);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    
+        $data['res_chk'] =$array;
         $data['bm'] =$id;
         $data['p_id'] =$p_id;
-
+        $query = $this->db->query('SELECT * FROM bom where b_id = '.$id.'   AND delete_flag != 0');
+        $res_bom= $query->result();
+        $b_master = $res_bom[0]->b_master;
         $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 and p.p_id = '$p_id.'";
-
         $query = $this->db->query($sql); 
         $res = $query->result(); 
-        $data['result_p'] =$res;
+        $query = $this->db->query("SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 and p.p_id != '$b_master.'"); 
+        $res_part = $query->result(); 
+        $data['result_p'] =$res_part;
         $data['p_name'] =$res[0]->p_name;;
         $this->load->view('part/subpart',$data);//bring $data to user_data 
 		$this->load->view('footer');

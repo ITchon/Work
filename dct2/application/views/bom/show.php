@@ -93,8 +93,12 @@ th, td {
                   <?php $bm = $row->b_id; ?>
                 <input type="text" name="bom" value="<?php echo $bm ?>" hidden>
                 <input type="text" name="p_id" value="<?php echo $row->p_id ?>" hidden>
-               <?php echo "<a type='button'><button class='btn-success btn-sm fa fa-wrench'></button></a></td>"; ?>
+               <?php echo "<a type='button'><button class='btn-success btn-sm fa fa-wrench'></button></a>"; ?>
                 </form>
+                <form id="form" action="<?php echo base_url()."part/add_sub/$bm"?>" method="post">
+
+                    <button type="submit"  class="btn-primary btn-sm fa fa-plus"></button></td>
+                    </form>  
                 <?php
               }
             foreach($result_bom as $row){
@@ -129,6 +133,7 @@ th, td {
                     </form>
 
                     <form id="form" action="<?php echo base_url()."part/add_sub/$bm"?>" method="post">
+                    <input type="hidden" name="m_id" value="<?php echo $row['m_id'] ?>" >
                     <input type="hidden" name="id" value="<?php echo $row['id'] ?>" >
                     <button type="submit"  class="btn-primary btn-sm fa fa-plus"></button>
                     </form>  

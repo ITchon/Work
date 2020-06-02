@@ -14,7 +14,6 @@
             <form class="form form-horizontal container" action="<?php echo base_url()."part/insert_sub/$bm"?>" method="post" data-toggle="validator">
             <input type="hidden" name="bm" value="<?php echo $bm ?>">
             <input type="hidden" name="p_no" value="<?php echo $p_id ?>">
-           
             <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Main Part</label>      
           
@@ -28,10 +27,18 @@
                       <div class="col-sm-6 col-md-4">
                    <select name="p_id[]" class="form-control select2" multiple="multiple" required>
                    <?php
-                      foreach($result_p as $r){?>
-             
+                         foreach($res_chk as $chk){
+                           
+                      foreach($result_p as $r){
+                  
+                          if($chk['m_id']!=$r->p_id){
+                            ?>
+                      
+                        
                      <option value="<?php  echo $r->p_id ?>"><?php echo $r->p_no ?></option>
                     <?php
+                      }
+                      }
                       }
                       ?> 
                    </select>
