@@ -188,8 +188,6 @@ class Bom extends CI_Controller {
      foreach ($p_id as $p) {
         $result = $this->model->insert_bom($bm,$p);
     }
-
-        echo "<script>alert('Add Data Success')</script>";
         redirect('bom/manage/'.$bm.'','refresh');
 
   

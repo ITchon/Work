@@ -9,14 +9,19 @@
               <div class="demo-form-wrapper card" style="padding-top:8px">
               <h2 class=" text-center text-primary">
              ADD PART
-             <?php echo anchor(base_url().'bom/manage/'.$bm.'', 'Back',array('class'=>'btn btn-primary')); ?>
+             <?php echo anchor(base_url().'bom/manage/'.$bm.'', 'Back',array('class'=>'btn btn-default ')); ?>
             </h2><hr>
-         
             <form class="form form-horizontal container" action="<?php echo base_url()."part/insert_sub/$bm"?>" method="post" data-toggle="validator">
             <input type="hidden" name="bm" value="<?php echo $bm ?>">
             <input type="hidden" name="p_no" value="<?php echo $p_id ?>">
-       
-    
+           
+            <div class="form-group">
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Main Part</label>      
+          
+                      <div class="col-sm-6 col-md-4">
+                      <input type="text" class="form-control" name="p_no" value="<?php echo $p_name ?>" readonly>
+                    </div>
+                    </div> 
                   <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Secondary Part</label>      
           
@@ -31,18 +36,19 @@
                       ?> 
                    </select>
                     </div>
+            <?php echo anchor(base_url().'part/add/', 'Create Part',array('class'=>'btn btn-primary')); ?>
                     </div> 
-
-                
-                    </div>
-                   
+                 
+            
+                  
             
                   <div class="form-group">
                 <br>
                     <button type="submit" id="btn" class="btn btn-primary btn-block">Save Changes</button>
                   </div>
                 </form>
-
+                
+                </div> 
               </div>
             </div>
           </div>

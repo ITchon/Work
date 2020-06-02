@@ -46,8 +46,6 @@ class Part extends CI_Controller {
         $sql = "SELECT * FROM drawing where delete_flag != 0 ";
         $query = $this->db->query($sql);
         $data['result_d'] = $query->result(); 
-
-
         $this->load->view('part/add',$data);//bring $data to user_data 
 		$this->load->view('footer');
 	}
@@ -57,10 +55,11 @@ class Part extends CI_Controller {
         $p_id =  $this->input->post('id');
         $data['bm'] =$id;
         $data['p_id'] =$p_id;
-        $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0';
+        $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 and p.p_id = '.$p_id.'';
         $query = $this->db->query($sql); 
-       $data['result_p'] = $query->result(); 
-       
+        $res = $query->result(); 
+        $data['result_p'] =$res;
+        $data['p_name'] =$res[0]->p_name;;
         $this->load->view('part/subpart',$data);//bring $data to user_data 
 		$this->load->view('footer');
 	}

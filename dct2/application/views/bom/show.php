@@ -13,7 +13,7 @@ th, td {
  font-weight: bold;
 }
 #header {
-  font-size: 1.17em;
+  font-size: 1.8em;
   font-weight: bold;
 }
 #form {
@@ -37,7 +37,7 @@ th, td {
 
         <form action="<?php echo base_url()?>bom/insert_bom" method="post" class="form-inline">
           <div class="col-xs-5">
-                  <span id="header">BOM TABLE  <?php echo anchor(base_url().'bom/manage', 'Back',array('class'=>'btn btn-primary')); ?></span>
+                  <span class="text-center text-primary" id="header">BOM TABLE  <?php echo anchor(base_url().'bom/manage', 'Back',array('class'=>'btn btn-default')); ?></span>
                   </div>
                   <div class="col-sm-6 col-md-3">
                    <select name="p_id[]" class="form-control select2" multiple="multiple"  required>
@@ -65,7 +65,7 @@ th, td {
                 for($i=1;$i<=$maxlv[0];$i++) { ?>
                <th width="40px" class="not-active" style='border-right: 1px groove ;'>lv <?php echo $i ?></th>
                <?php } ?>
-              <th width="" class="not-active" style='border-right: 1px groove ;'>Part No</th>
+              <th width="" class="not-active " style='border-right: 1px groove ;'>Part No</th>
               <th width="" class="not-active" style='border-right: 1px groove ;'>Part name</th>
               <th width="" class="not-active" style='border-right: 1px groove ;'>Drawing No</th>               
               <th width="15%">Manage</th>               
@@ -77,10 +77,10 @@ th, td {
                for($i=1;$i<=$maxlv[0]-1;$i++) { 
                 echo "<td style='border-right: 1px groove;border-bottom: 1px groove'></td>";
                 }
-                echo "<td style='border-right: 1px groove '>$row->p_no</td>";
-                echo "<td style='border-right: 1px groove '>$row->p_name</td>";
-                echo "<td style='border-right: 1px groove '>$row->d_no</td>";
-                echo "<td style='border-right: 1px groove '><a type='button' href='".base_url()."bom/delete/".$row->p_id."' onclick='return confirm(\"Confirm Delete Item\")' ><button class='btn-danger btn-sm fa fa-trash'></button></a>";
+                echo "<td class='text-danger' style='border-right: 1px groove '>$row->p_no</td>";
+                echo "<td class='text-danger' style='border-right: 1px groove '>$row->p_name</td>";
+                echo "<td class='text-danger' style='border-right: 1px groove '>$row->d_no</td>";
+                echo "<td class='text-danger'><a type='button' href='".base_url()."bom/delete/".$row->p_id."' onclick='return confirm(\"Confirm Delete Item\")' ><button class='btn-danger btn-sm fa fa-trash'></button></a>";
                 ?>
                 <form id="form" action="<?php echo base_url()?>part/edit_part" method="post">
                   <?php $bom = $row->p_id; ?>
@@ -160,6 +160,7 @@ th, td {
             ?>
   </tbody>
 </table>
+
  <script>
 $(document).ready( function () {
   $('.select2').select2();
