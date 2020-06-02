@@ -65,7 +65,7 @@ class Bom extends CI_Controller {
                                         foreach($data as $r){
    
                                             $data= $this->model->sub_part($r->p_id,$bm) ;
-                                            $a=array('lv'=>6,'id'=>$r->p_id,'m_id'=>$r->sub_id );
+                                            $a=array('lv'=>5,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                             
                                             array_push($array,$a);
                                             if($data != false){  
@@ -73,7 +73,7 @@ class Bom extends CI_Controller {
                                                 foreach($data as $r){
    
                                                     $data= $this->model->sub_part($r->p_id,$bm) ;
-                                                    $a=array('lv'=>7,'id'=>$r->p_id,'m_id'=>$r->sub_id );
+                                                    $a=array('lv'=>6,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                                     
                                                     array_push($array,$a);
                                                     if($data != false){  
@@ -81,7 +81,7 @@ class Bom extends CI_Controller {
                                                         foreach($data as $r){
    
                                                             $data= $this->model->sub_part($r->p_id,$bm) ;
-                                                            $a=array('lv'=>8,'id'=>$r->p_id,'m_id'=>$r->sub_id );
+                                                            $a=array('lv'=>7,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                                             
                                                             array_push($array,$a);
                                                             if($data != false){  
@@ -89,18 +89,26 @@ class Bom extends CI_Controller {
                                                                 foreach($data as $r){
    
                                                                     $data= $this->model->sub_part($r->p_id,$bm) ;
-                                                                    $a=array('lv'=>9,'id'=>$r->p_id,'m_id'=>$r->sub_id );
+                                                                    $a=array('lv'=>8,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                                                     
                                                                     array_push($array,$a);
                                                                     if($data != false){                                                             
                                                                         foreach($data as $r){
    
                                                                             $data= $this->model->sub_part($r->p_id,$bm) ;
+                                                                            $a=array('lv'=>9,'id'=>$r->p_id,'m_id'=>$r->sub_id );
+                                                                            
+                                                                            array_push($array,$a);
+                                                                        if($data != false){                                                        foreach($data as $r){
+   
+                                                                            $data= $this->model->sub_part($r->p_id,$bm) ;
                                                                             $a=array('lv'=>10,'id'=>$r->p_id,'m_id'=>$r->sub_id );
                                                                             
                                                                             array_push($array,$a);
                                                                      
-                                                                       }
+                                                                            }
+                                                                        }
+                                                                    }
                                                                 }
                                                             }
                                                         }
