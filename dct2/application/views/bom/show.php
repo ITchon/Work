@@ -68,7 +68,7 @@ th, td {
               <th width="" class="not-active" style='border-right: 1px groove ;'>Part No</th>
               <th width="" class="not-active" style='border-right: 1px groove ;'>Part name</th>
               <th width="" class="not-active" style='border-right: 1px groove ;'>Drawing No</th>               
-              <th width="20px">Manage</th>               
+              <th width="15%">Manage</th>               
              </tr>
             </thead>
           <tbody>
@@ -82,7 +82,7 @@ th, td {
                 echo "<td style='border-right: 1px groove '>$row->d_no</td>";
                 echo "<td style='border-right: 1px groove '><a type='button' href='".base_url()."bom/delete/".$row->p_id."' onclick='return confirm(\"Confirm Delete Item\")' ><button class='btn-danger btn-sm fa fa-trash'></button></a>";
                 ?>
-                <form action="<?php echo base_url()?>part/edit_part" method="post">
+                <form id="form" action="<?php echo base_url()?>part/edit_part" method="post">
                   <?php $bom = $row->p_id; ?>
                 <input type="text" name="bom" value="<?php echo $bom ?>" hidden>
                 <input type="text" name="p_id" value="<?php echo $row->p_id ?>" hidden>
@@ -114,10 +114,18 @@ th, td {
                            <td><button type="submit" onclick='return confirm("Confirm Delete Item")' class="btn-danger btn-sm fa fa-trash"></button>
                            
                            </form>
+
+                           <form id="form" action="<?php echo base_url()?>part/edit_part" method="post">
+                    <input type="text" name="bom" value="<?php echo $bom ?>" hidden>
+                    <input type="text" name="p_id" value="<?php echo $r->p_id ?>" hidden>
+                  <?php echo "<a type='button'><button class='btn-success btn-sm fa fa-wrench'></button></a>"; ?>
+                </form>
+
                    <form id="form" action="<?php echo base_url()."part/add_sub/$bm"?>" method="post">
                    <input type="hidden" name="id" value="<?php echo $row['id'] ?>" hidden>
-                   <button type="submit"  class="btn-success btn-sm fa fa-wrench"></button>
-                   </form> 
+                   <button type="submit"  class="btn-primary btn-sm fa fa-plus"></button>
+                   </form>
+                   </td> 
 
                        <?php   }else{?>
                     <form id="form" action="<?php echo base_url()?>bom/delete" method="post">
@@ -126,16 +134,17 @@ th, td {
                    <td><button type="submit" onclick='return confirm("Confirm Delete Item")' class="btn-danger btn-sm fa fa-trash"></button>
                    </form>
 
-                   <form action="<?php echo base_url()?>part/edit_part" method="post">
+                   <form id="form" action="<?php echo base_url()?>part/edit_part" method="post">
                     <input type="text" name="bom" value="<?php echo $bom ?>" hidden>
                     <input type="text" name="p_id" value="<?php echo $r->p_id ?>" hidden>
-                  <?php echo "<a type='button'><button class='btn-success btn-sm fa fa-wrench'></button></a></td>"; ?>
+                  <?php echo "<a type='button'><button class='btn-success btn-sm fa fa-wrench'></button></a>"; ?>
                 </form>
 
                    <form id="form" action="<?php echo base_url()."part/add_sub/$bm"?>" method="post">
                    <input type="hidden" name="id" value="<?php echo $row['id'] ?>" hidden>
-                   <button type="submit"  class="btn-success btn-sm fa fa-wrench"></button>
+                   <button type="submit"  class="btn-primary btn-sm fa fa-plus"></button>
                    </form>  
+                   </td>
 
                           <?php
                       
