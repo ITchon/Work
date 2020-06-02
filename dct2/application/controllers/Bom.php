@@ -139,9 +139,10 @@ class Bom extends CI_Controller {
     public function add()
     {
 
+
         $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 ';
         $query = $this->db->query($sql); 
-       $data['result_p'] = $query->result(); 
+        $data['result_p'] = $query->result(); 
         $this->load->view('bom/add',$data);//bring $data to user_data 
 		$this->load->view('footer');
     }
@@ -186,9 +187,9 @@ class Bom extends CI_Controller {
         $sql =  'SELECT * FROM bom where b_id = '.$bm.'   AND delete_flag != 0';
         $query = $this->db->query($sql);
         $res_bom= $query->result();
-        $b_id = $res_bom[0]->b_master;
+        $b_master = $res_bom[0]->b_master;
          foreach ($p_id as $p) {
-        $chk= $this->model->insert_sub_part($b_id,$p, $bm);
+        $chk= $this->model->insert_sub_part($b_master,$p, $bm);
         }
         redirect('bom/manage/'.$bm.'','refresh');
 

@@ -168,7 +168,7 @@ return false;
 
  function insert_sub_part($p,$d,$bm)
  {
-  $sql ="INSERT INTO sub_part (b_id,m_id,p_id,delete_flag) VALUES ('$bm','$p','$d',1);";
+  $sql ="INSERT INTO sub_part (b_id,m_id,p_id,date_created,delete_flag) VALUES ('$bm','$p','$d',CURRENT_TIMESTAMP,1);";
   $query = $this->db->query($sql);  
   if($query){
     return true;

@@ -55,12 +55,31 @@ class Part extends CI_Controller {
     {	
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
+        if($this->input->post('bm')){
+            $bm = $this->input->post('bm');
+            $p_id = $this->input->post('id');
+
+            $data['bm'] =$bm;
+            $data['p_id'] =$p_id;
+
+        $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 and p.p_id = '$p_id.'";
+
+        $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 ';
+
+        }else{
+
         $id = $this->uri->segment('3');
         $p_id =  $this->input->post('id');
+
         $data['bm'] =$id;
         $data['p_id'] =$p_id;
 
         $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 and p.p_id = '$p_id.'";
+
+        $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 ';
+
+        }
+        
 
         $query = $this->db->query($sql); 
         $res = $query->result(); 
@@ -101,7 +120,7 @@ class Part extends CI_Controller {
     public function insert_sub()
     {
 
-        $bm = $this->uri->segment('3');
+        $bm =  $this->input->post('bm');
         $p_no =  $this->input->post('p_no');
         $p_id =  $this->input->post('p_id');
   

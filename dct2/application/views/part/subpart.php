@@ -11,7 +11,7 @@
              ADD PART
              <?php echo anchor(base_url().'bom/manage/'.$bm.'', 'Back',array('class'=>'btn btn-default ')); ?>
             </h2><hr>
-            <form class="form form-horizontal container" action="<?php echo base_url()."part/insert_sub/$bm"?>" method="post" data-toggle="validator">
+            <form class="form form-horizontal container" action="<?php echo base_url()."part/insert_sub"?>" method="post" data-toggle="validator">
             <input type="hidden" name="bm" value="<?php echo $bm ?>">
             <input type="hidden" name="p_no" value="<?php echo $p_id ?>">
            
