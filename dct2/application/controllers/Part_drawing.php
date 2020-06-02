@@ -24,6 +24,8 @@ class Part_drawing extends CI_Controller {
     }
     public function add()
     {	
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+
         $sql = "SELECT * FROM drawing where delete_flag != 0";
 		$query1 = $this->db->query($sql);
         $sql1 = "SELECT * FROM part where delete_flag != 0";
@@ -37,6 +39,8 @@ class Part_drawing extends CI_Controller {
 
     	public function manage()
     {   
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+
         $p_id =  $this->input->post('p_id');
         $d_id =  $this->input->post('d_id');
         $name =  $this->input->post('name');
@@ -111,7 +115,7 @@ foreach ($sp_id as $sp) {
 
      public function enable($uid){
 
-        //$this->model->CheckPermission($this->session->userdata('sp_id'));
+        $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $result = $this->model->enablePartD($uid);
 
@@ -127,7 +131,7 @@ foreach ($sp_id as $sp) {
 
     public function disable($uid){
 
-        //$this->model->CheckPermission($this->session->userdata('sp_id'));
+        $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $result = $this->model->disablePartD($uid);
 
@@ -144,6 +148,8 @@ foreach ($sp_id as $sp) {
 
     public function deletePartD()
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        
         $this->model->delete_partD($this->uri->segment('3'));
         redirect('part_drawing/manage');
     }

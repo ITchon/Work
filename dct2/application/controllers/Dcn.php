@@ -26,7 +26,7 @@ class Dcn extends CI_Controller {
     }
     	public function manage()
     {	
-      
+        $this->model->CheckPermission($this->session->userdata('su_id'));
   
         $sql =  'select * from dcn where delete_flag != 0';
         $query = $this->db->query($sql); 
@@ -40,55 +40,29 @@ class Dcn extends CI_Controller {
     public function insert()
     {
     
+        $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $dcn =  $this->input->post('dcn_no');
         $result = $this->model->insert_dcn($dcn);
+        
+        redirect('dcn/manage','refresh');
     
   
     }
 
-    public function enable($uid){
-
-        //$this->model->CheckPermission($this->session->userdata('sp_id'));
-
-        $result = $this->model->enableDcn($uid);
-
-        if($result!=FALSE){
-            redirect('dcn/manage','refresh');
-
-        }else{
-        
-            echo "<script>alert('Simting wrong')</script>";
-       redirect('dcn/manage','refresh');
-        }
-    }
-
-    public function disable($uid){
-
-        //$this->model->CheckPermission($this->session->userdata('sp_id'));
-
-        $result = $this->model->disableDcn($uid);
-
-        if($result!=FALSE){
-            redirect('dcn/manage','refresh');
-            
-
-        }else{
-            echo "<script>alert('Simting wrong')</script>";
-            redirect('dcn/manage','refresh');
-
-        }
-    }
-
     public function deletedcn()
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+
         $this->model->delete_dcn($this->uri->segment('3'));
-        redirect('dcn/manage');
+        redirect('dcn/manage','refresh');
     }
 
 
     public function edit_dcn()   
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+
         $id = $this->uri->segment('3');
 
         $sql =  "SELECT * from dcn
