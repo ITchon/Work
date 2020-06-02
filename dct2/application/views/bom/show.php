@@ -76,7 +76,15 @@ th, td {
                 echo "<td style='border-right: 1px groove '>$row->p_no</td>";
                 echo "<td style='border-right: 1px groove '>$row->p_name</td>";
                 echo "<td style='border-right: 1px groove '>$row->d_no</td>";
-                echo "<td style='border-right: 1px groove '><a type='button' href='".base_url()."bom/delete/".$row->p_id."' onclick='return confirm(\"Confirm Delete Item\")' ><button class='btn-danger btn-sm fa fa-trash'></button></a></td></td>";
+                echo "<td style='border-right: 1px groove '><a type='button' href='".base_url()."bom/delete/".$row->p_id."' onclick='return confirm(\"Confirm Delete Item\")' ><button class='btn-danger btn-sm fa fa-trash'></button></a>";
+                ?>
+                <form action="<?php echo base_url()?>part/edit_part" method="post">
+                  <?php $bom = $row->p_id; ?>
+                <input type="text" name="bom" value="<?php echo $bom ?>" hidden>
+                <input type="text" name="p_id" value="<?php echo $row->p_id ?>" hidden>
+               <?php echo "<a type='button'><button class='btn-success btn-sm fa fa-wrench'></button></a></td>"; ?>
+                </form>
+                <?php
               }
             foreach($result_bom as $row){
                  ?>
@@ -89,7 +97,7 @@ th, td {
                                 }
                               }               
                               $p_id=$row['id'];
-                              $query=$this->db->query("SELECT p.p_no,p.p_name,d.d_no from part as p inner join drawing as d on d.d_id = p.d_id where p.p_id = $p_id");
+                              $query=$this->db->query("SELECT p.p_id,p.p_no,p.p_name,d.d_no from part as p inner join drawing as d on d.d_id = p.d_id where p.p_id = $p_id");
                               $data= $query->result();
                             foreach($data as $r){ 
                               echo "<td style='border-right: 1px groove '>".$r->p_no."</td>";
@@ -105,8 +113,13 @@ th, td {
                     <form action="<?php echo base_url()?>bom/delete" method="post">
                     <input type="hidden" name="m_id" value="<?php echo $row['m_id'] ?>" hidden>
                     <input type="hidden" name="bm" value="<?php echo $bm ?>" hidden>
-                   <td><button type="submit" onclick='return confirm("Confirm Delete Item")' class="btn-danger btn-sm fa fa-trash"></button></td> 
+                   <td><button type="submit" onclick='return confirm("Confirm Delete Item")' class="btn-danger btn-sm fa fa-trash"></button>
                    </form>
+                   <form action="<?php echo base_url()?>part/edit_part" method="post">
+                    <input type="text" name="bom" value="<?php echo $bom ?>" hidden>
+                    <input type="text" name="p_id" value="<?php echo $r->p_id ?>" hidden>
+                  <?php echo "<a type='button'><button class='btn-success btn-sm fa fa-wrench'></button></a></td>"; ?>
+                </form>
                           <?php
                       
                           }           

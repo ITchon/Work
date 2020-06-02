@@ -11,10 +11,16 @@
              EDIT PART
             </h2><hr>
             
-            <form class="form form-horizontal container" action="<?php echo base_url()?>part/save_edit" method="post" data-toggle="validator">
-              <input type="text" name="p_id" value="<?php echo $result[0]->p_id ?>" hidden>
             
-
+              <?php if(isset($gg)){ ?>
+                <form class="form form-horizontal container" action="<?php echo base_url()?>part/save_editb" method="post" data-toggle="validator">
+                <input type="text" name="bom" value="<?php echo $gg ?>"hidden >
+                <input type="text" name="p_id" value="<?php echo $result[0]->p_id ?>" hidden>
+              <?php }else{ ?>
+                <form class="form form-horizontal container" action="<?php echo base_url()?>part/save_edit" method="post" data-toggle="validator">
+              <input type="text" name="p_id" value="<?php echo $result[0]->p_id ?>" hidden>
+              <?php } ?>
+            
 
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Part Number</label>
@@ -42,7 +48,7 @@
           
                       <div class="col-sm-6 col-md-4">
                    <select name="d_id" class="form-control select2" >
-                   <option selected value="<?php echo $result[0]->d_no ?>"><?php echo $result[0]->d_no ?></option>
+                   <option selected value="<?php echo $result[0]->d_id ?>"><?php echo $result[0]->d_no ?></option>
                    <?php
                       foreach($result_g as $rg){?>
              
