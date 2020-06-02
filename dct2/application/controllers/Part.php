@@ -53,13 +53,14 @@ class Part extends CI_Controller {
 	}
 	public function add_sub()
     {	
-  
+        $id = $this->uri->segment('3');
+        $p_id =  $this->input->post('id');
+        $data['bm'] =$id;
+        $data['p_id'] =$p_id;
         $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0';
         $query = $this->db->query($sql); 
        $data['result_p'] = $query->result(); 
-
-
-
+       
         $this->load->view('part/subpart',$data);//bring $data to user_data 
 		$this->load->view('footer');
 	}
@@ -88,24 +89,14 @@ class Part extends CI_Controller {
     }
     public function insert_sub()
     {
-    
+        $bm = $this->uri->segment('3');
         $p_no =  $this->input->post('p_no');
-       
         $p_id =  $this->input->post('p_id');
-     
-     
-            foreach ($p_id as $p_id) {
-             $chk= $this->model->insert_sub_part($p_no,$p_id);
-           }
-     if($chk==true){
-            echo "<script>alert('Add Data Success')</script>";
-        redirect('part/add_sub','refresh');
   
-     }
-     else{
-        echo "<script>alert('Error')</script>";
-        redirect('part/add_sub','refresh');
-     }
+        foreach ($p_id as $p_id) {
+            $chk= $this->model->insert_sub_part($p_no,$p_id,$bm);
+           }
+           redirect('bom/manage/'.$bm.'','refresh');
     }
 
 
@@ -119,9 +110,8 @@ class Part extends CI_Controller {
             redirect('part/manage','refresh');
 
 		}else{
-		
 		    echo "<script>alert('Somting wrong')</script>";
-       redirect('part/manage','refresh');
+         redirect('bom/manage','refresh');
 		}
 	}
 
