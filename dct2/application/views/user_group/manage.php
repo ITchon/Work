@@ -76,7 +76,7 @@
   
             <div class="col-xs-4  card" >
             
-            <form id="form"  method="post"  class="text-center" >
+            <form id="form" action="<?php echo base_url()?>usergroup/insert"  method="post"  class="text-center" >
                  
                   <div class="form-group">
                     <label for="name-1" class="control-label">Group</label>
@@ -90,34 +90,33 @@
           </div>
         </div>
       </div>
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-      <script type="text/javascript">
-      $(document).ready(function() {
-
-        $('#table').DataTable({
-          dom: 'Bfrtip',
-        buttons: [
-            'colvis'
-        ]
-       
-    });
-
-        
-    $("#btn").on("click",function(){
-      
-        $.ajax({
-           url: "<?php echo base_url(); ?>Usergroup/insert",
-           type: 'POST',
-           data: $("#form").serialize(),
-           success: function() {
-             
-            alert('Insert usergroup success');
-           }
-        });
-       });
-     
-    });
-
-
-</script>
+//          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+//      <script type="text/javascript">
+//      $(document).ready(function() {
+//
+//        $('#table').DataTable({
+//          dom: 'Bfrtip',
+//        buttons: [
+//            'colvis'
+//        ]
+//       
+//    });
+//
+//        
+//    $("#btn").on("click",function(){
+//      
+//        $.ajax({
+//           url: "<?php echo base_url(); ?>usergroup/insert",
+//           type: 'POST',
+//           data: $("#form").serialize(),
+//           success: function() {
+//            
+//           }
+//        });
+//       });
+//     
+//    });
+//
+//
+//</script>
 

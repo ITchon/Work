@@ -28,7 +28,8 @@ class Permission extends CI_Controller {
     
 	public function manage()
     {	
-        
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+
         $sql =  'select * from sys_permissions where delete_flag !=0';
         $query = $this->db->query($sql); 
        $data['result'] = $query->result(); 
@@ -44,6 +45,7 @@ class Permission extends CI_Controller {
 
         public function insert()
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $gname =  $this->input->post('gname');
         $controller =  $this->input->post('controller');
@@ -55,13 +57,15 @@ class Permission extends CI_Controller {
 
     public function deletepermission()
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+
         $this->model->delete_permission($this->uri->segment('3'));
         redirect('permission/manage');
     }
 
     public function enable($uid){
 
-        //$this->model->CheckPermission($this->session->userdata('sp_id'));
+        $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $result = $this->model->enablePermission($uid);
 
@@ -77,7 +81,7 @@ class Permission extends CI_Controller {
 
     public function disable($uid){
 
-        //$this->model->CheckPermission($this->session->userdata('sp_id'));
+        $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $result = $this->model->disablePermission($uid);
 
@@ -94,10 +98,9 @@ class Permission extends CI_Controller {
 
     public function edit_permission()
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+
         $id = $this->uri->segment('3');
-
-        
-
         $sql =  "SELECT sp.sp_id, sp.name as sp_name, spg.spg_id, spg.name as spg_name, sp.controller from sys_permissions as sp
           inner join sys_permission_groups as spg on spg.spg_id = sp.spg_id
           where sp.sp_id = $id";

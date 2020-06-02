@@ -27,6 +27,7 @@ class Permissiongroup extends CI_Controller {
     
 	public function manage()
     {	
+        
         $sql =  'select * from sys_permission_groups where delete_flag != 0';
         $query = $this->db->query($sql); 
        $data['result'] = $query->result(); 
@@ -36,7 +37,7 @@ class Permissiongroup extends CI_Controller {
 
      public function enable($uid){
 
-        //$this->model->CheckPermission($this->session->userdata('sp_id'));
+        $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $result = $this->model->enablePermission_Group($uid);
 
@@ -53,7 +54,7 @@ class Permissiongroup extends CI_Controller {
 
     public function disable($uid){
 
-        //$this->model->CheckPermission($this->session->userdata('sp_id'));
+        $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $result = $this->model->disablePermission_Group($uid);
 
@@ -70,23 +71,28 @@ class Permissiongroup extends CI_Controller {
 
     public function insert()
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $gname =  $this->input->post('gname');
         $result = $this->model->insert_permissiongroup($gname);
+        redirect('permissiongroup/manage');
 
 
     }
 
-    public function delete_permissiongroup()
+    public function delete_pg()
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+
         $this->model->delete_permissiongroup($this->uri->segment('3'));
         redirect('permissiongroup/manage');
     }
 
-    public function edit_permissiongroup()
+    public function edit_pg()
     {
-        $id = $this->uri->segment('3');
+        $this->model->CheckPermission($this->session->userdata('su_id'));
 
+        $id = $this->uri->segment('3');
         $sql =  "SELECT spg.spg_id, spg.name as spg_name from sys_permission_groups as spg  where delete_flag !=0";
 
         $query = $this->db->query($sql); 

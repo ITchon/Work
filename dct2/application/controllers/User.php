@@ -23,7 +23,8 @@ class User extends CI_Controller {
     }
     public function manage()
     {   
-     
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        
         $sql =  'SELECT su.su_id,su.username, su.firstname ,su.lastname, su.gender,su.email,su.enable,su.delete_flag, sug.name as name
     FROM
     sys_users  AS su 
@@ -36,6 +37,8 @@ class User extends CI_Controller {
 
     public function add()
     {   
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+
         $sql='SELECT * FROM sys_users  INNER JOIN sys_user_groups ON sys_users.sug_id=sys_user_groups.sug_id;';
         //$sql =  'SELECT * FROM sys_users ';
         $query = $this->db->query($sql); 
@@ -58,6 +61,8 @@ class User extends CI_Controller {
 
     public function rule()
     {   
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+
         $id = $this->uri->segment('3');
         $sql =  "SELECT su.su_id,su.username, su.firstname ,su.lastname, su.gender,su.email,su.enable,su.delete_flag, sug.name as name
         FROM
@@ -93,6 +98,7 @@ class User extends CI_Controller {
     public function insert()
     {
     
+        $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $fname =  $this->input->post('fname');
         $lname  =  $this->input->post('lname');
@@ -161,6 +167,8 @@ class User extends CI_Controller {
 
     public function deleteuser()
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+
         $this->model->delete_user($this->uri->segment('3'));
         redirect('user/manage');
     }
@@ -169,7 +177,6 @@ class User extends CI_Controller {
     {
 
         $su_id =  $this->input->post('su_id');
-  
         $sp_id =  $this->input->post('sp_id');
            $this->model->deluser_permission($su_id);
            if($sp_id != ''){
@@ -184,8 +191,9 @@ class User extends CI_Controller {
 
     public function edit_u()
     {
-        $id = $this->uri->segment('3');
+        $this->model->CheckPermission($this->session->userdata('su_id'));
 
+        $id = $this->uri->segment('3');
         $sql="SELECT * FROM sys_users  INNER JOIN sys_user_groups ON sys_users.sug_id=sys_user_groups.sug_id where su_id = '$id';";
         //$sql =  'SELECT * FROM sys_users ';
         $query = $this->db->query($sql); 

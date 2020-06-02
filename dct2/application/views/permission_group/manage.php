@@ -51,10 +51,10 @@
                   <?php
                 }
                 ?> <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
-                echo base_url() . 'permissiongroup/edit_permissiongroup/' . $r->spg_id;
+                echo base_url() . 'permissiongroup/edit_pg/' . $r->spg_id;
                 ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
                 <?php 
-                echo "<a type='button' href='".base_url()."permissiongroup/delete_permissiongroup/".$r->spg_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
+                echo "<a type='button' href='".base_url()."permissiongroup/delete_pg/".$r->spg_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
                 
             echo "</tr>";
         }
@@ -67,7 +67,7 @@
             </div>
             <div class="col-xs-4 card" >
             
-            <form id="form"  method="post"  class="text-center" >
+            <form id="form" action="<?php echo base_url()?>permissiongroup/insert" method="post"  class="text-center" >
                  
                   <div class="form-group">
                     <label for="name-1" class="control-label">Permission Group</label>
@@ -83,33 +83,33 @@
       </div>
 
 
-            <script type="text/javascript">
-      
-      $(document).ready(function() {
-        $("#form").submit(function(){
-      
-        $.ajax({
-           url: "<?php echo base_url(); ?>permissiongroup/insert",
-           type: 'POST',
-           data: $("#form").serialize(),
-           success: function() {
-             
-            alert('Insert permissiongroup success');
-           }
-        });
-       });
-        
-        $('#table').DataTable({
-          dom: 'Bfrtip',
-        buttons: [
-            'colvis'
-        ]
-       
-    });
-
-     
-    });
-
-
-</script>
+//            <script type="text/javascript">
+//      
+//      $(document).ready(function() {
+//        $("#form").submit(function(){
+//      
+//        $.ajax({
+//           url: "<?php echo base_url(); ?>permissiongroup/insert",
+//           type: 'POST',
+//           data: $("#form").serialize(),
+//           success: function() {
+//             
+//            alert('Insert permissiongroup success');
+//           }
+//        });
+//       });
+//        
+//        $('#table').DataTable({
+//          dom: 'Bfrtip',
+//        buttons: [
+//            'colvis'
+//        ]
+//       
+//    });
+//
+//     
+//    });
+//
+//
+//</script>
     
