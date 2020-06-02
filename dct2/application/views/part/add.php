@@ -9,6 +9,7 @@
               <div class="demo-form-wrapper card" style="padding-top:8px">
               <h2 class=" text-center text-primary">
              ADD PART
+             <a class="btn btn-default" onclick="window.history.go(-1); return false;"> Back </a>
             </h2><hr>
             <form class="form form-horizontal container" action="<?php echo base_url()?>part/insert" method="post" data-toggle="validator">
             
@@ -81,14 +82,10 @@
                    </select>
                     </div>
                     </div> 
-
-                
-                    </div>
-                   
-            
                   <div class="form-group">
                 <br>
                     <button type="submit" id="btn" class="btn btn-primary btn-block">Save Changes</button>
+                    </div>
                   </div>
                 </form>
               </div>
