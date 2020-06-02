@@ -24,7 +24,7 @@
                   <thead>
                       <tr>
                       <th>DCN no</th>
-                        <th width="">Manage</th>
+                        <th width="15%">Manage</th>
                        
                       </tr>
                     </thead>
@@ -44,20 +44,8 @@
 
                     <?php
                 echo"</td>";
-                if($r->enable!=1 ){?>
-                  
-                  <td class="text-center"><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
-                  echo base_url() . 'dcn/enable/' . $r->dcn_id;
-                  ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
-                  <?php
-                }
-                else{?>
-                  <td class="text-center"><a type="button"  data-original-title='Rule' onclick="javascript:window.location='<?php
-                  echo base_url() . 'dcn/disable/' . $r->dcn_id;
-                  ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
-                  <?php
-                }
-                ?> <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
+
+                ?> <td class="text-center"><a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
                 echo base_url() . 'dcn/edit_dcn/' . $r->dcn_id;
                 ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
                 <?php 
@@ -74,7 +62,7 @@
   
             <div class="col-xs-5  card" >
             
-            <form id="form"  method="post"  class="text-center" >
+            <form id="form" action="<?php echo base_url()?>dcn/insert" method="post"  class="text-center" >
                  
                   <div class="form-group">
                     <label for="name-1" class="control-label">Add Drawing</label>
@@ -88,40 +76,40 @@
           </div>
         </div>
       </div>
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-      <script type="text/javascript">
-      
-      $(document).ready(function() {
-        
-        $('#table').DataTable({
-          dom: 'Bfrtip',
-        buttons: [
-            'colvis'
-        ]
-       
-    });
-
-
-    $("#btn").on("click",function(){
-      chk = $("#dcn_no").val();
-
-      if(chk != ''){
-        $.ajax({
-           url: "<?php echo base_url(); ?>dcn/insert",
-           type: 'POST',
-           data: $("#form").serialize(),
-           success: function() {
-            $('#demo-datatables-buttons-1').DataTable().ajax.reload();
-            alert('Insert Dcn success');
-           }
-        });
-      }else{
-
-      }
-       });
-     
-    });
-
-
-</script>
+//          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+//      <script type="text/javascript">
+//      
+//      $(document).ready(function() {
+//        
+//        $('#table').DataTable({
+//          dom: 'Bfrtip',
+//        buttons: [
+//            'colvis'
+//        ]
+//       
+//    });
+//
+//
+//    $("#btn").on("click",function(){
+//      chk = $("#dcn_no").val();
+//
+//      if(chk != ''){
+//        $.ajax({
+//           url: "<?php echo base_url(); ?>dcn/insert",
+//           type: 'POST',
+//           data: $("#form").serialize(),
+//           success: function() {
+//            $('#demo-datatables-buttons-1').DataTable().ajax.reload();
+//            alert('Insert Dcn success');
+//           }
+//        });
+//      }else{
+//
+//      }
+//       });
+//     
+//    });
+//
+//
+//</script>
 
