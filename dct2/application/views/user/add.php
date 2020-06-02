@@ -35,13 +35,16 @@
                       <label for="email-2" class="col-sm-3 col-md-2 control-label">Select</label>      
           
                       <div class="col-sm-6 col-md-2">
-                   <select name="gender" class="form-control select2" >
-                   <option value="">- - - - - -</option>
-                       <option value="Male">Male</option>
-                       <option value="Female">Female</option>
+                   <select name="gender" class="form-control select2"  >
+                   <option value="">Select Gender</option>
+                   <?php foreach ($result_gen as $gen) { ?>
+                      <option value="<?php echo $gen->gender ?>"><?php echo $gen->gender?></option>
+                  <?php  } ?>
+                       
                    </select>
                     </div>
                     </div>
+                    
                     <div class="form-group has-feedback">
                     <label for="password" class="col-sm-3 col-md-2 control-label">Firstname</label>
                     <div class="col-sm-6 col-md-3">
@@ -74,8 +77,8 @@
                       <label for="email-2" class="col-sm-3 col-md-2 control-label">Select Group</label>      
           
                       <div class="col-sm-6 col-md-2">
-                   <select name="sug_id" class="form-control select2" id="" required>
-                   <option value="" hidden>- - - - - -</option>
+                   <select name="sug_id" class="form-control select2"  required>
+                   <option value="">Select Group</option>
                     <?php foreach ($excLoadG as $r) {
                         ?>
                        <option value="<?php echo $r->sug_id ?>"><?php echo $r->name ?></option>

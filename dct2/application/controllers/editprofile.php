@@ -37,9 +37,22 @@ class editprofile extends CI_Controller {
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
 
-        $sqlSelG = "SELECT * FROM sys_user_groups WHERE sug_id<>'0' AND enable='1' AND delete_flag != 0 ;";
+        $gender = $data['result'][0]->gender;
+
+        $sql1 ="SELECT * FROM gender where gender != '$gender';";
+        //$sql =  'SELECT * FROM sys_users ';
+        $query = $this->db->query($sql1); 
+        $data['result_gen'] = $query->result();
+
+
+
+        $g = $data['result'][0]->sug_id;
+
+
+        $sqlSelG = "SELECT * FROM sys_user_groups WHERE sug_id<>'0' AND enable='1' AND delete_flag != 0 AND sug_id != $g;";
         $query = $this->db->query($sqlSelG); 
         $data['excLoadG'] = $query->result(); 
+
 
        $id = $this->uri->segment('3'); 
       

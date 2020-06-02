@@ -76,7 +76,7 @@
                     <input  class="form-control" type="text" name="controller" required>
                   </div>
 
-                  <select name="spg_id" id="" class="form-control" required>
+                  <select name="spg_id" id="" class="form-control select2" required>
              <option value="" hidden>Select Group</option>
                   <?php 
               foreach($excLoadG as $r){?>
@@ -85,7 +85,7 @@
                <?php
             }
        ?>     
-          </select><br>
+          </select><br><br>
                   <div class="form-group">
                     <button type="submit" id="btn" class="btn btn-primary ">Save Changes</button>
                   </div>
@@ -97,6 +97,11 @@
         </div>
       </div>
       <br><br>
+      <script>
+        $(document).ready(function() {
+    $('.select2').select2();
+});
+      </script>
 
             <script type="text/javascript">
       

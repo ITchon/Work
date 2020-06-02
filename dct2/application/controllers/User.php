@@ -36,12 +36,19 @@ class User extends CI_Controller {
 
     public function add()
     {   
-        $sql =  'select * from sys_users';
+        $sql='SELECT * FROM sys_users  INNER JOIN sys_user_groups ON sys_users.sug_id=sys_user_groups.sug_id;';
+        //$sql =  'SELECT * FROM sys_users ';
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
 
 
-        $sqlSelG = "SELECT * FROM sys_user_groups WHERE sug_id<>'1' AND enable='1' AND delete_flag != 0 ;";
+        $sql1 ="SELECT * FROM gender ;";
+        //$sql =  'SELECT * FROM sys_users ';
+        $query = $this->db->query($sql1); 
+        $data['result_gen'] = $query->result();
+
+
+        $sqlSelG = "SELECT * FROM sys_user_groups WHERE sug_id<>'0' AND enable='1' AND delete_flag != 0;";
         $query = $this->db->query($sqlSelG); 
         $data['excLoadG'] = $query->result(); 
 
@@ -179,17 +186,26 @@ class User extends CI_Controller {
     {
         $id = $this->uri->segment('3');
 
-        $sql =  "SELECT * from sys_users as su
-        inner join sys_user_groups as sug on sug.sug_id = su.sug_id
-          where su_id = $id";
-
+        $sql="SELECT * FROM sys_users  INNER JOIN sys_user_groups ON sys_users.sug_id=sys_user_groups.sug_id where su_id = '$id';";
+        //$sql =  'SELECT * FROM sys_users ';
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
 
-        $sql =  "SELECT * from sys_user_groups as sug where sug.delete_flag != 0 ";
+        $gender = $data['result'][0]->gender;
 
-        $query = $this->db->query($sql); 
-        $data['result_group'] = $query->result(); 
+        $sql1 ="SELECT * FROM gender where gender != '$gender';";
+        //$sql =  'SELECT * FROM sys_users ';
+        $query = $this->db->query($sql1); 
+        $data['result_gen'] = $query->result();
+
+
+
+        $g = $data['result'][0]->sug_id;
+
+
+        $sqlSelG = "SELECT * FROM sys_user_groups WHERE sug_id<>'0' AND enable='1' AND delete_flag != 0 AND sug_id != $g;";
+        $query = $this->db->query($sqlSelG); 
+        $data['excLoadG'] = $query->result(); 
 
         $this->load->view('user/edit',$data);
         $this->load->view('footer');

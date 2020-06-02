@@ -35,10 +35,12 @@
                       <label for="email-2" class="col-sm-3 col-md-2 control-label">Select</label>      
           
                       <div class="col-sm-6 col-md-2">
-                   <select name="gender" class="form-control"  >
-                   <option value="<?php echo $result[0]->gender ?>"><?php echo $result[0]->gender ?></option>
-                       <option value="Male" >Male</option>
-                       <option value="Female">Female</option>
+                   <select name="gender" class="form-control select2"  >
+                   <option value="<?php echo $result_gen[0]->gender ?>"><?php echo $result[0]->gender ?></option>
+                   <?php foreach ($result_gen as $gen) { ?>
+                      <option value="<?php echo $gen->gender ?>"><?php echo $gen->gender?></option>
+                  <?php  } ?>
+                       
                    </select>
                     </div>
                     </div>
@@ -57,7 +59,7 @@
                       <label for="email-2" class="col-sm-3 col-md-2 control-label">Select Group</label>      
           
                       <div class="col-sm-6 col-md-2">
-                   <select name="sug_id" class="form-control"  required>
+                   <select name="sug_id" class="form-control select2"  required>
                    <option value="<?php echo $result[0]->sug_id ?>"><?php echo $result[0]->name ?></option>
                     <?php foreach ($excLoadG as $r) {
                         ?>
@@ -80,6 +82,11 @@
          
         </div>
       </div>
+      <script>
+        $(document).ready(function() {
+    $('.select2').select2();
+});
+      </script>
       <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
       <script type="text/javascript">
     $("#form").submit(function(){

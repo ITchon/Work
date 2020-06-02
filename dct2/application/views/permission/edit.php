@@ -27,7 +27,7 @@
                     <label for="dcn" class="col-sm-3 col-md-4 control-label">Permission Group</label>
                     <div class="col-sm-6 col-md-5">
                     <input type="text" name="spg_id" value="<?php echo $result[0]->spg_name?>" hidden>
-                    <select name="spg_id" id="" class="form-control" required>
+                    <select name="spg_id" id="" class="form-control select2" required>
              <option value="<?php echo $result[0]->spg_id ?>" hidden> <?php echo $result[0]->spg_name ?> </option>
                   <?php 
               foreach($result_g as $r){?>
