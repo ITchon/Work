@@ -122,8 +122,6 @@ class Part extends CI_Controller {
 
 		if($result!=FALSE){
             redirect('part/manage','refresh');
-			
-
 		}else{
             echo "<script>alert('Somting wrong')</script>";
             redirect('part/manage','refresh');
@@ -139,11 +137,22 @@ class Part extends CI_Controller {
 
     public function edit_part()   
     {
-        $id = $this->uri->segment('3');
+        
+        if($this->input->post('bom')){
+        $p_id =  $this->input->post('p_id');
+        $sql =  "SELECT p.p_id, p.p_no, p.p_name,p.d_id, d.d_no from part as p
+        inner join drawing as d on d.d_id = p.d_id
+        where p.p_id = $p_id";
+        
+        $data['gg'] = $this->input->post('bom');
 
+        }else{
+        $id = $this->uri->segment('3');
         $sql =  "SELECT p.p_id, p.p_no, p.p_name,p.d_id, d.d_no from part as p
         inner join drawing as d on d.d_id = p.d_id
         where p.p_id = $id";
+        }
+        
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
 
@@ -152,7 +161,6 @@ class Part extends CI_Controller {
         $sql1 =  "SELECT * from drawing where d_id != '$d'";
         $query = $this->db->query($sql1); 
         $data['result_g'] = $query->result(); 
-
         
         $this->load->view('part/edit',$data);
         $this->load->view('footer');
@@ -168,6 +176,20 @@ class Part extends CI_Controller {
 
         $this->model->save_edit_part($p_id, $p_no, $p_name,$d_id);
         redirect('part/manage');
+        
+    }  
+
+        public function save_editb()
+    {
+        $bom =  $this->input->post('bom');
+        $p_id =  $this->input->post('p_id');
+        $p_no =  $this->input->post('p_no');
+        $p_name =  $this->input->post('p_name');
+        $d_id =  $this->input->post('d_id');
+        
+        $this->model->save_edit_partb($p_id, $p_no, $p_name,$d_id);
+        redirect('bom/manage/'.$bom.'','refresh');
+        
     }
 
 }

@@ -4,13 +4,13 @@
         <div class="layout-content-body">
           <div class="title-bar">
             <div class="title-bar-actions">
-              <select class="selectpicker dropdown" name="period" data-dropdown-align-right="true" data-style="btn-default btn-sm" data-width="fit">
+        <!--       <select class="selectpicker dropdown" name="period" data-dropdown-align-right="true" data-style="btn-default btn-sm" data-width="fit">
                 <option value="today">Today</option>
                 <option value="yesterday">Yesterday</option>
                 <option value="last_7d" selected="selected">Last 7 days</option>
                 <option value="last_1m">Last 30 days</option>
                 <option value="last_3m">Last 90 days</option>
-              </select>
+              </select> -->
             </div>
             <h1 class="title-bar-title">
               <span class="d-ib">Dashboard</span>

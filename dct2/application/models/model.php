@@ -707,7 +707,14 @@ return false;
 
 public function save_edit_part($p_id, $p_no, $p_name,$d_id)
   {
-     $sql1 ="UPDATE part SET p_no = '$p_no', p_name = '$p_name', d_id = '$d_id', date_updated = CURRENT_TIMESTAMP WHERE p_id = '$p_id'";
+     $sql1 ="UPDATE part SET p_no = '$p_no', p_name = '$p_name', d_id = '$d_id', date_updated = CURRENT_TIMESTAMP, delete_flag = '1' WHERE p_id = '$p_id'";
+    $exc_user = $this->db->query($sql1);
+    if ($exc_user ){ return true; }else{ return false; }
+  }
+
+  public function save_edit_partb($p_id, $p_no, $p_name,$d_id)
+  {
+     $sql1 ="UPDATE part SET p_no = '$p_no', p_name = '$p_name', d_id = '$d_id', date_updated = CURRENT_TIMESTAMP, delete_flag = '1' WHERE p_id = '$p_id'";
     $exc_user = $this->db->query($sql1);
     if ($exc_user ){ return true; }else{ return false; }
   }
