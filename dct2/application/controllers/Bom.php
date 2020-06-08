@@ -38,6 +38,13 @@ class Bom extends CI_Controller {
         if(isset($bm)){
             $array=[];
             $res_bom= $this->model->hook_bom($bm) ;
+            if($res_bom==false){
+                echo '<script language="javascript">';
+                echo 'alert("Data not found.");';
+                echo 'history.go(-1);';
+                echo '</script>';
+                exit();
+            }
             $data= $this->model->sub_part($res_bom[0]->b_master,$res_bom[0]->b_id) ;
             $bm =  $res_bom[0]->b_id;
             if($data != false){  
@@ -144,10 +151,34 @@ class Bom extends CI_Controller {
     }
 
     
+    public function edit_bom()
+    {
+        $bm = $this->uri->segment('3');
+        $p_id =  $this->input->post('id');
+        $m_id =  $this->input->post('m_id');
+        $query=$this->db->query("SELECT * from bom inner join part on part.p_id=bom.b_master where b_id = $bm");
+        $data['result'] = $query->result();
+        $data['bm'] =$bm;
+        $data['p_id'] =$p_id;
+        $data['m_id'] =$m_id;
+        $this->load->view('bom/edit_bom',$data);//bring $data to user_data 
+		$this->load->view('footer');
+    }
+    public function edit_part()
+    {
+        $bm = $this->uri->segment('3');
+        $p_no =  $this->input->post('p_no');
+        $id =  $this->input->post('m_id');
+        $query=$this->db->query("SELECT * from part inner join sub_part on sub_part.m_id=part.p_id where  sub_id =  $id");
+        $data['result'] = $query->result(); 
+        $data['bm'] =$bm;
+        $data['p_no'] =$p_no;
+        $data['m_id'] =$id;
+        $this->load->view('bom/edit_part',$data);//bring $data to user_data 
+		$this->load->view('footer');
+    }
     public function add()
     {
-
-
         $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 ';
         $query = $this->db->query($sql); 
         $data['result_p'] = $query->result(); 
@@ -180,6 +211,26 @@ class Bom extends CI_Controller {
             $chk= $this->model->insert_sub_part($bm, $p,$lasted_id);
             }
         redirect('bom/manage/'.$lasted_id.'','refresh');
+    }
+
+    public function insert_edit_part()
+    {    $bm = $this->uri->segment('3');
+        $m_id =  $this->input->post('m_id');
+        $qty =  $this->input->post('quantity');
+        $unit =  $this->input->post('unit');
+        $c_p =  $this->input->post('common_part');
+        $lasted_id = $this->model->insert_edit_part($m_id,$qty,$unit ,$c_p );
+       
+        redirect('bom/manage/'.$bm.'','refresh');
+    }
+    public function insert_edit_bom()
+    {    $bm = $this->uri->segment('3');
+        $qty =  $this->input->post('quantity');
+        $unit =  $this->input->post('unit');
+        $c_p =  $this->input->post('common_part');
+        $lasted_id = $this->model->insert_edit_bom($bm,$qty,$unit ,$c_p );
+       
+        redirect('bom/manage/'.$bm.'','refresh');
     }
     public function insert_sub()
     {

@@ -41,7 +41,12 @@ class Model extends CI_Model
   {
     $sql =  'SELECT * FROM bom where b_id = '.$bm.'   AND delete_flag != 0';
     $query = $this->db->query($sql); 
-    return $query->result(); 
+    if($query ){
+      return $query->result(); 
+    }
+    else{
+      return false;
+    }
   }
 
   public function get_part_drawing()
@@ -706,6 +711,20 @@ return false;
         $update_pass=$this->db->query("UPDATE sys_users set password='$new_password'  where su_id='$session_id'");
       }
 
+
+public function insert_edit_part($m_id, $qty,$unit,$c_p)
+  {
+     $sql="UPDATE sub_part SET quantity = '$qty', unit = '$unit', common_part = '$c_p'WHERE sub_id = '$m_id'";
+    $exc = $this->db->query($sql);
+    if ($exc ){ return true; }else{ return false; }
+  }
+
+public function insert_edit_bom($bm, $qty,$unit,$c_p)
+  {
+     $sql ="UPDATE bom SET quantity = '$qty', unit = '$unit', common_part = '$c_p' WHERE b_id = '$bm'";
+     $exc= $this->db->query($sql);
+    if ($exc){ return true; }else{ return false; }
+  }
 
 public function save_edit_part($p_id, $p_no, $p_name,$d_id)
   {
