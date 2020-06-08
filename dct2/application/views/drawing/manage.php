@@ -28,6 +28,7 @@
                         <th>Version</th>
                         <th>Manage</th>
                         <th>Status</th>
+                        <th>Open File</th>
               
                        
                       </tr>
@@ -155,8 +156,13 @@
                   <?php
                 }
                 ?>
-                      
+
+                <td><form action="<?php echo base_url()?>drawing/openfile" method="post">
+    <input type="text" name="file" value="\<?php echo $r->file_name ?>"hidden>
+    <button type="submit" style="border:none;"><a><b><?php echo $r->file_name ?></b></a></button>
+</form></td>
                 <?php
+
             echo "</tr>";
 
 
