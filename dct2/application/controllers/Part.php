@@ -56,6 +56,7 @@ class Part extends CI_Controller {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $id = $this->uri->segment('3');
         $p_id =  $this->input->post('id');
+        $p_no =  $this->input->post('p_no');
         $m_id =  $this->input->post('m_id');
         $sql =  'SELECT * FROM sub_part where sub_id = '.$m_id.'  AND delete_flag != 0';
         $query = $this->db->query($sql); 
@@ -114,6 +115,7 @@ class Part extends CI_Controller {
         $data['res_chk'] =$array;
         $data['bm'] =$id;
         $data['p_id'] =$p_id;
+        $data['p_no'] =$p_no;
         $data['result_p'] =$res_part;
         $data['p_name'] =$res[0]->p_name;;
         $this->load->view('part/subpart',$data);//bring $data to user_data 

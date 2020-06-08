@@ -75,8 +75,9 @@ th, td {
                <?php } ?>
               <th width="" class="not-active " style='border-right: 1px groove ;'>Part No</th>
               <th width="" class="not-active" style='border-right: 1px groove ;'>Part name</th>
-              <th width="" class="not-active" style='border-right: 1px groove ;'>Drawing No</th>               
               <th width="" class="not-active" style='border-right: 1px groove ;'>Qty</th>               
+              <th width="" class="not-active" style='border-right: 1px groove ;'>Unit</th>               
+              <th width="" class="not-active" style='border-right: 1px groove ;'>Drawing No</th>               
               <th width="">Manage</th>               
              </tr>
             </thead>
@@ -89,8 +90,9 @@ th, td {
                 }
                 echo "<td class='text-danger' style='border-right: 1px groove '>$row->p_no</td>";
                 echo "<td class='text-danger' style='border-right: 1px groove '>$row->p_name</td>";
+                echo "<td class='text-danger' style='border-right: 1px groove '>$row->quantity</td>";
+                echo "<td class='text-danger' style='border-right: 1px groove '>$row->unit</td>";
                 echo "<td class='text-danger' style='border-right: 1px groove '>$row->d_no</td>";
-                echo "<td class='text-danger' style='border-right: 1px groove '></td>";
                 echo "<td class='text-danger'><a type='button' href='".base_url()."bom/delete_bom/".$bm."' onclick='return confirm(\"Confirm Delete Item\")' ><button class='btn-danger btn-sm fa fa-trash'></button></a>";
                 
                 ?>
@@ -101,7 +103,6 @@ th, td {
                <?php echo "<a type='button'><button class='btn-default btn-sm fa fa-search'></button></a>"; ?>
                 </form>
                 <form id="form" action="<?php echo base_url()."part/add_sub/$bm"?>" method="post">
-
                     <button type="submit"  class="btn-primary btn-sm fa fa-plus"></button>
                     </form>
                     <?php
@@ -123,11 +124,11 @@ th, td {
                               foreach($data as $r){ 
                               echo "<td style='border-right: 1px groove '>".$r->p_no."</td>";
                               echo "<td style='border-right: 1px groove '>".$r->p_name."</td>";
+                              echo "<td style='border-right: 1px groove '>".$row['qty']."</td>";
+                              echo "<td style='border-right: 1px groove '>".$row['unit']."</td>";
                               echo "<td style='border-right: 1px groove '>".$r->d_no."</td>";
                          ?>
-                          <td  style='border-right: 1px groove'>
-
-                          </td>   
+                        
                         <td >
                     <form id="form" action="<?php echo base_url()?>bom/delete" method="post">
                     <input type="hidden" name="m_id" value="<?php echo $row['m_id'] ?>" >
@@ -144,6 +145,7 @@ th, td {
                     <form id="form" action="<?php echo base_url()."part/add_sub/$bm"?>" method="post">
                     <input type="hidden" name="m_id" value="<?php echo $row['m_id'] ?>" >
                     <input type="hidden" name="id" value="<?php echo $row['id'] ?>" >
+                    <input type="hidden" name="p_no" value="<?php echo $r->p_no ?>" >
                     <button type="submit"  class="btn-primary btn-sm fa fa-plus"></button>
                     </form>  
                     <form id="form" action="<?php echo base_url()."bom/edit_part/$bm" ?>" method="post">

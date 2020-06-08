@@ -19,7 +19,8 @@
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Main Part</label>      
           
                       <div class="col-sm-6 col-md-4">
-                      <input type="text" class="form-control" name="p_no" value="<?php echo $p_id ?>" readonly>
+                      <input type="hidden" class="form-control" name="p_no" value="<?php echo $p_id ?>" >
+                      <input type="text" class="form-control" name="" value="<?php echo $p_no ?>" readonly>
                     </div>
                     </div> 
                   <div class="form-group">
