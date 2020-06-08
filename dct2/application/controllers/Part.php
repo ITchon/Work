@@ -151,7 +151,7 @@ class Part extends CI_Controller {
     public function insert_sub()
     {
 
-        $bm = $this->uri->segment('3');
+        $bm =  $this->input->post('bm');
         $p_no =  $this->input->post('p_no');
         $p_id =  $this->input->post('p_id');
   

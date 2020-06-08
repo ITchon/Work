@@ -147,9 +147,10 @@ class Bom extends CI_Controller {
     public function add()
     {
 
+
         $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 ';
         $query = $this->db->query($sql); 
-       $data['result_p'] = $query->result(); 
+        $data['result_p'] = $query->result(); 
         $this->load->view('bom/add',$data);//bring $data to user_data 
 		$this->load->view('footer');
     }
