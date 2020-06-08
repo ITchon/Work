@@ -102,10 +102,6 @@ class Part extends CI_Controller {
             }
         }
 
-    
-        $data['res_chk'] =$array;
-        $data['bm'] =$id;
-        $data['p_id'] =$p_id;
         $query = $this->db->query('SELECT * FROM bom where b_id = '.$id.'   AND delete_flag != 0');
         $res_bom= $query->result();
         $b_master = $res_bom[0]->b_master;
@@ -114,6 +110,10 @@ class Part extends CI_Controller {
         $res = $query->result(); 
         $query = $this->db->query("SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 and p.p_id != '$b_master.'"); 
         $res_part = $query->result(); 
+        
+        $data['res_chk'] =$array;
+        $data['bm'] =$id;
+        $data['p_id'] =$p_id;
         $data['result_p'] =$res_part;
         $data['p_name'] =$res[0]->p_name;;
         $this->load->view('part/subpart',$data);//bring $data to user_data 

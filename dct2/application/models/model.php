@@ -158,8 +158,9 @@ return false;
  {
   $sql ="INSERT INTO bom (b_master,date_created,delete_flag) VALUES ('$bm',CURRENT_TIMESTAMP,'1');";
     $query = $this->db->query($sql);  
+    $insert_id = $this->db->insert_id($query );
    if($query){
-     return true;
+    return  $insert_id;
    }
    else{
      return false;

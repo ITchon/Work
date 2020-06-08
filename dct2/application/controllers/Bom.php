@@ -175,18 +175,11 @@ class Bom extends CI_Controller {
     {
         $bm =  $this->input->post('bm');
         $p_id =  $this->input->post('p_id');
-        $result = $this->model->insert_bom($bm);
-        $sql =  'SELECT * FROM bom where b_master = '.$bm.'   AND delete_flag != 0';
-        $query = $this->db->query($sql);
-        $res_bom= $query->result();
-        $b_id = $res_bom[0]->b_id;
-         foreach ($p_id as $p) {
-        $chk= $this->model->insert_sub_part($bm,$p, $b_id);
-        }
-
-        redirect('bom/manage/'.$b_id.'','refresh');
-
-  
+        $lasted_id = $this->model->insert_bom($bm);
+        foreach ($p_id as $p) {
+            $chk= $this->model->insert_sub_part($bm, $p,$lasted_id);
+            }
+        redirect('bom/manage/'.$lasted_id.'','refresh');
     }
     public function insert_sub()
     {

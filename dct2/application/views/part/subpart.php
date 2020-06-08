@@ -1,8 +1,9 @@
 <div class="layout-content">
         <div class="layout-content-body">
           <div class="title-bar">
-       
-           
+        <?php  
+
+          ?>
           </div>
           <div class="row">
             <div class="col-md-12  ">
@@ -27,27 +28,26 @@
                       <div class="col-sm-6 col-md-4">
                    <select name="p_id[]" class="form-control select2" multiple="multiple" required>
                    <?php
-                         foreach($res_chk as $chk){
-                           
-                      foreach($result_p as $r){
-                  
-                          if($chk['m_id']!=$r->p_id){
-                            ?>
-                      
-                        
-                     <option value="<?php  echo $r->p_id ?>"><?php echo $r->p_no ?></option>
-                    <?php
-                      }
-                      }
+                        $genres = array();
+                        foreach($res_chk as $sg){ 
+                           $genres[] = $sg['m_id'];
+                        }
+                        $genres[] = $p_id;
+                      foreach($result_p as $r){ 
+                        if (!in_array($r->p_id,$genres)) {?>
+                          <option value="<?php  echo $r->p_id ?>"><?php echo $r->p_no ?></option>
+                          
+                        <?php
+                        }
                       }
                       ?> 
                    </select>
                     </div>
-            <?php echo anchor(base_url().'part/add/'.$bm.'', 'Create Part',array('class'=>'btn btn-primary')); ?>
+            <?php echo anchor(base_url().'part/add/'.$bm.'', 'Create Part',array('class'=>'btn btn-primary'));        ?>
                     </div> 
                  
             
-                  
+            
             
                   <div class="form-group">
                 <br>
