@@ -47,23 +47,23 @@
                 
                 if($r->enable!=1 ){?>
                   
-                  <td class="text-center"><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
                   echo base_url() . 'part/enable/' . $r->p_id;
                   ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
                   <?php
                 }
                 else{?>
 
-                  <td class="text-center"><a type="button"  data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งาน</h5>'  data-original-title='Rule' onclick="javascript:window.location='<?php
                   echo base_url() . 'part/disable/' . $r->p_id;
                   ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
                   <?php
                 }
-                ?> <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
+                ?> <a type ='button' class=' ' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขข้อมูล</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
                 echo base_url() . 'part/edit_part/' . $r->p_id;
                 ?>';"><i class='btn-info btn-sm fa fa-wrench'> </i> </a>
                 <?php 
-                echo "<a type='button' href='".base_url()."part/deletepart/".$r->p_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";  
+                echo "<a type='button' href='".base_url()."part/deletepart/".$r->p_id."' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";  
 
             echo "</tr>";
         }
