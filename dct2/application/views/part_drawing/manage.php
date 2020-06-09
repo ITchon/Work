@@ -45,7 +45,7 @@
                   
                   ?><td class="text-center"><?php
 
-                echo "<a type='button' href='".base_url()."part_drawing/deletePartD/".$r->pd_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";   
+                echo "<a type='button' href='".base_url()."part_drawing/deletePartD/".$r->pd_id."'  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";   
 
             echo "</tr>";
         }

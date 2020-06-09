@@ -88,19 +88,19 @@
                     <?php
                 echo"</td>";
                 echo "<td>$r->dcn_no</td>";
-                ?><td><a href="<?php echo base_url() . 'drawing/manage/' . $r->d_id ?>"><?php echo $r->version ?></a></td>
+                ?><td><a href="<?php echo base_url() . 'drawing/manage/' . $r->d_id ?>" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ดูVersionทั้งหมด</h5>'><?php echo $r->version ?></a></td>
                 <?php 
                 if(isset($r->v_id)){
                     if($r->v_id != 'v_id'){
               if($r->enable!=1 ){?>
                   
-                  <td class="text-center"><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
                   echo base_url() . 'drawing/enable_v/' . $r->v_id;
                   ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
                   <?php
                 }
                 else{?>
-                  <td class="text-center"><a type="button"  data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งาน</h5>'  data-original-title='Rule' onclick="javascript:window.location='<?php
                   echo base_url() . 'drawing/disable_v/' . $r->v_id;
                   ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
                   <?php
@@ -110,13 +110,13 @@
 
                 if($r->enable!=1 ){?>
                   
-                  <td class="text-center"><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
                   echo base_url() . 'drawing/enable/' . $r->d_id;
                   ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
                   <?php
                 }
                 else{?>
-                  <td class="text-center"><a type="button"  data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งาน</h5>'  data-original-title='Rule' onclick="javascript:window.location='<?php
                   echo base_url() . 'drawing/disable/' . $r->d_id;
                   ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
                   <?php
@@ -131,13 +131,13 @@
               else{
                    if($r->enable!=1 ){?>
                   
-                  <td class="text-center"><a type="button" data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
                   echo base_url() . 'drawing/enable/' . $r->d_id;
                   ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
                   <?php
                 }
                 else{?>
-                  <td class="text-center"><a type="button"  data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งาน</h5>'  data-original-title='Rule' onclick="javascript:window.location='<?php
                   echo base_url() . 'drawing/disable/' . $r->d_id;
                   ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
                   <?php
@@ -149,20 +149,20 @@
                 <?php 
                 if(isset($r->v_id)){
                   if($r->v_id != 'v_id'){ ?>
-                  <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <a type ='button' class=' ' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เพิ่มVersion</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
                 echo base_url() . 'drawing/version_form_v/' . $r->v_id;
-                ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
+                ?>';"><i class='btn-info btn-sm fa fa-plus'> </i> </a>
                 <?php
                 }else{ ?>
-                  <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <a type ='button' class=' ' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เพิ่มVersion</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
                 echo base_url() . 'drawing/version_form/' . $r->d_id;
-                ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
+                ?>';"><i class='btn-info btn-sm fa fa-plus'> </i> </a>
                 <?php 
                 }
                 }else{ ?>
-                  <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <a type ='button' class=' ' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เพิ่มVersion</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
                 echo base_url() . 'drawing/version_form/' . $r->d_id;
-                ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
+                ?>';"><i class='btn-info btn-sm fa fa-plus'> </i> </a>
                 <?php } ?>
 
 
@@ -171,12 +171,12 @@
                 <?php 
                 if(isset($r->v_id)){
                   if($r->v_id != 'v_id'){
-                  echo "<a type='button' href='".base_url()."drawing/deletedrawing_v/".$r->v_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
+                  echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."drawing/deletedrawing_v/".$r->v_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
                 }else{
-                  echo "<a type='button' href='".base_url()."drawing/deletedrawing/".$r->d_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
+                  echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."drawing/deletedrawing/".$r->d_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
                 }
                 }else{
-                  echo "<a type='button' href='".base_url()."drawing/deletedrawing/".$r->d_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
+                  echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."drawing/deletedrawing/".$r->d_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
                 }
                 ?>
                 
@@ -195,7 +195,7 @@
                 <td><form action="<?php echo base_url()?>drawing/openfile" method="post">
     <input type="text" name="file" value="\<?php echo $r->file_name ?>"hidden>
     <input type="text" name="path" value="<?php echo $r->path_file ?>"hidden>
-    <button type="submit" style="border:none;"><a><b><?php echo $r->file_name ?></b></a></button>
+    <button type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><a><b><?php echo $r->file_name ?></b></a></button>
 </form></td>
                 <?php
 

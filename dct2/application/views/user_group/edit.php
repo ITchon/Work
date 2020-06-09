@@ -8,12 +8,12 @@
             <div class="col-md-12  ">
               <div class="demo-form-wrapper card" style="padding-top:8px">
               <h2 class=" text-center text-primary">
-             EDIT PERMISSION
+             EDIT GROUP
             </h2><hr>
             <form class="form form-horizontal container" action="<?php echo base_url()?>usergroup/save_edit" method="post" data-toggle="validator">
             
                 <div class="form-group has-feedback">
-                    <label for="part" class="col-sm-5 col-md-4 control-label">Permission Name</label>
+                    <label for="part" class="col-sm-5 col-md-4 control-label">GROUP NAME</label>
                     <div class="col-sm-6 col-md-4">
                       <input type="text" name="sug_id" value="<?php echo $result[0]->sug_id?>" hidden>
                     <input id="sug_name" class="form-control " type="text" name="sug_name" value="<?php echo $result[0]->sug_name ?>">

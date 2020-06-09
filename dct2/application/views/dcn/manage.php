@@ -1,4 +1,8 @@
-
+<style>
+#form {
+  display: inline-block;
+}
+</style>
       <div class="layout-content">
         <div class="layout-content-body">
           <div class="title-bar">
@@ -23,7 +27,7 @@
                   <thead>
                       <tr>
                       <th>DCN no</th>
-                      <th width="15%">Manage</th>
+                      <th width="30%">Manage</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -31,23 +35,26 @@
                       <?php
                     foreach($result as $r){
              echo "<tr>";
-                echo "<td>" ?>
-        <form action="<?php echo base_url()?>drawing/manage" method="post">
-                    <input type="text" name="dcn_id" value="<?php echo $r->dcn_id ?>" hidden>
-                    <input type="text" name="title" value="<?php echo $r->dcn_no ?>" hidden>
-                    <input type="text" name="name" value="DCN" hidden>
-                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    <?php echo"<b>".$r->dcn_no."</b>" ?>
-        </form>
+             echo "<td>" ?>
+        
+        <?php echo"<b>".$r->dcn_no."</b>" ?>
 
                     <?php
                 echo"</td>";
 
-                ?> <td class="text-center"><a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
+                ?> <td class="text-center"><a type ='button' class=' ' data-original-title='Rule'  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' onclick="javascript:window.location='<?php
                 echo base_url() . 'dcn/edit_dcn/' . $r->dcn_id;
                 ?>';"><i class='btn-info btn-sm fa fa-wrench'> </i> </a>
                 <?php 
-                echo "<a type='button' href='".base_url()."dcn/deletedcn/".$r->dcn_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
+                echo "<a type='button' href='".base_url()."dcn/deletedcn/".$r->dcn_id."'  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a>"; ?>
+
+                <form id="form" action="<?php echo base_url()?>drawing/manage" method="post">
+                    <input type="text" name="dcn_id" value="<?php echo $r->dcn_id ?>" hidden>
+                    <input type="text" name="title" value="<?php echo $r->dcn_no ?>" hidden>
+                    <input type="text" name="name" value="DCN" hidden>
+                    <button type="submit" class="btn btn-sm btn-primary" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ดูข้อมูล Drawing ที่เกี่ยวข้อง</h5>'><i class="fa fa-search" aria-hidden="true"></i></button></td>
+                    
+        </form><?php
             echo "</tr>";
         }
     ?>
@@ -60,7 +67,7 @@
   
             <div class="col-xs-5  card" >
             
-            <form id="form" action="<?php echo base_url()?>dcn/insert" method="post"  class="text-center" >
+            <form action="<?php echo base_url()?>dcn/insert" method="post"  class="text-center" >
                  
                   <div class="form-group">
                     <label for="name-1" class="control-label">Add Drawing</label>

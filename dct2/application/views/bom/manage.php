@@ -36,7 +36,7 @@
             
                   <div class="form-group">
                 <br>
-                    <button type="submit" id="btn" class="btn btn-primary btn-block">BOOOOOOM!</button>
+                    <button type="submit" id="btn" class="btn btn-primary btn-block">Click me</button>
                   </div>
                 </form>
 
