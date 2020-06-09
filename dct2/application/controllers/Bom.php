@@ -28,7 +28,8 @@ class Bom extends CI_Controller {
     {	
         $sql =  'SELECT * From bom inner join part p on p.p_id = bom.b_master where bom.delete_flag !=0';
         $query = $this->db->query($sql); 
-        $data['result'] = $query->result(); 
+        $res = $query->result(); 
+        $data['result'] =$res;
 
        if( $this->input->post('bm')){
           $bm =  $this->input->post('bm'); 
@@ -135,11 +136,13 @@ class Bom extends CI_Controller {
 // print_r($array_sub_part);
     $data['result_bom'] = $array;  
     $query=$this->db->query("SELECT * from bom inner join part on part.p_id=bom.b_master inner join drawing d on d.d_id=part.d_id where b_id = $bm");
-    $data['bom']=$query->result();
+    $res = $query->result();
+    $data['bom']=$res;
     $data['bm']=$bm;
+    $data['bm_id']=$res[0]->b_master;
     $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
-       $query = $this->db->query($sql); 
-       $data['result_sub'] = $query->result(); 
+    $query = $this->db->query($sql); 
+    $data['result_sub'] = $query->result(); 
     $this->load->view('bom/show',$data);//bring $data to user_data 
    $this->load->view('footer');
     }else{

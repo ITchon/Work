@@ -53,271 +53,22 @@
                     <button class="navbar-search-adv-btn" type="button">Advanced</button>
                   </div>
                 </form>
-              </li>
-              <li class="dropdown">
-                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true">
-                  <span class="icon-with-child hidden-xs">
-                    <span class="icon icon-envelope-o icon-lg"></span>
-                    <span class="badge badge-danger badge-above right">8</span>
-                  </span>
-                  <span class="visible-xs-block">
-                    <span class="icon icon-envelope icon-lg icon-fw"></span>
-                    <span class="badge badge-danger pull-right">8</span>
-                    Messages
-                  </span>
+                <li class="visible-xs-block">
+                <a href="login-1.html">
+                  <span class="icon icon-power-off icon-lg icon-fw"></span>
+                  Sign out
                 </a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
-                  <div class="dropdown-header">
-                    <a class="dropdown-link" href="compose.html">New Message</a>
-                    <h5 class="dropdown-heading">Recent messages</h5>
-                  </div>
-                  <div class="dropdown-body">
-                    <div class="list-group list-group-divided custom-scrollbar">
-                      <a class="list-group-item" href="#">
-                        <div class="notification">
-                          <div class="notification-media">
-                          </div>
-                          <div class="notification-content">
-                            <small class="notification-timestamp">16 min</small>
-                            <h5 class="notification-heading">Harry Jones</h5>
-                            <p class="notification-text">
-                              <small class="truncate">Hi Teddy, Just wanted to let you know we got the project! We should be starting the planning next week. Harry</small>
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item" href="#">
-                        <div class="notification">
-                          <div class="notification-media">
-                          </div>
-                          <div class="notification-content">
-                            <small class="notification-timestamp">2 hr</small>
-                            <h5 class="notification-heading">Daniel Taylor</h5>
-                            <p class="notification-text">
-                              <small class="truncate">Teddy Boyyyy, label text isn't vertically aligned with value text in grid forms when using .form-control... DT</small>
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item" href="#">
-                        <div class="notification">
-                          <div class="notification-media">
-                          </div>
-                          <div class="notification-content">
-                            <small class="notification-timestamp">Sep 20</small>
-                            <h5 class="notification-heading">Charlotte Harrison</h5>
-                            <p class="notification-text">
-                              <small class="truncate">Dear Teddy, Can we discuss the benefits of this approach during our Monday meeting? Best regards Charlotte Harrison</small>
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item" href="#">
-                        <div class="notification">
-                          <div class="notification-media">
-                          </div>
-                          <div class="notification-content">
-                            <small class="notification-timestamp">Sep 19</small>
-                            <h5 class="notification-heading">Ethan Walker</h5>
-                            <p class="notification-text">
-                              <small class="truncate">If you need any further assistance, please feel free to contact us. We are always happy to assist you. Regards, Ethan</small>
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item" href="#">
-                        <div class="notification">
-                          <div class="notification-media">
-                          </div>
-                          <div class="notification-content">
-                            <small class="notification-timestamp">Sep 18</small>
-                            <h5 class="notification-heading">Sophia Evans</h5>
-                            <p class="notification-text">
-                              <small class="truncate">Teddy, Please call me when you finish your work! I have many things to discuss. Don't forget call me !! Sophia</small>
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item" href="#">
-                        <div class="notification">
-                          <div class="notification-media">
-                          </div>
-                          <div class="notification-content">
-                            <small class="notification-timestamp">Sep 17</small>
-                            <h5 class="notification-heading">Harry Walker</h5>
-                            <p class="notification-text">
-                              <small class="truncate">Thank you for your message. I am currently out of the office, with no email access. I will be returning on 20 Jun.</small>
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item" href="#">
-                        <div class="notification">
-                          <div class="notification-media">
-                          </div>
-                          <div class="notification-content">
-                            <small class="notification-timestamp">Sep 15</small>
-                            <h5 class="notification-heading">Emma Lewis</h5>
-                            <p class="notification-text">
-                              <small class="truncate">Teddy, Please find the attached report. I am truly sorry and very embarrassed about not finishing the report by the deadline.</small>
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item" href="#">
-                        <div class="notification">
-                          <div class="notification-media">
-                          </div>
-                          <div class="notification-content">
-                            <small class="notification-timestamp">Sep 15</small>
-                            <h5 class="notification-heading">Eliot Morgan</h5>
-                            <p class="notification-text">
-                              <small class="truncate">Dear Teddy, Please accept this message as notification that I was unable to work yesterday, due to personal illness.m</small>
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                  <div class="dropdown-footer">
-                    <a class="dropdown-btn" href="#">See All</a>
-                  </div>
-                </div>
               </li>
-              <li class="dropdown">
-                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true">
-                  <span class="icon-with-child hidden-xs">
-                    <span class="icon icon-bell-o icon-lg"></span>
-                    <span class="badge badge-danger badge-above right">7</span>
-                  </span>
-                  <span class="visible-xs-block">
-                    <span class="icon icon-bell icon-lg icon-fw"></span>
-                    <span class="badge badge-danger pull-right">7</span>
-                    Notifications
-                  </span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
-                  <div class="dropdown-header">
-                    <a class="dropdown-link" href="#">Mark all as read</a>
-                    <h5 class="dropdown-heading">Recent Notifications</h5>
-                  </div>
-                  <div class="dropdown-body">
-                    <div class="list-group list-group-divided custom-scrollbar">
-                      <a class="list-group-item" href="#">
-                        <div class="notification">
-                          <div class="notification-media">
-                            <span class="icon icon-exclamation-triangle bg-warning rounded sq-40"></span>
-                          </div>
-                          <div class="notification-content">
-                            <small class="notification-timestamp">35 min</small>
-                            <h5 class="notification-heading">Update Status</h5>
-                            <p class="notification-text">
-                              <small class="truncate">Failed to get available update data. To ensure the proper functioning of your application, update now.</small>
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item" href="#">
-                        <div class="notification">
-                          <div class="notification-media">
-                            <span class="icon icon-flag bg-success rounded sq-40"></span>
-                          </div>
-                          <div class="notification-content">
-                            <small class="notification-timestamp">43 min</small>
-                            <h5 class="notification-heading">Account Contact Change</h5>
-                            <p class="notification-text">
-                              <small class="truncate">A contact detail associated with your account teddy.wilson, has recently changed.</small>
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item" href="#">
-                        <div class="notification">
-                          <div class="notification-media">
-                            <span class="icon icon-exclamation-triangle bg-warning rounded sq-40"></span>
-                          </div>
-                          <div class="notification-content">
-                            <small class="notification-timestamp">1 hr</small>
-                            <h5 class="notification-heading">Failed Login Warning</h5>
-                            <p class="notification-text">
-                              <small class="truncate">There was a failed login attempt from "192.98.19.164" into the account teddy.wilson.</small>
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item" href="#">
-                        <div class="notification">
-                          <div class="notification-media">
-                          </div>
-                          <div class="notification-content">
-                            <small class="notification-timestamp">4 hr</small>
-                            <h5 class="notification-heading">Daniel Taylor</h5>
-                            <p class="notification-text">
-                              <small class="truncate">Like your post: "Everything you know about Bootstrap is wrong".</small>
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item" href="#">
-                        <div class="notification">
-                          <div class="notification-media">
-                          </div>
-                          <div class="notification-content">
-                            <small class="notification-timestamp">8 hr</small>
-                            <h5 class="notification-heading">Emma Lewis</h5>
-                            <p class="notification-text">
-                              <small class="truncate">Like your post: "Everything you know about Bootstrap is wrong".</small>
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item" href="#">
-                        <div class="notification">
-                          <div class="notification-media">
-                          </div>
-                          <div class="notification-content">
-                            <small class="notification-timestamp">8 hr</small>
-                            <h5 class="notification-heading">Sophia Evans</h5>
-                            <p class="notification-text">
-                              <small class="truncate">Like your post: "Everything you know about Bootstrap is wrong".</small>
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item" href="#">
-                        <div class="notification">
-                          <div class="notification-media">
-                          </div>
-                          <div class="notification-content">
-                            <small class="notification-timestamp">9 hr</small>
-                            <h5 class="notification-heading">Teddy Wilson</h5>
-                            <p class="notification-text">
-                              <small class="truncate">Published a new post: "Everything you know about Bootstrap is wrong".</small>
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                  <div class="dropdown-footer">
-                    <a class="dropdown-btn" href="#">See All</a>
-                  </div>
-                </div>
               </li>
+            
+             
               <li class="dropdown hidden-xs">
                 <button class="navbar-account-btn" data-toggle="dropdown" aria-haspopup="true">
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right">
-                  <li>
-                    <a href="upgrade.html">
-                      <h5 class="navbar-upgrade-heading">
-                        Upgrade Now
-                        <small class="navbar-upgrade-notification">You have 15 days left in your trial.</small>
-                      </h5>
-                    </a>
-                  </li>
-                  <li class="divider"></li>
+              
+  =-023=33333330.
                   <li class="navbar-upgrade-version">User: <?php echo $this->session->userdata('username') ?></li>
                   <li class="divider"></li>
                   <li><a href="contacts.html">Contacts</a></li>
@@ -339,12 +90,7 @@
                   Profile
                 </a>
               </li>
-              <li class="visible-xs-block">
-                <a href="login-1.html">
-                  <span class="icon icon-power-off icon-lg icon-fw"></span>
-                  Sign out
-                </a>
-              </li>
+              
             </ul>
           </nav>
         </div>

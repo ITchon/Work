@@ -8,7 +8,7 @@
             <div class="col-md-12  ">
               <div class="demo-form-wrapper card"><br> 
               <h2 class=" text-center text-primary">
-             Edit User
+            EDIT USER
             </h2><hr>
             <form class="form form-horizontal container" action="<?php echo base_url()?>user/save_edit" method="post" data-toggle="validator">
             

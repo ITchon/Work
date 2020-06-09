@@ -161,7 +161,7 @@ return false;
 
  function insert_bom($bm)
  {
-  $sql ="INSERT INTO bom (b_master,date_created,delete_flag) VALUES ('$bm',CURRENT_TIMESTAMP,'1');";
+  $sql ="INSERT INTO bom (b_master,unit,date_created,delete_flag) VALUES ($bm,'pcs',CURRENT_TIMESTAMP,1);";
     $query = $this->db->query($sql);  
     $insert_id = $this->db->insert_id($query );
    if($query){
@@ -174,7 +174,7 @@ return false;
 
  function insert_sub_part($p,$d,$bm)
  {
-  $sql ="INSERT INTO sub_part (b_id,m_id,p_id,date_created,delete_flag) VALUES ('$bm','$p','$d',CURRENT_TIMESTAMP,1);";
+  $sql ="INSERT INTO sub_part (b_id,m_id,p_id,unit,date_created,delete_flag) VALUES ($bm,$p,$d,'pcs',CURRENT_TIMESTAMP,1);";
   $query = $this->db->query($sql);  
   if($query){
     return true;

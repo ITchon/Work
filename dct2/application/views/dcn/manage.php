@@ -15,8 +15,7 @@
               <div class="card">
                 <div class="card-header">
 
-                  <h3>DCN Table</h3>
-                  <small>The tables presented below use <a href="https://datatables.net/extensions/responsive/" target="_blank">DataTables Responsive Extension</a>, the styling of which is completely rewritten in SASS, without modifying however anything in JavaScript.</small>
+                  <h3>MANAGE DCN</h3>
 
                 </div>
                 <div class="card-body">
@@ -24,8 +23,7 @@
                   <thead>
                       <tr>
                       <th>DCN no</th>
-                        <th width="15%">Manage</th>
-                       
+                      <th width="15%">Manage</th>
                       </tr>
                     </thead>
                     <tbody>

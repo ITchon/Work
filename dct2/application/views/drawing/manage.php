@@ -11,9 +11,9 @@
           <div class="row gutter-xs">
             <div class="col-xs-8">
               <div class="card">
-                <div class="card-header">
+                <div class="card-header ">
             
-                  <h3><a href="">Drawing Table</a> <?php if(isset($title)){?>
+                  <h3><a href="<?php echo base_url()?>drawing/manage"  >MANAGE DRAWING </a> <?php if(isset($title)){?>
                   >
                 <a class=""> </a><a  onClick="history.go(-1)"style="cursor: pointer;">Back </a> > <?php echo $name ?>  <?php echo $title ?>
                 <?php  }?> 
