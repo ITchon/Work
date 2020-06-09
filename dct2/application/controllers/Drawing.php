@@ -253,7 +253,7 @@ class Drawing extends CI_Controller {
     public function openfile()
     {
         $file =  $this->input->post('file');
-        $path = $this->input->post('path');
+        $path = '"D:\xampp\htdocs\Git\Work\dct2\uploads"';
         $open = ("$path$file");
         
         exec($open);
