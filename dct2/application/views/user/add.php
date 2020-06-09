@@ -8,7 +8,7 @@
             <div class="col-md-12  ">
               <div class="demo-form-wrapper card"><br> 
               <h2 class=" text-center text-primary">
-             Add User
+            ADD USER
             </h2><hr>
             <form class="form form-horizontal container" action="<?php echo base_url()?>user/insert" method="post" data-toggle="validator">
                   <?php echo $this->session->flashdata("error"); ?>

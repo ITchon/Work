@@ -9,7 +9,7 @@
             <div class="col-md-12  ">
               <div class="demo-form-wrapper card" style="padding-top:8px">
               <h2 class=" text-center text-primary">
-             ADD PART
+             ADD SUB PART
              <?php echo anchor(base_url().'bom/manage/'.$bm.'', 'Back',array('class'=>'btn btn-default ')); ?>
             </h2><hr>
             <form class="form form-horizontal container" action="<?php echo base_url()."part/insert_sub"?>" method="post" data-toggle="validator">

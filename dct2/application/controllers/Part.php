@@ -60,8 +60,8 @@ class Part extends CI_Controller {
         $m_id =  $this->input->post('m_id');
         $sql =  'SELECT * FROM sub_part where sub_id = '.$m_id.'  AND delete_flag != 0';
         $query = $this->db->query($sql); 
-        $test= $query->result();
-        $query = $this->db->query('SELECT * FROM sub_part where p_id = '.$test[0]->p_id.'  AND delete_flag != 0'); 
+        $res= $query->result();
+        $query = $this->db->query('SELECT * FROM sub_part where p_id = '.$res[0]->p_id.'  AND delete_flag != 0'); 
         $data= $query->result();
         $array=[];
         foreach($data as $r){
@@ -111,7 +111,6 @@ class Part extends CI_Controller {
         $res = $query->result(); 
         $query = $this->db->query("SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 and p.p_id != '$b_master.'"); 
         $res_part = $query->result(); 
-        
         $data['res_chk'] =$array;
         $data['bm'] =$id;
         $data['p_id'] =$p_id;

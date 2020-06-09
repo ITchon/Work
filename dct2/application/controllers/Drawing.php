@@ -121,9 +121,7 @@ class Drawing extends CI_Controller {
         $result = $this->model->enableDrawing($uid);
 
         if($result!=FALSE){
-            echo '<script language="javascript">';
-            echo 'history.go(-1);';
-            echo '</script>';
+            redirect('drawing/manage','refresh');
         }else{
             echo "<script>alert('Simting wrong')</script>";
             redirect('drawing/manage','refresh');
@@ -137,9 +135,7 @@ class Drawing extends CI_Controller {
         $result = $this->model->disableDrawing($uid);
 
         if($result!=FALSE){
-            echo '<script language="javascript">';
-            echo 'history.go(-1);';
-            echo '</script>';
+            redirect('drawing/manage','refresh');
             
 
         }else{
@@ -155,9 +151,7 @@ class Drawing extends CI_Controller {
         $result = $this->model->enableDrawing_v($uid);
 
         if($result!=FALSE){
-            echo '<script language="javascript">';
-            echo 'history.go(-1);';
-            echo '</script>';
+            redirect('drawing/manage','refresh');
 
         }else{
         
@@ -173,12 +167,8 @@ class Drawing extends CI_Controller {
         $result = $this->model->disableDrawing_v($uid);
 
         if($result!=FALSE){
-                echo '<script language="javascript">';
-        
-            echo 'history.go(-1);';
-            echo '</script>';
+            redirect('drawing/manage','refresh');
             
-
         }else{
             echo "<script>alert('Simting wrong')</script>";
             redirect('drawing/manage','refresh');
@@ -191,9 +181,8 @@ class Drawing extends CI_Controller {
     public function deletedrawing_v()
     {
         $this->model->delete_drawing_v($this->uri->segment('3'));
-        echo '<script language="javascript">';
-            echo 'history.go(-1);';
-            echo '</script>';
+        redirect('drawing/manage','refresh');
+
     }
 
 

@@ -6,7 +6,7 @@
             <div class="col-xs-8">
               <div class="card">
                 <div class="card-header">
-                  <h4>Permission Table</h4>
+                  <h3>MANAGE PERMISSION</h3>
                 </div>
                 <div class="card-body">
                   <table id="demo-datatables-buttons-1" class="table table-bordered table-striped dataTable" cellspacing="0" width="100%">
@@ -15,11 +15,6 @@
                         <th>ID</th>
                         <th>Permission name</th>
                         <th width="15%">Manage</th>
-  
-     
-                 
-                  
-                       
                       </tr>
                     </thead>
                     <tbody>

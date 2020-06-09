@@ -40,7 +40,6 @@ th, td {
         <div class="card">
         <div class="card-header">
         <div class="col-xs-10">
-
         <form action="<?php echo base_url()?>bom/insert_sub" method="post" class="form-inline">
           <div class="col-xs-5">
                   <span class="text-center text-primary" id="header">BOM TABLE  <?php echo anchor(base_url().'bom/manage', 'Back',array('class'=>'btn btn-default')); ?></span>
@@ -49,18 +48,21 @@ th, td {
                    <select name="p_id[]" class="form-control select2" multiple="multiple"  required>
                  
                    <?php
-                   echo $maxlv[0];
-                      foreach($result_sub as $r){?>
+                   $genres = array();
+                    $genres[] = $bm_id;
+                      foreach($result_sub as $r){
+                        if (!in_array($r->p_id,$genres)) {?>
              
                      <option value="<?php  echo $r->p_id ?>"><?php echo $r->p_no ?></option>
                     <?php
+                        }
                       }
                       ?> 
                    </select>
                     </div>   
                     
                     <input type="hidden" name="bm" value="<?php echo $bm ?>" hidden>
-                    <input type="submit" class="btn btn-outline-primary" value="Add Part">
+                    <input type="submit" class="btn btn-outline-primary" value="Add Part lv 2">
         </form>          
         
             </div>      
@@ -78,7 +80,7 @@ th, td {
               <th width="" class="not-active" style='border-right: 1px groove ;'>Qty</th>               
               <th width="" class="not-active" style='border-right: 1px groove ;'>Unit</th>               
               <th width="" class="not-active" style='border-right: 1px groove ;'>Drawing No</th>               
-              <th width="">Manage</th>               
+              <th width="" class="not-active">Manage</th>               
              </tr>
             </thead>
           <tbody>
@@ -93,20 +95,19 @@ th, td {
                 echo "<td class='text-danger' style='border-right: 1px groove '>$row->quantity</td>";
                 echo "<td class='text-danger' style='border-right: 1px groove '>$row->unit</td>";
                 echo "<td class='text-danger' style='border-right: 1px groove '>$row->d_no</td>";
-                echo "<td class='text-danger'><a type='button' href='".base_url()."bom/delete_bom/".$bm."' onclick='return confirm(\"Confirm Delete Item\")' ><button class='btn-danger btn-sm fa fa-trash'></button></a>";
-                
+                echo "<td class='text-danger'><a type='button' href='".base_url()."bom/delete_bom/".$bm."' onclick='return confirm(\"Confirm Delete Item\")' ><button class='btn-danger btn-sm fa fa-trash' data-toggle='tooltip' data-html='true' data-placement='left' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>'></button></a>";
                 ?>
+  
+                <a type="button" href="<?php echo base_url()?>bom/edit_bom/$bm" ><button class="btn-success btn-sm fa fa-wrench" data-toggle="tooltip" data-html="true" data-placement="bottom" aria-describedby="passHelp" title="<h5>แก้ไขจำนวน</h5>"></button></a>
+         
                 <form id="form" action="<?php echo base_url()?>part/edit_part" method="post">
                   <?php $bm = $row->b_id; ?>
                 <input type="text" name="bom" value="<?php echo $bm ?>" hidden>
                 <input type="text" name="p_id" value="<?php echo $row->p_id ?>" hidden>
-               <?php echo "<a type='button'><button class='btn-default btn-sm fa fa-search'></button></a>"; ?>
+               <?php echo "<a type='button'><button class='btn-default btn-sm fa fa-search' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ดูข้อมูล</h5>'></button></a></td>"; ?>
                 </form>
-                <form id="form" action="<?php echo base_url()."part/add_sub/$bm"?>" method="post">
-                    <button type="submit"  class="btn-primary btn-sm fa fa-plus"></button>
-                    </form>
                     <?php
-                  echo  "<a type='button' href='".base_url()."bom/edit_bom/".$bm."' ><button class='btn-success btn-sm fa fa-wrench'></button></a></td>";
+               
            
               }
               foreach($result_bom as $row){ ?>
@@ -133,26 +134,26 @@ th, td {
                     <form id="form" action="<?php echo base_url()?>bom/delete" method="post">
                     <input type="hidden" name="m_id" value="<?php echo $row['m_id'] ?>" >
                     <input type="hidden" name="bm" value="<?php echo $bm ?>" >
-                    <button type="submit" onclick='return confirm("Confirm Delete Item")' class="btn-danger btn-sm fa fa-trash"></button>
+                    <button type="submit" onclick='return confirm("Confirm Delete Item")' class="btn-danger btn-sm fa fa-trash" data-toggle="tooltip" data-html="true" data-placement="left" aria-describedby="passHelp" title="<h5>ลบข้อมูล</h5>"></button>
                     </form>
 
+                    <form id="form" action="<?php echo base_url()."bom/edit_part/$bm" ?>" method="post">
+                    <input type="hidden" name="m_id" value="<?php echo $row['m_id'] ?>" >
+                    <input type="hidden" name="p_no" value="<?php echo $r->p_no ?>" >
+                    <button type="submit"  class="btn-success btn-sm fa fa-wrench" data-toggle="tooltip" data-html="true" data-placement="bottom" aria-describedby="passHelp" title="<h5>แก้ไขจำนวน</h5>"></button>
+                    </form>       
                     <form id="form" action="<?php echo base_url()?>part/edit_part" method="post">
                     <input type="hidden" name="bom" value="<?php echo $bm ?>" >
                     <input type="hidden" name="p_id" value="<?php echo $r->p_id ?>" >
-                    <?php echo "<a type='button'><button class='btn-default btn-sm fa fa-search'></button></a>"; ?>
+                    <?php echo "<a type='button'><button class='btn-default btn-sm fa fa-search' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ดูข้อมูล</h5>'></button></a> "?>
                     </form>
-                            
                     <form id="form" action="<?php echo base_url()."part/add_sub/$bm"?>" method="post">
                     <input type="hidden" name="m_id" value="<?php echo $row['m_id'] ?>" >
                     <input type="hidden" name="id" value="<?php echo $row['id'] ?>" >
                     <input type="hidden" name="p_no" value="<?php echo $r->p_no ?>" >
-                    <button type="submit"  class="btn-primary btn-sm fa fa-plus"></button>
+                    <button type="submit"  class="btn-primary btn-sm fa fa-plus" data-toggle="tooltip" data-html="true" data-placement="bottom" aria-describedby="passHelp" title="<h5>Add Part Lv <?php echo $row['lv']+1 ?></h5>"></button>
                     </form>  
-                    <form id="form" action="<?php echo base_url()."bom/edit_part/$bm" ?>" method="post">
-                    <input type="hidden" name="m_id" value="<?php echo $row['m_id'] ?>" >
-                    <input type="hidden" name="p_no" value="<?php echo $r->p_no ?>" >
-                    <button type="submit"  class="btn-success btn-sm fa fa-wrench"></button>
-                    </form>
+             
                               </td>
 
                           <?php                      
@@ -163,10 +164,12 @@ th, td {
       
   </tbody>
 </table>
-
-
  <script>
 $(document).ready( function () {
   $('.select2').select2();
 });
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 </script>
