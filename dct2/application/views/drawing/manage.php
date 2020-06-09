@@ -9,7 +9,8 @@
           </div>
           <div class="col-xs-12 card" >
             
-            <form id="form" action="<?php echo base_url()?>drawing/insert" method="post" class="text-center" >
+
+              <?php echo form_open_multipart('drawing/insert');?>
                  
                   <div class="form-group">
                   <label for="name-1" class="control-label">Add Drawing No</label>

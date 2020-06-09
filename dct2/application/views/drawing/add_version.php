@@ -29,7 +29,7 @@
 
         <div class="col-sm-6 col-md-4">
                    <select name="dcn_id" class="col-sm-5 col-md-4 control-label form-control select2" id="dcn_id"  required>
-                   <option value="<?php echo $result[0]->dcn_no ?>" hidden> <?php echo $result[0]->dcn_no ?> </option>
+                   <option value="<?php echo $result[0]->dcn_id ?>" hidden> <?php echo $result[0]->dcn_no ?> </option>
                    <?php
                       foreach($result_dcn as $dcn){?>
                      <option value="<?php  echo $dcn->dcn_id ?>"><?php echo $dcn->dcn_no ?></option>
@@ -50,6 +50,34 @@
 
                     </div>
                     </div> 
+
+                    
+                    <div class="form-group">
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">File</label>      
+                      <div class="col-sm-6 col-md-4">
+                        <?php if($result[0]->file == null){ ?>
+                <input class="form-control" type="text" readonly value="Please add file">
+                <input class="form-control" type="hidden" name="path" value="<?php echo $result[0]->path_file ?>">
+                       <?php  }else { ?>
+                <input class="form-control" type="text" readonly value="<?php echo $result[0]->file ?>">
+                <input class="form-control" type="hidden" name="path" value="<?php echo $result[0]->path_file ?>">
+                   <?php } ?>
+                    </div>
+                    </div> 
+
+                    <div class="form-group">
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Change File</label>  
+                      <div class="col-sm-6 col-md-4">
+                        <?php if($result[0]->file){ ?>
+                              <input type="text" name="file_name" id="file_name" value="<?php echo $result[0]->file ?>" hidden>
+                              <input type="file" name="file_name2" class="form-control" id="file_name2">         
+                      <?php }else{ ?>
+                          <input type="file" name="file_name" class="form-control" id="file_name" required>
+
+                      <?php } ?>
+
+                   </div>
+                    </div>
 
                     <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Status</label>  
@@ -72,31 +100,6 @@
                 ?>
                    </div>
                     </div> 
-                    
-                    <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">File</label>      
-                      <div class="col-sm-6 col-md-4">
-                        <?php if($result[0]->file == null){ ?>
-                        <input class="form-control" type="text" readonly value="Please add file">
-                       <?php  }else { ?>
-                   <input class="form-control" type="text" readonly value="<?php echo $result[0]->file ?>">
-                   <?php } ?>
-                    </div>
-                    </div> 
-
-                    <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Change File</label>  
-                      <div class="col-sm-6 col-md-4">
-                        <?php if($result[0]->file){ ?>
-                              <input type="text" name="file_name" id="file_name" value="<?php echo $result[0]->file ?>" hidden>
-                              <input type="file" name="file_name2" class="form-control" id="file_name2">         
-                      <?php }else{ ?>
-                          <input type="file" name="file_name" class="form-control" id="file_name" required>
-
-                      <?php } ?>
-
-                   </div>
-                    </div>
             </div>
                   <div class="form-group">
                 <br>

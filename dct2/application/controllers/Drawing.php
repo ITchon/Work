@@ -16,8 +16,8 @@ class Drawing extends CI_Controller {
          $sql =  "select * from sys_menus where order_no != 0  and enable != 0 ORDER BY order_no";
          $query = $this->db->query($sql); 
          $menu['submenu']= $query->result(); 
-         $this->load->view('header');
-         $this->load->view('menu',$menu);
+        $this->load->view('header');
+        $this->load->view('menu',$menu);
 
     }
 	public function index()
@@ -75,20 +75,45 @@ class Drawing extends CI_Controller {
     
     public function insert()
     {
+        $d_no =  $this->input->post('d_no');
+        $dcn_id =  $this->input->post('dcn_id');
+        $_FILE = $_FILES['file_name']['name'];
+
+        $config['upload_path']          = './uploads/';
+                $config['allowed_types']        = '*';
+                $config['max_size']             = 10000;
+
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+
+                if ( ! $this->upload->do_upload('file_name'))
+                {
+                   
+                        $data = array('upload_data' => $this->upload->data());
+                        //$this->load->view('drawing/manage', $data);
+                }
+
+
+        $result = $this->model->insert_drawing($d_no, $dcn_id, $_FILE);
+
+        redirect('drawing/manage','refresh');
+  
+    }
+
+    public function insert2()
+    {
     
         $d_no =  $this->input->post('d_no');
         $dcn_id =  $this->input->post('dcn_id');
+        $file_name =  $this->input->post('file_name2');
 
-        if($this->input->post('file_name') == null){
-            $file_name =  $this->input->post('file_name2');
-        }else{
-            $file_name =  $this->input->post('file_name');
-        }
+        
         $result = $this->model->insert_drawing($d_no, $dcn_id, $file_name);
 
         redirect('drawing/manage','refresh');
   
     }
+
 
     public function enable($uid){
 
@@ -176,7 +201,8 @@ class Drawing extends CI_Controller {
     {
         $id = $this->uri->segment('3');
 
-        $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, d.enable, d.file_name as file, dc.dcn_no, d.version from drawing as d
+        $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, d.enable, d.file_name as file, dc.dcn_no, d.version,
+        d.path_file from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
           where d.d_id = $id";
 
@@ -199,7 +225,8 @@ class Drawing extends CI_Controller {
     {
         $id = $this->uri->segment('3');
 
-        $sql =  "SELECT v.v_id, d.d_id, d.d_no, v.dcn_id, dc.dcn_no, v.enable, v.file_name as file, v.version from version as v
+        $sql =  "SELECT v.v_id, d.d_id, d.d_no, v.dcn_id, dc.dcn_no, v.enable, v.file_name as file,
+        v.version, v.path_file from version as v
         inner join drawing as d on d.d_id = v.d_id
         inner join dcn as dc on dc.dcn_id = d.dcn_id
           where v.v_id = $id";
@@ -223,9 +250,11 @@ class Drawing extends CI_Controller {
         $d_no =  $this->input->post('d_no');
         $dcn_id =  $this->input->post('dcn_id');
         $version =  $this->input->post('version');
+        $path_file =  $this->input->post('path');
         $file_name =  $this->input->post('file_name');
+
         $this->model->select_version($d_id);
-        $this->model->update_version($d_id, $d_no, $dcn_id, $version, $file_name);
+        $this->model->update_version($d_id, $d_no, $dcn_id, $version, $file_name, $path_file);
         redirect('drawing/manage');
 
 
@@ -246,6 +275,8 @@ class Drawing extends CI_Controller {
 
   
     }
+
+
 
 }
 
