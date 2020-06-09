@@ -10,7 +10,7 @@ class Usergroup extends CI_Controller {
         $this->load->database(); 
         $this->load->model('model');
         $this->model->CheckSession();
-        $menu['menu'] = $this->model->showmenu();
+        $menu['menu'] = $this->model->showmenu($this->session->userdata('sug_id'));
         $url = current_url(true);               
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
          $menu['mg']= $this->model->givemeid($url);

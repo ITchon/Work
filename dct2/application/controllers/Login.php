@@ -33,7 +33,7 @@ class Login extends CI_Controller {
                 redirect('login','refresh'); 
              } else{
                 echo "<script>alert('Welcome $username')</script>";
-                redirect('user/manage','refresh');
+                redirect('manage/index','refresh');
              }
         }
      else{

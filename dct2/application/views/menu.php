@@ -125,7 +125,6 @@
                     <span class="sidenav-icon fa  <?php echo $r->icon_menu ?>"></span>
                     <span class="sidenav-label"><?php echo $r->g_name ?></span>
                   </a>
-        
                      <ul class="sidenav-subnav collapse <?php echo($r->mg == $mg[0]->mg_id)? " ":"" ?>">
                     <li class="sidenav-subheading "><?php echo $r->g_name ?></li>
               
@@ -148,13 +147,7 @@
                  <?php
                 }
                 ?>
-                <li class="sidenav-item has-subnav " >
-                  <a href="<?php echo base_url()?>fullcalendar" aria-haspopup="true">
-                    <span class="sidenav-icon fa fa-calendar"></span>
-                    <span class="sidenav-label">Calendar</span>
-                  </a>
- 
-                </li> 
+               
                
                    </div>
                   </div>     
