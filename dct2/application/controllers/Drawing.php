@@ -31,19 +31,19 @@ class Drawing extends CI_Controller {
         $name =  $this->input->post('name');
         $title =  $this->input->post('title');
         if($name == 'DCN'){
-          $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version from drawing as d
+          $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
           where d.delete_flag != 0 AND d.dcn_id = $dcn_id";
                $data['title'] = $title ;
                $data['name'] = $name ;
         }
         else if(isset($id)){
-            $sql =  "SELECT d.d_id, d.d_no, d.enable, d.file_name, d.version, dcn.dcn_no,'v_id'
+            $sql =  "SELECT d.d_id, d.d_no, d.enable, d.file_name, d.version, dcn.dcn_no, d.path_file,'v_id'
             from drawing as d
             inner join dcn on dcn.dcn_id = d.dcn_id
             where d.delete_flag != 0 AND d.d_id = $id
             UNION
-    SELECT v.d_id, v.d_no, v.enable, v.file_name, v.version, dc.dcn_no, v.v_id
+    SELECT v.d_id, v.d_no, v.enable, v.file_name, v.version, dc.dcn_no, d.path_file, v.v_id
     from version as v
     inner join drawing as d on d.d_id = v.d_id
     inner join dcn as dc on dc.dcn_id = v.dcn_id
@@ -55,7 +55,7 @@ class Drawing extends CI_Controller {
 
         }
         else{
-          $sql =  'SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version from drawing d 
+          $sql =  'SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file from drawing d 
           inner join dcn as dc on dc.dcn_id = d.dcn_id where d.delete_flag != 0';
         }
 
@@ -224,10 +224,9 @@ class Drawing extends CI_Controller {
     public function openfile()
     {
         $file =  $this->input->post('file');
-
-        $path ='C:\xampp\htdocs\Git\Work\dct2\uploads';
+        $path = $this->input->post('path');
         $open = ("$path$file");
-
+        
         exec($open);
         
 

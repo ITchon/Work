@@ -7,9 +7,43 @@
              
             </p>
           </div>
+          <div class="col-xs-12 card" >
+            
+            <form id="form" action="<?php echo base_url()?>drawing/insert" method="post" class="text-center" >
+                 
+                  <div class="form-group">
+                  <label for="name-1" class="control-label">Add Drawing No</label>
+                    <input id="d_no" class="form-control" type="text" name="d_no" required>
+                  </div>
+                  <div class="form-group">
+                  <label for="name-2" class="control-label">DCN Number</label>      
+          
+                     
+                   <select name="dcn_id" class="form-control select2" id="dcn_id"  required>
+                   <option value="" hidden> - - - Select DCN- - - </option>
+                   <?php
+                   
+                      foreach($result_dcn as $dcn){?>
+                     <option value="<?php  echo $dcn->dcn_id ?>"><?php echo $dcn->dcn_no ?></option>
+                    <?php
+                      }
+                      ?> 
+                   </select>
+                    </div>
+                   <div class="form-group">
+                  <label for="name-1" class="control-label">File</label>
+                    <input id="file_name" class="form-control" type="file" name="file_name" required>
+                  </div>
+                    
+
+                  <div class="form-group">
+                    <button  id="btn" class="btn btn-primary ">Save Changes</button>
+                  </div>
+                </form>
+          </div>
 
           <div class="row gutter-xs">
-            <div class="col-xs-8">
+            <div class="col-xs-12">
               <div class="card">
                 <div class="card-header ">
             
@@ -159,6 +193,7 @@
 
                 <td><form action="<?php echo base_url()?>drawing/openfile" method="post">
     <input type="text" name="file" value="\<?php echo $r->file_name ?>"hidden>
+    <input type="text" name="path" value="<?php echo $r->path_file ?>"hidden>
     <button type="submit" style="border:none;"><a><b><?php echo $r->file_name ?></b></a></button>
 </form></td>
                 <?php
@@ -175,40 +210,7 @@
               </div>
             </div>
   
-            <div class="col-xs-4  card" >
             
-            <form id="form" action="<?php echo base_url()?>drawing/insert" method="post" class="text-center" >
-                 
-                  <div class="form-group">
-                  <label for="name-1" class="control-label">Add Drawing No</label>
-                    <input id="d_no" class="form-control" type="text" name="d_no" required>
-                  </div>
-                  <div class="form-group">
-                  <label for="name-2" class="control-label">DCN Number</label>      
-          
-                     
-                   <select name="dcn_id" class="form-control select2" id="dcn_id"  required>
-                   <option value="" hidden> - - - Select DCN- - - </option>
-                   <?php
-                   
-                      foreach($result_dcn as $dcn){?>
-                     <option value="<?php  echo $dcn->dcn_id ?>"><?php echo $dcn->dcn_no ?></option>
-                    <?php
-                      }
-                      ?> 
-                   </select>
-                    </div>
-                   <div class="form-group">
-                  <label for="name-1" class="control-label">File</label>
-                    <input id="file_name" class="form-control" type="file" name="file_name" required>
-                  </div>
-                    
-
-                  <div class="form-group">
-                    <button  id="btn" class="btn btn-primary ">Save Changes</button>
-                  </div>
-                </form>
-          </div>
           </div>
         </div>
       </div>
