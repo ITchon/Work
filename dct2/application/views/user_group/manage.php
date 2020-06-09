@@ -47,7 +47,7 @@
                 }
                 ?> <a class='' onclick="javascript:window.location='<?php
                 echo base_url() . 'usergroup/rule_ug/' . $r->sug_id;
-                ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
+                ?>';"><i class='btn-info btn-sm fa fa-wrench'> </i> </a>
 
                 <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
                 echo base_url() . 'usergroup/edit_ug/' . $r->sug_id;

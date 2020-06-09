@@ -26,7 +26,7 @@
                 <table id="demo-datatables-buttons-1" class="table table-bordered table-striped dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
-                        <th>Drawing id</th>
+          
                         <th>Part name</th>
                         <th>Drawing no</th>
                         <th>Part no</th>
@@ -39,7 +39,6 @@
                       <?php
                     foreach($result as $r){
             echo "<tr>";
-                echo "<td>".$r->d_id."</td>";
                 echo "<td>".$r->p_name."</td>";
                 echo "<td>".$r->d_no."</td>";
                 echo "<td>".$r->p_no."</td>";

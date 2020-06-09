@@ -42,7 +42,7 @@
                 }
                 ?> <a type ='button' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
                 echo base_url() . 'permissiongroup/edit_pg/' . $r->spg_id;
-                ?>';"><i class='btn-info btn-sm fa fa-key'> </i> </a>
+                ?>';"><i class='btn-info btn-sm fa fa-wrench'> </i> </a>
                 <?php 
                 echo "<a type='button' href='".base_url()."permissiongroup/delete_pg/".$r->spg_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
                 
