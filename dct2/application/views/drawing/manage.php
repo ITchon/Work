@@ -80,7 +80,7 @@
                     <input type="text" name="d_id" value="<?php echo $r->d_id ?>" hidden>
                     <input type="text" name="title" value="<?php echo $r->d_no ?>" hidden>
                     <input type="text" name="name" value="Drawing" hidden>
-                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    <button type="submit" data-toggle='tooltip' data-html='true' data-placement='right' aria-describedby='passHelp' title='<h5>ค้นหาPartที่เกี่ยวข้อง</h5>' class="btn btn-sm btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
                     <?php echo "<b>".$r->d_no."</b>" ?>
         </form>
 

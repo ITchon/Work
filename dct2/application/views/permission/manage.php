@@ -12,9 +12,8 @@
                   <table id="demo-datatables-buttons-1" class="table table-bordered table-striped dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
-                        <th>ID</th>
                         <th>Permission name</th>
-                        <th width="15%">Manage</th>
+                        <th width="30%">Manage</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -22,7 +21,6 @@
                     <?php
                     foreach($result as $r){
             echo "<tr>";
-                echo "<td>".$r->spg_id."</td>";
                 echo "<td>".$r->name."</td>";
                  if($r->enable!=1 ){?>
                   
