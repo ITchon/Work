@@ -68,7 +68,7 @@ th, td {
             </div>      
               </div>
        <div class="card-body">
-         <table id="demo-datatables-buttons-2" class="table table-striped dataTable text-center" style="border: 1px groove #ddd !important;" cellspacing="0" width="100%"  >
+         <table id="" class="table table-striped dataTable text-center" style="border: 1px groove #ddd !important;" cellspacing="0" width="100%"  >
             <thead> 
              <tr>
                <?php 

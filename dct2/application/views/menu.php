@@ -40,34 +40,30 @@
               </span>
             </button>
             <ul class="nav navbar-nav navbar-right">
-              <li class="visible-xs-block">
-                <h4 class="navbar-text text-center">Hi, Teddy Wilson</h4>
-              </li>
-              <li class="hidden-xs hidden-sm">
-                <form class="navbar-search navbar-search-collapsed">
-                  <div class="navbar-search-group">
-                    <input class="navbar-search-input" type="text" placeholder="Search for people, companies, and more&hellip;">
-                    <button class="navbar-search-toggler" title="Expand search form ( S )" aria-expanded="false" type="submit">
-                      <span class="icon icon-search icon-lg"></span>
-                    </button>
-                    <button class="navbar-search-adv-btn" type="button">Advanced</button>
-                  </div>
-                </form>
-                <li class="visible-xs-block">
-                <a href="login-1.html">
-                  <span class="icon icon-power-off icon-lg icon-fw"></span>
-                  Sign out
-                </a>
-              </li>
-              </li>
-            
-             
+            <li>        
+            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"> 
+            <span class="badge "></span>
+           <?php echo $this->session->userdata('username') ?>
+                  </span>   
+                  </span>
+                  </a>
+                  </li>
+    
+<!--              
               <li class="dropdown hidden-xs">
                 <button class="navbar-account-btn" data-toggle="dropdown" aria-haspopup="true">
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right">
-            
+                  <li>
+                    <a href="upgrade.html">
+                      <h5 class="navbar-upgrade-heading">
+                        Upgrade Now
+                        <small class="navbar-upgrade-notification">You have 15 days left in your trial.</small>
+                      </h5>
+                    </a>
+                  </li>
+                  <li class="divider"></li>
                   <li class="navbar-upgrade-version">User: <?php echo $this->session->userdata('username') ?></li>
                   <li class="divider"></li>
                   <li><a href="contacts.html">Contacts</a></li>
@@ -89,7 +85,12 @@
                   Profile
                 </a>
               </li>
-              
+              <li class="visible-xs-block">
+                <a href="login-1.html">
+                  <span class="icon icon-power-off icon-lg icon-fw"></span>
+                  Sign out
+                </a>
+              </li> -->
             </ul>
           </nav>
         </div>
@@ -125,6 +126,7 @@
                     <span class="sidenav-icon fa  <?php echo $r->icon_menu ?>"></span>
                     <span class="sidenav-label"><?php echo $r->g_name ?></span>
                   </a>
+        
                      <ul class="sidenav-subnav collapse <?php echo($r->mg == $mg[0]->mg_id)? " ":"" ?>">
                     <li class="sidenav-subheading "><?php echo $r->g_name ?></li>
               
@@ -147,7 +149,13 @@
                  <?php
                 }
                 ?>
-               
+                <li class="sidenav-item has-subnav " >
+                  <a href="<?php echo base_url()?>fullcalendar" aria-haspopup="true">
+                    <span class="sidenav-icon fa fa-calendar"></span>
+                    <span class="sidenav-label">Calendar</span>
+                  </a>
+ 
+                </li> 
                
                    </div>
                   </div>     
@@ -290,7 +298,7 @@
       <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header bg-primary">
+        <div class="modal-header bg-danger">
           <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
             <h5 class="modal-title " id="exampleModalLabel">Ready to Destroy this Session?</h5>
 
@@ -298,7 +306,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="<?php echo base_url()?>/logout">Logout</a>
+            <a class="btn btn-danger" href="<?php echo base_url()?>/logout">Logout</a>
         </div>
       </div>
     </div>
