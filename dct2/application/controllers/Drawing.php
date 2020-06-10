@@ -31,32 +31,39 @@ class Drawing extends CI_Controller {
         $name =  $this->input->post('name');
         $title =  $this->input->post('title');
         if($name == 'DCN'){
-          $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file from drawing as d
+          $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
+          from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
+          inner join part as p on p.d_id = d.d_id 
           where d.delete_flag != 0 AND d.dcn_id = $dcn_id";
                $data['title'] = $title ;
                $data['name'] = $name ;
         }
         else if(isset($id)){
-            $sql =  "SELECT d.d_id, d.d_no, d.enable, d.file_name, d.version, dcn.dcn_no, d.path_file,'v_id'
+            $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, d.enable, d.file_name, d.version, dcn.dcn_no, d.path_file,'v_id', p.p_no
             from drawing as d
             inner join dcn on dcn.dcn_id = d.dcn_id
+            inner join part as p on p.d_id = d.d_id 
             where d.delete_flag != 0 AND d.d_id = $id
             UNION
-    SELECT v.d_id, v.d_no, v.enable, v.file_name, v.version, dc.dcn_no, d.path_file, v.v_id
-    from version as v
-    inner join drawing as d on d.d_id = v.d_id
-    inner join dcn as dc on dc.dcn_id = v.dcn_id
-    where v.delete_flag != 0 AND v.d_id = $id
-    ORDER by version DESC";
+         SELECT v.d_id, v.d_no, v.enable, d.dcn_id, v.file_name, v.version, dc.dcn_no, d.path_file, v.v_id, p.p_no
+         from version as v
+         inner join drawing as d on d.d_id = v.d_id
+         inner join dcn as dc on dc.dcn_id = v.dcn_id
+         inner join part as p on p.d_id = d.d_id 
+         where v.delete_flag != 0 AND v.d_id = $id
+         ORDER by version DESC";
                  $data['title'] = $title ;
                  $data['name'] = $name ;
 
 
         }
         else{
-          $sql =  'SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file from drawing d 
-          inner join dcn as dc on dc.dcn_id = d.dcn_id where d.delete_flag != 0';
+          $sql =  'SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
+          from drawing d 
+          inner join dcn as dc on dc.dcn_id = d.dcn_id
+          inner join part as p on p.d_id = d.d_id 
+          where d.delete_flag != 0';
         }
 
         $sql1 =  'SELECT * from dcn where delete_flag != 0';
@@ -70,6 +77,19 @@ class Drawing extends CI_Controller {
         $this->load->view('drawing/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
         
+    }
+
+    public function add()
+
+    {   
+        //$this->model->CheckPermission($this->session->userdata('su_id'));
+
+        $sql = "SELECT * FROM dcn where delete_flag != 0 ";
+        $query = $this->db->query($sql);
+        $data['result_dcn'] = $query->result(); 
+
+        $this->load->view('drawing/add',$data);//bring $data to user_data 
+        $this->load->view('footer');
     }
 
     
@@ -176,7 +196,6 @@ class Drawing extends CI_Controller {
         }
     }
 
-  
 
     public function deletedrawing_v()
     {
@@ -253,15 +272,31 @@ class Drawing extends CI_Controller {
     public function openfile()
     {
         $file =  $this->input->post('file');
-        $path = '"D:\xampp\htdocs\Git\Work\dct2\uploads"';
+        $path = $this->input->post('path');
         $open = ("$path$file");
-        
         exec($open);
         
+        redirect('drawing/manage');
 
-        redirect('drawing/manage','refresh');
+    }
 
+    public function open_dcn()
+    {
+        $dcn_id =  $this->uri->segment('3');
 
+        $sql =  "SELECT * from dcn where dcn_id = '$dcn_id' ";
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+
+        $path =  $data['result'][0]->path_file;
+        $file =  $data['result'][0]->file_name;
+
+        $open = ("$path$file");
+
+        exec($open);
+
+        
+        redirect('drawing/manage');
   
     }
 

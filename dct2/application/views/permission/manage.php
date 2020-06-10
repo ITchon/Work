@@ -3,7 +3,7 @@
         <div class="layout-content-body">
         
           <div class="row gutter-xs">
-            <div class="col-xs-8">
+            <div class="col-xs-12">
               <div class="card">
                 <div class="card-header">
                   <h3>MANAGE PERMISSION</h3>
@@ -55,36 +55,6 @@
                 </div>
               </div>
             </div>
-      <div class="col-xs-4 card" >
-            
-            <form id="form"  method="post"  class="text-center conta" >
-                 
-                  <div class="form-group">
-                    <br>
-                    <label for="name-1" class="control-label">Add Permission</label>
-                    <input  class="form-control" type="text" name="gname" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="name-1" class="control-label">Controller</label>
-                    <input  class="form-control" type="text" name="controller" required>
-                  </div>
-
-                  <select name="spg_id" id="" class="form-control select2" required>
-             <option value="" hidden>Select Group</option>
-                  <?php 
-              foreach($excLoadG as $r){?>
-             
-               <option value="<?php  echo $r->spg_id ?>"><?php echo $r->name ?></option>
-               <?php
-            }
-       ?>     
-          </select><br><br>
-                  <div class="form-group">
-                    <button type="submit" id="btn" class="btn btn-primary ">Save Changes</button>
-                  </div>
-                </form>
-          </div>
-
 
           </div>
         </div>

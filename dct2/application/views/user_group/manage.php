@@ -6,7 +6,7 @@
             </h1>
           </div>
           <div class="row gutter-xs">
-            <div class="col-xs-8">
+            <div class="col-xs-12">
               <div class="card">
                 <div class="card-header">
                   <div class="card-actions">
@@ -21,7 +21,7 @@
                   <thead>
                       <tr>
     
-                        <th>Group name</th>
+                        <th width="20%">Group name</th>
                         <th width="20%">Manage</th>
                        
                       </tr>
@@ -65,19 +65,6 @@
               </div>
             </div>
   
-            <div class="col-xs-4  card" >
-            
-            <form id="form" action="<?php echo base_url()?>usergroup/insert"  method="post"  class="text-center" >
-                 
-                  <div class="form-group">
-                    <label for="name-1" class="control-label">Group</label>
-                    <input  class="form-control" type="text" name="gname" required>
-                  </div>
-                  <div class="form-group">
-                    <button  id="btn" class="btn btn-primary ">Save Changes</button>
-                  </div>
-                </form>
-          </div>
           </div>
         </div>
       </div>

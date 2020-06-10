@@ -51,8 +51,20 @@ class Permission extends CI_Controller {
         $controller =  $this->input->post('controller');
         $spg_id =  $this->input->post('spg_id');
         $result = $this->model->insert_permission($gname, $controller, $spg_id);
+        redirect('permission/manage');
 
+    }
 
+    public function add()
+    {   
+        //$this->model->CheckPermission($this->session->userdata('su_id'));
+
+        $sql = "SELECT * FROM sys_permission_groups where delete_flag != 0 ";
+        $query = $this->db->query($sql);
+        $data['excLoadG'] = $query->result(); 
+
+        $this->load->view('permission/add',$data);//bring $data to user_data 
+        $this->load->view('footer');
     }
 
     public function deletepermission()
