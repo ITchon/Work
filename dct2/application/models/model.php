@@ -13,19 +13,9 @@ class Model extends CI_Model
      
       }else{	return TRUE; 	}
   }
-
-
-
-  public function get_drawing()
-  {
-    $sql ="SELECT * FROM drawing";
-    $query = $this->db->query($sql); 
-   return $query;
-  }
-
   public function sub_part($id,$bm)
   { 
-    $sql =  'SELECT * FROM sub_part where m_id = '.$id.'  AND delete_flag != 0 and b_id = '.$bm.'';
+    $sql =  'SELECT * FROM sub_part inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id where m_id = '.$id.'  AND sub_part.delete_flag != 0 and b_id = '.$bm.'';
     $query = $this->db->query($sql); 
     if($query){
       $result= $query->result();
@@ -35,6 +25,276 @@ class Model extends CI_Model
     }
       
   }
+  public function bom($bm)
+  {
+    $array=[];
+    $res_bom= $this->model->hook_bom($bm) ;
+    $data= $this->model->sub_part($res_bom[0]->b_master,$res_bom[0]->b_id) ;
+    $bm =  $res_bom[0]->b_id;
+    if($data != false){  
+        $m_id =$data[0]->p_id;
+        foreach($data as $r){
+            $data= $this->model->sub_part($r->p_id,$bm) ;
+            $a=array('lv'=>2,'id'=>$r->p_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );
+            array_push($array,$a);
+            if($data != false){  
+                foreach($data as $r){
+                    $data= $this->model->sub_part($r->p_id,$bm) ;
+                    $a=array('lv'=>3,'id'=>$r->p_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );
+                    
+                    array_push($array,$a);
+                    if($data != false){  
+            
+                        foreach($data as $r){
+
+                            $data= $this->model->sub_part($r->p_id,$bm) ;
+                            $a=array('lv'=>4,'id'=>$r->p_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );
+                            
+                            array_push($array,$a);
+                            if($data != false){  
+                    
+                                foreach($data as $r){
+
+                                    $data= $this->model->sub_part($r->p_id,$bm) ;
+                                    $a=array('lv'=>5,'id'=>$r->p_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );
+                                    
+                                    array_push($array,$a);
+                                    if($data != false){  
+                            
+                                        foreach($data as $r){
+
+                                            $data= $this->model->sub_part($r->p_id,$bm) ;
+                                            $a=array('lv'=>6,'id'=>$r->p_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );
+                                            
+                                            array_push($array,$a);
+                                            if($data != false){  
+                                    
+                                                foreach($data as $r){
+
+                                                    $data= $this->model->sub_part($r->p_id,$bm) ;
+                                                    $a=array('lv'=>7,'id'=>$r->p_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );
+                                                    
+                                                    array_push($array,$a);
+                                                    if($data != false){  
+                                            
+                                                        foreach($data as $r){
+
+                                                            $data= $this->model->sub_part($r->p_id,$bm) ;
+                                                            $a=array('lv'=>8,'id'=>$r->p_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );
+                                                            
+                                                            array_push($array,$a);
+                                                            if($data != false){                                                             
+                                                                foreach($data as $r){
+
+                                                                    $data= $this->model->sub_part($r->p_id,$bm) ;
+                                                                    $a=array('lv'=>9,'id'=>$r->p_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );
+                                                                    
+                                                                    array_push($array,$a);
+                                                                    if($data != false){                                                             
+                                                                        foreach($data as $r){
+   
+                                                                            $data= $this->model->sub_part($r->p_id,$bm) ;
+                                                                            $a=array('lv'=>10,'id'=>$r->p_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );
+                                                                            
+                                                                            array_push($array,$a);
+                                                                        }
+                                                                    }
+                                                               }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+     }
+    }
+    return  $array;
+  }
+
+  public function filter($sub_id,$bm)
+  {
+    $sql =  'SELECT * FROM sub_part where sub_id = '.$sub_id.'  AND delete_flag != 0';
+    $query = $this->db->query($sql); 
+    $res= $query->result();
+    $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id where sub_part.p_id = '.$res[0]->p_id.' AND b_id = '.$bm.'  AND sub_part.delete_flag != 0'); 
+    $data= $query->result();
+    $array=[];
+    foreach($data as $r){
+        $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+        $data= $query->result();
+        $a=array('m_id'=>$r->m_id,'p_no'=>$r->p_no);                                       
+        array_push($array,$a);
+        foreach($data as $r){
+
+            $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+            $data= $query->result();
+            $a=array('m_id'=>$r->m_id,'p_no'=>$r->p_no);                                       
+            array_push($array,$a);
+            foreach($data as $r){
+
+                $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+                $data= $query->result();
+                $a=array('m_id'=>$r->m_id,'p_no'=>$r->p_no);                                       
+                array_push($array,$a);
+                foreach($data as $r){
+    
+                    $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+                    $data= $query->result();
+                    $a=array('m_id'=>$r->m_id,'p_no'=>$r->p_no);                                       
+                    array_push($array,$a);
+                    foreach($data as $r){
+                        $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+                        $data= $query->result();
+                        $a=array('m_id'=>$r->m_id,'p_no'=>$r->p_no);                                       
+                        array_push($array,$a);
+                        foreach($data as $r){
+                            $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+                            $data= $query->result();
+                            $a=array('m_id'=>$r->m_id,'p_no'=>$r->p_no);                                       
+                            array_push($array,$a);
+                        
+                        foreach($data as $r){
+                            $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+                            $data= $query->result();
+                            $a=array('m_id'=>$r->m_id,'p_no'=>$r->p_no);                                       
+                            array_push($array,$a);
+                        
+                        foreach($data as $r){
+                            $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+                            $data= $query->result();
+                            $a=array('m_id'=>$r->m_id,'p_no'=>$r->p_no);                                       
+                            array_push($array,$a);
+                        
+                        foreach($data as $r){
+                            $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+                            $data= $query->result();
+                            $a=array('m_id'=>$r->m_id,'p_no'=>$r->p_no);                                       
+                            array_push($array,$a);
+                        
+                        foreach($data as $r){
+                            $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+                            $data= $query->result();
+                            $a=array('m_id'=>$r->m_id,'p_no'=>$r->p_no);                                       
+                            array_push($array,$a);
+                                  }
+                                }
+                             }
+                           }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return $array;
+  }
+  public function tree_up($sub_id,$lv,$bm)
+  {
+
+    $array=[];
+    $sql =  'SELECT * FROM sub_part inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id where m_id = '.$sub_id.' AND  b_id = '.$bm.' AND sub_part.delete_flag != 0';
+    $query = $this->db->query($sql); 
+    $res= $query->result();
+    $a=array('lv'=>$lv,'m_id'=>$res[0]->m_id,'p_no'=>$res[0]->p_no,'sub_id'=>$res[0]->sub_id,'qty'=>$res[0]->quantity,'unit'=>$res[0]->unit,'common_part'=>$res[0]->common_part,'p_no'=>$res[0]->p_no,'p_id'=>$res[0]->p_id,'p_name'=>$res[0]->p_name,'d_no'=>$res[0]->d_no );                                       
+    array_push($array,$a);
+    foreach($res as $r ){
+    $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.'  AND sub_part.delete_flag != 0'); 
+    $data= $query->result();
+    foreach($data as $r){
+        $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+        $data= $query->result();
+        $a=array('lv'=>$lv-1,'m_id'=>$r->m_id,'p_no'=>$r->p_no,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );                                       
+        array_push($array,$a);
+        foreach($data as $r){
+
+            $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+            $data= $query->result();
+            $a=array('lv'=>$lv-2,'m_id'=>$r->m_id,'p_no'=>$r->p_no,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );                                       
+            array_push($array,$a);
+            foreach($data as $r){
+
+                $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+                $data= $query->result();
+                $a=array('lv'=>$lv-3,'m_id'=>$r->m_id,'p_no'=>$r->p_no,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );                                       
+                array_push($array,$a);
+                foreach($data as $r){
+    
+                    $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+                    $data= $query->result();
+                    $a=array('lv'=>$lv-4,'m_id'=>$r->m_id,'p_no'=>$r->p_no,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );                                       
+                    array_push($array,$a);
+                    foreach($data as $r){
+                        $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+                        $data= $query->result();
+                        $a=array('lv'=>$lv-5,'m_id'=>$r->m_id,'p_no'=>$r->p_no,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );                                       
+                        array_push($array,$a);
+                        foreach($data as $r){
+                            $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+                            $data= $query->result();
+                            $a=array('lv'=>$lv-6,'m_id'=>$r->m_id,'p_no'=>$r->p_no,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );                                       
+                            array_push($array,$a);
+                        
+                        foreach($data as $r){
+                            $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+                            $data= $query->result();
+                            $a=array('lv'=>$lv-7,'m_id'=>$r->m_id,'p_no'=>$r->p_no,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );                                       
+                            array_push($array,$a);
+                        
+                        foreach($data as $r){
+                            $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+                            $data= $query->result();
+                            $a=array('lv'=>$lv-8,'m_id'=>$r->m_id,'p_no'=>$r->p_no,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );                                       
+                            array_push($array,$a);
+                        
+                        foreach($data as $r){
+                            $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+                            $data= $query->result();
+                            $a=array('lv'=>$lv-9,'m_id'=>$r->m_id,'p_no'=>$r->p_no,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );                                       
+                            array_push($array,$a);
+                        
+                        foreach($data as $r){
+                            $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id   where sub_part.p_id = '.$r->m_id.' AND b_id = '.$bm.' AND sub_part.delete_flag != 0'); 
+                            $data= $query->result();
+                            $a=array('lv'=>$lv-10,'m_id'=>$r->m_id,'p_no'=>$r->p_no,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no );                                       
+                            array_push($array,$a);
+                                  }
+                                }
+                             }
+                           }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+  }
+  foreach ($array as $k => $v) {
+    foreach ($array as $key => $value) {
+        if ($k != $key && $v['sub_id'] == $value['sub_id']) {
+           unset($array[$k]);
+        }
+    }
+}
+
+    return $array;
+   
+  }
+  public function get_drawing()
+  {
+    $sql ="SELECT * FROM drawing";
+    $query = $this->db->query($sql); 
+   return $query;
+  }
+
+
 
 
   public function hook_bom($bm)
@@ -183,7 +443,7 @@ return false;
 
  function insert_part($p_no,$p_name,$d_no,$master )
  {
-  $sql ="INSERT INTO part (p_no,p_name,d_id,enable,date_created,delete_flag) VALUES ( '$p_no', '$p_name', '$d_no','1',CURRENT_TIMESTAMP,'1');";
+  $sql ="INSERT INTO part (p_no,p_name,d_id,enable,date_created,delete_flag) VALUES ( '$p_no', '$p_name', '$d_no',CURRENT_TIMESTAMP,'1');";
   $sql1 ="INSERT INTO sub_part (m_id,p_id) VALUES ( '$master','$p_no' );";
     $query = $this->db->query($sql);  
     $query = $this->db->query($sql1);  
