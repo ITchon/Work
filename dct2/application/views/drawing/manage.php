@@ -1,4 +1,8 @@
-
+<style>
+#form {
+  display: inline-block;
+}
+</style>
       <div class="layout-content">
         <div class="layout-content-body">
           <div class="title-bar">
@@ -6,41 +10,6 @@
             <p class="title-bar-description">
              
             </p>
-          </div>
-          <div class="col-xs-12 card" >
-            
-
-              <?php echo form_open_multipart('drawing/insert');?>
-                 
-                  <div class="form-group">
-                  <label for="name-1" class="control-label">Add Drawing No</label>
-                    <input id="d_no" class="form-control" type="text" name="d_no" required>
-                  </div>
-                  <div class="form-group">
-                  <label for="name-2" class="control-label">DCN Number</label>      
-          
-                     
-                   <select name="dcn_id" class="form-control select2" id="dcn_id"  required>
-                   <option value="" hidden> - - - Select DCN- - - </option>
-                   <?php
-                   
-                      foreach($result_dcn as $dcn){?>
-                     <option value="<?php  echo $dcn->dcn_id ?>"><?php echo $dcn->dcn_no ?></option>
-                    <?php
-                      }
-                      ?> 
-                   </select>
-                    </div>
-                   <div class="form-group">
-                  <label for="name-1" class="control-label">File</label>
-                    <input id="file_name" class="form-control" type="file" name="file_name" required>
-                  </div>
-                    
-
-                  <div class="form-group">
-                    <button  id="btn" class="btn btn-primary ">Save Changes</button>
-                  </div>
-                </form>
           </div>
 
           <div class="row gutter-xs">
@@ -58,14 +27,13 @@
                 <table id="demo-datatables-buttons-1" class="table table-bordered table-striped table-nowrap dataTable " cellspacing="0" width="100%">
                   <thead>
                       <tr>
-                        <th>Drawing</th>
-                        <th>DCN</th>
-                        <th>Version</th>
-                        <th>Manage</th>
-                        <th>Status</th>
-                        <th>Open File</th>
-              
-                       
+                        <th width="10%">Drawing</th>
+                        <th width="10%">Part No</th>
+                        <th width="10%">DCN</th>
+                        <th width="3%">Version</th>
+                        <th width="10%">Manage</th>
+                        <th width="10%">Status</th>
+
                       </tr>
                     </thead>
                     <tbody>
@@ -84,11 +52,14 @@
                     <?php echo "<b>".$r->d_no."</b>" ?>
         </form>
 
-                    
+                    <td><?php echo "<b>".$r->p_no."</b>" ?></td>
                     <?php
-                echo"</td>";
-                echo "<td>$r->dcn_no</td>";
-                ?><td><a href="<?php echo base_url() . 'drawing/manage/' . $r->d_id ?>" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ดูVersionทั้งหมด</h5>'><?php echo $r->version ?></a></td>
+                echo"</td>";?>
+                <td class="text-center"><a data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
+                  echo base_url() . 'drawing/open_dcn/' . $r->dcn_id;
+                  ?>';"> <?php echo $r->dcn_no ?></a></td>
+
+                <td><a href="<?php echo base_url() . 'drawing/manage/' . $r->d_id ?>" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ดูVersionทั้งหมด</h5>'><?php echo $r->version ?></a></td>
                 <?php 
                 if(isset($r->v_id)){
                     if($r->v_id != 'v_id'){
@@ -176,9 +147,14 @@
                   echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."drawing/deletedrawing/".$r->d_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
                 }
                 }else{
-                  echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."drawing/deletedrawing/".$r->d_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
+                  echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."drawing/deletedrawing/".$r->d_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a>";
                 }
                 ?>
+                <form id='form' action="<?php echo base_url()?>drawing/openfile" method="post">
+    <input type="text" name="path" value="<?php echo $r->path_file ?>" hidden>
+    <input type="text" name="file" value="<?php echo $r->file_name ?>" hidden>
+    <button  type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><i class=" btn-primary btn-sm fa fa-inbox" aria-hidden="true"></i></button>
+</form></td>
                 
                 <?php 
                 if($r->enable!=1 ){?>
@@ -192,11 +168,7 @@
                 }
                 ?>
 
-                <td><form action="<?php echo base_url()?>drawing/openfile" method="post">
-    <input type="text" name="file" value="\<?php echo $r->file_name ?>"hidden>
-    <input type="text" name="path" value="<?php echo $r->path_file ?>"hidden>
-    <button type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><a><b><?php echo $r->file_name ?></b></a></button>
-</form></td>
+                
                 <?php
 
             echo "</tr>";

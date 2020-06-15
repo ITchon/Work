@@ -22,7 +22,7 @@ class Usergroup extends CI_Controller {
 
     }
 	public function index()
-    {	
+  {	
 
 	}
 
@@ -65,6 +65,15 @@ class Usergroup extends CI_Controller {
    
     }
 
+    public function add()
+    {   
+        //$this->model->CheckPermission($this->session->userdata('su_id'));
+
+
+        $this->load->view('user_group/add');//bring $data to user_data 
+        $this->load->view('footer');
+    }
+
 
     public function insert()
     {
@@ -74,7 +83,7 @@ class Usergroup extends CI_Controller {
         $result = $this->model->insert_group($gname);
        if($result == true){
         echo "<script>alert('Inserted Data Success')</script>";
-        redirect('usergroup/manage','refresh'); 
+        redirect('usergroup/manage','refresh');
        }
        if($result == false){
         echo "<script>alert('Name already exist')</script>";

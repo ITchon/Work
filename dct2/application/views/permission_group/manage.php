@@ -7,7 +7,7 @@
           </div>
 
           <div class="row gutter-xs">
-            <div class="col-xs-8">
+            <div class="col-xs-12">
               <div class="card">
                 <div class="card-header">
                   <h3>MANAGE PERMISSION GROUP</h3>
@@ -55,19 +55,6 @@
                 </div>
               </div>
             </div>
-            <div class="col-xs-4 card" >
-            
-            <form id="form" action="<?php echo base_url()?>permissiongroup/insert" method="post"  class="text-center" >
-                 
-                  <div class="form-group">
-                    <label for="name-1" class="control-label">Permission Group</label>
-                    <input  class="form-control" type="text" name="gname" required>
-                  </div>
-                  <div class="form-group">
-                    <button type="submit" id="btn" class="btn btn-primary ">Save Changes</button>
-                  </div>
-                </form>
-          </div>
           </div>
         </div>
       </div>

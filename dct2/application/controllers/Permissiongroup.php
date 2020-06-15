@@ -35,6 +35,14 @@ class Permissiongroup extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+    public function add()
+    {   
+        //$this->model->CheckPermission($this->session->userdata('su_id'));
+
+        $this->load->view('permission_group/add');//bring $data to user_data 
+        $this->load->view('footer');
+    }
+
      public function enable($uid){
 
         $this->model->CheckPermission($this->session->userdata('su_id'));
