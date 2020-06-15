@@ -114,9 +114,9 @@ th, td {
             </thead>
           <tbody>
              <?php  
-             foreach($bom as $row){
+               foreach($bom as $row){
                 echo "<td class='text-danger text-center' style='border-right: 1px groove;border-bottom: 1px groove'>1</td>";
-               for($i=1;$i<=$maxlv[0]-1;$i++) { 
+                 for($i=1;$i<=$maxlv[0]-1;$i++) { 
                 echo "<td style='border-right: 1px groove;border-bottom: 1px groove'></td>";
                 }
                 echo "<td class='text-danger' style='border-right: 1px groove '>$row->p_no</td>";

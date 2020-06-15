@@ -42,28 +42,28 @@ class Bom extends CI_Controller {
         $sort =  $this->input->post('sort'); 
         $sub_id =  $this->input->post('sub_id'); 
  
-        $array= $this->model->bom($bm) ;
-        $sql =  'SELECT * FROM sub_part where sub_id = '.$sub_id.'  AND delete_flag != 0';
-        $query = $this->db->query($sql); 
-        $res= $query->result();
-        $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id where sub_part.p_id = '.$res[0]->p_id.' AND b_id = '.$bm.'  AND sub_part.delete_flag != 0'); 
-        $data= $query->result();
-        foreach($data as $row){
-       echo $row->sub_id." | "."<br>";
-        foreach($array as $r){
-       
-            if($row->sub_id == $r['sub_id']){
-       
-                $tree_up= $this->model->tree_up($row->m_id,$r['lv'],$bm);
-                foreach($tree_up as $re){
-                echo $re['lv']." | ".$re['p_id']." | ".$re['sub_id']."<br>";
-                }
-            }
-            
-        }
-    }
-    
-        exit;
+        $array_bom= $this->model->bom($bm) ;
+        $data= $this->model->tree_down($sub_id,$bm) ;
+        $array=[];
+            foreach($data as $row){
+            foreach($array_bom as $r){  
+            if($r['sub_id']==$row['sub_id']){ 
+            $a=array('lv'=>$r['lv'],'p_no'=>$r['p_no'],'p_name'=>$r['p_name'],'qty'=>$r['qty'],'unit'=>$r['unit'],'d_no'=>$r['d_no'],'sub_id'=>$r['sub_id'],'p_id'=>$r['p_id'] );
+            array_push($array,$a);
+                          }
+                       }
+                   }
+                   $_data = array();
+                   foreach ($array as $v) {
+                     if (isset($_data[$v['sub_id']])) {
+                       // found duplicate
+                       continue;
+                     }
+                     // remember unique item
+                     $_data[$v['sub_id']] = $v;
+                   }
+                   // if you need a zero-based array, otheriwse work with $_data
+                   $array = array_values($_data);
         $data['result_bom'] = $array;  
         $query=$this->db->query("SELECT * from bom inner join part on part.p_id=bom.b_master inner join drawing d on d.d_id=part.d_id where b_id = $bm");
         $res = $query->result();
