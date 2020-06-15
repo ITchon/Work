@@ -20,6 +20,7 @@
           
                       <div class="col-sm-6 col-md-4">
                       <input type="hidden" class="form-control" name="p_no" value="<?php echo $p_id ?>" >
+                      <input type="hidden" class="form-control" name="sub_id" value="<?php echo $sub_id ?>" >
                       <input type="text" class="form-control" name="" value="<?php echo $p_no ?>" readonly>
                     </div>
                     </div> 

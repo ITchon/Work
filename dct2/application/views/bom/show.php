@@ -33,10 +33,6 @@ th, td {
           <p class="title-bar-description">
           </p>
         </div>
-        <div class="col-xs-1">
-        </div>
-        <div class="row gutter-xs">
-        <div class="col-xs-10">
         <div class="card">
         <div class="card-header">
         <div class="col-xs-10">
@@ -64,16 +60,49 @@ th, td {
                     <input type="hidden" name="bm" value="<?php echo $bm ?>" hidden>
                     <input type="submit" class="btn btn-outline-primary" value="Add Part lv 2">
         </form>          
-        
             </div>      
-              </div>
+          </div>
+          <br>
+          
+          <form id="" class="" action="<?php echo base_url()."bom/manage/$bm "?>" style="padding-left:60%" method="post">
+          <select name="sort" class="btn btn-primary" id="">
+          <option value="down">Tree down</option>
+          <option value="up">Tree up</option>
+          </select>
+          <div class="col-sm-6 col-md-4">
+                   <select name="sub_id" class="form-control select2"  required>
+                   <option>- - - Search - - - </option>
+                   <?php
+                   $_data = array();
+                   foreach ($result_bom as $v) {
+                     if (isset($_data[$v['p_id']])) {
+                       // found duplicate
+                       continue;
+                     }
+                     // remember unique item
+                     $_data[$v['p_id']] = $v;
+                   }
+                   // if you need a zero-based array, otheriwse work with $_data
+                   $data = array_values($_data);
+                      foreach($data as $row){?>           
+                     <option value="<?php  echo $row['sub_id'] ?>"><?php echo $row['p_no'] ?></option>
+                    <?php                       
+                      }
+                      ?> 
+                   </select>
+                    </div>   
+                    
+                    <input type="hidden" name="search" value="search" hidden>
+                    <input type="submit" class="btn btn-outline-primary" value="Search">
+        </form>          
+</form>
        <div class="card-body">
-         <table id="" class="table table-striped dataTable text-center" style="border: 1px groove #ddd !important;" cellspacing="0" width="100%"  >
+         <table id="" class="table table-striped dataTable" style="border: 1px groove #ddd !important;" cellspacing="0" width="100%"  >
             <thead> 
              <tr>
                <?php 
                 for($i=1;$i<=$maxlv[0];$i++) { ?>
-               <th width="40px" class="not-active" style='border-right: 1px groove ;'>lv <?php echo $i ?></th>
+               <th width="40px" class="not-active " style='border-right: 1px groove ;'>lv <?php echo $i ?></th>
                <?php } ?>
               <th width="" class="not-active " style='border-right: 1px groove ;'>Part No</th>
               <th width="" class="not-active" style='border-right: 1px groove ;'>Part name</th>
@@ -86,7 +115,7 @@ th, td {
           <tbody>
              <?php  
              foreach($bom as $row){
-                echo "<td class='text-danger' style='border-right: 1px groove;border-bottom: 1px groove'>1</td>";
+                echo "<td class='text-danger text-center' style='border-right: 1px groove;border-bottom: 1px groove'>1</td>";
                for($i=1;$i<=$maxlv[0]-1;$i++) { 
                 echo "<td style='border-right: 1px groove;border-bottom: 1px groove'></td>";
                 }
@@ -114,50 +143,46 @@ th, td {
                           <tr>  
                              <?php for($i=1;$i<=$maxlv[0];$i++) { 
                                if($i== $row['lv']){
-                                  echo "<td style='border-right: 1px groove ;border-bottom: 1px groove'>".$row['lv']."</td>";
+                                  echo "<td class='text-center' style='border-right: 1px groove ;border-bottom: 1px groove'>".$row['lv']."</td>";
                                 }else{
                                  echo "<td style='border-right: 1px groove;border-bottom: 1px groove  '></td>";
                                 }
                               }               
-                              $p_id=$row['id'];
-                              $query=$this->db->query("SELECT p.p_id,p.p_no,p.p_name,d.d_no from part as p inner join drawing as d on d.d_id = p.d_id where p.p_id = $p_id");
-                              $data= $query->result();
-                              foreach($data as $r){ 
-                              echo "<td style='border-right: 1px groove '>".$r->p_no."</td>";
-                              echo "<td style='border-right: 1px groove '>".$r->p_name."</td>";
-                              echo "<td style='border-right: 1px groove '>".$row['qty']."</td>";
-                              echo "<td style='border-right: 1px groove '>".$row['unit']."</td>";
-                              echo "<td style='border-right: 1px groove '>".$r->d_no."</td>";
+                                echo "<td style='border-right: 1px groove '>".$row['p_no']."</td>";
+                                echo "<td style='border-right: 1px groove '>".$row['p_name']."</td>";
+                                echo "<td style='border-right: 1px groove '>".$row['qty']."</td>";
+                                echo "<td style='border-right: 1px groove '>".$row['unit']."</td>";
+                                echo "<td style='border-right: 1px groove '>".$row['d_no']."</td>";
                          ?>
                         
                         <td >
                     <form id="form" action="<?php echo base_url()?>bom/delete" method="post">
-                    <input type="hidden" name="m_id" value="<?php echo $row['m_id'] ?>" >
+                    <input type="hidden" name="m_id" value="<?php echo $row['sub_id'] ?>" >
                     <input type="hidden" name="bm" value="<?php echo $bm ?>" >
                     <button type="submit" onclick='return confirm("Confirm Delete Item")' class="btn-danger btn-sm fa fa-trash" data-toggle="tooltip" data-html="true" data-placement="left" aria-describedby="passHelp" title="<h5>ลบข้อมูล</h5>"></button>
                     </form>
 
                     <form id="form" action="<?php echo base_url()."bom/edit_part/$bm" ?>" method="post">
-                    <input type="hidden" name="m_id" value="<?php echo $row['m_id'] ?>" >
-                    <input type="hidden" name="p_no" value="<?php echo $r->p_no ?>" >
+                    <input type="hidden" name="m_id" value="<?php echo $row['sub_id'] ?>" >
+                    <input type="hidden" name="p_no" value="<?php echo $row['p_no'] ?>" >
                     <button type="submit"  class="btn-success btn-sm fa fa-wrench" data-toggle="tooltip" data-html="true" data-placement="bottom" aria-describedby="passHelp" title="<h5>แก้ไขจำนวน</h5>"></button>
                     </form>       
                     <form id="form" action="<?php echo base_url()?>part/edit_part" method="post">
                     <input type="hidden" name="bom" value="<?php echo $bm ?>" >
-                    <input type="hidden" name="p_id" value="<?php echo $r->p_id ?>" >
+                    <input type="hidden" name="p_id" value="<?php echo $row['p_id'] ?>" >
                     <?php echo "<a type='button'><button class='btn-default btn-sm fa fa-search' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ดูข้อมูล</h5>'></button></a> "?>
                     </form>
                     <form id="form" action="<?php echo base_url()."part/add_sub/$bm"?>" method="post">
-                    <input type="hidden" name="m_id" value="<?php echo $row['m_id'] ?>" >
-                    <input type="hidden" name="id" value="<?php echo $row['id'] ?>" >
-                    <input type="hidden" name="p_no" value="<?php echo $r->p_no ?>" >
+                    <input type="text" name="sub_id" value="<?php echo $row['sub_id'] ?>" >
+                    <input type="hidden" name="id" value="<?php echo $row['p_id'] ?>" >
+                    <input type="hidden" name="p_no" value="<?php echo $row['p_no'] ?>" >
                     <button type="submit"  class="btn-primary btn-sm fa fa-plus" data-toggle="tooltip" data-html="true" data-placement="bottom" aria-describedby="passHelp" title="<h5>Add Part Lv <?php echo $row['lv']+1 ?></h5>"></button>
                     </form>  
              
                               </td>
 
                           <?php                      
-                          }                     
+                                              
                             }
                                ?>                                                        
                           </tr>                         

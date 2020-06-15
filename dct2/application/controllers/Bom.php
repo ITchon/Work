@@ -31,110 +31,54 @@ class Bom extends CI_Controller {
         $query = $this->db->query($sql); 
         $res = $query->result(); 
         $data['result'] =$res;
-
+    
        if( $this->input->post('bm')){
           $bm =  $this->input->post('bm'); 
        }else{
         $bm = $this->uri->segment('3');
        }
-        if(isset($bm)){
-            $array=[];
-            $res_bom= $this->model->hook_bom($bm) ;
-            if($res_bom==false){
-                echo '<script language="javascript">';
-                echo 'alert("Data not found.");';
-                echo 'history.go(-1);';
-                echo '</script>';
-                exit();
-            }
-            $data= $this->model->sub_part($res_bom[0]->b_master,$res_bom[0]->b_id) ;
-            $bm =  $res_bom[0]->b_id;
-            if($data != false){  
-                $m_id =$data[0]->p_id;
-                foreach($data as $r){
-                    $data= $this->model->sub_part($r->p_id,$bm) ;
-                    $a=array('lv'=>2,'id'=>$r->p_id,'m_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part );
-                    array_push($array,$a);
-                    if($data != false){  
-                        foreach($data as $r){
-                            $data= $this->model->sub_part($r->p_id,$bm) ;
-                            $a=array('lv'=>3,'id'=>$r->p_id,'m_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part );
-                            
-                            array_push($array,$a);
-                            if($data != false){  
-                    
-                                foreach($data as $r){
-   
-                                    $data= $this->model->sub_part($r->p_id,$bm) ;
-                                    $a=array('lv'=>4,'id'=>$r->p_id,'m_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part );
-                                    
-                                    array_push($array,$a);
-                                    if($data != false){  
-                            
-                                        foreach($data as $r){
-   
-                                            $data= $this->model->sub_part($r->p_id,$bm) ;
-                                            $a=array('lv'=>5,'id'=>$r->p_id,'m_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part );
-                                            
-                                            array_push($array,$a);
-                                            if($data != false){  
-                                    
-                                                foreach($data as $r){
-   
-                                                    $data= $this->model->sub_part($r->p_id,$bm) ;
-                                                    $a=array('lv'=>6,'id'=>$r->p_id,'m_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part );
-                                                    
-                                                    array_push($array,$a);
-                                                    if($data != false){  
-                                            
-                                                        foreach($data as $r){
-   
-                                                            $data= $this->model->sub_part($r->p_id,$bm) ;
-                                                            $a=array('lv'=>7,'id'=>$r->p_id,'m_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part );
-                                                            
-                                                            array_push($array,$a);
-                                                            if($data != false){  
-                                                    
-                                                                foreach($data as $r){
-   
-                                                                    $data= $this->model->sub_part($r->p_id,$bm) ;
-                                                                    $a=array('lv'=>8,'id'=>$r->p_id,'m_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part );
-                                                                    
-                                                                    array_push($array,$a);
-                                                                    if($data != false){                                                             
-                                                                        foreach($data as $r){
-   
-                                                                            $data= $this->model->sub_part($r->p_id,$bm) ;
-                                                                            $a=array('lv'=>9,'id'=>$r->p_id,'m_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part );
-                                                                            
-                                                                            array_push($array,$a);
-                                                                            if($data != false){                                                             
-                                                                                foreach($data as $r){
-           
-                                                                                    $data= $this->model->sub_part($r->p_id,$bm) ;
-                                                                                    $a=array('lv'=>10,'id'=>$r->p_id,'m_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part );
-                                                                                    
-                                                                                    array_push($array,$a);
-                                                                                }
-                                                                            }
-                                                                       }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+       $search =  $this->input->post('search'); 
+       if($search){
+        $sort =  $this->input->post('sort'); 
+        $sub_id =  $this->input->post('sub_id'); 
+ 
+        $array= $this->model->bom($bm) ;
+        $sql =  'SELECT * FROM sub_part where sub_id = '.$sub_id.'  AND delete_flag != 0';
+        $query = $this->db->query($sql); 
+        $res= $query->result();
+        $query = $this->db->query('SELECT * FROM sub_part  inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id where sub_part.p_id = '.$res[0]->p_id.' AND b_id = '.$bm.'  AND sub_part.delete_flag != 0'); 
+        $data= $query->result();
+        foreach($data as $row){
+       echo $row->sub_id." | "."<br>";
+        foreach($array as $r){
+       
+            if($row->sub_id == $r['sub_id']){
+       
+                $tree_up= $this->model->tree_up($row->m_id,$r['lv'],$bm);
+                foreach($tree_up as $re){
+                echo $re['lv']." | ".$re['p_id']." | ".$re['sub_id']."<br>";
                 }
             }
-         }
-
-// print_r($array_sub_part);
+            
+        }
+    }
+    
+        exit;
+        $data['result_bom'] = $array;  
+        $query=$this->db->query("SELECT * from bom inner join part on part.p_id=bom.b_master inner join drawing d on d.d_id=part.d_id where b_id = $bm");
+        $res = $query->result();
+        $data['bom']=$res;
+        $data['bm']=$bm;
+        $data['bm_id']=$res[0]->b_master;
+        $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
+        $query = $this->db->query($sql); 
+        $data['result_sub'] = $query->result(); 
+        $this->load->view('bom/show_up',$data);//bring $data to user_data 
+        $this->load->view('footer');
+        
+       }
+        else if(isset($bm)){
+    $array= $this->model->bom($bm) ;
     $data['result_bom'] = $array;  
     $query=$this->db->query("SELECT * from bom inner join part on part.p_id=bom.b_master inner join drawing d on d.d_id=part.d_id where b_id = $bm");
     $res = $query->result();
@@ -244,6 +188,7 @@ class Bom extends CI_Controller {
         $query = $this->db->query($sql);
         $res_bom= $query->result();
         $b_master = $res_bom[0]->b_master;
+    
          foreach ($p_id as $p) {
         $chk= $this->model->insert_sub_part($b_master,$p, $bm);
         }

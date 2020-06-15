@@ -53,56 +53,25 @@ class Part extends CI_Controller {
 	}
 	public function add_sub()
     {	
+
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $id = $this->uri->segment('3');
         $p_id =  $this->input->post('id');
         $p_no =  $this->input->post('p_no');
-        $m_id =  $this->input->post('m_id');
-        $sql =  'SELECT * FROM sub_part where sub_id = '.$m_id.'  AND delete_flag != 0';
-        $query = $this->db->query($sql); 
-        $res= $query->result();
-        $query = $this->db->query('SELECT * FROM sub_part where p_id = '.$res[0]->p_id.'  AND delete_flag != 0'); 
-        $data= $query->result();
-        $array=[];
-        foreach($data as $r){
-            $query = $this->db->query('SELECT * FROM sub_part where p_id = '.$r->m_id.'  AND delete_flag != 0'); 
-            $data= $query->result();
-            $a=array('m_id'=>$r->m_id);                                       
-            array_push($array,$a);
-            foreach($data as $r){
-
-                $query = $this->db->query('SELECT * FROM sub_part where p_id = '.$r->m_id.'  AND delete_flag != 0'); 
-                $data= $query->result();
-                $a=array('m_id'=>$r->m_id);                                       
-                array_push($array,$a);
-                foreach($data as $r){
-    
-                    $query = $this->db->query('SELECT * FROM sub_part where p_id = '.$r->m_id.'  AND delete_flag != 0'); 
-                    $data= $query->result();
-                    $a=array('m_id'=>$r->m_id);                                       
-                    array_push($array,$a);
-                    foreach($data as $r){
-        
-                        $query = $this->db->query('SELECT * FROM sub_part where p_id = '.$r->m_id.'  AND delete_flag != 0'); 
-                        $data= $query->result();
-                        $a=array('m_id'=>$r->m_id);                                       
-                        array_push($array,$a);
-                        foreach($data as $r){
-                            $query = $this->db->query('SELECT * FROM sub_part where p_id = '.$r->m_id.'  AND delete_flag != 0'); 
-                            $data= $query->result();
-                            $a=array('m_id'=>$r->m_id);                                       
-                            array_push($array,$a);
-                            foreach($data as $r){
-                
-                                $a=array('m_id'=>$r->m_id);                                       
-                                array_push($array,$a);
-                            }
-                        }
-                    }
-                }
-            }
+        $sub_id =  $this->input->post('sub_id');
+        $array = $this->model->filter($sub_id,$id);
+        $_data = array();
+        foreach ($array as $v) {
+          if (isset($_data[$v['m_id']])) {
+            // found duplicate
+            continue;
+          }
+          // remember unique item
+          $_data[$v['m_id']] = $v;
         }
-
+        // if you need a zero-based array, otheriwse work with $_data
+        $array = array_values($_data);
+        
         $query = $this->db->query('SELECT * FROM bom where b_id = '.$id.'   AND delete_flag != 0');
         $res_bom= $query->result();
         $b_master = $res_bom[0]->b_master;
@@ -115,8 +84,9 @@ class Part extends CI_Controller {
         $data['bm'] =$id;
         $data['p_id'] =$p_id;
         $data['p_no'] =$p_no;
+        $data['sub_id'] =$sub_id;
         $data['result_p'] =$res_part;
-        $data['p_name'] =$res[0]->p_name;;
+        $data['p_name'] =$res[0]->p_name;
         $this->load->view('part/subpart',$data);//bring $data to user_data 
 		$this->load->view('footer');
 	}
@@ -132,13 +102,11 @@ class Part extends CI_Controller {
         $d_id =  $this->input->post('d_id');
        $d_no =  $this->input->post('d_no');
        $master =  $this->input->post('master');
-       $lv = 2;
        $master =0;
        if(isset($master)){
-       $lv = 3;
        $master =  $this->input->post('master');
        }
-        $this->model->insert_part($p_no,$p_name, $d_no,$lv,$master);
+        $this->model->insert_part($p_no,$p_name, $d_no,$master);
 
         echo "<script>alert('Add Data Success')</script>";
         if(!$bm){
@@ -155,7 +123,7 @@ class Part extends CI_Controller {
         $bm =  $this->input->post('bm');
         $p_no =  $this->input->post('p_no');
         $p_id =  $this->input->post('p_id');
-  
+        $sub_id =  $this->input->post('sub_id');
         foreach ($p_id as $p_id) {
             $chk= $this->model->insert_sub_part($p_no,$p_id,$bm);
            }
