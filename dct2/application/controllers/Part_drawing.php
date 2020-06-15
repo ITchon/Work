@@ -51,6 +51,17 @@ class Part_drawing extends CI_Controller {
           where d.delete_flag != 0 AND d.dcn_id = $dcn_id";
                $data['title'] = $title ;
                $data['name'] = $name ;
+
+        $sql1 =  'SELECT * from dcn where delete_flag != 0';
+        $query = $this->db->query($sql1); 
+        $data['result_dcn'] = $query->result(); 
+
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+
+
+        $this->load->view('part_drawing/manage',$data);//bring $data to user_data 
+        $this->load->view('footer');
         }
         else if(isset($id)){
             $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, d.enable, d.file_name, d.version, dcn.dcn_no, d.path_file,'v_id', p.p_no
@@ -69,26 +80,50 @@ class Part_drawing extends CI_Controller {
                  $data['title'] = $title ;
                  $data['name'] = $name ;
 
-
-        }
-        else{
-          $sql =  'SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no, p.p_name, p.p_id
-          from drawing d 
-          inner join dcn as dc on dc.dcn_id = d.dcn_id
-          inner join part as p on p.d_id = d.d_id 
-          where d.delete_flag != 0';
-        }
-
         $sql1 =  'SELECT * from dcn where delete_flag != 0';
         $query = $this->db->query($sql1); 
         $data['result_dcn'] = $query->result(); 
 
-       $query = $this->db->query($sql); 
-       $data['result'] = $query->result(); 
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
 
 
         $this->load->view('part_drawing/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
+
+
+        }
+        else if($this->input->post('bm')){
+            $bm =  $this->input->post('bm'); 
+            $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
+          from drawing d 
+          inner join dcn as dc on dc.dcn_id = d.dcn_id
+          inner join part as p on p.d_id = d.d_id 
+          where d.d_id = '$bm' AND d.delete_flag != 0";
+          $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+
+
+        $this->load->view('part_drawing/show',$data);//bring $data to user_data 
+        $this->load->view('footer');
+
+        }
+        else{
+          $sql =  'SELECT * from drawing d 
+          where d.delete_flag != 0';
+          $sql1 =  'SELECT * from dcn where delete_flag != 0';
+        $query = $this->db->query($sql1); 
+        $data['result_dcn'] = $query->result(); 
+
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+
+
+        $this->load->view('part_drawing/manage',$data);//bring $data to user_data 
+        $this->load->view('footer');
+        }
+
+        
         
     }
     
@@ -160,6 +195,17 @@ foreach ($sp_id as $sp) {
         
         $this->model->delete_partD($this->uri->segment('3'));
         redirect('part_drawing/manage');
+    }
+
+    public function openfile()
+    {
+        $file =  $this->input->post('file');
+        $path = $this->input->post('path');
+        $open = ("$path$file");
+        exec($open);
+        
+        redirect('part_drawing/manage');
+
     }
 
 

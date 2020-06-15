@@ -33,9 +33,10 @@
                     foreach($result as $r){
             echo "<tr>";
             echo "<td>" ?>
-        <form action="<?php echo base_url()?>part_drawing/manage" method="post">
+        <form action="<?php echo base_url()?>drawing/manage" method="post">
                     <input type="text" name="p_id" value="<?php echo $r->p_id ?>" hidden>
                     <input type="text" name="title" value="<?php echo $r->p_no ?>" hidden>
+                    <input type="text" name="d_id" value="<?php echo $r->d_id ?>" hidden>
                     <input type="text" name="name" value="Part" hidden>
                     <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
                     <?php echo "<b>".$r->p_no."</b>" ?>

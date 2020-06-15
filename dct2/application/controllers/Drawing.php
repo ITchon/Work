@@ -28,6 +28,7 @@ class Drawing extends CI_Controller {
     {	
         $id = $this->uri->segment('3');
         $dcn_id =  $this->input->post('dcn_id');
+        $d_id =  $this->input->post('d_id');
         $name =  $this->input->post('name');
         $title =  $this->input->post('title');
         if($name == 'DCN'){
@@ -38,35 +39,7 @@ class Drawing extends CI_Controller {
           where d.delete_flag != 0 AND d.dcn_id = $dcn_id";
                $data['title'] = $title ;
                $data['name'] = $name ;
-        }
-        else if(isset($id)){
-            $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, d.enable, d.file_name, d.version, dcn.dcn_no, d.path_file,'v_id', p.p_no
-            from drawing as d
-            inner join dcn on dcn.dcn_id = d.dcn_id
-            inner join part as p on p.d_id = d.d_id 
-            where d.delete_flag != 0 AND d.d_id = $id
-            UNION
-         SELECT v.d_id, v.d_no, v.enable, d.dcn_id, v.file_name, v.version, dc.dcn_no, d.path_file, v.v_id, p.p_no
-         from version as v
-         inner join drawing as d on d.d_id = v.d_id
-         inner join dcn as dc on dc.dcn_id = v.dcn_id
-         inner join part as p on p.d_id = d.d_id 
-         where v.delete_flag != 0 AND v.d_id = $id
-         ORDER by version DESC";
-                 $data['title'] = $title ;
-                 $data['name'] = $name ;
-
-
-        }
-        else{
-          $sql =  'SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
-          from drawing d 
-          inner join dcn as dc on dc.dcn_id = d.dcn_id
-          inner join part as p on p.d_id = d.d_id 
-          where d.delete_flag != 0';
-        }
-
-        $sql1 =  'SELECT * from dcn where delete_flag != 0';
+               $sql1 =  'SELECT * from dcn where delete_flag != 0';
         $query = $this->db->query($sql1); 
         $data['result_dcn'] = $query->result(); 
 
@@ -74,8 +47,92 @@ class Drawing extends CI_Controller {
        $data['result'] = $query->result(); 
 
 
+        $this->load->view('drawing/show',$data);//bring $data to user_data 
+        $this->load->view('footer');
+        }
+        else if($name == 'Part'){
+            $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
+          from drawing as d
+          inner join dcn as dc on dc.dcn_id = d.dcn_id
+          inner join part as p on p.d_id = d.d_id 
+          where d.delete_flag != 0 AND d.d_id = $d_id";
+                 $data['title'] = $title ;
+                 $data['name'] = $name ;
+                 $sql1 =  'SELECT * from dcn where delete_flag != 0';
+        $query = $this->db->query($sql1); 
+        $data['result_dcn'] = $query->result(); 
+
+       $query = $this->db->query($sql); 
+       $data['result'] = $query->result(); 
+
+
+        $this->load->view('drawing/show',$data);//bring $data to user_data 
+        $this->load->view('footer');
+
+
+        }
+         else if($name == 'Drawing'){
+            $d_id = $this->input->post('d_id');
+            $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
+          from drawing as d
+          inner join dcn as dc on dc.dcn_id = d.dcn_id
+          inner join part as p on p.d_id = d.d_id 
+          where d.delete_flag != 0 AND d.d_id = $d_id";
+                 $data['title'] = $title ;
+                 $data['name'] = $name ;
+                 $sql1 =  'SELECT * from dcn where delete_flag != 0';
+        $query = $this->db->query($sql1); 
+        $data['result_dcn'] = $query->result(); 
+
+       $query = $this->db->query($sql); 
+       $data['result'] = $query->result(); 
+
+
+        $this->load->view('drawing/show',$data);//bring $data to user_data 
+        $this->load->view('footer');
+
+
+        }
+        else if($this->uri->segment('3')){
+            $id = $this->uri->segment('3');
+        $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, d.enable, d.path_file, d.file_name, d.version, p.p_no,'v_id'
+            from drawing as d
+            inner join dcn on dcn.dcn_id = d.dcn_id
+            inner join part as p on p.d_id = d.d_id 
+            where d.delete_flag != 0 AND d.d_id = $id
+            UNION
+                SELECT v.d_id, v.d_no, v.dcn_id, v.enable, v.path_file, v.file_name, v.version,p.p_no, v.v_id
+         from version as v
+         inner join dcn as dc on dc.dcn_id = v.dcn_id
+         inner join part as p on p.d_id = v.d_id 
+         where v.delete_flag != 0 AND v.d_id = $id
+         ORDER by version DESC";
+                 $data['title'] = $title ;
+                 $data['name'] = $name ;
+                 
+
+       $query = $this->db->query($sql); 
+       $data['result'] = $query->result(); 
+
+
+        $this->load->view('drawing/show',$data);//bring $data to user_data 
+        $this->load->view('footer');
+
+        }
+        else{
+            $sql =  "SELECT *
+          from drawing as d
+          where d.delete_flag != 0";
+
+       $query = $this->db->query($sql); 
+       $data['result'] = $query->result(); 
+
+
         $this->load->view('drawing/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
+        }
+
+        
         
     }
 
@@ -141,10 +198,10 @@ class Drawing extends CI_Controller {
         $result = $this->model->enableDrawing($uid);
 
         if($result!=FALSE){
-            redirect('drawing/manage','refresh');
+            redirect('drawing/manage/'.$uid.'','refresh');
         }else{
             echo "<script>alert('Simting wrong')</script>";
-            redirect('drawing/manage','refresh');
+            redirect('drawing/manage/'.$uid.'','refresh');
         }
     }
 
@@ -154,13 +211,14 @@ class Drawing extends CI_Controller {
 
         $result = $this->model->disableDrawing($uid);
 
+
         if($result!=FALSE){
-            redirect('drawing/manage','refresh');
+            redirect('drawing/manage/'.$uid.'','refresh');
             
 
         }else{
             echo "<script>alert('Simting wrong')</script>";
-            redirect('drawing/manage','refresh');
+            redirect('drawing/manage/'.$uid.'','refresh');
 
         }
     }
@@ -168,15 +226,23 @@ class Drawing extends CI_Controller {
     public function enable_v($uid){
 
         //$this->model->CheckPermission($this->session->userdata('sp_id'));
+
+        $sql =  "SELECT * from version as v
+        where v.v_id = $uid";
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+
+        $d_id =  $data['result'][0]->d_id;
+
         $result = $this->model->enableDrawing_v($uid);
 
         if($result!=FALSE){
-            redirect('drawing/manage','refresh');
+            redirect('drawing/manage/'.$d_id.'','refresh');
 
         }else{
         
             echo "<script>alert('Simting wrong')</script>";
-       redirect('drawing/manage','refresh');
+       redirect('drawing/manage/'.$d_id.'','refresh');
         }
     }
 
@@ -184,23 +250,47 @@ class Drawing extends CI_Controller {
 
         //$this->model->CheckPermission($this->session->userdata('sp_id'));
 
+        $sql =  "SELECT * from version as v
+        where v.v_id = $uid";
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+
+        $d_id =  $data['result'][0]->d_id;
+
         $result = $this->model->disableDrawing_v($uid);
 
         if($result!=FALSE){
-            redirect('drawing/manage','refresh');
+            redirect('drawing/manage/'.$d_id.'','refresh');
             
         }else{
             echo "<script>alert('Simting wrong')</script>";
-            redirect('drawing/manage','refresh');
+            redirect('drawing/manage/'.$d_id.'','refresh');
 
         }
     }
 
 
+    public function deletedrawing()
+    {
+        $id = $this->uri->segment('3');
+
+        $this->model->delete_drawing($id);
+        redirect('drawing/manage/'.$id.'','refresh');
+
+    }
+
     public function deletedrawing_v()
     {
-        $this->model->delete_drawing_v($this->uri->segment('3'));
-        redirect('drawing/manage','refresh');
+        $id = $this->uri->segment('3');
+
+        $sql =  "SELECT * from version as v where v.v_id = '$id' ";
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+
+        $d_id =  $data['result'][0]->d_id;
+
+        $this->model->delete_drawing_v($id);
+        redirect('drawing/manage/'.$d_id.'','refresh');
 
     }
 
@@ -269,20 +359,29 @@ class Drawing extends CI_Controller {
   
     }
 
+
     public function openfile()
     {
+        $d_id =  $this->input->post('d_id');
         $file =  $this->input->post('file');
         $path = $this->input->post('path');
         $open = ("$path$file");
         exec($open);
-        
-        redirect('drawing/manage');
+        if($open){
+            echo '<script language="javascript">';
+                echo 'history.go(-1);';
+                echo '</script>';
+        }else{
+            echo "<script>";
+            echo 'alert("Data not found.");';
+            echo '</script>';
+        }
 
     }
 
     public function open_dcn()
     {
-        $dcn_id =  $this->uri->segment('3');
+        $dcn_id =  $this->input->post('dcn_id');
 
         $sql =  "SELECT * from dcn where dcn_id = '$dcn_id' ";
         $query = $this->db->query($sql); 
@@ -294,9 +393,15 @@ class Drawing extends CI_Controller {
         $open = ("$path$file");
 
         exec($open);
-
-        
-        redirect('drawing/manage');
+        if($open){
+            echo '<script language="javascript">';
+                echo 'history.go(-1);';
+                echo '</script>';
+        }else{
+            echo "<script>";
+            echo 'alert("Data not found.");';
+            echo '</script>';
+        }
   
     }
 

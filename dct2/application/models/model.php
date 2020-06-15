@@ -473,6 +473,7 @@ return false;
   $path_file =  $data[0]->path_file;
   $d_no =  $data[0]->d_no;
   $dcn_id =  $data[0]->dcn_id;
+  $path_file = quotemeta($path_file);
 
   $gg ="INSERT INTO version (d_id, d_no, dcn_id, enable, date_created, delete_flag, path_file, file_name, version) VALUES ( '$d_id', '$d_no', '$dcn_id', '0',
    CURRENT_TIMESTAMP, '1', '$path_file', '$file_name', '$version');";
@@ -489,6 +490,7 @@ if($query){
  function update_version($d_id, $d_no, $dcn_id, $version, $file_name, $path_file)
  {
   $v = $version+1;
+$path_file = quotemeta($path_file);
   $sql ="UPDATE drawing SET d_no = '$d_no' , date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id', version = '$v', path_file = '$path_file', file_name = '$file_name' WHERE d_id = '$d_id'";
     $query = $this->db->query($sql);  
    if($query){
