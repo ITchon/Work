@@ -1,101 +1,72 @@
-
-      <div class="layout-content">
+<div class="layout-content">
         <div class="layout-content-body">
           <div class="title-bar">
-            <h1 class="title-bar-title">
-          
-
-            </h1>
-            <p class="title-bar-description">
-            </p>
+       
+           
           </div>
-
-          <div class="row gutter-xs">
-            <div class="col-xs-12">
-              <div class="card">
-                <div class="card-header">
+          <div class="row">
+            <div class="col-md-12  ">
+              <div class="demo-form-wrapper card" style="padding-top:8px">
+              <h2 class=" text-center text-primary">
+         Part
+  
+    </h2><hr>
             
-                  <h3>MANAGE PART</h3>
-
-                </div>
-                <div class="card-body">
-                <table id="demo-datatables-buttons-1" class="table table-bordered table-striped dataTable" cellspacing="0" width="100%">
-                  <thead>
-                    <tr>
-                      <th>P/NO</th>
-                      <th>Part Name</th>
-                        <th width="10%">Manage</th>
-                       
-                      </tr>
-                    </thead>
-                    <tbody>
+            <form class="table form form-horizontal container" action="<?php echo base_url()?>part/manage" method="post" data-toggle="validator">
+            <div class="form-group">
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Part</label>      
+          
+                      <div class="col-sm-6 col-md-4">
+                    <input type="hidden" name="name" value="Part">
+                   <select name="p_id" class="form-control select2"  required>
+                   <option value="">- - - Select Part - - -</option>
+                   <?php
+                      foreach($result as $r){?>
+             
+                     <option value="<?php  echo $r->p_id ?>"><?php echo $r->p_no ?></option>
                     <?php
-                    foreach($result as $r){
-            echo "<tr>";
-            echo "<td>" ?>
-        <form action="<?php echo base_url()?>drawing/manage" method="post">
-                    <input type="text" name="p_id" value="<?php echo $r->p_id ?>" hidden>
-                    <input type="text" name="title" value="<?php echo $r->p_no ?>" hidden>
-                    <input type="text" name="d_id" value="<?php echo $r->d_id ?>" hidden>
-                    <input type="text" name="name" value="Part" hidden>
-                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    <?php echo "<b>".$r->p_no."</b>" ?>
-        </form>
+                      }
+                      ?> 
+                   </select>
+                    </div>
+                    </div> 
 
-                    <?php
-                echo"</td>";
-                echo "<td>".$r->p_name."</td>";
                 
-                if($r->enable!=1 ){?>
-                  
-                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
-                  echo base_url() . 'part/enable/' . $r->p_id;
-                  ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
-                  <?php
-                }
-                else{?>
-
-                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งาน</h5>'  data-original-title='Rule' onclick="javascript:window.location='<?php
-                  echo base_url() . 'part/disable/' . $r->p_id;
-                  ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
-                  <?php
-                }
-                ?> <a type ='button' class=' ' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขข้อมูล</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
-                echo base_url() . 'part/edit_part/' . $r->p_id;
-                ?>';"><i class='btn-info btn-sm fa fa-wrench'> </i> </a>
-                <?php 
-                echo "<a type='button' href='".base_url()."part/deletepart/".$r->p_id."' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";  
-
-            echo "</tr>";
-        }
-    ?>
-                  
-                    </tbody>
-                  </table>
-                </div>
+                    </div>
+                   
+            
+                  <div class="form-group">
+                  <br>
+                    <button type="submit" id="btn" class="btn btn-primary btn-block">Click me</button>
+                  </div>
+                </form>
+                
               </div>
             </div>
           </div>
+         
         </div>
       </div>
-
-      
+      <script>
+        $(document).ready(function() {
+    $('.select2').select2();
+});
+      </script>
+      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
       <script type="text/javascript">
-      
-      $(document).ready(function() {
-        
-        $('#table').DataTable({
-          dom: 'Bfrtip',
-        buttons: [
-            'colvis'
-        ]
-       
+    $("#form").submit(function(){
+        $.ajax({
+           url: "<?php echo base_url(); ?>user/insert",
+           type: 'POST',
+           data: $("#form").serialize(),
+           success: function() {
+            alert('Success');
+           }
+        });
+
+
     });
 
-     
-    });
 
+</script> -->
 
-</script>
-
-    

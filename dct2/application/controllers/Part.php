@@ -31,11 +31,39 @@ class Part extends CI_Controller {
     {	
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
-        $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable,p.d_id from part as p where delete_flag != 0';
+        $name =  $this->input->post('name');
+        
+        if($name == 'Part'){
+            $p_id =  $this->input->post('p_id');
+            $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable,p.d_id,d.d_no
+            from part as p
+            inner join drawing as d on d.d_id = p.d_id
+            where p.delete_flag != 0 AND p.p_id = '$p_id'";
+        $query = $this->db->query($sql); 
+       $data['result'] = $query->result(); 
+        $this->load->view('part/show',$data);//bring $data to user_data 
+        $this->load->view('footer');
+
+        }
+        else if($this->uri->segment('3')){
+            $id = $this->uri->segment('3');
+            $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable,p.d_id,d.d_no
+            from part as p
+            inner join drawing as d on d.d_id = p.d_id
+            where p.delete_flag != 0 AND p.p_id = '$id'";
+        $query = $this->db->query($sql); 
+       $data['result'] = $query->result(); 
+        $this->load->view('part/show',$data);//bring $data to user_data 
+        $this->load->view('footer');
+        }
+        else{
+            $sql =  'SELECT * from part as p where delete_flag != 0';
         $query = $this->db->query($sql); 
        $data['result'] = $query->result(); 
         $this->load->view('part/manage',$data);//bring $data to user_data 
-		$this->load->view('footer');
+        $this->load->view('footer');
+        }
+        
 	}
 	public function add()
 
@@ -136,11 +164,11 @@ class Part extends CI_Controller {
 		$result = $this->model->enablePart($uid);
 
 		if($result!=FALSE){
-            redirect('part/manage','refresh');
+            redirect('part/manage/'.$uid.'','refresh');
 
 		}else{
 		    echo "<script>alert('Somting wrong')</script>";
-         redirect('bom/manage','refresh');
+         redirect('part/manage/'.$uid.'','refresh');
 		}
 	}
 
@@ -151,10 +179,10 @@ class Part extends CI_Controller {
 		$result = $this->model->disablePart($uid);
 
 		if($result!=FALSE){
-            redirect('part/manage','refresh');
+            redirect('part/manage/'.$uid.'','refresh');
 		}else{
             echo "<script>alert('Somting wrong')</script>";
-            redirect('part/manage','refresh');
+            redirect('part/manage/'.$uid.'','refresh');
 
 		}
 	}
@@ -162,9 +190,9 @@ class Part extends CI_Controller {
     public function deletepart()
     {
         $this->model->CheckPermission($this->session->userdata('su_id'));
-        
-        $this->model->delete_part($this->uri->segment('3'));
-        redirect('part/manage');
+        $id = $this->uri->segment('3');
+        $this->model->delete_part($id);
+        redirect('part/manage/'.$id.'','refresh');
     }
 
     public function edit_part()   
@@ -208,7 +236,7 @@ class Part extends CI_Controller {
         $d_id =  $this->input->post('d_id');
 
         $this->model->save_edit_part($p_id, $p_no, $p_name,$d_id);
-        redirect('part/manage');
+        redirect('part/manage/'.$p_id.'','refresh');
         
     }  
 

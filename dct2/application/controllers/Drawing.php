@@ -154,24 +154,16 @@ class Drawing extends CI_Controller {
     {
         $d_no =  $this->input->post('d_no');
         $dcn_id =  $this->input->post('dcn_id');
-        $_FILE = $_FILES['file_name']['name'];
-
-        $config['upload_path']          = './uploads/';
-                $config['allowed_types']        = '*';
-                $config['max_size']             = 10000;
-
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
-
-                if ( ! $this->upload->do_upload('file_name'))
-                {
-                   
-                        $data = array('upload_data' => $this->upload->data());
-                        //$this->load->view('drawing/manage', $data);
-                }
+        $p_no =  $this->input->post('p_no');
+        $p_name =  $this->input->post('p_name');
+        $path =  $this->input->post('path');
+        $file =  $this->input->post('file_name');
 
 
-        $result = $this->model->insert_drawing($d_no, $dcn_id, $_FILE);
+        $last_id = $this->model->insert_drawing($d_no, $dcn_id, $path, $file);
+        $d_id = $last_id;
+
+        $this->model->insert_part1($p_no,$p_name,$d_id);
 
         redirect('drawing/manage','refresh');
   

@@ -1,123 +1,72 @@
-<style>
-#form {
-  display: inline-block;
-}
-</style>
-      <div class="layout-content">
+<div class="layout-content">
         <div class="layout-content-body">
           <div class="title-bar">
-            <h1 class="title-bar-title">
-        
-
-            </h1>
-            <p class="title-bar-description">
-            </p>
+       
+           
           </div>
-
-          <div class="row gutter-xs">
-          <div class="col-xs-7">
-              <div class="card">
-                <div class="card-header">
-
-                  <h3>MANAGE DCN</h3>
-
-                </div>
-                <div class="card-body">
-                <table id="demo-datatables-buttons-1" class="table table-bordered table-striped dataTable" cellspacing="0" width="100%">
-                  <thead>
-                      <tr>
-                      <th>DCN no</th>
-                      <th width="30%">Manage</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-                      <?php
-                    foreach($result as $r){
-             echo "<tr>";
-             echo "<td>" ?>
-              <form id="form" action="<?php echo base_url()?>drawing/manage" method="post">
-                    <input type="text" name="dcn_id" value="<?php echo $r->dcn_id ?>" hidden>
-                    <input type="text" name="title" value="<?php echo $r->dcn_no ?>" hidden>
-                    <input type="text" name="name" value="DCN" hidden>
-                    <button type="submit" class="btn btn-sm btn-primary" data-toggle='tooltip' data-html='true' data-placement='right' aria-describedby='passHelp' title='<h5>ดูข้อมูล Drawing ที่เกี่ยวข้อง</h5>'><i class="fa fa-search" aria-hidden="true"></i></button>
-                    <?php echo"<b>".$r->dcn_no."</b>" ?>
-                    </td>
-                    
-        </form>
-        
-        
-
-                    <?php
-                echo"</td>";
-
-                ?> <td class="text-center"><a type ='button' class=' ' data-original-title='Rule'  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' onclick="javascript:window.location='<?php
-                echo base_url() . 'dcn/edit_dcn/' . $r->dcn_id;
-                ?>';"><i class='btn-info btn-sm fa fa-wrench'> </i> </a>
-                <?php 
-                echo "<a type='button' href='".base_url()."dcn/deletedcn/".$r->dcn_id."'  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>"; ?>
-
-                <?php
-            echo "</tr>";
-        }
-    ?>
-            
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
+          <div class="row">
+            <div class="col-md-12  ">
+              <div class="demo-form-wrapper card" style="padding-top:8px">
+              <h2 class=" text-center text-primary">
+         DCN
   
-            <div class="col-xs-5  card" >
+    </h2><hr>
             
-            <form action="<?php echo base_url()?>dcn/insert" method="post"  class="text-center" >
-                 
+            <form class="table form form-horizontal container" action="<?php echo base_url()?>dcn/manage" method="post" data-toggle="validator">
+            <div class="form-group">
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select DCN</label>      
+          
+                      <div class="col-sm-6 col-md-4">
+                    <input type="hidden" name="name" value="DCN">
+                   <select name="dcn_id" class="form-control select2"  required>
+                   <option value="">- - - Select DCN - - -</option>
+                   <?php
+                      foreach($result as $r){?>
+             
+                     <option value="<?php  echo $r->dcn_id ?>"><?php echo $r->dcn_no ?></option>
+                    <?php
+                      }
+                      ?> 
+                   </select>
+                    </div>
+                    </div> 
+
+                
+                    </div>
+                   
+            
                   <div class="form-group">
-                    <label for="name-1" class="control-label">Add Drawing</label>
-                    <input id="dcn_no" class="form-control" type="text" name="dcn_no" required>
-                  </div>
-                  <div class="form-group">
-                    <button  id="btn" class="btn btn-primary ">Save Changes</button>
+                  <br>
+                    <button type="submit" id="btn" class="btn btn-primary btn-block">Click me</button>
                   </div>
                 </form>
+                
+              </div>
+            </div>
           </div>
-          </div>
+         
         </div>
       </div>
-//          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-//      <script type="text/javascript">
-//      
-//      $(document).ready(function() {
-//        
-//        $('#table').DataTable({
-//          dom: 'Bfrtip',
-//        buttons: [
-//            'colvis'
-//        ]
-//       
-//    });
-//
-//
-//    $("#btn").on("click",function(){
-//      chk = $("#dcn_no").val();
-//
-//      if(chk != ''){
-//        $.ajax({
-//           url: "<?php echo base_url(); ?>dcn/insert",
-//           type: 'POST',
-//           data: $("#form").serialize(),
-//           success: function() {
-//            $('#demo-datatables-buttons-1').DataTable().ajax.reload();
-//            alert('Insert Dcn success');
-//           }
-//        });
-//      }else{
-//
-//      }
-//       });
-//     
-//    });
-//
-//
-//</script>
+      <script>
+        $(document).ready(function() {
+    $('.select2').select2();
+});
+      </script>
+      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script type="text/javascript">
+    $("#form").submit(function(){
+        $.ajax({
+           url: "<?php echo base_url(); ?>user/insert",
+           type: 'POST',
+           data: $("#form").serialize(),
+           success: function() {
+            alert('Success');
+           }
+        });
+
+
+    });
+
+
+</script> -->
 
