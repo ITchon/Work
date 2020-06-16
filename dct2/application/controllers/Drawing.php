@@ -32,6 +32,7 @@ class Drawing extends CI_Controller {
         $name =  $this->input->post('name');
         $title =  $this->input->post('title');
         if($name == 'DCN'){
+            $dcn_id =  $this->input->post('dcn_id');
           $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
           from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
@@ -46,11 +47,16 @@ class Drawing extends CI_Controller {
        $query = $this->db->query($sql); 
        $data['result'] = $query->result(); 
 
+       $res = $query->result();
+
+       $data['dcn'] = $data['result'][0]->dcn_id;
 
         $this->load->view('drawing/show',$data);//bring $data to user_data 
         $this->load->view('footer');
         }
         else if($name == 'Part'){
+            $d_id = $this->input->post('d_id');
+            $data['did'] = $d_id;
             $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
           from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
@@ -73,6 +79,7 @@ class Drawing extends CI_Controller {
         }
          else if($name == 'Drawing'){
             $d_id = $this->input->post('d_id');
+            $data['did'] = $d_id;
             $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
           from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
@@ -118,6 +125,65 @@ class Drawing extends CI_Controller {
         $this->load->view('drawing/show',$data);//bring $data to user_data 
         $this->load->view('footer');
 
+        }else if($name == 'dno'){
+            $d_no = $this->input->post('d_no');
+            $did = $this->input->post('did');
+            $data['did'] = $did;
+            $dcn =  $this->input->post('dcn');
+            $data['dcn'] = $dcn;
+
+            if(isset($dcn)){
+                $dcn =  $this->input->post('dcn');
+                
+            $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
+          from drawing as d
+          inner join dcn as dc on dc.dcn_id = d.dcn_id
+          inner join part as p on p.d_id = d.d_id 
+          where d.delete_flag != 0 AND d.dcn_id = '$dcn' AND d.d_no LIKE '%{$d_no}%'";
+      }else{
+        
+        $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
+          from drawing as d
+          inner join dcn as dc on dc.dcn_id = d.dcn_id
+          inner join part as p on p.d_id = d.d_id 
+          where d.delete_flag != 0 AND d.d_id = '$did' AND d.d_no LIKE '%{$d_no}%'";
+      }
+          
+       $query = $this->db->query($sql); 
+       $data['result'] = $query->result(); 
+
+
+        $this->load->view('drawing/show',$data);//bring $data to user_data 
+        $this->load->view('footer');
+
+        }else if($name == 'pno'){
+            $p_no = $this->input->post('p_no');
+            $did = $this->input->post('did');
+            $data['did'] = $did;
+            $dcn =  $this->input->post('dcn');
+            $data['dcn'] = $dcn;
+
+            if(isset($dcn)){
+                $dcn =  $this->input->post('dcn');
+            $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
+          from drawing as d
+          inner join dcn as dc on dc.dcn_id = d.dcn_id
+          inner join part as p on p.d_id = d.d_id 
+          where d.delete_flag != 0 AND d.dcn_id = '$dcn' AND p.p_no LIKE '%{$p_no}%'";
+      }else{
+        $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
+          from drawing as d
+          inner join dcn as dc on dc.dcn_id = d.dcn_id
+          inner join part as p on p.d_id = d.d_id 
+          where d.delete_flag != 0 AND d.d_id = '$did' AND p.p_no LIKE '%{$p_no}%'";
+      }
+            
+       $query = $this->db->query($sql); 
+       $data['result'] = $query->result(); 
+
+
+        $this->load->view('drawing/show',$data);//bring $data to user_data 
+        $this->load->view('footer');
         }
         else{
             $sql =  "SELECT *
@@ -158,6 +224,15 @@ class Drawing extends CI_Controller {
         $p_name =  $this->input->post('p_name');
         $path =  $this->input->post('path');
         $file =  $this->input->post('file_name');
+
+
+$info = pathinfo($file);
+$file_name =  basename($file,'.'.$info['extension']);
+
+echo $file_name; // outputs 'image'
+
+    exit();
+
 
 
         $last_id = $this->model->insert_drawing($d_no, $dcn_id, $path, $file);

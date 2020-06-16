@@ -17,14 +17,38 @@
               <div class="card">
                 <div class="card-header ">
             
-                  <h3><a href="<?php echo base_url()?>drawing/manage">MANAGE DRAWING </a> <?php if(isset($title)){?>
-                  >
+              <h3><a href="<?php echo base_url()?>drawing/manage">MANAGE DRAWING </a> <?php if(isset($title)){?>
                 <a class=""> </a><a  onClick="history.go(-1)"style="cursor: pointer;">Back </a> > <?php echo $name ?>  <?php echo $title ?>
                 <?php  }?> 
                 </h3>
+
+                <form id='form' action="<?php echo base_url()?>drawing/manage" method="post">
+                    <input type="text" name="d_no" placeholder="Drawing No">
+                    <?php if(isset($did)){ ?>
+                      <input type="hidden" name="did" value="<?php echo $did ?>">
+                   <?php  } ?>
+                   <?php if(isset($dcn)){ ?>
+                      <input type="hidden" name="dcn" value="<?php echo $dcn ?>">
+                   <?php  } ?>
+                    <input type="hidden" name="name" value="dno">
+                    <input hidden type="submit" name="" value="search">
+                  </form>
+
+                  <form id='form' action="<?php echo base_url()?>drawing/manage" method="post">
+                    <input type="text" name="p_no" placeholder="Part No">
+                    <?php if(isset($did)){ ?>
+                      <input type="hidden" name="did" value="<?php echo $did ?>">
+                   <?php  } ?>
+                   <?php if(isset($dcn)){ ?>
+                      <input type="hidden" name="dcn" value="<?php echo $dcn ?>">
+                   <?php  } ?>
+                    <input type="hidden" name="name" value="pno">
+                    <input hidden type="submit" name="" value="search">
+                  </form>
+
                 </div>
                 <div class="card-body">
-                <table id="demo-datatables-buttons-1" class="table table-bordered table-striped table-nowrap dataTable " cellspacing="0" width="100%">
+                <table id="demo-datatables-buttons-1" class="table table-bordered table-striped table-nowrap dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
                         <th width="10%">Drawing No</th>
@@ -51,7 +75,8 @@
                   <form id='form' action="<?php echo base_url()?>drawing/open_dcn" method="post">
                     <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
                     <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                    <button  type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><i class=" btn-primary btn-sm fa fa-inbox" aria-hidden="true"></button></i>
+                    <button  type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><a>
+                      <?php echo $r->dcn_no ?></a></button>
 
 
                   </form>
