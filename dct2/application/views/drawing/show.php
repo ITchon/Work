@@ -27,7 +27,7 @@
                 <table id="demo-datatables-buttons-1" class="table table-bordered table-striped table-nowrap dataTable " cellspacing="0" width="100%">
                   <thead>
                       <tr>
-                        <th width="10%">Drawing</th>
+                        <th width="10%">Drawing No</th>
                         <th width="10%">Part No</th>
                         <th width="10%">DCN</th>
                         <th width="3%">Version</th>
@@ -146,7 +146,7 @@
 
                   <form id='form' action="<?php echo base_url()?>drawing/openfile" method="post">
     <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>" >
-    <input type="hidden" name="path" value="<?php echo $r->path_file ?>" >
+    <input type="hidden" name="path" value="<?php echo $r->path_file ?>\" >
     <input type="hidden" name="file" value="<?php echo $r->file_name ?>" >
     <button  type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><i class=" btn-primary btn-sm fa fa-inbox" aria-hidden="true"></i>
     </button>
@@ -159,7 +159,7 @@
 
                   <form id='form' action="<?php echo base_url()?>drawing/openfile" method="post">
     <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>" >
-    <input type="hidden" name="path" value="<?php echo $r->path_file ?>" >
+    <input type="hidden" name="path" value="<?php echo $r->path_file ?>\" >
     <input type="hidden" name="file" value="<?php echo $r->file_name ?>" >
     <button  type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><i class=" btn-primary btn-sm fa fa-inbox" aria-hidden="true"></i>
     </button>
@@ -173,7 +173,7 @@
 
                   <form id='form' action="<?php echo base_url()?>drawing/openfile" method="post">
     <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>" >
-    <input type="hidden" name="path" value="<?php echo $r->path_file ?>" >
+    <input type="hidden" name="path" value="<?php echo $r->path_file ?>\" >
     <input type="hidden" name="file" value="<?php echo $r->file_name ?>" >
     <button  type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><i class=" btn-primary btn-sm fa fa-inbox" aria-hidden="true"></i>
     </button>

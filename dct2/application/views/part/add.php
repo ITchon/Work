@@ -33,8 +33,8 @@
                     </div>
                 </div>
                 <div class="form-group has-feedback">
-                    <label for="p_name" class="col-sm-3 col-md-4 control-label">Part Name</label>
-                    <div class="col-sm-6 col-md-5">
+                    <label for="p_name" class="col-sm-5 col-md-4 control-label">Part Name</label>
+                    <div class="col-sm-6 col-md-4">
                     <input id="p_name" class="form-control" type="text" name="p_name" placeholder="Part Name" required>
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
@@ -56,29 +56,12 @@
                       ?> 
                    </select>
                     </div>
-                    </div>
-                  <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Sharing Drawing </label>      
-          
-                      <div class="col-sm-6 col-md-4">
-                   <select name="d_id[]" class="form-control select2" multiple="multiple" required>
-                   
-                   <?php
-                   
-                      foreach($result_d as $r){?>
-             
-                     <option value="<?php  echo $r->d_id ?>"><?php echo $r->d_no ?></option>
-                    <?php
-                      }
-                      ?> 
-                   </select>
-                    </div>
                     </div> 
+                  
+                  </div>
                   <div class="form-group">
-                <br>
                     <button type="submit" id="btn" class="btn btn-primary btn-block">Save Changes</button>
                     </div>
-                  </div>
                 </form>
               </div>
             </div>

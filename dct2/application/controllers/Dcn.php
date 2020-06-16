@@ -27,19 +27,49 @@ class Dcn extends CI_Controller {
     	public function manage()
     {	
         $this->model->CheckPermission($this->session->userdata('su_id'));
-  
+        $name =  $this->input->post('name');
+
+        if($name =='DCN'){
+            $dcn_id =  $this->input->post('dcn_id');
+        $sql =  "SELECT * from dcn as dcn where dcn.delete_flag != 0 AND dcn.dcn_id = '$dcn_id' ";
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+        $this->load->view('dcn/show',$data);//bring $data to user_data 
+        $this->load->view('footer');
+
+        }
+        else if($this->uri->segment('3')){
+            $id = $this->uri->segment('3');
+            $sql =  "SELECT * from dcn as dcn where dcn.delete_flag != 0 AND dcn.dcn_id = '$id' ";
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+        $this->load->view('dcn/show',$data);//bring $data to user_data 
+        $this->load->view('footer');
+        }
+        else{
         $sql =  'select * from dcn where delete_flag != 0';
         $query = $this->db->query($sql); 
-       $data['result'] = $query->result(); 
+        $data['result'] = $query->result(); 
         $this->load->view('dcn/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
+        }
+
         
+        
+    }
+
+    public function add()
+    {   
+        //$this->model->CheckPermission($this->session->userdata('su_id'));
+
+        $this->load->view('dcn/add');//bring $data to user_data 
+        $this->load->view('footer');
     }
 
     
     public function insert()
     {
-    
+        
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $dcn =  $this->input->post('dcn_no');
@@ -53,9 +83,9 @@ class Dcn extends CI_Controller {
     public function deletedcn()
     {
         $this->model->CheckPermission($this->session->userdata('su_id'));
-
-        $this->model->delete_dcn($this->uri->segment('3'));
-        redirect('dcn/manage','refresh');
+        $id =  $this->uri->segment('3');
+        $this->model->delete_dcn($id);
+        redirect('dcn/manage/'.$id.'','refresh');
     }
 
 
@@ -83,9 +113,38 @@ class Dcn extends CI_Controller {
         $dcn_no  =  $this->input->post('dcn_no');
        $this->model->save_dcn($dcn_id,$dcn_no);
 
-        echo "<script>alert('Add Data Success')</script>";
-        redirect('dcn/manage','refresh');
+        redirect('dcn/manage/'.$dcn_id.'','refresh');
   
+    }
+
+    public function enable($uid){
+
+        //$this->model->CheckPermission($this->session->userdata('su_id'));
+
+        $result = $this->model->enableDcn($uid);
+
+        if($result!=FALSE){
+            redirect('dcn/manage/'.$uid.'','refresh');
+
+        }else{
+            echo "<script>alert('Somting wrong')</script>";
+         redirect('dcn/manage/'.$uid.'','refresh');
+        }
+    }
+
+    public function disable($uid){
+
+        //$this->model->CheckPermission($this->session->userdata('su_id'));
+
+        $result = $this->model->disableDcn($uid);
+
+        if($result!=FALSE){
+            redirect('dcn/manage/'.$uid.'','refresh');
+        }else{
+            echo "<script>alert('Somting wrong')</script>";
+            redirect('dcn/manage/'.$uid.'','refresh');
+
+        }
     }
 
 }
