@@ -90,6 +90,23 @@ class Part extends CI_Controller {
         $this->load->view('part/subpart',$data);//bring $data to user_data 
 		$this->load->view('footer');
 	}
+	public function add_bom_sub()
+    {	
+        $id = $this->uri->segment('3');
+        $m_id =  $this->input->post('m_id');
+        $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 and p.p_id = $m_id";
+        $query = $this->db->query($sql); 
+        $res = $query->result(); 
+        $query = $this->db->query("SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 and p.p_id != $m_id"); 
+        $res_part = $query->result(); 
+        $data['bm'] =$id;
+        $data['p_no'] =$res[0]->p_no;
+        $data['p_id'] =$m_id;
+        $data['result_p'] =$res_part;
+        $data['p_name'] =$res[0]->p_name;
+        $this->load->view('part/subpart_b',$data);//bring $data to user_data 
+		$this->load->view('footer');
+	}
 
     public function insert()
     {
@@ -119,11 +136,11 @@ class Part extends CI_Controller {
     {
 
         $bm =  $this->input->post('bm');
-        $p_no =  $this->input->post('p_no');
+        $b_master =  $this->input->post('b_master');
         $p_id =  $this->input->post('p_id');
         $sub_id =  $this->input->post('sub_id');
         foreach ($p_id as $p_id) {
-            $chk= $this->model->insert_sub_part($p_no,$p_id,$bm);
+            $chk= $this->model->insert_sub_part($b_master,$p_id,$bm);
            }
            redirect('bom/manage/'.$bm.'','refresh');
     }

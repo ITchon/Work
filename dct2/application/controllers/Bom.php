@@ -27,6 +27,7 @@ class Bom extends CI_Controller {
     }
     	public function manage()
     {	
+        $sort =  $this->input->post('sort'); 
         $sql =  'SELECT * From bom inner join part p on p.p_id = bom.b_master where bom.delete_flag !=0';
         $query = $this->db->query($sql); 
         $res = $query->result(); 
@@ -37,8 +38,8 @@ class Bom extends CI_Controller {
        }else{
         $bm = $this->uri->segment('3');
        }
-       $search =  $this->input->post('search'); 
-       if($search){
+     
+       if($sort == "down"){
         $sort =  $this->input->post('sort'); 
         $sub_id =  $this->input->post('sub_id'); 
  
@@ -69,21 +70,73 @@ class Bom extends CI_Controller {
         $res = $query->result();
         $data['bom']=$res;
         $data['bm']=$bm;
+        $data['sort']=$sort;
         $data['bm_id']=$res[0]->b_master;
         $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
         $query = $this->db->query($sql); 
         $data['result_sub'] = $query->result(); 
-        $this->load->view('bom/show_up',$data);//bring $data to user_data 
+        $this->load->view('bom/show',$data);//bring $data to user_data 
         $this->load->view('footer');
         
        }
+
+    //    ---------------------------------------------tree up-------------------------------------------------
+    //    else if($sort == "up"){
+    //     $sort =  $this->input->post('sort'); 
+    //     $sub_id =  $this->input->post('sub_id'); 
+ 
+    //     $array_bom= $this->model->bom($bm) ;
+    //     $data= $this->model->tree_up($sub_id,$bm) ;
+    //     $array=[];
+    //         foreach($data as $row){ 
+    //         foreach($array_bom as $r){  
+    //         if($r['sub_id']==$row['sub_id']){ 
+                
+    //         $a=array('p_id'=>$r['p_id'],'lv'=>$r['lv'],'m_id'=>$row['m_id'] ,'p_no'=>$r['p_no'],'p_name'=>$r['p_name'],'qty'=>$r['qty'],'unit'=>$r['unit'],'d_no'=>$r['d_no'],'sub_id'=>$r['sub_id'],);
+    //         array_push($array,$a);
+    //                       }
+    //                    }
+    //                }
+    //                $_data = array();
+    //                foreach ($array as $v) {
+    //                  if (isset($_data[$v['sub_id']])) {
+    //                    // found duplicate
+    //                    continue;
+    //                  }
+    //                  // remember unique item
+    //                  $_data[$v['sub_id']] = $v;
+    //                }
+              
+    //                // if you need a zero-based array, otheriwse work with $_data
+    //                $array = array_values($_data);
+    //     $data['result_bom'] = $array;  
+    //     $query=$this->db->query("SELECT * from bom inner join part on part.p_id=bom.b_master inner join drawing d on d.d_id=part.d_id where b_id = $bm");
+    //     $res = $query->result();
+    //     $data['bom']=$res;
+    //     $data['bm']=$bm;
+    //     $data['sort']=$sort;
+    //     $data['bm_id']=$res[0]->b_master;
+    //     $query=$this->db->query('SELECT * FROM sub_part inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id where sub_id = '.$sub_id.' AND  b_id = '.$bm.' AND sub_part.delete_flag != 0');
+    //     $search_data = $query->result();
+    //     $data['search_data']=$search_data;
+    //     $data['search_chk']=$search_data[0]->m_id;
+    //     $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
+    //     $query = $this->db->query($sql); 
+    //     $data['result_sub'] = $query->result(); 
+    //     $this->load->view('bom/show_up',$data);//bring $data to user_data 
+    //     $this->load->view('footer');
+        
+    //    }
+    // --------------------------------------------------------------------------------
         else if(isset($bm)){
     $array= $this->model->bom($bm) ;
     $data['result_bom'] = $array;  
-    $query=$this->db->query("SELECT * from bom inner join part on part.p_id=bom.b_master inner join drawing d on d.d_id=part.d_id where b_id = $bm");
+    $sql ='SELECT * from bom inner join part on part.p_id=bom.b_master inner join drawing d on d.d_id=part.d_id where b_id = '.$bm.'';
+    $query=$this->db->query($sql);
     $res = $query->result();
     $data['bom']=$res;
     $data['bm']=$bm;
+    $data['sort']=null;
     $data['bm_id']=$res[0]->b_master;
     $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
     $query = $this->db->query($sql); 

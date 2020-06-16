@@ -14,7 +14,7 @@
             </h2><hr>
             <form class="form form-horizontal container" action="<?php echo base_url()."part/insert_sub"?>" method="post" data-toggle="validator">
             <input type="hidden" name="bm" value="<?php echo $bm ?>">
-            <input type="hidden" name="p_no" value="<?php echo $p_id ?>">
+            <input type="hidden" name="b_master" value="<?php echo $p_id ?>">
             <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Main Part</label>      
           
