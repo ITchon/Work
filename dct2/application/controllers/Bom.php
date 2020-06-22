@@ -39,16 +39,19 @@ class Bom extends CI_Controller {
         $bm = $this->uri->segment('3');
        }
      
-       if($sort == "down"){
+       if($sort){
         $sort =  $this->input->post('sort'); 
         $sub_id =  $this->input->post('sub_id'); 
  
         $array_bom= $this->model->bom($bm) ;
-        $data= $this->model->tree_down($sub_id,$bm) ;
+        if($sort == "up"){
+            $data= $this->model->tree_up($sub_id,$bm) ;
+        }else{
+            $data= $this->model->tree_down($sub_id,$bm) ;
+        }
         $array=[];
             foreach($data as $row){
                 // echo $row['p_no']."<br>";
-               
             foreach($array_bom as $r){  
             if($r['sub_id']==$row['sub_id']){ 
             $a=array('lv'=>$r['lv'],'p_no'=>$r['p_no'],'p_name'=>$r['p_name'],'qty'=>$r['qty'],'unit'=>$r['unit'],'d_no'=>$r['d_no'],'sub_id'=>$r['sub_id'],'p_id'=>$r['p_id'] ,'origin'=>$r['origin'] );
@@ -56,22 +59,26 @@ class Bom extends CI_Controller {
                           }
                        }
                    }
-
         $data['result_bom'] = $array;  
         $query=$this->db->query("SELECT * from bom inner join part on part.p_id=bom.b_master inner join drawing d on d.d_id=part.d_id where b_id = $bm");
         $res = $query->result();
         $data['bom']=$res;
         $data['bm']=$bm;
         $data['sort']=$sort;
-        $data['bm_id']=$res[0]->b_master;
+        $data['bm_id']=$res[0]->b_master;   
+
+        $sql =  "SELECT  * FROM sub_part inner join part on part.p_id=sub_part.p_id where sub_id=$sub_id";
+        $query = $this->db->query($sql); 
+        $res =  $query->result(); 
+        $data['p_no'] = $res[0]->p_no;
         $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
         $query = $this->db->query($sql); 
         $data['result_sub'] = $query->result(); 
+
         $this->load->view('bom/show',$data);//bring $data to user_data 
         $this->load->view('footer');
         
        }
-
     //    ---------------------------------------------tree up-------------------------------------------------
     //    else if($sort == "up"){
     //     $sort =  $this->input->post('sort'); 

@@ -37,7 +37,7 @@ th, td {
         <div class="card-header">
         <div class="col-xs-10">
           <div class="col-xs-5">
-                  <span class="text-center text-primary" id="header">BOM TABLE <a href="" class="btn btn-default" onclick="window.history.go(-1); return false;"> Back </a></span>
+               <span class="text-center text-primary" id="header"><a href="">BOM TABLE</a> <a href="" class="btn btn-default" onclick="window.history.go(-1); return false;"> Back </a></span>
                   </div>
 
                     
@@ -48,12 +48,18 @@ th, td {
           
           <form id="" class="" action="<?php echo base_url()."bom/manage/$bm "?>" style="padding-left:60%" method="post">
           <select name="sort" class="btn btn-primary" id="">
-          <option value="down">Tree down</option>
-          <option value="up">Tree up</option>
+          <?php if($sort == "up"){  
+              echo "<option value='up'  >Tree up</option>";
+              echo "<option value='down' >Tree down</option>";
+          }else{
+            echo "<option value='down' >Tree down</option>";
+            echo "<option value='up'  >Tree up</option>";
+          }
+            ?>
           </select>
           <div class="col-sm-6 col-md-4">
                    <select name="sub_id" class="form-control select2"  required>
-                   <option>- - - Search - - - </option>
+                   <option value="">- - - Search - - - </option>
                    <?php
                    $_data = array();
                    foreach ($result_bom as $v) {
@@ -66,9 +72,15 @@ th, td {
                    }
                    // if you need a zero-based array, otheriwse work with $_data
                    $data = array_values($_data);
-                      foreach($data as $row){?>           
-                     <option value="<?php  echo $row['sub_id'] ?>"><?php echo $row['p_no'] ?></option>
-                    <?php                       
+                      foreach($data as $row){
+                        if($p_no == $row['p_no']){?>           
+                     <option value="<?php  echo $row['sub_id'] ?>" selected><?php echo $row['p_no'] ?></option>
+                    <?php              
+                        }  
+                        else{?>
+                     <option value="<?php  echo $row['sub_id'] ?>" ><?php echo $row['p_no'] ?></option>
+                      <?php
+                        }       
                       }
                       ?> 
                    </select>
@@ -77,6 +89,7 @@ th, td {
                     <input type="hidden" name="search" value="search" hidden>
                     <input type="submit" class="btn btn-outline-primary" value="Search">
         </form>          
+        
 </form>
        <div class="card-body">
          <table id="" class="table table-striped dataTable" style="border: 1px groove #ddd !important;" cellspacing="0" width="100%"  >
@@ -84,7 +97,7 @@ th, td {
              <tr>
                <?php 
                 for($i=1;$i<=$maxlv[0];$i++) { ?>
-               <th width="40px" class="not-active " style='border-right: 1px groove ;'>lv <?php echo $i ?></th>
+               <th width="40px" class="not-active " style='border-right: 1px groove ;'>lv <?php echo $i  ?></th>
                <?php } ?>
               <th width="" class="not-active " style='border-right: 1px groove ;'>Part No</th>
               <th width="" class="not-active" style='border-right: 1px groove ;'>Part name</th>
@@ -169,22 +182,19 @@ th, td {
                                   echo "<td class='text-danger text-center' style='border-right: 1px groove;border-bottom: 1px groove'>1</td>";
                                    for($i=1;$i<=$maxlv[0]-1;$i++) { 
                                   echo "<td style='border-right: 1px groove;border-bottom: 1px groove'></td>";
-                                  }
+                                  } 
                                   echo "<td class='text-danger' style='border-right: 1px groove '>$row->p_no</td>";
                                   echo "<td class='text-danger' style='border-right: 1px groove '>$row->p_name</td>";
                                   echo "<td class='text-danger' style='border-right: 1px groove '>$row->quantity</td>";
                                   echo "<td class='text-danger' style='border-right: 1px groove '>$row->unit</td>";
                                   echo "<td class='text-danger' style='border-right: 1px groove '>$row->d_no</td>";
-                                  echo "<td class='text-danger'><a type='button' href='".base_url()."bom/delete_bom/".$bm."' onclick='return confirm(\"Confirm Delete Item\")' ><button class='btn-danger btn-sm fa fa-trash' data-toggle='tooltip' data-html='true' data-placement='left' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>'></button></a>";
+                                  echo "<td class='text-danger text-center'><a type='button' href='".base_url()."bom/delete_bom/".$bm."' onclick='return confirm(\"Confirm Delete Item\")' ><button class='btn-danger btn-sm fa fa-trash' data-toggle='tooltip' data-html='true' data-placement='left' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>'></button></a>";
                                   ?>
                     
                                   <a type="button" href="<?php echo base_url()?>bom/edit_bom/$bm" ><button class="btn-success btn-sm fa fa-wrench" data-toggle="tooltip" data-html="true" data-placement="bottom" aria-describedby="passHelp" title="<h5>แก้ไขจำนวน</h5>"></button></a>
-                           
-                                  <form id="form" action="<?php echo base_url()?>part/edit_part" method="post">
-                                    <?php $bm = $row->b_id; ?>
-                                  <input type="text" name="bom" value="<?php echo $bm ?>" hidden>
-                                  <input type="text" name="p_id" value="<?php echo $row->p_id ?>" hidden>
-                                 <?php echo "<a type='button'><button class='btn-default btn-sm fa fa-search' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ดูข้อมูล</h5>'></button></a></td>"; ?>
+                                  <form id="form" action="<?php echo base_url()."part/add_bom_sub/$bm" ?>" method="post">
+                                  <input type="hidden" name="m_id" value="<?php echo $bm_id?>" >
+                                  <button type="submit"  class="btn-primary btn-sm fa fa-plus" data-toggle="tooltip" data-html="true" data-placement="bottom" aria-describedby="passHelp" title="<h5>Add Part Lv 2</h5>"></button>
                                   </form>
                                       <?php
                                 }

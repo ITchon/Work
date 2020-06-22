@@ -44,7 +44,7 @@
             <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"> 
             <span class="badge "></span>
            <?php echo $this->session->userdata('username') ?>
-           <li><a  data-toggle="modal" data-target="#logoutModal">Sign out</a></li>
+           <li><a  data-toggle="modal" data-target="#logoutModal"><i class="fa fa-sign-out"></i></a></li>
                
                   </a>
                   </li>
