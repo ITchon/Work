@@ -117,9 +117,9 @@
                   <td class="text-center">
 
                   <form id="form" action="<?php echo base_url()?>drawing/enable" method="post">
-                  <input type="text" name="d_id" value="<?php echo $r->d_id ?>">
+                  <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
                   <?php if(isset($dcn_id)){ ?>
-                  <input type="text" name="dcn_id" value="<?php echo $r->dcn_id ?>">
+                  <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
                   <?php  } ?>
                   <button type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' style="border:none;"><i class='btn-danger btn-sm fa fa-times'></i></button>
 
@@ -130,9 +130,9 @@
                 else{?>
                   <td class="text-center">
                   <form id="form" action="<?php echo base_url()?>drawing/disable" method="post">
-                  <input type="text" name="d_id" value="<?php echo $r->d_id ?>">
+                  <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
                   <?php if(isset($dcn_id)){ ?>
-                  <input type="text" name="dcn_id" value="<?php echo $r->dcn_id ?>">
+                  <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
                   <?php  } ?>
                   <button data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งาน</h5>' style="border:none;"><i class='btn-success btn-sm fa fa-check'></i></button>
                   
@@ -152,9 +152,9 @@
                   <td class="text-center">
 
                   <form id="form" action="<?php echo base_url()?>drawing/enable" method="post">
-                  <input type="text" name="d_id" value="<?php echo $r->d_id ?>">
+                  <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
                   <?php if(isset($dcn_id)){ ?>
-                  <input type="text" name="dcn_id" value="<?php echo $r->dcn_id ?>">
+                  <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
                   <?php  } ?>
                   <button type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' style="border:none;"><i class='btn-danger btn-sm fa fa-times'></i></button>
 
@@ -165,9 +165,9 @@
                 else{?>
                   <td class="text-center">
                   <form id="form" action="<?php echo base_url()?>drawing/disable" method="post">
-                  <input type="text" name="d_id" value="<?php echo $r->d_id ?>">
+                  <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
                   <?php if(isset($dcn_id)){ ?>
-                  <input type="text" name="dcn_id" value="<?php echo $r->dcn_id ?>">
+                  <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
                   <?php  } ?>
                   <button data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งาน</h5>' style="border:none;"><i class='btn-success btn-sm fa fa-check'></i></button>
                   
