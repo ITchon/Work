@@ -1,6 +1,6 @@
    
 
-  <body class="layout layout-header-fixed ">
+  <body class="layout layout-header-fixed">
     <div class="layout-header">
       <div class="navbar navbar-default">
         <div class="navbar-header ">
@@ -44,7 +44,7 @@
             <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"> 
             <span class="badge "></span>
            <?php echo $this->session->userdata('username') ?>
-           <li><a  data-toggle="modal" data-target="#logoutModal">Sign out</a></li>
+           <li><a  data-toggle="modal" data-target="#logoutModal"><i class="fa fa-sign-out"></i></a></li>
                
                   </a>
                   </li>
@@ -162,7 +162,7 @@
                 </div>     
          
   
-    <div class="theme">
+    <div class="theme  no_print">
       <div class="theme-panel theme-panel-collapsed">
         <div class="theme-panel-controls">
           <button class="theme-panel-toggler" title="Expand theme panel ( ] )" type="button">

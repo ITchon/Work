@@ -35,20 +35,22 @@ class Bom extends CI_Controller {
     
        if( $this->input->post('bm')){
           $bm =  $this->input->post('bm'); 
+          redirect('bom/manage/'.$bm.'');
        }else{
         $bm = $this->uri->segment('3');
        }
-     
-       if($sort == "down"){
+       if($sort){
         $sort =  $this->input->post('sort'); 
         $sub_id =  $this->input->post('sub_id'); 
- 
         $array_bom= $this->model->bom($bm) ;
-        $data= $this->model->tree_down($sub_id,$bm) ;
+        if($sort == "up"){
+            $data= $this->model->tree_up($sub_id,$bm) ;
+        }else{
+            $data= $this->model->tree_down($sub_id,$bm) ;
+        }
         $array=[];
             foreach($data as $row){
                 // echo $row['p_no']."<br>";
-               
             foreach($array_bom as $r){  
             if($r['sub_id']==$row['sub_id']){ 
             $a=array('lv'=>$r['lv'],'p_no'=>$r['p_no'],'p_name'=>$r['p_name'],'qty'=>$r['qty'],'unit'=>$r['unit'],'d_no'=>$r['d_no'],'sub_id'=>$r['sub_id'],'p_id'=>$r['p_id'] ,'origin'=>$r['origin'] );
@@ -56,70 +58,24 @@ class Bom extends CI_Controller {
                           }
                        }
                    }
-
         $data['result_bom'] = $array;  
         $query=$this->db->query("SELECT * from bom inner join part on part.p_id=bom.b_master inner join drawing d on d.d_id=part.d_id where b_id = $bm");
         $res = $query->result();
         $data['bom']=$res;
         $data['bm']=$bm;
         $data['sort']=$sort;
-        $data['bm_id']=$res[0]->b_master;
+        $data['bm_id']=$res[0]->b_master;   
+        $sql =  "SELECT  * FROM sub_part inner join part on part.p_id=sub_part.p_id where sub_id=$sub_id";
+        $query = $this->db->query($sql); 
+        $res =  $query->result(); 
+        $data['p_no'] = $res[0]->p_no;
         $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
         $query = $this->db->query($sql); 
         $data['result_sub'] = $query->result(); 
+
         $this->load->view('bom/show',$data);//bring $data to user_data 
         $this->load->view('footer');
-        
        }
-
-    //    ---------------------------------------------tree up-------------------------------------------------
-    //    else if($sort == "up"){
-    //     $sort =  $this->input->post('sort'); 
-    //     $sub_id =  $this->input->post('sub_id'); 
- 
-    //     $array_bom= $this->model->bom($bm) ;
-    //     $data= $this->model->tree_up($sub_id,$bm) ;
-    //     $array=[];
-    //         foreach($data as $row){ 
-    //         foreach($array_bom as $r){  
-    //         if($r['sub_id']==$row['sub_id']){ 
-                
-    //         $a=array('p_id'=>$r['p_id'],'lv'=>$r['lv'],'m_id'=>$row['m_id'] ,'p_no'=>$r['p_no'],'p_name'=>$r['p_name'],'qty'=>$r['qty'],'unit'=>$r['unit'],'d_no'=>$r['d_no'],'sub_id'=>$r['sub_id'],);
-    //         array_push($array,$a);
-    //                       }
-    //                    }
-    //                }
-    //                $_data = array();
-    //                foreach ($array as $v) {
-    //                  if (isset($_data[$v['sub_id']])) {
-    //                    // found duplicate
-    //                    continue;
-    //                  }
-    //                  // remember unique item
-    //                  $_data[$v['sub_id']] = $v;
-    //                }
-              
-    //                // if you need a zero-based array, otheriwse work with $_data
-    //                $array = array_values($_data);
-    //     $data['result_bom'] = $array;  
-    //     $query=$this->db->query("SELECT * from bom inner join part on part.p_id=bom.b_master inner join drawing d on d.d_id=part.d_id where b_id = $bm");
-    //     $res = $query->result();
-    //     $data['bom']=$res;
-    //     $data['bm']=$bm;
-    //     $data['sort']=$sort;
-    //     $data['bm_id']=$res[0]->b_master;
-    //     $query=$this->db->query('SELECT * FROM sub_part inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id where sub_id = '.$sub_id.' AND  b_id = '.$bm.' AND sub_part.delete_flag != 0');
-    //     $search_data = $query->result();
-    //     $data['search_data']=$search_data;
-    //     $data['search_chk']=$search_data[0]->m_id;
-    //     $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
-    //     $query = $this->db->query($sql); 
-    //     $data['result_sub'] = $query->result(); 
-    //     $this->load->view('bom/show_up',$data);//bring $data to user_data 
-    //     $this->load->view('footer');
-        
-    //    }
-    // --------------------------------------------------------------------------------
         else if(isset($bm)){
         $array= $this->model->bom($bm) ;
         $data['result_bom'] = $array;  
@@ -133,15 +89,28 @@ class Bom extends CI_Controller {
         $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
         $query = $this->db->query($sql); 
         $data['result_sub'] = $query->result(); 
+        if($this->input->post('csv')){
+            header("Content-type: application/csv");
+            header("Content-Disposition: attachment; filename=\"test".".csv\"");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, array("Lv","Part No","Part Name","Quantity","Unit","Drawing No"));
+            fputcsv($handle, array("1",$res[0]->p_no,$res[0]->p_name,$res[0]->quantity,$res[0]->unit,$res[0]->d_no));
+            foreach ($array as $key) {
+                $narray=array($key['lv'],$key['p_no'],$key['p_name'],$key['qty'],$key['unit'],$key['d_no']);
+                fputcsv($handle, $narray);
+                 }
+                fclose($handle);
+            exit;
+        }
         $this->load->view('bom/show',$data);//bring $data to user_data 
         $this->load->view('footer');
          }else{
         $this->load->view('bom/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
+         }
         }
-
-        
-    }
 
     
     public function edit_bom()
@@ -198,7 +167,6 @@ class Bom extends CI_Controller {
         $bm =  $this->input->post('bm');
         $p_id =  $this->input->post('p_id');
         $lasted_id = $this->model->insert_bom($bm);
-  
         foreach ($p_id as $p) {
         $sub_id= $this->model->insert_sub_part($lasted_id,$bm,$p,$p);
         $sub_id= $this->model->update_sub_id($sub_id);
