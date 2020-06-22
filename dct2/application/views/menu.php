@@ -1,6 +1,6 @@
    
 
-  <body class="layout layout-header-fixed ">
+  <body class="layout layout-header-fixed">
     <div class="layout-header">
       <div class="navbar navbar-default">
         <div class="navbar-header ">
@@ -162,7 +162,7 @@
                 </div>     
          
   
-    <div class="theme">
+    <div class="theme  no_print">
       <div class="theme-panel theme-panel-collapsed">
         <div class="theme-panel-controls">
           <button class="theme-panel-toggler" title="Expand theme panel ( ] )" type="button">
