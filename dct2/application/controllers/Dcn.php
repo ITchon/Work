@@ -31,7 +31,7 @@ class Dcn extends CI_Controller {
 
         if($name =='DCN'){
             $dcn_id =  $this->input->post('dcn_id');
-        $sql =  "SELECT * FROM `dcn`inner join drawing d on d.dcn_id = dcn.dcn_id where dcn.dcn_id = $dcn_id ";
+        $sql =  "SELECT * from dcn as dcn where dcn.delete_flag != 0 AND dcn.dcn_id = '$dcn_id' ";
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
         $this->load->view('dcn/show',$data);//bring $data to user_data 
@@ -40,7 +40,7 @@ class Dcn extends CI_Controller {
         }
         else if($this->uri->segment('3')){
             $id = $this->uri->segment('3');
-            $sql =  "SELECT * from dcn as dcn where dcn.delete_flag != 0 AND dcn.dcn_id = '$id' ";
+        $sql =  "SELECT * from dcn as dcn where dcn.delete_flag != 0 AND dcn.dcn_id = '$id' ";
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
         $this->load->view('dcn/show',$data);//bring $data to user_data 
