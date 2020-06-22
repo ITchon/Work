@@ -366,17 +366,95 @@ class Model extends CI_Model
   public function get_drawing_by($id,$search)
   {
       $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
+      ,p.p_id
       from drawing as d
       inner join dcn as dc on dc.dcn_id = d.dcn_id
       inner join part as p on p.d_id = d.d_id 
-      where d.delete_flag != 0 AND d.d_id = $id AND p.p_no LIKE '%{$search}%'";
+      where d.delete_flag != 0 AND d.d_id = $id AND d.d_no LIKE '%{$search}%'";
       $query = $this->db->query($sql); 
       $result =  $query->result();
       return $result;
   }
-  public function get_drawing_ver($id,$search)
+  public function get_drawing_ver($id,$search,$p_id)
   {
-    $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, d.enable, d.path_file, d.file_name, d.version, p.p_no,v_id from drawing as d inner join dcn on dcn.dcn_id = d.dcn_id inner join part as p on p.d_id = d.d_id where d.delete_flag != 0 AND d.d_id = $id UNION SELECT v.d_id, v.d_no, v.dcn_id, v.enable, v.path_file, v.file_name, v.version,p.p_no, v.v_id from version as v inner join dcn as dc on dc.dcn_id = v.dcn_id inner join part as p on p.d_id = v.d_id where v.delete_flag != 0 AND v.d_id = $id ORDER by version DESC";
+     $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.path_file, d.file_name, d.version
+     , p.p_no,p.p_id,'v_id'
+            from drawing as d
+            inner join dcn as dc on dc.dcn_id = d.dcn_id
+            inner join part as p on p.d_id = d.d_id 
+            where d.delete_flag != 0 AND d.d_id = $id AND p.p_id = $p_id
+            UNION
+                SELECT v.d_id, v.d_no, v.dcn_id, dc.dcn_no, v.enable, v.path_file, v.file_name, v.version
+                , p.p_no,p.p_id, v.v_id
+         from version as v
+         inner join dcn as dc on dc.dcn_id = v.dcn_id
+         inner join part as p on p.d_id = v.d_id 
+         where v.delete_flag != 0 AND v.d_id = $id AND p.p_id = $p_id
+         ORDER by version DESC";
+      $query = $this->db->query($sql); 
+      $result =  $query->result();
+      return $result;
+  }
+
+  public function get_dcn_by($id,$search)
+  {
+     $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
+     ,p.p_id
+          from drawing as d
+          inner join dcn as dc on dc.dcn_id = d.dcn_id
+          inner join part as p on p.d_id = d.d_id 
+          where d.delete_flag != 0 AND d.dcn_id = $id AND d.d_no LIKE '%{$search}%'";
+      $query = $this->db->query($sql); 
+      $result =  $query->result();
+      return $result;
+  }
+  public function get_dcn_byid($id)
+  {
+     $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
+     ,p.p_id
+          from drawing as d
+          inner join dcn as dc on dc.dcn_id = d.dcn_id
+          inner join part as p on p.d_id = d.d_id 
+          where d.delete_flag != 0 AND d.dcn_id = $id";
+      $query = $this->db->query($sql); 
+      $result =  $query->result();
+      return $result;
+  }
+
+  public function get_dcn_by_dcnid($id)
+  {
+     $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
+     ,p.p_id
+          from drawing as d
+          inner join dcn as dc on dc.dcn_id = d.dcn_id
+          inner join part as p on p.d_id = d.d_id 
+          where d.delete_flag != 0 AND d.d_id = $id";
+      $query = $this->db->query($sql); 
+      $result =  $query->result();
+      return $result;
+  }
+
+  public function get_dcn_p($dcn_id,$search)
+  {
+     $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
+     ,p.p_id
+          from drawing as d
+          inner join dcn as dc on dc.dcn_id = d.dcn_id
+          inner join part as p on p.d_id = d.d_id 
+          where d.delete_flag != 0 AND d.dcn_id = $dcn_id AND p.p_no LIKE '%{$search}%'";
+      $query = $this->db->query($sql); 
+      $result =  $query->result();
+      return $result;
+  }
+
+  public function get_part_by($id,$search)
+  {
+     $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
+     ,p.p_id
+          from drawing as d
+          inner join dcn as dc on dc.dcn_id = d.dcn_id
+          inner join part as p on p.d_id = d.d_id 
+          where d.delete_flag != 0 AND d.d_id = $id AND p.p_no LIKE '%{$search}%'";
       $query = $this->db->query($sql); 
       $result =  $query->result();
       return $result;

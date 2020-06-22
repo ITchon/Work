@@ -25,178 +25,99 @@ class Drawing extends CI_Controller {
 
     }
     	public function manage()
-    {	
+    {   
         $id = $this->uri->segment('3');
         $dcn_id =  $this->input->post('dcn_id');
         $d_id =  $this->input->post('d_id');
         $name =  $this->input->post('name');
-        $title =  $this->input->post('title');
-        if($name == 'DCN'){
-            $dcn_id =  $this->input->post('dcn_id');
-          $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
-          from drawing as d
-          inner join dcn as dc on dc.dcn_id = d.dcn_id
-          inner join part as p on p.d_id = d.d_id 
-          where d.delete_flag != 0 AND d.dcn_id = $dcn_id";
-               $data['title'] = $title ;
-               $data['name'] = $name ;
-               $sql1 =  'SELECT * from dcn where delete_flag != 0';
-        $query = $this->db->query($sql1); 
-        $data['result_dcn'] = $query->result(); 
-
-       $query = $this->db->query($sql); 
-       $data['result'] = $query->result(); 
-
-       $res = $query->result();
-
-       $data['dcn'] = $data['result'][0]->dcn_id;
-
-        $this->load->view('drawing/show',$data);//bring $data to user_data 
-        $this->load->view('footer');
-        }
-        else if($name == 'Part'){
-            $d_id = $this->input->post('d_id');
-            $data['did'] = $d_id;
-            $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
-          from drawing as d
-          inner join dcn as dc on dc.dcn_id = d.dcn_id
-          inner join part as p on p.d_id = d.d_id 
-          where d.delete_flag != 0 AND d.d_id = $d_id";
-                 $data['title'] = $title ;
-                 $data['name'] = $name ;
-                 $sql1 =  'SELECT * from dcn where delete_flag != 0';
-        $query = $this->db->query($sql1); 
-        $data['result_dcn'] = $query->result(); 
-
-       $query = $this->db->query($sql); 
-       $data['result'] = $query->result(); 
-
-
-        $this->load->view('drawing/show',$data);//bring $data to user_data 
-        $this->load->view('footer');
-
-
-        }
-         else if($name == 'Drawing'){
-            $d_id = $this->input->post('d_id');
-            $data['did'] = $d_id;
-            $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
-          from drawing as d
-          inner join dcn as dc on dc.dcn_id = d.dcn_id
-          inner join part as p on p.d_id = d.d_id 
-          where d.delete_flag != 0 AND d.d_id = $d_id";
-                 $data['title'] = $title ;
-                 $data['name'] = $name ;
-                 $sql1 =  'SELECT * from dcn where delete_flag != 0';
-        $query = $this->db->query($sql1); 
-        $data['result_dcn'] = $query->result(); 
-
-       $query = $this->db->query($sql); 
-       $data['result'] = $query->result(); 
-
-
-        $this->load->view('drawing/show',$data);//bring $data to user_data 
-        $this->load->view('footer');
-
-
-        }
-        else if($this->uri->segment('3')){
-            $id = $this->uri->segment('3');
-        $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, d.enable, d.path_file, d.file_name, d.version, p.p_no,'v_id'
-            from drawing as d
-            inner join dcn on dcn.dcn_id = d.dcn_id
-            inner join part as p on p.d_id = d.d_id 
-            where d.delete_flag != 0 AND d.d_id = $id
-            UNION
-                SELECT v.d_id, v.d_no, v.dcn_id, v.enable, v.path_file, v.file_name, v.version,p.p_no, v.v_id
-         from version as v
-         inner join dcn as dc on dc.dcn_id = v.dcn_id
-         inner join part as p on p.d_id = v.d_id 
-         where v.delete_flag != 0 AND v.d_id = $id
-         ORDER by version DESC";
-                 $data['title'] = $title ;
-                 $data['name'] = $name ;
-                 
-
-       $query = $this->db->query($sql); 
-       $data['result'] = $query->result(); 
-
-
-        $this->load->view('drawing/show',$data);//bring $data to user_data 
-        $this->load->view('footer');
-
-        }else if($name == 'dno'){
-            $d_no = $this->input->post('d_no');
-            $did = $this->input->post('did');
-            $data['did'] = $did;
-            $dcn =  $this->input->post('dcn');
-            $data['dcn'] = $dcn;
-
-            if(isset($dcn)){
-                $dcn =  $this->input->post('dcn');
-                
-            $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
-          from drawing as d
-          inner join dcn as dc on dc.dcn_id = d.dcn_id
-          inner join part as p on p.d_id = d.d_id 
-          where d.delete_flag != 0 AND d.dcn_id = '$dcn' AND d.d_no LIKE '%{$d_no}%'";
-      }else{
+        $search =$this->input->post('p_no');
         
-        $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
-          from drawing as d
-          inner join dcn as dc on dc.dcn_id = d.dcn_id
-          inner join part as p on p.d_id = d.d_id 
-          where d.delete_flag != 0 AND d.d_id = '$did' AND d.d_no LIKE '%{$d_no}%'";
-      }
-          
-       $query = $this->db->query($sql); 
-       $data['result'] = $query->result(); 
+        if($this->session->flashdata('name')){
+            $gg = $this->session->flashdata('name');
+            $name = $gg;
+        }
+        if($this->session->flashdata('dcn_id')){
+            $dcn = $this->session->flashdata('dcn_id');
+            $dcn_id = $dcn;
+        }
 
+         if($name == 'Drawing'){
+            $d_id = $this->input->post('d_id');
+            $d_no = $this->input->post('d_no');
+            $dcn_id =  $this->input->post('dcn_id');
+            $search = $d_no;
+            $data['d_id'] = $d_id;  
+            $data['dcn_id'] = $dcn_id;
+            $data['search'] = $search;  
+            $data['name'] = $name;  
+            $data['title'] = $search;  
+            $data['result_dcn'] = $this->model->get_dcn(); 
+            if(isset($dcn_id)){
+            $data['result'] = $this->model->get_dcn_by($dcn_id,$search); 
+            }else{
+            $data['result'] = $this->model->get_drawing_by($d_id,$search); 
+            }
 
         $this->load->view('drawing/show',$data);//bring $data to user_data 
-        $this->load->view('footer');
-
-        }else if($name == 'pno'){
-            $p_no = $this->input->post('p_no');
-            $did = $this->input->post('did');
-            $data['did'] = $did;
-            $dcn =  $this->input->post('dcn');
-            $data['dcn'] = $dcn;
-
-            if(isset($dcn)){
-                $dcn =  $this->input->post('dcn');
-            $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
-          from drawing as d
-          inner join dcn as dc on dc.dcn_id = d.dcn_id
-          inner join part as p on p.d_id = d.d_id 
-          where d.delete_flag != 0 AND d.dcn_id = '$dcn' AND p.p_no LIKE '%{$p_no}%'";
-      }else{
-        $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
-          from drawing as d
-          inner join dcn as dc on dc.dcn_id = d.dcn_id
-          inner join part as p on p.d_id = d.d_id 
-          where d.delete_flag != 0 AND d.d_id = '$did' AND p.p_no LIKE '%{$p_no}%'";
-      }
+        }else if($name == 'Version'){
+            $p_id = $this->input->post('p_id');
+            $d_id = $this->input->post('d_id');
+            $data['d_id'] = $d_id;  
+            $data['search'] = $search;  
+            $data['name'] = $name; 
+            $data['title'] = $search;  
+            $data['result_dcn'] = $this->model->get_dcn(); 
+            $data['result'] = $this->model->get_drawing_ver($d_id,$search,$p_id); 
+            $this->load->view('drawing/show',$data);//bring $data to user_data 
+        }else if($name == 'DCN'){
+            $data['dcn'] = $dcn_id;
+            $data['dcn_id'] = $dcn_id;  
+            $data['search'] = $search;
+            $data['name'] = $name;   
+            $data['result_dcn'] = $this->model->get_dcn(); 
+            if($search != null){
+                $data['result'] = $this->model->get_dcn_by($dcn_id,$search); 
+            }else{
+                $data['result'] = $this->model->get_dcn_byid($dcn_id);
+            }
             
-       $query = $this->db->query($sql); 
-       $data['result'] = $query->result(); 
-
-
         $this->load->view('drawing/show',$data);//bring $data to user_data 
-        $this->load->view('footer');
-        }
-        else{
-            $sql =  "SELECT *
-          from drawing as d
-          where d.delete_flag != 0";
+        }else if($name == 'Part'){
+            $d_id = $this->input->post('d_id');
+            $p_no = $this->input->post('p_no');
+            $dcn_id =  $this->input->post('dcn_id');
+            $search = $p_no;
+            $data['d_id'] = $d_id; 
+            $data['dcn_id'] = $dcn_id;   
+            $data['search'] = $search;  
+            $data['name'] = $name; 
+            $data['title'] = $search;  
+            $data['result_dcn'] = $this->model->get_dcn(); 
+            if(isset($dcn_id)){
+                $data['result'] = $this->model->get_dcn_p($dcn_id,$search);
+            }else{
+                $data['result'] = $this->model->get_part_by($d_id,$search); 
+            }
+            
+        $this->load->view('drawing/show',$data);//bring $data to user_data 
 
-       $query = $this->db->query($sql); 
-       $data['result'] = $query->result(); 
+        }else if($this->uri->segment('3')){
+            $dcn_id = $this->uri->segment('3');
+            $data['d_id'] = $d_id;  
+            $data['search'] = $search;  
+            $data['name'] = $name; 
+            $data['title'] = $search;  
+            $data['result_dcn'] = $this->model->get_dcn(); 
 
+            $data['result'] = $this->model->get_drawing_by($dcn_id,$search);
 
+            
+            $this->load->view('drawing/show',$data);//bring $data to user_data 
+        }else{
+        $data['result'] = $this->model->get_drawing(); 
         $this->load->view('drawing/manage',$data);//bring $data to user_data 
-        $this->load->view('footer');
-        }
+    }
+    $this->load->view('footer');
 
         
         
@@ -225,16 +146,6 @@ class Drawing extends CI_Controller {
         $path =  $this->input->post('path');
         $file =  $this->input->post('file_name');
 
-
-$info = pathinfo($file);
-$file_name =  basename($file,'.'.$info['extension']);
-
-echo $file_name; // outputs 'image'
-
-    exit();
-
-
-
         $last_id = $this->model->insert_drawing($d_no, $dcn_id, $path, $file);
         $d_id = $last_id;
 
@@ -259,35 +170,51 @@ echo $file_name; // outputs 'image'
     }
 
 
-    public function enable($uid){
+    public function enable(){
 
         //$this->model->CheckPermission($this->session->userdata('sp_id'));
-        $result = $this->model->enableDrawing($uid);
+        $d_id =  $this->input->post('d_id');
+        $dcn_id =  $this->input->post('dcn_id');
 
-        if($result!=FALSE){
-            redirect('drawing/manage/'.$uid.'','refresh');
-        }else{
-            echo "<script>alert('Simting wrong')</script>";
-            redirect('drawing/manage/'.$uid.'','refresh');
+        if($this->input->post('dcn_id')){
+        $result = $this->model->enableDrawing($d_id);
+        $data = "DCN";
+        $this->session->set_flashdata('name',$data);
+        $this->session->set_flashdata('dcn_id',$dcn_id);
+        redirect('drawing/manage/','refresh');
         }
+        else{
+            $result = $this->model->enableDrawing($d_id);
+            redirect('drawing/manage/'.$d_id.'','refresh');
+        }
+        
+        
+
+
+
     }
 
-    public function disable($uid){
+    public function disable(){
 
         //$this->model->CheckPermission($this->session->userdata('sp_id'));
+        $d_id = $this->input->post('d_id');
+        $dcn_id =  $this->input->post('dcn_id');
 
-        $result = $this->model->disableDrawing($uid);
+        if($this->input->post('dcn_id')){
+        $result = $this->model->disableDrawing($d_id);
 
-
-        if($result!=FALSE){
-            redirect('drawing/manage/'.$uid.'','refresh');
-            
-
-        }else{
-            echo "<script>alert('Simting wrong')</script>";
-            redirect('drawing/manage/'.$uid.'','refresh');
-
+        $data = "DCN";
+        $this->session->set_flashdata('name',$data);
+        $this->session->set_flashdata('dcn_id',$dcn_id);
+        redirect('drawing/manage/','refresh');
         }
+        else{
+        $result = $this->model->disableDrawing($d_id);
+        redirect('drawing/manage/'.$d_id.'','refresh');
+        }
+        
+        
+
     }
 
     public function enable_v($uid){
