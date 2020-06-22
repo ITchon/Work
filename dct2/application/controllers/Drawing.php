@@ -217,18 +217,14 @@ class Drawing extends CI_Controller {
 
     }
 
-    public function enable_v($uid){
+    public function enable_v(){
 
         //$this->model->CheckPermission($this->session->userdata('sp_id'));
+        $d_id = $this->input->post('d_id');
+        $v_id =  $this->input->post('v_id');
 
-        $sql =  "SELECT * from version as v
-        where v.v_id = $uid";
-        $query = $this->db->query($sql); 
-        $data['result'] = $query->result(); 
 
-        $d_id =  $data['result'][0]->d_id;
-
-        $result = $this->model->enableDrawing_v($uid);
+        $result = $this->model->enableDrawing_v($v_id);
 
         if($result!=FALSE){
             redirect('drawing/manage/'.$d_id.'','refresh');
@@ -240,18 +236,14 @@ class Drawing extends CI_Controller {
         }
     }
 
-    public function disable_v($uid){
+    public function disable_v(){
 
         //$this->model->CheckPermission($this->session->userdata('sp_id'));
+        $d_id = $this->input->post('d_id');
+        $v_id =  $this->input->post('v_id');
 
-        $sql =  "SELECT * from version as v
-        where v.v_id = $uid";
-        $query = $this->db->query($sql); 
-        $data['result'] = $query->result(); 
 
-        $d_id =  $data['result'][0]->d_id;
-
-        $result = $this->model->disableDrawing_v($uid);
+        $result = $this->model->disableDrawing_v($v_id);
 
         if($result!=FALSE){
             redirect('drawing/manage/'.$d_id.'','refresh');

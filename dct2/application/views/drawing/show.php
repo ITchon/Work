@@ -98,15 +98,23 @@
                     if($r->v_id != 'v_id'){
               if($r->enable!=1 ){?>
                   
-                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดการใช้งานVเปิด</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
-                  echo base_url() . 'drawing/enable_v/' . $r->v_id;
-                  ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
+                  <td class="text-center">
+                    <form id="form" action="<?php echo base_url()?>drawing/enable_v" method="post">
+                  <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
+                  <input type="hidden" name="v_id" value="<?php echo $r->v_id ?>">
+                  <button type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' style="border:none;"><i class='btn-danger btn-sm fa fa-times'></i></button>
+
+                  </form>
                   <?php
                 }
                 else{?>
-                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งานVปิด</h5>'  data-original-title='Rule' onclick="javascript:window.location='<?php
-                  echo base_url() . 'drawing/disable_v/' . $r->v_id;
-                  ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
+                  <td class="text-center">
+                  <form id="form" action="<?php echo base_url()?>drawing/disable_v" method="post">
+                  <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
+                  <input type="hidden" name="v_id" value="<?php echo $r->v_id ?>">
+                  <button data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งาน</h5>' style="border:none;"><i class='btn-success btn-sm fa fa-check'></i></button>
+                  
+                  </form>                                  
                   <?php
                 }
                 }else{
