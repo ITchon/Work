@@ -1,17 +1,17 @@
-<?php 
- if($result_bom!=null){
+<!-- <?php 
+//  if($result_bom!=null){
 
-foreach($result_bom as $row){
+// foreach($result_bom as $row){
 
-   $max[] = array($row['lv']); 
-}
- $maxlv = max($max);
- }else{
-  $max[]=array(1);
-  $maxlv = max($max);
- }
+//    $max[] = array($row['lv']); 
+// }
+//  $maxlv = max($max);
+//  }else{
+//   $max[]=array(1);
+//   $maxlv = max($max);
+//  }
 
-?>
+?> -->
 
 <style>
 th, td {
@@ -113,7 +113,7 @@ th, td {
             <thead> 
              <tr>
                <?php 
-                for($i=1;$i<=$maxlv[0];$i++) { ?>
+                for($i=1;$i<=$maxlv;$i++) { ?>
                <th width="30px" class="not-active " style='border-right: 1px groove ;'>lv <?php echo $i  ?></th>
                <?php } ?>
               <th width="" class="not-active " style='border-right: 1px groove ;'>Part No</th>
@@ -130,7 +130,7 @@ th, td {
             
                            foreach($bom as $row){
                             echo "<td class='text-danger text-center' style='border-right: 1px groove;border-bottom: 1px groove'>1</td>";
-                             for($i=1;$i<=$maxlv[0]-1;$i++) { 
+                             for($i=1;$i<=$maxlv-1;$i++) { 
                             echo "<td style='border-right: 1px groove;border-bottom: 1px groove'></td>";
                             }
                             echo "<td class='text-danger' style='border-right: 1px groove '>$row->p_no</td>";
@@ -153,7 +153,7 @@ th, td {
                ?>
             <?php  foreach($result_bom as $row){ ?>
                           <tr>  
-                             <?php for($i=1;$i<=$maxlv[0];$i++) { 
+                             <?php for($i=1;$i<=$maxlv;$i++) { 
                                if($i== $row['lv']){
                                   echo "<td class='text-center' style='border-right: 1px groove ;border-bottom: 1px groove'>".$row['lv']."</td>";
                                 }else{
@@ -197,7 +197,7 @@ th, td {
                           <?php  if($sort == "up"){
                                 foreach($bom as $row){
                                   echo "<td class='text-danger text-center' style='border-right: 1px groove;border-bottom: 1px groove'>1</td>";
-                                   for($i=1;$i<=$maxlv[0]-1;$i++) { 
+                                   for($i=1;$i<=$maxlv-1;$i++) { 
                                   echo "<td style='border-right: 1px groove;border-bottom: 1px groove'></td>";
                                   } 
                                   echo "<td class='text-danger' style='border-right: 1px groove '>$row->p_no</td>";

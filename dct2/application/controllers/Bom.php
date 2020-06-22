@@ -86,10 +86,27 @@ class Bom extends CI_Controller {
         $data['bm']=$bm;
         $data['sort']=null;
         $data['bm_id']=$res[0]->b_master;
+        //Find Maxlv in array
+        if($array!=null){
+        foreach($array as $row){
+        $max[] = array($row['lv']); 
+        }
+        $maxlv = max($max);
+        }else{
+         $max[]=array(1);
+         $maxlv = max($max);
+        }
+        $data['maxlv']= $maxlv[0];
+        
         $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
         $query = $this->db->query($sql); 
         $data['result_sub'] = $query->result(); 
         if($this->input->post('csv')){
+            foreach($array as $row){
+                $max[] = array($row['lv']); 
+              $maxlv = max($max);
+            }
+
             header("Content-type: application/csv");
             header("Content-Disposition: attachment; filename=\"test".".csv\"");
             header("Pragma: no-cache");
