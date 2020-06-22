@@ -13,14 +13,16 @@
              <?php echo anchor(base_url().'bom/manage/'.$bm.'', 'Back',array('class'=>'btn btn-default ')); ?>
             </h2><hr>
             <form class="form form-horizontal container" action="<?php echo base_url()."part/insert_sub"?>" method="post" data-toggle="validator">
-            <input type="hidden" name="bm" value="<?php echo $bm ?>">
-            <input type="hidden" name="b_master" value="<?php echo $p_id ?>">
+
             <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Main Part</label>      
           
                       <div class="col-sm-6 col-md-4">
-                      <input type="hidden" class="form-control" name="p_no" value="<?php echo $p_id ?>" >
-                      <input type="hidden" class="form-control" name="sub_id" value="<?php echo $sub_id ?>" >
+                      <input type="hidden" name="bm" value="<?php echo $bm ?>">
+                      <input type="hidden" name="b_master" value="<?php echo $p_id ?>">
+                      <input type="hidden" name="p_no" value="<?php echo $p_id ?>" >
+                      <input type="hidden" name="sub_id" value="<?php echo $sub_id ?>" >
+                      <input type="hidden" name="origin" value="<?php echo $origin ?>" >
                       <input type="text" class="form-control" name="" value="<?php echo $p_no ?>" readonly>
                     </div>
                     </div> 
