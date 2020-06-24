@@ -32,6 +32,7 @@ class Drawing extends CI_Controller {
         $name =  $this->input->post('name');
         $search =$this->input->post('p_no');
         $p_id = $this->input->post('p_id');
+        $d_no = $this->input->post('d_no');
         
         if($this->session->flashdata('name')){
             $gg = $this->session->flashdata('name');
@@ -45,11 +46,11 @@ class Drawing extends CI_Controller {
             $p_id = $this->session->flashdata('p_id');
             $d_id = $this->session->flashdata('d_id');
         }
+        if($this->session->flashdata('name')=='Drawing'){
+            $d_id = $this->session->flashdata('d_id');
 
+        }
          if($name == 'Drawing'){
-            $d_id = $this->input->post('d_id');
-            $d_no = $this->input->post('d_no');
-            $dcn_id =  $this->input->post('dcn_id');
             $search = $d_no;
             $data['d_id'] = $d_id;  
             $data['dcn_id'] = $dcn_id;
@@ -65,6 +66,7 @@ class Drawing extends CI_Controller {
 
         $this->load->view('drawing/show',$data);//bring $data to user_data 
         }else if($name == 'Version'){
+            $data['p_id'] = $p_id;
             $data['d_id'] = $d_id;  
             $data['search'] = $search;  
             $data['name'] = $name; 
@@ -187,8 +189,11 @@ class Drawing extends CI_Controller {
         redirect('drawing/manage/','refresh');
         }
         else{
-            $result = $this->model->enableDrawing($d_id);
-            redirect('drawing/manage/'.$d_id.'','refresh');
+        $result = $this->model->enableDrawing($d_id);
+        $data = "Drawing";
+        $this->session->set_flashdata('name',$data);
+        $this->session->set_flashdata('d_id',$d_id);
+            redirect('drawing/manage/','refresh');
         }
         
         
@@ -213,7 +218,10 @@ class Drawing extends CI_Controller {
         }
         else{
         $result = $this->model->disableDrawing($d_id);
-        redirect('drawing/manage/'.$d_id.'','refresh');
+        $data = "Drawing";
+        $this->session->set_flashdata('name',$data);
+        $this->session->set_flashdata('d_id',$d_id);
+        redirect('drawing/manage/','refresh');
         }
         
         

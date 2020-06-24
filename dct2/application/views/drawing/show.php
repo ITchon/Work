@@ -59,13 +59,15 @@
 
                   <form id='form' action="<?php echo base_url()?>drawing/manage" method="post">
                     <?php if(isset($name)){ 
-                      if($name == 'Drawing'){
-                      ?>
+                      if($name == 'Drawing') { ?>
                     <input type="hidden" name="name" value="Drawing">
                     <?php  }else if($name =='Part'){ ?>
                     <input type="hidden" name="name" value="Part">
                     <?php }else if($name =='DCN'){ ?>
                     <input type="hidden" name="name" value="DCN">
+                    <?php }else if($name =='Version'){ ?>
+                    <input type="hidden" name="name" value="Drawing">
+                    <input type="hidden" name="d_id" value="<?php echo $d_id ?>">
                     <?php }} ?>
                     <?php if(isset($dcn_id)){ ?>
                       <input type="hidden" name="dcn_id" value="<?php echo $dcn_id ?>">
