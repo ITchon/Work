@@ -96,8 +96,6 @@ class User extends CI_Controller {
 
     public function insert()
     {
-    
-        $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $fname =  $this->input->post('fname');
         $lname  =  $this->input->post('lname');

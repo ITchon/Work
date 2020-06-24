@@ -1,18 +1,3 @@
-<!-- <?php 
- if($result_bom!=null){
-
-foreach($result_bom as $row){
-
-   $max[] = array($row['lv']); 
-}
- $maxlv = max($max);
- }else{
-  $max[]=array(1);
-  $maxlv = max($max);
- }
-
-?> -->
-
 <style>
 th, td {
  font-size:17px;
