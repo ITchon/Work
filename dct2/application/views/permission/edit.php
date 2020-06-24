@@ -10,7 +10,7 @@
               <h2 class=" text-center text-primary">
              EDIT PERMISSION
             </h2><hr>
-            <form class="form form-horizontal container" action="<?php echo base_url()?>permission/save_edit" method="post" data-toggle="validator">
+            <form class="table form form-horizontal container" action="<?php echo base_url()?>permission/save_edit" method="post" data-toggle="validator">
             
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Permission Name</label>
@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group has-feedback">
                     <label for="dcn" class="col-sm-3 col-md-4 control-label">Permission Group</label>
-                    <div class="col-sm-6 col-md-5">
+                    <div class="col-sm-6 col-md-3">
                     <input type="text" name="spg_id" value="<?php echo $result[0]->spg_name?>" hidden>
                     <select name="spg_id" id="" class="form-control select2" required>
              <option value="<?php echo $result[0]->spg_id ?>" hidden> <?php echo $result[0]->spg_name ?> </option>

@@ -15,16 +15,16 @@
                  
                   <div class="form-group">
                     <br>
-                    <label for="name-1" class="col-sm-3 col-md-4 control-label">Add Permission</label>
+                    <label for="name-1" class="col-sm-3 col-md-4 control-label">Permission Name</label>
                     <div class="col-sm-6 col-md-4">
-                    <input  class="form-control" type="text" name="gname" required>
+                    <input  class="form-control" type="text" name="gname" placeholder="Permission Name" required>
                   </div>
                   </div>
 
                   <div class="form-group">
                     <label for="name-1" class="col-sm-3 col-md-4 control-label">Controller</label>
                     <div class="col-sm-6 col-md-4">
-                    <input  class="form-control" type="text" name="controller" required>
+                    <input  class="form-control" type="text" placeholder="Controller" name="controller" required>
                   </div>
                   </div>
 

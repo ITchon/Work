@@ -13,9 +13,9 @@
             <form class="table form form-horizontal container" action="<?php echo base_url()?>permissiongroup/insert" method="post" data-toggle="validator">
                  
                   <div class="form-group">
-                    <label for="name-1"  class="col-sm-3 col-md-4 control-label">Permission Group</label>
+                    <label for="name-1"  class="col-sm-3 col-md-4 control-label">Permission_Group Name</label>
                     <div class="col-sm-6 col-md-4">
-                    <input  class="form-control" type="text" name="gname" required>
+                    <input  class="form-control" type="text" placeholder="Permission_Group Name" name="gname" required>
                   </div>
                   </div>
              </div>
