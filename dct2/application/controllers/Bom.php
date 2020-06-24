@@ -69,6 +69,16 @@ class Bom extends CI_Controller {
         $query = $this->db->query($sql); 
         $res =  $query->result(); 
         $data['p_no'] = $res[0]->p_no;
+        if($array!=null){
+            foreach($array as $row){
+               $max[] = array($row['lv']); 
+            }
+               $maxlv = max($max);
+               }else{
+                $max[]=array(1);
+                $maxlv = max($max);
+               }
+        $data['maxlv']= $maxlv[0];
         $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
         $query = $this->db->query($sql); 
         $data['result_sub'] = $query->result(); 
@@ -78,6 +88,7 @@ class Bom extends CI_Controller {
        }
         else if(isset($bm)){
         $array= $this->model->bom($bm) ;
+        
         $data['result_bom'] = $array;  
         $sql ='SELECT * from bom inner join part on part.p_id=bom.b_master inner join drawing d on d.d_id=part.d_id where b_id = '.$bm.'';
         $query=$this->db->query($sql);
@@ -86,10 +97,25 @@ class Bom extends CI_Controller {
         $data['bm']=$bm;
         $data['sort']=null;
         $data['bm_id']=$res[0]->b_master;
+        //Find Maxlv in array
+        if($array!=null){
+                 foreach($array as $row){
+                    $max[] = array($row['lv']); 
+                 }
+                    $maxlv = max($max);
+                    }else{
+                     $max[]=array(1);
+                     $maxlv = max($max);
+                    }
+        $data['maxlv']= $maxlv[0];
         $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
         $query = $this->db->query($sql); 
-        $data['result_sub'] = $query->result(); 
+        $data['result_sub'] = $query->result();     
         if($this->input->post('csv')){
+            foreach($array as $row){
+                $max[] = array($row['lv']); 
+              $maxlv = max($max);
+            }
             header("Content-type: application/csv");
             header("Content-Disposition: attachment; filename=\"test".".csv\"");
             header("Pragma: no-cache");
