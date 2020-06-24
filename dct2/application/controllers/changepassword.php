@@ -32,8 +32,9 @@ class changepassword extends CI_Controller {
 
     public function account()
     {	
+        $su_id =  $this->session->userdata('su_id');
         $this->model->CheckSession();
-        $sql='SELECT * FROM sys_users ;';
+        $sql='SELECT * FROM sys_users WHERE su_id =  '.$su_id.'';
         //$sql =  'SELECT * FROM sys_users ';
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
