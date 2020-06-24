@@ -151,13 +151,39 @@ class Drawing extends CI_Controller {
         $path =  $this->input->post('path');
         $file =  $this->input->post('file_name');
 
-        $last_id = $this->model->insert_drawing($d_no, $dcn_id, $path, $file);
+  $num= $this->db->query("SELECT * FROM drawing where d_no = '$d_no'"); 
+  $chk= $num->num_rows();
+ if($chk >= 1){
+    $this->session->set_flashdata('success','<div class="alert alert-danger">  
+          <span> ชื่อนี้ถูกใช้เเล้ว</span>
+        </div> ');
+        $this->session->set_flashdata('d_no',$d_no);
+      
+ }else if($chk != 1){
+    $num= $this->db->query("SELECT * FROM part where p_no = '$p_no'"); 
+  $chk= $num->num_rows();
+  if($chk!=1){
+    $this->session->set_flashdata('success','<div class="alert alert-danger">  
+          <span> ชื่อนี้ถูกใช้เเล้ว</span>
+        </div> ');
+        $this->session->set_flashdata('p_no',$p_no);
+     
+ }else{
+    $this->session->set_flashdata('success','<div class="alert alert-danger">  
+          <span> ชื่อนี้ถูกใช้เเล้ว</span>
+        </div> ');
+        $this->session->set_flashdata('p_no',$p_no);
+        
+ }
+}else{
+    $last_id = $this->model->insert_drawing($d_no, $dcn_id, $path, $file);
         $d_id = $last_id;
-
-        $this->model->insert_part1($p_no,$p_name,$d_id);
-
-        redirect('drawing/manage','refresh');
-  
+        $result = $this->model->insert_part1($p_no,$p_name,$d_id);
+        $this->session->set_flashdata('success','<div class="alert alert-success">  
+          <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
+        </div> ');
+       
+}         redirect('drawing/add','refresh');
     }
 
     public function insert2()

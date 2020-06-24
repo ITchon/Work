@@ -594,30 +594,39 @@ return false;
 
  function insert_part($p_no,$p_name,$d_id,$master )
  {
-  $sql ="INSERT INTO part (p_no,p_name,d_id,enable,date_created,delete_flag) VALUES ( '$p_no', '$p_name', '$d_id'
+
+$num= $this->db->query("SELECT * FROM part where p_no = '$p_no'"); 
+  $chk= $num->num_rows();
+
+ if($chk < 1){
+    $sql ="INSERT INTO part (p_no,p_name,d_id,enable,date_created,delete_flag) VALUES ( '$p_no', '$p_name', '$d_id'
   ,'1',CURRENT_TIMESTAMP,'1');";
   $sql1 ="INSERT INTO sub_part (m_id,p_id) VALUES ( '$master','$p_no' );";
     $query = $this->db->query($sql);  
+  if($query){
     $query = $this->db->query($sql1);  
-   if($query){
-     return true;
-   }
-   else{
-     return false;
-   }
+      return true;
+  }
+ }else{
+    return false;
+ }
  }
 
  function insert_part1($p_no,$p_name,$d_id)
  {
-  $sql ="INSERT INTO part (p_no,p_name,d_id,enable,date_created,delete_flag) VALUES ( '$p_no', '$p_name', '$d_id'
+    $num= $this->db->query("SELECT * FROM part where p_no = '$p_no'"); 
+  $chk= $num->num_rows();
+
+ if($chk < 1){
+    $sql ="INSERT INTO part (p_no,p_name,d_id,enable,date_created,delete_flag) VALUES ( '$p_no', '$p_name', '$d_id'
   ,'1',CURRENT_TIMESTAMP,'1');";
     $query = $this->db->query($sql);  
-   if($query){
-     return true;
-   }
-   else{
-     return false;
-   }
+  if($query){
+      return true;
+  }
+ }else{
+    return false;
+ }
  }
  function insert_group($gname)
  {
@@ -638,14 +647,20 @@ return false;
 
  function insert_drawing($d_no, $dcn_id,$path_file,$file_name)
  {
-    $path_file = quotemeta($path_file);
+    
+       $path_file = quotemeta($path_file);
   $sql ="INSERT INTO drawing (d_no,enable, dcn_id, date_created,delete_flag,path_file,file_name,version) VALUES 
   ( '$d_no', '1', '$dcn_id', CURRENT_TIMESTAMP,  '1','$path_file','$file_name','00');";
     $query = $this->db->query($sql);  
     $last_id = $this->db->insert_id();
-   return  $last_id;
-
+  if($query){
+      return $last_id;
+  }else{
+    return false;
  }
+ }
+ 
+
 
   function select_version($d_id)
  {
@@ -1212,14 +1227,19 @@ public function save_edit_part($p_id, $p_no, $p_name,$d_id)
 
   public function insert_dcn($dcn_no,$path,$file)
   {
-     $sql  = "INSERT INTO dcn(dcn_no, date_created, delete_flag, enable, path_file, file_name) VALUES  ('$dcn_no', CURRENT_TIMESTAMP, '1', '1','$path','$file')";
-     $query = $this->db->query($sql);
-    if ($query) { 
-      return true; 
-    } 
-    else{
-       return false;
-    }
+    $num= $this->db->query("SELECT * FROM dcn where dcn_no = '$dcn_no'"); 
+  $chk= $num->num_rows();
+
+ if($chk < 1){
+    $sql  = "INSERT INTO dcn (dcn_no, date_created, delete_flag, enable, path_file, file_name) VALUES  ('$dcn_no', CURRENT_TIMESTAMP, '1', '1','$path','$file')";
+  $query= $this->db->query($sql); 
+  if($query){
+      return true;
+  }
+ }else{
+    return false;
+ }
+
   }
 
   public function save_dcn($dcn_id,$dcn_no)

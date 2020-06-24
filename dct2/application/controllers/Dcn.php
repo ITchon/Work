@@ -61,9 +61,10 @@ class Dcn extends CI_Controller {
     public function add()
     {   
         //$this->model->CheckPermission($this->session->userdata('su_id'));
-
         $this->load->view('dcn/add');//bring $data to user_data 
         $this->load->view('footer');
+        
+        
     }
 
     
@@ -72,12 +73,30 @@ class Dcn extends CI_Controller {
         
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
-        $dcn =  $this->input->post('dcn_no');
+        $dcn_no =  $this->input->post('dcn_no');
         $path =  $this->input->post('path');
         $file =  $this->input->post('file_name');
-        $result = $this->model->insert_dcn($dcn,$path,$file);
+        $result = $this->model->insert_dcn($dcn_no,$path,$file);
         
-        redirect('dcn/manage','refresh');
+
+        if($result == true){
+       $this->session->set_flashdata('success','<div class="alert alert-success">  
+          <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
+        </div> ');
+
+        redirect('dcn/add','refresh'); 
+       }
+       else if($result == false){
+        //echo "<script>alert('Username already exist')</script>";
+        $this->session->set_flashdata('success','<div class="alert alert-danger">  
+          <span> ชื่อนี้ถูกใช้เเล้ว</span>
+        </div> ');
+
+        $this->session->set_flashdata('dcn_no',$dcn_no);
+        redirect('dcn/add','refresh'); 
+       }
+        
+           
     
   
     }

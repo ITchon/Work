@@ -10,13 +10,15 @@
               <h2 class=" text-center text-primary">
              ADD DRAWING
             </h2><hr>
-
+                <?php echo $this->session->flashdata("success"); ?>
                <form class="table form form-horizontal container" action="<?php echo base_url()?>drawing/insert" method="post" data-toggle="validator">
+                <?php $d_no = $this->session->flashdata('d_no'); ?>
+                <?php $p_no = $this->session->flashdata('p_no'); ?>
 
                     <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Drawing No</label>
                     <div class="col-sm-5 col-md-4">
-                    <input id="d_no" class="form-control " type="text" name="d_no" placeholder="Drawing No">
+                    <input id="d_no" class="form-control " type="text" value="<?php echo $d_no ?>" name="d_no" placeholder="Drawing No">
 
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
@@ -46,7 +48,7 @@
                     <label for="part" class="col-sm-5 col-md-4 control-label">Part Number</label>
                     <div class="col-sm-6 col-md-4">
 
-                    <input id="part" class="form-control " type="text" name="p_no" placeholder="Part Number" required>
+                    <input id="part" class="form-control" value="<?php echo $p_no ?>" type="text" name="p_no" placeholder="Part Number" required>
 
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>

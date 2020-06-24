@@ -66,7 +66,6 @@ class Part extends CI_Controller {
         
 	}
 	public function add()
-
     {	
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $sql = "SELECT * FROM drawing where delete_flag != 0 ";
@@ -150,14 +149,26 @@ class Part extends CI_Controller {
        if(isset($master)){
        $master =  $this->input->post('master');
        }
-        $this->model->insert_part($p_no,$p_name, $d_no,$master);
+       $result = $this->model->insert_part($p_no,$p_name, $d_no,$master);
 
-        echo "<script>alert('Add Data Success')</script>";
-        if(!$bm){
-            redirect('part/add','refresh'); 
-        }else{
-            redirect('part/add/'.$bm.'','refresh'); 
-        }
+        if($result == true){
+       $this->session->set_flashdata('success','<div class="alert alert-success">  
+          <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
+        </div> ');
+
+        redirect('part/add','refresh'); 
+       }
+       else if($result == false){
+        //echo "<script>alert('Username already exist')</script>";
+        $this->session->set_flashdata('success','<div class="alert alert-danger">  
+          <span> ชื่อนี้ถูกใช้เเล้ว</span>
+        </div> ');
+
+        $this->session->set_flashdata('p_no',$p_no);
+        $this->session->set_flashdata('p_name',$p_name);
+        $this->session->set_flashdata('d_id',$d_id);
+        redirect('part/add','refresh'); 
+       }
        
   
     }

@@ -55,12 +55,12 @@
 
                 <a class='btn-primary' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขสิทธิ์</h5>' onclick="javascript:window.location='<?php
                 echo base_url() . 'user/rule/' . $r->su_id;
-                ?>';"><i class='btn-info btn-sm fa fa-wrench'> </i></a>
+                ?>';"><i class='btn-info btn-sm fa fa-gear'> </i></a>
 
 
                 <a type ='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขข้อมูล</h5>' class=' ' data-original-title='Rule' onclick="javascript:window.location='<?php
                 echo base_url() . 'user/edit_u/' . $r->su_id;
-                ?>';"><i class='btn-info btn-sm fa fa-child'></i></a>
+                ?>';"><i class='btn-info btn-sm fa fa-wrench'></i></a>
                 <?php 
                 echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."user/deleteuser/".$r->su_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";  
            
