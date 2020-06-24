@@ -540,7 +540,7 @@ return false;
  {
 
 
-  $num= $this->db->query("SELECT COUNT(`username`) FROM sys_users where username = '$username'"); 
+  $num= $this->db->query("SELECT * FROM sys_users where username = '$username'"); 
   $chk= $num->num_rows();
  if($chk!=1){
     $sql1 ="INSERT INTO sys_users (sug_id, username, password, firstname, lastname, gender, email, enable, date_created, date_updated,delete_flag) VALUES ( '$sug_id', '$username', '$password', '$fname', '$lname', '$gender', '$email', '1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '1' )";

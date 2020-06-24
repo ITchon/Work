@@ -32,7 +32,9 @@ class editprofile extends CI_Controller {
 
     public function manage()
     {	
-        $sql='SELECT * FROM sys_users  INNER JOIN sys_user_groups ON sys_users.sug_id=sys_user_groups.sug_id;';
+        $su_id =  $this->session->userdata('su_id');
+        $sql='SELECT * FROM sys_users  INNER JOIN sys_user_groups ON sys_users.sug_id=sys_user_groups.sug_id
+        where su_id = '.$su_id.'';
         //$sql =  'SELECT * FROM sys_users ';
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
