@@ -73,7 +73,9 @@ class Dcn extends CI_Controller {
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $dcn =  $this->input->post('dcn_no');
-        $result = $this->model->insert_dcn($dcn);
+        $path =  $this->input->post('path');
+        $file =  $this->input->post('file_name');
+        $result = $this->model->insert_dcn($dcn,$path,$file);
         
         redirect('dcn/manage','refresh');
     

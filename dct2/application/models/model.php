@@ -1211,9 +1211,9 @@ public function save_edit_part($p_id, $p_no, $p_name,$d_id)
   }
 
 
-  public function insert_dcn($dcn_no)
+  public function insert_dcn($dcn_no,$path,$file)
   {
-     $sql  = "INSERT INTO dcn(dcn_no, date_created, delete_flag, enable) VALUES  ('$dcn_no', CURRENT_TIMESTAMP, '1', '1')";
+     $sql  = "INSERT INTO dcn(dcn_no, date_created, delete_flag, enable, path_file, file_name) VALUES  ('$dcn_no', CURRENT_TIMESTAMP, '1', '1','$path','$file')";
      $query = $this->db->query($sql);
     if ($query) { 
       return true; 
