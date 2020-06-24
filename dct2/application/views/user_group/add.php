@@ -16,15 +16,14 @@
 
                  
                   <div class="form-group">
-                    <label for="name-1" class="col-sm-3 col-md-4 control-label">Group Name</label>
+                    <label for="name-1" class="col-sm-3 col-md-4 control-label">GROUP NAME</label>
 
                     <div class="col-sm-6 col-md-4">
-                    <input class="form-control" type="text" name="gname" placeholder="Group Name" required>
+                    <input class="form-control" type="text" name="gname" placeholder="GROUP NAME" required>
                   </div>
                   </div>
           </div>
           <div class="form-group">
-                <br>
                     <button type="submit" id="btn" class="btn btn-primary btn-block ">Save Changes</button>
                   </div>
                 </form>
