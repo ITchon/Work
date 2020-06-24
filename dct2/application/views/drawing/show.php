@@ -20,11 +20,10 @@
               <h3><a href="<?php echo base_url()?>drawing/manage">MANAGE DRAWING </a> <?php if(isset($title)){?>
                 <a class=""> </a><a  onClick="history.go(-1)"style="cursor: pointer;">Back </a> > <?php echo $name ?>  <?php echo $title ?>
                 <?php  }?> 
-                <?php echo $name ?>
                 </h3>
 
                 <form id='form' action="<?php echo base_url()?>drawing/manage" method="post">
-                    <input type="text" name="d_no" placeholder="Drawing No">
+                    <input type="text" class="form-control" name="d_no" placeholder="Drawing No">
                     <?php if(isset($d_id)){ ?>
                       <input type="hidden" name="d_id" value="<?php echo $d_id ?>">
                    <?php  } ?>
@@ -36,7 +35,7 @@
                   </form>
 
                   <form id='form' action="<?php echo base_url()?>drawing/manage" method="post">
-                    <input type="text" name="p_no" placeholder="Part No">
+                    <input type="text" class="form-control" name="p_no" placeholder="Part No">
                     <?php if(isset($d_id)){ ?>
                       <input type="hidden" name="d_id" value="<?php echo $d_id ?>">
                    <?php  } ?>
@@ -45,6 +44,26 @@
                    <?php  } ?>
                     <input type="hidden" name="name" value="Part">
                     <input hidden type="submit" name="search" value="search">
+                  </form>
+
+                  <form id='form' action="<?php echo base_url()?>drawing/manage" method="post">
+                    <?php if(isset($name)){ 
+                      if($name == 'Drawing'){
+                      ?>
+                    <input type="hidden" name="name" value="Drawing">
+                    <?php  }else if($name =='Part'){ ?>
+                    <input type="hidden" name="name" value="Part">
+                    <?php }else if($name =='DCN'){ ?>
+                    <input type="hidden" name="name" value="DCN">
+                    <input type="hidden" name="dcn_id" value="<?php echo $result[0]->dcn_id ?>">
+                    <?php }} ?>
+                    <?php if(isset($dcn_id)){ ?>
+                      <input type="hidden" name="dcn_id" value="<?php echo $dcn_id ?>">
+                   <?php  } ?>
+                    <input type="hidden" name="d_id" value="<?php echo $result[0]->d_id ?>">
+                    <button  type="submit" class="form-control bg-danger">clear</button>
+
+
                   </form>
 
                 </div>
