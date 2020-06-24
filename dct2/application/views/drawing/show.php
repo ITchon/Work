@@ -23,7 +23,13 @@
                 </h3>
 
                 <form id='form' action="<?php echo base_url()?>drawing/manage" method="post">
+                    <?php if($name == 'Drawing'){ ?>
+                    <input type="text" class="form-control" name="d_no" placeholder="Drawing No" 
+                    value="<?php echo $search ?>">
+                    <?php }else{ ?>
                     <input type="text" class="form-control" name="d_no" placeholder="Drawing No">
+                    <?php } ?>
+
                     <?php if(isset($d_id)){ ?>
                       <input type="hidden" name="d_id" value="<?php echo $d_id ?>">
                    <?php  } ?>
@@ -35,7 +41,12 @@
                   </form>
 
                   <form id='form' action="<?php echo base_url()?>drawing/manage" method="post">
+                    <?php if($name == 'Part'){ ?>
+                    <input type="text" class="form-control" name="p_no" placeholder="Part No" 
+                    value="<?php echo $search ?>">
+                    <?php }else{ ?>
                     <input type="text" class="form-control" name="p_no" placeholder="Part No">
+                    <?php } ?>
                     <?php if(isset($d_id)){ ?>
                       <input type="hidden" name="d_id" value="<?php echo $d_id ?>">
                    <?php  } ?>
@@ -55,13 +66,14 @@
                     <input type="hidden" name="name" value="Part">
                     <?php }else if($name =='DCN'){ ?>
                     <input type="hidden" name="name" value="DCN">
-                    <input type="hidden" name="dcn_id" value="<?php echo $result[0]->dcn_id ?>">
                     <?php }} ?>
                     <?php if(isset($dcn_id)){ ?>
                       <input type="hidden" name="dcn_id" value="<?php echo $dcn_id ?>">
                    <?php  } ?>
-                    <input type="hidden" name="d_id" value="<?php echo $result[0]->d_id ?>">
-                    <button  type="submit" class="form-control bg-danger">clear</button>
+                   <?php if(isset($d_id)){ ?>
+                   <input type="hidden" name="d_id" value="<?php echo $d_id ?>">
+                   <?php  } ?>
+                    <button type="submit" class="form-control bg-primary">Clear</button>
 
 
                   </form>
@@ -77,6 +89,7 @@
                         <th width="3%">Version</th>
                         <th width="10%">Manage</th>
                         <th width="10%">Status</th>
+                        <th>Path File</th>
 
                       </tr>
                     </thead>
@@ -102,7 +115,7 @@
                   </form>
                 </td>
 
-                <td><form id='form' action="<?php echo base_url()?>drawing/manage" method="post">
+                <td class="text-center"><form id='form' action="<?php echo base_url()?>drawing/manage" method="post">
                     <input type="hidden" name="p_id" value="<?php echo $r->p_id ?>">
                     <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
                     <input type="hidden" name="name" value="Version">
@@ -121,6 +134,8 @@
                     <form id="form" action="<?php echo base_url()?>drawing/enable_v" method="post">
                   <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
                   <input type="hidden" name="v_id" value="<?php echo $r->v_id ?>">
+                  <input type="hidden" name="p_id" value="<?php echo $r->p_id ?>">
+                  <input type="hidden" name="name" value="Version">
                   <button type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' style="border:none;"><i class='btn-danger btn-sm fa fa-times'></i></button>
 
                   </form>
@@ -131,6 +146,7 @@
                   <form id="form" action="<?php echo base_url()?>drawing/disable_v" method="post">
                   <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
                   <input type="hidden" name="v_id" value="<?php echo $r->v_id ?>">
+                  <input type="hidden" name="p_id" value="<?php echo $r->p_id ?>">
                   <button data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งาน</h5>' style="border:none;"><i class='btn-success btn-sm fa fa-check'></i></button>
                   
                   </form>                                  
@@ -287,7 +303,7 @@
                 }
                 ?>
 
-                
+                <td style="font-size: 14px"><?php echo $r->path_file ?> </td>
                 <?php
 
             echo "</tr>";
@@ -316,6 +332,15 @@
     $(document).ready(function() {
       $("#button").click();
   });
+</script>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script type="text/javascript">
+
+    $("#clear").on("click",function(){
+      document.getElementById("#id").submit();
+       });
+    
+
 </script>
 
 

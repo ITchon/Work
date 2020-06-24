@@ -31,6 +31,7 @@ class Drawing extends CI_Controller {
         $d_id =  $this->input->post('d_id');
         $name =  $this->input->post('name');
         $search =$this->input->post('p_no');
+        $p_id = $this->input->post('p_id');
         
         if($this->session->flashdata('name')){
             $gg = $this->session->flashdata('name');
@@ -39,6 +40,10 @@ class Drawing extends CI_Controller {
         if($this->session->flashdata('dcn_id')){
             $dcn = $this->session->flashdata('dcn_id');
             $dcn_id = $dcn;
+        }
+        if($this->session->flashdata('name')=='Version'){
+            $p_id = $this->session->flashdata('p_id');
+            $d_id = $this->session->flashdata('d_id');
         }
 
          if($name == 'Drawing'){
@@ -60,8 +65,6 @@ class Drawing extends CI_Controller {
 
         $this->load->view('drawing/show',$data);//bring $data to user_data 
         }else if($name == 'Version'){
-            $p_id = $this->input->post('p_id');
-            $d_id = $this->input->post('d_id');
             $data['d_id'] = $d_id;  
             $data['search'] = $search;  
             $data['name'] = $name; 
@@ -222,18 +225,18 @@ class Drawing extends CI_Controller {
         //$this->model->CheckPermission($this->session->userdata('sp_id'));
         $d_id = $this->input->post('d_id');
         $v_id =  $this->input->post('v_id');
+        $p_id =  $this->input->post('p_id');
 
 
         $result = $this->model->enableDrawing_v($v_id);
 
-        if($result!=FALSE){
-            redirect('drawing/manage/'.$d_id.'','refresh');
+        $data = "Version";
+        $this->session->set_flashdata('name',$data);
+        $this->session->set_flashdata('p_id',$p_id);
+        $this->session->set_flashdata('d_id',$d_id);
 
-        }else{
-        
-            echo "<script>alert('Simting wrong')</script>";
-       redirect('drawing/manage/'.$d_id.'','refresh');
-        }
+        redirect('drawing/manage/','refresh');
+
     }
 
     public function disable_v(){
@@ -241,18 +244,18 @@ class Drawing extends CI_Controller {
         //$this->model->CheckPermission($this->session->userdata('sp_id'));
         $d_id = $this->input->post('d_id');
         $v_id =  $this->input->post('v_id');
+        $p_id =  $this->input->post('p_id');
 
 
         $result = $this->model->disableDrawing_v($v_id);
 
-        if($result!=FALSE){
-            redirect('drawing/manage/'.$d_id.'','refresh');
-            
-        }else{
-            echo "<script>alert('Simting wrong')</script>";
-            redirect('drawing/manage/'.$d_id.'','refresh');
+        $data = "Version";
+        $this->session->set_flashdata('name',$data);
+        $this->session->set_flashdata('p_id',$p_id);
+        $this->session->set_flashdata('d_id',$d_id);
 
-        }
+        redirect('drawing/manage/','refresh');
+
     }
 
 
