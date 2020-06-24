@@ -149,13 +149,7 @@
                  <?php
                 }
                 ?>
-                <li class="sidenav-item has-subnav " >
-                  <a href="<?php echo base_url()?>fullcalendar" aria-haspopup="true">
-                    <span class="sidenav-icon fa fa-calendar"></span>
-                    <span class="sidenav-label">Calendar</span>
-                  </a>
- 
-                </li> 
+         
                
                    </div>
                   </div>     

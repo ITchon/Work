@@ -1,4 +1,4 @@
-<?php 
+<!-- <?php 
  if($result_bom!=null){
 
 foreach($result_bom as $row){
@@ -11,7 +11,7 @@ foreach($result_bom as $row){
   $maxlv = max($max);
  }
 
-?>
+?> -->
 
 <style>
 th, td {
