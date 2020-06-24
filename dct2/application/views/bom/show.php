@@ -76,19 +76,20 @@ th, td {
                    // if you need a zero-based array, otheriwse work with $_data
                    $data = array_values($_data);
                       foreach($data as $row){
-                        if($p_no == $row['p_no']){?>           
-                     <option value="<?php  echo $row['sub_id'] ?>" selected><?php echo $row['p_no'] ?></option>
-                    <?php              
-                        }  
-                        else{?>
-                     <option value="<?php  echo $row['sub_id'] ?>" ><?php echo $row['p_no'] ?></option>
-                      <?php
-                        }       
-                      }
+                        if($p_no == null){
+                          $p_no = null;  // $p_no is null but not null
+                        }
+                        ?>
+                              
+                     <option value="<?php  echo $row['sub_id'] ?>"  <?php if($p_no == $row['p_no']){?>selected  <?php } ?>><?php echo $row['p_no'] ?></option>
+                  
+                    <?php
+                        }      
+                      
                       ?> 
                    </select>
                     </div>   
-                    
+          
                     <input type="hidden" name="search" value="search" hidden>
                     <input type="submit" class="btn btn-outline-primary" value="Search">
         </form>          

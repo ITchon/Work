@@ -32,14 +32,16 @@ class Bom extends CI_Controller {
         $query = $this->db->query($sql); 
         $res = $query->result(); 
         $data['result'] =$res;
-    
+
        if( $this->input->post('bm')){
           $bm =  $this->input->post('bm'); 
           redirect('bom/manage/'.$bm.'');
        }else{
         $bm = $this->uri->segment('3');
        }
-       if($sort){
+
+      
+       if($sort){   //---------------------------BOM SEARCH----------------------------
         $sort =  $this->input->post('sort'); 
         $sub_id =  $this->input->post('sub_id'); 
         $array_bom= $this->model->bom($bm) ;
@@ -82,13 +84,12 @@ class Bom extends CI_Controller {
         $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
         $query = $this->db->query($sql); 
         $data['result_sub'] = $query->result(); 
-
-        $this->load->view('bom/show',$data);//bring $data to user_data 
+        $this->load->view('bom/show',$data);
         $this->load->view('footer');
-       }
+       } //------------------END BOM SEARCH-----------------
+
         else if(isset($bm)){
         $array= $this->model->bom($bm) ;
-        
         $data['result_bom'] = $array;  
         $sql ='SELECT * from bom inner join part on part.p_id=bom.b_master inner join drawing d on d.d_id=part.d_id where b_id = '.$bm.'';
         $query=$this->db->query($sql);
@@ -130,10 +131,10 @@ class Bom extends CI_Controller {
                 fclose($handle);
             exit;
         }
-        $this->load->view('bom/show',$data);//bring $data to user_data 
+        $this->load->view('bom/show',$data);
         $this->load->view('footer');
          }else{
-        $this->load->view('bom/manage',$data);//bring $data to user_data 
+        $this->load->view('bom/manage',$data);
         $this->load->view('footer');
          }
         }
@@ -149,7 +150,7 @@ class Bom extends CI_Controller {
         $data['bm'] =$bm;
         $data['p_id'] =$p_id;
         $data['m_id'] =$m_id;
-        $this->load->view('bom/edit_bom',$data);//bring $data to user_data 
+        $this->load->view('bom/edit_bom',$data);
 		$this->load->view('footer');
     }
     public function edit_part()
@@ -162,7 +163,7 @@ class Bom extends CI_Controller {
         $data['bm'] =$bm;
         $data['p_no'] =$p_no;
         $data['m_id'] =$id;
-        $this->load->view('bom/edit_part',$data);//bring $data to user_data 
+        $this->load->view('bom/edit_part',$data);
 		$this->load->view('footer');
     }
     public function add()
@@ -170,7 +171,7 @@ class Bom extends CI_Controller {
         $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 ';
         $query = $this->db->query($sql); 
         $data['result_p'] = $query->result(); 
-        $this->load->view('bom/add',$data);//bring $data to user_data 
+        $this->load->view('bom/add',$data);
 		$this->load->view('footer');
     }
 
@@ -192,6 +193,13 @@ class Bom extends CI_Controller {
     {
         $bm =  $this->input->post('bm');
         $p_id =  $this->input->post('p_id');
+  
+        if(in_array($bm,$p_id)){
+            echo "<script>";
+            echo 'alert("ไม่สามารถเลือก Part เดียวกับ BOM ได้");';
+            echo 'history.go(-1);';
+            echo '</script>';
+        }
         $lasted_id = $this->model->insert_bom($bm);
         foreach ($p_id as $p) {
         $sub_id= $this->model->insert_sub_part($lasted_id,$bm,$p,$p);

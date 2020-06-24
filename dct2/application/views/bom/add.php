@@ -10,13 +10,12 @@
               <h2 class=" text-center text-primary">
              ADD BOM
             </h2><hr>
-            
             <form class="table form form-horizontal container" action="<?php echo base_url()?>bom/insert_bom" method="post" data-toggle="validator">
             <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Bom Master</label>      
           
                       <div class="col-sm-6 col-md-4">
-                   <select name="bm" class="form-control select2"  required>
+                   <select name="bm" id="bom" class="form-control select2"  required>
                    <option value="">- - - Select Bom Master - - -</option>
                    <?php
                       foreach($result_p as $r){?>
@@ -65,6 +64,11 @@
       <script>
         $(document).ready(function() {
     $('.select2').select2();
+
+
+
+    var x = <?php echo $this->session->userdata('sug_id')?>;
+    document.getElementById('bom').value=2;
 });
       </script>
       <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
