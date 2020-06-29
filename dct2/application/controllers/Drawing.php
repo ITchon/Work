@@ -31,6 +31,8 @@ class Drawing extends CI_Controller {
         $d_id =  $this->input->post('d_id');
         $name =  $this->input->post('name');
         $search =$this->input->post('p_no');
+        $p_id = $this->input->post('p_id');
+        $d_no = $this->input->post('d_no');
         
         if($this->session->flashdata('name')){
             $gg = $this->session->flashdata('name');
@@ -40,11 +42,15 @@ class Drawing extends CI_Controller {
             $dcn = $this->session->flashdata('dcn_id');
             $dcn_id = $dcn;
         }
+        if($this->session->flashdata('name')=='Version'){
+            $p_id = $this->session->flashdata('p_id');
+            $d_id = $this->session->flashdata('d_id');
+        }
+        if($this->session->flashdata('name')=='Drawing'){
+            $d_id = $this->session->flashdata('d_id');
 
+        }
          if($name == 'Drawing'){
-            $d_id = $this->input->post('d_id');
-            $d_no = $this->input->post('d_no');
-            $dcn_id =  $this->input->post('dcn_id');
             $search = $d_no;
             $data['d_id'] = $d_id;  
             $data['dcn_id'] = $dcn_id;
@@ -60,8 +66,7 @@ class Drawing extends CI_Controller {
 
         $this->load->view('drawing/show',$data);//bring $data to user_data 
         }else if($name == 'Version'){
-            $p_id = $this->input->post('p_id');
-            $d_id = $this->input->post('d_id');
+            $data['p_id'] = $p_id;
             $data['d_id'] = $d_id;  
             $data['search'] = $search;  
             $data['name'] = $name; 
@@ -146,13 +151,39 @@ class Drawing extends CI_Controller {
         $path =  $this->input->post('path');
         $file =  $this->input->post('file_name');
 
-        $last_id = $this->model->insert_drawing($d_no, $dcn_id, $path, $file);
+  $num= $this->db->query("SELECT * FROM drawing where d_no = '$d_no'"); 
+  $chk= $num->num_rows();
+ if($chk >= 1){
+    $this->session->set_flashdata('success','<div class="alert alert-danger">  
+          <span> ชื่อนี้ถูกใช้เเล้ว</span>
+        </div> ');
+        $this->session->set_flashdata('d_no',$d_no);
+      
+ }else if($chk != 1){
+    $num= $this->db->query("SELECT * FROM part where p_no = '$p_no'"); 
+  $chk= $num->num_rows();
+  if($chk!=1){
+    $this->session->set_flashdata('success','<div class="alert alert-danger">  
+          <span> ชื่อนี้ถูกใช้เเล้ว</span>
+        </div> ');
+        $this->session->set_flashdata('p_no',$p_no);
+     
+ }else{
+    $this->session->set_flashdata('success','<div class="alert alert-danger">  
+          <span> ชื่อนี้ถูกใช้เเล้ว</span>
+        </div> ');
+        $this->session->set_flashdata('p_no',$p_no);
+        
+ }
+}else{
+    $last_id = $this->model->insert_drawing($d_no, $dcn_id, $path, $file);
         $d_id = $last_id;
-
-        $this->model->insert_part1($p_no,$p_name,$d_id);
-
-        redirect('drawing/manage','refresh');
-  
+        $result = $this->model->insert_part1($p_no,$p_name,$d_id);
+        $this->session->set_flashdata('success','<div class="alert alert-success">  
+          <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
+        </div> ');
+       
+}         redirect('drawing/add','refresh');
     }
 
     public function insert2()
@@ -184,8 +215,11 @@ class Drawing extends CI_Controller {
         redirect('drawing/manage/','refresh');
         }
         else{
-            $result = $this->model->enableDrawing($d_id);
-            redirect('drawing/manage/'.$d_id.'','refresh');
+        $result = $this->model->enableDrawing($d_id);
+        $data = "Drawing";
+        $this->session->set_flashdata('name',$data);
+        $this->session->set_flashdata('d_id',$d_id);
+            redirect('drawing/manage/','refresh');
         }
         
         
@@ -210,7 +244,10 @@ class Drawing extends CI_Controller {
         }
         else{
         $result = $this->model->disableDrawing($d_id);
-        redirect('drawing/manage/'.$d_id.'','refresh');
+        $data = "Drawing";
+        $this->session->set_flashdata('name',$data);
+        $this->session->set_flashdata('d_id',$d_id);
+        redirect('drawing/manage/','refresh');
         }
         
         
@@ -222,18 +259,18 @@ class Drawing extends CI_Controller {
         //$this->model->CheckPermission($this->session->userdata('sp_id'));
         $d_id = $this->input->post('d_id');
         $v_id =  $this->input->post('v_id');
+        $p_id =  $this->input->post('p_id');
 
 
         $result = $this->model->enableDrawing_v($v_id);
 
-        if($result!=FALSE){
-            redirect('drawing/manage/'.$d_id.'','refresh');
+        $data = "Version";
+        $this->session->set_flashdata('name',$data);
+        $this->session->set_flashdata('p_id',$p_id);
+        $this->session->set_flashdata('d_id',$d_id);
 
-        }else{
-        
-            echo "<script>alert('Simting wrong')</script>";
-       redirect('drawing/manage/'.$d_id.'','refresh');
-        }
+        redirect('drawing/manage/','refresh');
+
     }
 
     public function disable_v(){
@@ -241,18 +278,18 @@ class Drawing extends CI_Controller {
         //$this->model->CheckPermission($this->session->userdata('sp_id'));
         $d_id = $this->input->post('d_id');
         $v_id =  $this->input->post('v_id');
+        $p_id =  $this->input->post('p_id');
 
 
         $result = $this->model->disableDrawing_v($v_id);
 
-        if($result!=FALSE){
-            redirect('drawing/manage/'.$d_id.'','refresh');
-            
-        }else{
-            echo "<script>alert('Simting wrong')</script>";
-            redirect('drawing/manage/'.$d_id.'','refresh');
+        $data = "Version";
+        $this->session->set_flashdata('name',$data);
+        $this->session->set_flashdata('p_id',$p_id);
+        $this->session->set_flashdata('d_id',$d_id);
 
-        }
+        redirect('drawing/manage/','refresh');
+
     }
 
 

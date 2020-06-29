@@ -19,13 +19,16 @@
               ?>
             
             </h2><hr>
-            <form class="form form-horizontal container" action="<?php echo base_url()?>part/insert" method="post" data-toggle="validator">
+            <?php echo $this->session->flashdata("success"); ?>
+            <form class="table form form-horizontal container" action="<?php echo base_url()?>part/insert" method="post" data-toggle="validator">
+              <?php $p_no = $this->session->flashdata('p_no'); ?>
+
                 <input type="hidden" name="bm" value="<?php echo $bm ?>">
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Part Number</label>
                     <div class="col-sm-6 col-md-4">
 
-                    <input id="part" class="form-control " type="text" name="p_no" placeholder="Part Number" required>
+                    <input id="part" class="form-control" value="<?php echo $p_no ?>" type="text" name="p_no" placeholder="Part Number" required>
 
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
@@ -45,7 +48,7 @@
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Drawing</label>      
           
                       <div class="col-sm-6 col-md-4">
-                   <select name="d_no" class="form-control select2"  required>
+                   <select name="d_no" class="form-control select2" required>
                    <option value="">- - - Select Drawing - - -</option>
                    <?php
                       foreach($result_d as $r){?>
