@@ -80,15 +80,14 @@ class Dcn extends CI_Controller {
         
 
         if($result == true){
-       $this->session->set_flashdata('success','<div class="alert alert-success">  
+       $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
           <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
         </div> ');
-
         redirect('dcn/add','refresh'); 
        }
        else if($result == false){
         //echo "<script>alert('Username already exist')</script>";
-        $this->session->set_flashdata('success','<div class="alert alert-danger">  
+        $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
           <span> ชื่อนี้ถูกใช้เเล้ว</span>
         </div> ');
 
@@ -120,8 +119,6 @@ class Dcn extends CI_Controller {
         where dcn_id = $id";
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
-
-        
         $this->load->view('dcn/edit',$data);
         $this->load->view('footer');
   
@@ -132,7 +129,9 @@ class Dcn extends CI_Controller {
     
         $dcn_id =  $this->input->post('dcn_id');
         $dcn_no  =  $this->input->post('dcn_no');
-       $this->model->save_dcn($dcn_id,$dcn_no);
+        $path_file =  $this->input->post('path_file');
+        $file_name =  $this->input->post('file_name');
+       $this->model->save_dcn($dcn_id,$dcn_no,$path_file,$file_name);
 
         redirect('dcn/manage/'.$dcn_id.'','refresh');
   

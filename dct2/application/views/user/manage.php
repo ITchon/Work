@@ -14,6 +14,7 @@
                   <h3>MANAGE USER</h3>
                 </div>
                 <div class="card-body">
+                <?php echo $this->session->flashdata("success"); ?>
                   <table id="demo-datatables-buttons-1" class="table table-bordered table-striped dataTable" cellspacing="0" width="100%">
                   <thead>
                     <tr>
@@ -87,9 +88,7 @@
             'colvis'
         ]
        
-    });
-
-     
+    });  
     });
 
 

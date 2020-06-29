@@ -8,10 +8,10 @@
             <div class="col-md-12  ">
               <div class="demo-form-wrapper card" style="padding-top:8px">
               <h2 class=" text-center text-primary">
-             EDIT PART
+             EDIT DCN
             </h2><hr>
             
-            <form class="form form-horizontal container" action="<?php echo base_url()?>dcn/save_edit_dcn" method="post" data-toggle="validator">
+            <form class="form form-horizontal container" action="<?php echo base_url()?>dcn/save_edit_dcn" method="post" >
             
 
 
@@ -20,6 +20,36 @@
                     <div class="col-sm-6 col-md-4">
                     <input type="text" name="dcn_id" value="<?php echo $result[0]->dcn_id ?>" hidden>
                     <input id="part" class="form-control " type="text" name="dcn_no" value="<?php echo $result[0]->dcn_no ?>">
+
+                    <span class="form-control-feedback" aria-hidden="true">
+                    <span class="icon"></span>
+                    </span>
+                    </div>
+                </div>
+                <div class="form-group has-feedback">
+                    <label for="part" class="col-sm-5 col-md-4 control-label">Path File</label>
+                    <div class="col-sm-6 col-md-4">
+                    <input id="part" class="form-control " type="text" name="path_file" value="<?php echo $result[0]->path_file ?>">
+
+                    <span class="form-control-feedback" aria-hidden="true">
+                    <span class="icon"></span>
+                    </span>
+                    </div>
+                </div>
+                <div class="form-group has-feedback">
+                    <label for="part" class="col-sm-5 col-md-4 control-label">File</label>
+                    <div class="col-sm-6 col-md-5">
+                    <input id="part" class="form-control " type="text"  value="<?php echo $result[0]->file_name ?> "readonly>
+
+                    <span class="form-control-feedback" aria-hidden="true">
+                    <span class="icon"></span>
+                    </span>
+                    </div>
+                </div>
+                <div class="form-group has-feedback">
+                    <label for="part" class="col-sm-5 col-md-4 control-label">New File</label>
+                    <div class="col-sm-6 col-md-4">
+                    <input id="part" class="form-control " type="file" name="file_name" value="<?php echo $result[0]->file_name ?>">
 
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>

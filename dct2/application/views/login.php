@@ -38,7 +38,9 @@
         </a>
         <h3 class="login-heading">Sign in</h3>
         <div class="login-form">  
+        
           <form data-toggle="md-validator" action="<?php echo base_url()?>Login/chklogin" method="post">
+          <?php echo $this->session->flashdata("success"); ?>            
             <div class="md-form-group md-label-floating">
               <input class="md-form-control" type="text" name="username" spellcheck="false" autocomplete="off" data-msg-required="Please enter your username." required>
               <label class="md-control-label">Username</label>
@@ -48,31 +50,23 @@
               <label class="md-control-label">Password</label>
             </div>
             <div class="md-form-group md-custom-controls">
-              <label class="custom-control custom-control-primary custom-checkbox">
-                <input class="custom-control-input" type="checkbox" checked="checked">
-                <span class="custom-control-indicator"></span>
-                <span class="custom-control-label">Keep me signed in</span>
-              </label>
-              <span aria-hidden="true"> · </span>
-              <a href="password-3.html">Forgot password?</a>
             </div>
             <button class="btn btn-primary btn-block" type="submit">Sign in</button>
           </form>
         </div>
       </div>
-      <div class="login-footer">
-        Don't have an account? <a href="signup-3.html">Sign Up</a>
-      </div>
     </div>
     <script src="<?php echo base_url().'assets/js/vendor.min.js'?>"></script>
     <script src="<?php echo base_url().'assets/js/elephant.min.js'?>"></script>
     <script>
+        $(".hide-it").fadeOut(5000);
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-83990101-1', 'auto');
       ga('send', 'pageview');
+      
     </script>
   </body>
 </html>

@@ -74,7 +74,7 @@ class editprofile extends CI_Controller {
         $password =  $this->input->post('password');
         $email  =  $this->input->post('email');
         $sug_id =  $this->input->post('sug_id');
-        $su_id = $this->input->post('su_id');
+
         $result = $this->model->updated_profile_data($fname,$lname,$username,$password,$gender,$email,$sug_id,$su_id);
 
        redirect('User/manage');

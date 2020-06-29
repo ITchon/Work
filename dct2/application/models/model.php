@@ -1225,7 +1225,7 @@ public function save_edit_part($p_id, $p_no, $p_name,$d_id)
   }
 
 
-  public function insert_dcn($dcn_no)
+  public function insert_dcn($dcn_no,$path,$file)
   {
     $num= $this->db->query("SELECT * FROM dcn where dcn_no = '$dcn_no'"); 
   $chk= $num->num_rows();
@@ -1242,9 +1242,9 @@ public function save_edit_part($p_id, $p_no, $p_name,$d_id)
 
   }
 
-  public function save_dcn($dcn_id,$dcn_no)
+  public function save_dcn($dcn_id,$dcn_no,$path_file,$file_name)
   {
-     $sql ="UPDATE dcn SET dcn_no = '$dcn_no', date_updated = CURRENT_TIMESTAMP WHERE dcn_id = '$dcn_id'";
+     $sql ="UPDATE dcn SET dcn_no = '$dcn_no', path_file = '$path_file', file_name = '$file_name', date_updated = CURRENT_TIMESTAMP WHERE dcn_id = '$dcn_id'";
     $exc_user = $this->db->query($sql);
     if ($exc_user ){ return true; }else{ return false; }
   }

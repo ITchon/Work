@@ -62,7 +62,7 @@ class changepassword extends CI_Controller {
                 redirect('Logout');
                 }
                else{
-                    $this->session->set_flashdata('error','<div class="alert alert-danger">  
+                    $this->session->set_flashdata('error','<div class="alert alert-danger hide-it">  
           <span>  <b> Error - </b> รหัสของคุณไม่ตรงกัน - กรุณาลองไหม่</span>
         </div> ');
             redirect('changepassword/account');

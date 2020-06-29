@@ -152,7 +152,7 @@ class Part extends CI_Controller {
        $result = $this->model->insert_part($p_no,$p_name, $d_no,$master);
 
         if($result == true){
-       $this->session->set_flashdata('success','<div class="alert alert-success">  
+       $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
           <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
         </div> ');
 
@@ -160,7 +160,7 @@ class Part extends CI_Controller {
        }
        else if($result == false){
         //echo "<script>alert('Username already exist')</script>";
-        $this->session->set_flashdata('success','<div class="alert alert-danger">  
+        $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
           <span> ชื่อนี้ถูกใช้เเล้ว</span>
         </div> ');
 

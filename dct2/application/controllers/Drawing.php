@@ -154,7 +154,7 @@ class Drawing extends CI_Controller {
   $num= $this->db->query("SELECT * FROM drawing where d_no = '$d_no'"); 
   $chk= $num->num_rows();
  if($chk >= 1){
-    $this->session->set_flashdata('success','<div class="alert alert-danger">  
+    $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
           <span> ชื่อนี้ถูกใช้เเล้ว</span>
         </div> ');
         $this->session->set_flashdata('d_no',$d_no);
@@ -163,13 +163,13 @@ class Drawing extends CI_Controller {
     $num= $this->db->query("SELECT * FROM part where p_no = '$p_no'"); 
   $chk= $num->num_rows();
   if($chk!=1){
-    $this->session->set_flashdata('success','<div class="alert alert-danger">  
+    $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
           <span> ชื่อนี้ถูกใช้เเล้ว</span>
         </div> ');
         $this->session->set_flashdata('p_no',$p_no);
      
  }else{
-    $this->session->set_flashdata('success','<div class="alert alert-danger">  
+    $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
           <span> ชื่อนี้ถูกใช้เเล้ว</span>
         </div> ');
         $this->session->set_flashdata('p_no',$p_no);
@@ -179,7 +179,7 @@ class Drawing extends CI_Controller {
     $last_id = $this->model->insert_drawing($d_no, $dcn_id, $path, $file);
         $d_id = $last_id;
         $result = $this->model->insert_part1($p_no,$p_name,$d_id);
-        $this->session->set_flashdata('success','<div class="alert alert-success">  
+        $this->session->set_flashdata('success','<div class="alert alert-succes hide-its">  
           <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
         </div> ');
        

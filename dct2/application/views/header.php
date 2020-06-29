@@ -66,3 +66,9 @@ a{
   text-decoration: none;
 }
 </style>
+<script>
+        $(document).ready(function() {
+          $(".hide-it").fadeOut(5000);
+});
+   
+    </script>

@@ -55,24 +55,6 @@
                     </div>
                     </div>
                     
-
-                <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Group</label>      
-          
-                      <div class="col-sm-6 col-md-3">
-                   <select name="sug_id" class="form-control select2"  required>
-                   <option value="<?php echo $result[0]->sug_id ?>"><?php echo $result[0]->name ?></option>
-                    <?php foreach ($excLoadG as $r) {
-                        ?>
-                       <option value="<?php echo $r->sug_id ?>"><?php echo $r->name ?></option>
-                  <?php
-                   } ?>
-                   </select>
-                    </div>
-                    </div>
-
-            
-                  
               </div>
               <div class="form-group">
                 <br>

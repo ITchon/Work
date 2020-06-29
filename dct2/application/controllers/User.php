@@ -107,21 +107,21 @@ class User extends CI_Controller {
        $result = $this->model->insert($fname,$lname,$username,$password,$gender,$email,$sug_id);
        if($result == true){
        // echo "<script>alert('Inserted Data Success')</script>";
-         $this->session->set_flashdata('error','<div class="alert alert-success">  
+         $this->session->set_flashdata('error','<div class="alert alert-success hide-it">  
           <span>  <b> Complete - </b> Inserted Data Success</span>
         </div> ');
         redirect('user/add','refresh'); 
        }
        if($result == false){
         //echo "<script>alert('Username already exist')</script>";
-        $this->session->set_flashdata('error','<div class="alert alert-warning">  
+        $this->session->set_flashdata('error','<div class="alert alert-warning hide-it">  
           <span>  <b> Warning - </b> Username already exist</span>
         </div> ');
         redirect('user/add','refresh'); 
        }
        if($result == 3){
         //echo "<script>alert('Error')</script>";
-        $this->session->set_flashdata('error','<div class="alert alert-danger">  
+        $this->session->set_flashdata('error','<div class="alert alert-danger hide-it">  
           <span>  <b> Error - </b> Error!! please try again</span>
         </div> ');
         redirect('user/add','refresh'); 
@@ -167,6 +167,9 @@ class User extends CI_Controller {
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $this->model->delete_user($this->uri->segment('3'));
+        $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
+        <span>  Delete Success</span>
+      </div> ');
         redirect('user/manage');
     }
 

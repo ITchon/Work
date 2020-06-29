@@ -18,7 +18,7 @@
                 <div class="card-header ">
             
               <h3><a href="<?php echo base_url()?>drawing/manage">MANAGE DRAWING </a> <?php if(isset($title)){?>
-                <a class=""> </a><a  onClick="history.go(-1)"style="cursor: pointer;">Back </a> > <?php echo $name ?>  <?php echo $title ?>
+                <a class=""> </a> > <?php echo $name ?>  <?php echo $title ?>  <a  class="fa fa-undo " onClick="history.go(-1)"style="cursor: pointer;"> </a> 
                 <?php  }?> 
                 </h3>
 
