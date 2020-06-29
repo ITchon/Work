@@ -131,6 +131,9 @@ class Dcn extends CI_Controller {
         $dcn_no  =  $this->input->post('dcn_no');
         $path_file =  $this->input->post('path_file');
         $file_name =  $this->input->post('file_name');
+        if($file_name==null){
+            $file_name =  $this->input->post('file_name_old');
+        }
        $this->model->save_dcn($dcn_id,$dcn_no,$path_file,$file_name);
 
         redirect('dcn/manage/'.$dcn_id.'','refresh');

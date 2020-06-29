@@ -65,6 +65,12 @@ a{
   cursor: default;
   text-decoration: none;
 }
+.table tr:hover {
+    background-color: #efefef;
+}
+.table td {
+    background: none !important;
+}
 </style>
 <script>
         $(document).ready(function() {

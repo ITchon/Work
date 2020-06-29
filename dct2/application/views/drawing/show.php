@@ -82,7 +82,7 @@
 
                 </div>
                 <div class="card-body">
-                <table id="demo-datatables-buttons-1" class="table table-bordered table-striped table-nowrap dataTable" cellspacing="0" width="100%">
+                <table id="demo-datatables-buttons-1" class="table table-hover  table-nowrap dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
                         <th width="10%">Drawing No</th>
@@ -110,7 +110,7 @@
                   <form id='form' action="<?php echo base_url()?>drawing/open_dcn" method="post">
                     <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
                     <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                    <button  type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><a>
+                    <button  type="submit" style=" background-color: Transparent;border:none" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><a>
                       <?php echo $r->dcn_no ?></a></button>
 
 
@@ -121,7 +121,7 @@
                     <input type="hidden" name="p_id" value="<?php echo $r->p_id ?>">
                     <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
                     <input type="hidden" name="name" value="Version">
-                    <button  type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ดูVersionทั้งหมด</h5>' style="border:none;"><a>
+                    <button  type="submit"  style=" background-color: Transparent;border:none" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ดูVersionทั้งหมด</h5>' ><a>
                       <?php echo $r->version ?></a></button>
 
 

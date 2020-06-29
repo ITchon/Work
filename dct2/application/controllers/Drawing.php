@@ -376,7 +376,15 @@ class Drawing extends CI_Controller {
 
         $this->model->select_version($d_id);
         $this->model->update_version($d_id, $d_no, $dcn_id, $version, $file_name, $path_file);
-        redirect('drawing/manage');
+        // if($dcn_id){
+        //     $data = "DCN";
+        //     $this->session->set_flashdata('name',$data);
+        //     $this->session->set_flashdata('dcn_id',$dcn_id);
+        //     redirect('drawing/manage/','refresh');
+        // }else{
+
+            redirect('drawing/manage');
+        // }
 
 
   

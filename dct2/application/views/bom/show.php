@@ -97,7 +97,7 @@ th, td {
 </form>
 </div>
        <div class="card-body">
-         <table id="" class="table table-striped dataTable" style="border: 1px groove #ddd !important;" cellspacing="0" width="100%"  >
+         <table id="" class="table table-hover  dataTable" style="border: 1px groove #ddd !important;" cellspacing="0" width="100%"  >
             <thead> 
              <tr>
                <?php 

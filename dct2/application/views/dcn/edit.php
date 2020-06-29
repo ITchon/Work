@@ -10,7 +10,8 @@
               <h2 class=" text-center text-primary">
              EDIT DCN
             </h2><hr>
-            
+            <?php echo $this->session->flashdata("success"); ?>
+          
             <form class="form form-horizontal container" action="<?php echo base_url()?>dcn/save_edit_dcn" method="post" >
             
 
@@ -39,7 +40,7 @@
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">File</label>
                     <div class="col-sm-6 col-md-5">
-                    <input id="part" class="form-control " type="text"  value="<?php echo $result[0]->file_name ?> "readonly>
+                    <input id="part" class="form-control " type="text" name="file_name_old" value="<?php echo $result[0]->file_name ?> "readonly>
 
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>

@@ -15,7 +15,7 @@
                 </div>
                 <div class="card-body">
                 <?php echo $this->session->flashdata("success"); ?>
-                  <table id="demo-datatables-buttons-1" class="table table-bordered table-striped dataTable" cellspacing="0" width="100%">
+                  <table id="demo-datatables-buttons-1" class="table table-hover dataTable" cellspacing="0" width="100%">
                   <thead>
                     <tr>
                       <th>Username</th>
@@ -31,7 +31,7 @@
                       
                     <?php
                     foreach($result as $r){
-            echo "<tr>";
+                 echo "<tr>";
                 echo "<td>".$r->username."</td>";
                 echo "<td>".$r->firstname." ".$r->lastname."</td>";
                 echo "<td>".$r->gender."</td>"; 

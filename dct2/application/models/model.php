@@ -1246,9 +1246,14 @@ public function save_edit_part($p_id, $p_no, $p_name,$d_id)
   {
      $sql ="UPDATE dcn SET dcn_no = '$dcn_no', path_file = '$path_file', file_name = '$file_name', date_updated = CURRENT_TIMESTAMP WHERE dcn_id = '$dcn_id'";
     $exc_user = $this->db->query($sql);
-    if ($exc_user ){ return true; }else{ return false; }
+    if ($exc_user ){ 
+      return true; 
+    }else{ 
+      return false; 
+    }
   }
 
+  
 }
 
 ?>

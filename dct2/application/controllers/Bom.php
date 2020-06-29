@@ -122,7 +122,8 @@ class Bom extends CI_Controller {
             header("Pragma: no-cache");
             header("Expires: 0");
             $handle = fopen('php://output', 'w');
-            fputcsv($handle, array("Lv","Part No","Part Name","Quantity","Unit","Drawing No"));
+            $lv=array("1","2");
+            fputcsv($handle,array("Lv","Part No","Part Name","Quantity","Unit","Drawing No"));
             fputcsv($handle, array("1",$res[0]->p_no,$res[0]->p_name,$res[0]->quantity,$res[0]->unit,$res[0]->d_no));
             foreach ($array as $key) {
                 $narray=array($key['lv'],$key['p_no'],$key['p_name'],$key['qty'],$key['unit'],$key['d_no']);
