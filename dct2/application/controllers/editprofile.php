@@ -20,7 +20,7 @@ class editprofile extends CI_Controller {
          $menu['submenu']= $query->result(); 
          $this->load->view('header');
          $this->load->view('menu',$menu);
-
+         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
     }
 
 	public function index()
