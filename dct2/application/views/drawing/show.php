@@ -26,6 +26,7 @@
                 <a class=""> </a> > <?php echo $name ?>  <?php echo $title ?>  <a  class="fa fa-undo " onClick="history.go(-1)"style="cursor: pointer;"> </a> 
                 <?php  }?> 
                 <a href="" class="btn btn-default no_print" onclick="window.history.go(-1); return false;"> Back </a>
+                <b><?php echo $sort ?> : <?php echo $search ?></b>
                 </h3>
 
 
@@ -39,7 +40,7 @@
                     <option value="Part">Part</option>
                     <option value="DCN">DCN</option>
                   </select>
-                  <button type="submit">search</button>
+                  <button type="submit" class="btn btn-primary">SEARCH</button>
                 </form>
 
 
@@ -71,12 +72,11 @@
                 echo"</td>";?>
                 <td class="text-center">
                   <form id='form' action="<?php echo base_url()?>drawing/open_dcn" method="post">
-                    <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
-                    <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
+                  <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
+                  <input type="hidden" name="path" value="<?php echo $r->dcn_path ?>\">
+                  <input type="hidden" name="file" value="<?php echo $r->dcn_file ?>">
                     <button  type="submit" style=" background-color: Transparent;border:none" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><a>
                       <?php echo $r->dcn_file ?></a></button>
-
-
                   </form>
                 </td>
 
@@ -125,7 +125,7 @@
                   </button>
                   </form>
       
-                    <form id="form" action="<?php echo base_url()?>bom/delete" method="post">
+                    <form id="form" action="<?php echo base_url()?>drawing/delete" method="post">
                     <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
                     <button class="btn-danger btn-sm fa fa-trash" onclick='return confirm("Confirm Delete Item")' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' style="border:none;"></button>
                     </form>

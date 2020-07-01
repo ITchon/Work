@@ -382,7 +382,7 @@ class Model extends CI_Model
   public function get_drawing_by($id,$search,$sort)
   {
       $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
-      ,p.p_id,dc.file_name as dcn_file
+      ,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path
       from drawing as d
       inner join dcn as dc on dc.dcn_id = d.dcn_id
       inner join part as p on p.d_id = d.d_id 
@@ -394,14 +394,14 @@ class Model extends CI_Model
   public function get_drawing_ver($id,$p_id)
   {
      $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.path_file, d.file_name, d.version
-     , p.p_no,p.p_id,'v_id',dc.file_name as dcn_file
+     , p.p_no,p.p_id,'v_id',dc.file_name as dcn_file,dc.path_file as dcn_path
             from drawing as d
             inner join dcn as dc on dc.dcn_id = d.dcn_id
             inner join part as p on p.d_id = d.d_id 
             where d.delete_flag != 0 AND d.d_id = $id AND p.p_id = $p_id
             UNION
                 SELECT v.d_id, v.d_no, v.dcn_id, dc.dcn_no, v.enable, v.path_file, v.file_name, v.version
-                , p.p_no,p.p_id, v.v_id,dc.file_name as dcn_file
+                , p.p_no,p.p_id, v.v_id,dc.file_name as dcn_file,dc.path_file as dcn_path
          from version as v
          inner join dcn as dc on dc.dcn_id = v.dcn_id
          inner join part as p on p.d_id = v.d_id 
@@ -413,25 +413,10 @@ class Model extends CI_Model
   }
 
 
-  public function get_dcn_id($id)
-  {
-     $sql =  "SELECT d.d_id, d.d_no, dc.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
-     ,p.p_id,dc.file_name as dcn_file
-          from drawing as d
-          inner join dcn as dc on dc.dcn_id = d.dcn_id
-          inner join part as p on p.d_id = d.d_id 
-          where d.delete_flag != 0 AND dc.dcn_no = $id";
-      $query = $this->db->query($sql); 
-      $data =  $query->result();
-      $dcn =  $data['result'][0]->dcn_id;
-      return $dcn;
-  }
-
-
   public function get_dcn_by($id,$search,$sort)
   {
      $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
-     ,p.p_id,dc.file_name as dcn_file
+     ,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path
           from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
           inner join part as p on p.d_id = d.d_id 
@@ -441,24 +426,12 @@ class Model extends CI_Model
       return $result;
   }
 
-  public function get_dcn_by_dcnid($id)
-  {
-     $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
-     ,p.p_id,dc.file_name as dcn_file
-          from drawing as d
-          inner join dcn as dc on dc.dcn_id = d.dcn_id
-          inner join part as p on p.d_id = d.d_id 
-          where d.delete_flag != 0 AND d.d_id = $id";
-      $query = $this->db->query($sql); 
-      $result =  $query->result();
-      return $result;
-  }
 
 
   public function get_part_by($id,$search,$sort)
   {
      $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
-     ,p.p_id,dc.file_name as dcn_file
+     ,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path
           from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
           inner join part as p on p.d_id = d.d_id 
