@@ -6,6 +6,7 @@ class Drawing extends CI_Controller {
     function __construct() { 
     
         parent::__construct(); 
+        $this->load->helper('download');
         $this->load->helper('form');
         $this->load->database(); 
         $this->load->model('model');
@@ -312,7 +313,7 @@ class Drawing extends CI_Controller {
         $file =  $this->input->post('file');
         $path = $this->input->post('path');
         $open = ("$path$file");
-        exec($open);
+        force_download($open, NULL);
         if($open){
             echo '<script language="javascript">';
                 echo 'history.go(-1);';
