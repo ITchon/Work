@@ -12,11 +12,7 @@ th, td {
 #form {
   display: inline-block;
 }
-@media print{
-  .no_print{
-  display:none;
-}
-}
+
 
 </style>
 <div class="layout-content">
