@@ -9,7 +9,7 @@
                   <h3>MANAGE PERMISSION</h3>
                 </div>
                 <div class="card-body">
-                  <table id="demo-datatables-buttons-1" class="table table-hover dataTable" cellspacing="0" width="100%">
+                  <table id="demo-datatables-buttons-1" class="table table-hover  table-bordered dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
                         <th>Permission name</th>
