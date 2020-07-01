@@ -17,6 +17,7 @@
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select BOM</label>      
           
                       <div class="col-sm-6 col-md-4">
+                      <div class="input-group" >
                    <select name="bm" class="form-control select2"  required>
                    <option value="">- - - Select Bom - - -</option>
                    <?php
@@ -27,17 +28,15 @@
                       }
                       ?> 
                    </select>
-                    </div>
+                    <div class="input-group-btn"> 
+                    <button type="submit" id="btn" class="btn btn-primary btn-block">SEARCH</button>
+                  </div>
+                  </div>
                     </div> 
-
-                
                     </div>
                    
             
-                  <div class="form-group">
-                  <br>
-                    <button type="submit" id="btn" class="btn btn-primary btn-block">SEARCH</button>
-                  </div>
+                  
                 </form>
                 
               </div>
