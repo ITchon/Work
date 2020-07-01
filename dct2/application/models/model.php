@@ -473,7 +473,7 @@ class Model extends CI_Model
 		if($numChkPerm == 0) {
 			
 			echo '<script language="javascript">';
-			echo 'alert("Permission not found.");';
+			echo 'alert("Permission '.$get_url.' not found.");';
 			echo 'history.go(-1);';
 			echo '</script>';
 			exit();
@@ -482,7 +482,7 @@ class Model extends CI_Model
 
   }
   public function CheckPermissionGroup($para){
-    $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method());
+    $get_url = trim($this->router->fetch_class().'/'.$this->router->fetch_method());
     $sqlSelPerm = "SELECT
   p.sp_id,
   p.name,
@@ -491,13 +491,13 @@ class Model extends CI_Model
   sys_users_groups_permissions AS ugp
   LEFT JOIN sys_permission_groups AS pg ON pg.spg_id = ugp.spg_id
   inner JOIN sys_permissions AS p ON p.spg_id = pg.spg_id
-  WHERE pg.enable='1' AND p.enable='1' AND ugp.sug_id='$para' AND p.controller='{$url}';";
+  WHERE pg.enable='1' AND p.enable='1' AND ugp.sug_id='$para' AND p.controller='{$get_url}';";
     $excChkPerm = $this->db->query($sqlSelPerm);
     $numChkPerm = $excChkPerm->num_rows();
     if($numChkPerm == 0) {
     
     echo '<script language="javascript">';
-    echo 'alert("Permission not found.");';
+    echo 'alert("Permission '.$get_url.' not found.");';
     echo 'history.go(-1);';
     echo '</script>';
     exit();

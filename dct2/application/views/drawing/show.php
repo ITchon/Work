@@ -33,9 +33,9 @@
                 <form id='form' class="form-inline" action="<?php echo base_url()?>drawing/show" method="post">
                   <input type="hidden" name="id" value="<?php echo $id ?>">
                   <input type="hidden" name="name" value="<?php echo $name ?>">
-                  <input type="text-center" class="form-control" name="search" value="<?php echo $search ?>">
+                  <input type="text-center" class="form-control" name="search" placeholder="Search..." value="<?php echo $search ?>">
 
-                  <select id="select" name="sort" class="form-control">
+                  <select id="select" name="sort" class="form-control btn btn-primary">
                     <option value="Drawing">Drawing</option>
                     <option value="Part">Part</option>
                     <option value="DCN">DCN</option>
@@ -125,7 +125,7 @@
                   </button>
                   </form>
       
-                    <form id="form" action="<?php echo base_url()?>drawing/delete" method="post">
+                    <form id="form" action="<?php echo base_url()?>drawing/deletedrawing" method="post">
                     <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
                     <button class="btn-danger btn-sm fa fa-trash" onclick='return confirm("Confirm Delete Item")' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' style="border:none;"></button>
                     </form>

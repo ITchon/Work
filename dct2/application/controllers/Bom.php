@@ -19,7 +19,7 @@ class Bom extends CI_Controller {
          $menu['submenu']= $query->result(); 
          $this->load->view('header');
         $this->load->view('menu',$menu);
-        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+      
 
 
     }
@@ -30,6 +30,7 @@ class Bom extends CI_Controller {
     	public function manage()
     {	        
         $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $sort =  $this->input->post('sort'); 
         $sql =  'SELECT * From bom inner join part p on p.p_id = bom.b_master where bom.delete_flag !=0';
         $query = $this->db->query($sql); 
@@ -156,6 +157,8 @@ class Bom extends CI_Controller {
     }
     public function edit_part()
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $bm = $this->uri->segment('3');
         $p_no =  $this->input->post('p_no');
         $id =  $this->input->post('m_id');
@@ -169,6 +172,8 @@ class Bom extends CI_Controller {
     }
     public function add()
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 ';
         $query = $this->db->query($sql); 
         $data['result_p'] = $query->result(); 
@@ -177,8 +182,10 @@ class Bom extends CI_Controller {
     }
 
 
-    public function delete()
+    public function delete_sub()
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $bm =  $this->input->post('bm');
         $m_id =  $this->input->post('m_id');
         $this->model->delete_sub($m_id);
@@ -186,6 +193,8 @@ class Bom extends CI_Controller {
     }
     public function delete_bom()
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $bm = $this->uri->segment('3');
         $this->model->delete_bom($bm);
         redirect('bom/manage','refresh');

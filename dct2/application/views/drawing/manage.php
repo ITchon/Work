@@ -97,8 +97,11 @@
    
       <script>
         $(document).ready(function() {
-    $('.select2').select2();
-});
+          $('.select2').select2();
+          });
+          if(performance.navigation.type == 2){
+             location.reload(true);
+          }
       </script>
       <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
       <script type="text/javascript">
