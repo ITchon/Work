@@ -15,7 +15,7 @@
                 </div>
                 <div class="card-body">
                 <?php echo $this->session->flashdata("success"); ?>
-                  <table id="demo-datatables-buttons-1" class="table table-hover dataTable" cellspacing="0" width="100%">
+                  <table id="demo-datatables-buttons-1" class="table table-hover  table-bordered dataTable" cellspacing="0" width="100%">
                   <thead>
                     <tr>
                       <th>Username</th>
