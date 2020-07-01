@@ -508,7 +508,30 @@ class Model extends CI_Model
 		}
 
   }
-  
+  public function CheckPermissionGroup($para){
+    $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method());
+    $sqlSelPerm = "SELECT
+  p.sp_id,
+  p.name,
+    p.controller
+  FROM
+  sys_users_groups_permissions AS ugp
+  LEFT JOIN sys_permission_groups AS pg ON pg.spg_id = ugp.spg_id
+  inner JOIN sys_permissions AS p ON p.spg_id = pg.spg_id
+  WHERE pg.enable='1' AND p.enable='1' AND ugp.sug_id='$para' AND p.controller='{$url}';";
+    $excChkPerm = $this->db->query($sqlSelPerm);
+    $numChkPerm = $excChkPerm->num_rows();
+    if($numChkPerm == 0) {
+    
+    echo '<script language="javascript">';
+    echo 'alert("Permission not found.");';
+    echo 'history.go(-1);';
+    echo '</script>';
+    exit();
+    
+    }
+ }
+
   public function getuser($user,$pass) {  
     $pass = base64_encode(trim($pass));
     $sql ="SELECT u.su_id as su_id , u.enable as u_enable ,ug.enable as sug_enable ,u.username as username,u.password as password, ug.sug_id  FROM sys_users as u

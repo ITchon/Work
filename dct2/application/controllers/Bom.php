@@ -19,6 +19,8 @@ class Bom extends CI_Controller {
          $menu['submenu']= $query->result(); 
          $this->load->view('header');
         $this->load->view('menu',$menu);
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+
 
     }
 	public function index()
@@ -26,7 +28,8 @@ class Bom extends CI_Controller {
         
     }
     	public function manage()
-    {	
+    {	        
+        $this->model->CheckPermission($this->session->userdata('su_id'));
         $sort =  $this->input->post('sort'); 
         $sql =  'SELECT * From bom inner join part p on p.p_id = bom.b_master where bom.delete_flag !=0';
         $query = $this->db->query($sql); 
@@ -113,16 +116,11 @@ class Bom extends CI_Controller {
         $query = $this->db->query($sql); 
         $data['result_sub'] = $query->result();     
         if($this->input->post('csv')){
-            foreach($array as $row){
-                $max[] = array($row['lv']); 
-              $maxlv = max($max);
-            }
             header("Content-type: application/csv");
             header("Content-Disposition: attachment; filename=\"test".".csv\"");
             header("Pragma: no-cache");
             header("Expires: 0");
             $handle = fopen('php://output', 'w');
-            $lv=array("1","2");
             fputcsv($handle,array("Lv","Part No","Part Name","Quantity","Unit","Drawing No"));
             fputcsv($handle, array("1",$res[0]->p_no,$res[0]->p_name,$res[0]->quantity,$res[0]->unit,$res[0]->d_no));
             foreach ($array as $key) {

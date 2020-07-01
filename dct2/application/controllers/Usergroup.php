@@ -19,7 +19,7 @@ class Usergroup extends CI_Controller {
          $menu['submenu']= $query->result(); 
          $this->load->view('header');
          $this->load->view('menu',$menu);
-
+         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
     }
 	public function index()
   {	
@@ -31,7 +31,7 @@ class Usergroup extends CI_Controller {
     {	
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
-        $sql =  'select * from sys_user_groups where delete_flag != 0';
+        $sql =  'SELECT * FROM sys_user_groups WHERE delete_flag != 0';
         $query = $this->db->query($sql); 
        $data['result_all'] = $query->result();
         $this->load->view('user_group/manage',$data);//bring $data to user_data 

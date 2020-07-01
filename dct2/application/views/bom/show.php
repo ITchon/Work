@@ -31,37 +31,27 @@ th, td {
         <div class="col-xs-10">
           <div class="col-xs-5">
                <span class="text-center text-primary" id="header">BOM TABLE <a href="" class="btn btn-default no_print" onclick="window.history.go(-1); return false;"> Back </a></span>
-                  </div>
-
-                    
-              
+                  </div>            
             </div>      
           </div>
           <br>
   <div class="no_print">
-  <div class="col-sm-6 col-md-2">
-  <form id="form" class="" action="<?php echo base_url()."bom/manage/$bm "?>" style="padding-left:60%" method="post">
+  <div class=" col-md-3 col-sm-3">
+  <form id="form" class="" action="<?php echo base_url()."bom/manage/$bm "?>" method="post">
   <input type="submit" class="btn btn-outline-info" name="csv" value="csv" >
   <button class=" btn btn-success " onclick="window.print()"><i class="fa fa-print"></i></button>
         </form>
       
           </div>
-          <form id="" class="" action="<?php echo base_url()."bom/manage/$bm "?>" style="padding-left:60%" method="post">
-          <div class="col-md-2" style="padding-left:50px">
-        <a href="" class="no_print btn btn-primary ">Clear</a> 
+          <form id="" class="" action="<?php echo base_url()."bom/manage/$bm "?>" style="padding-right:50px"  method="post">
+          <div class="col-md-3 col-sm-12" >
           </div>
-          <select name="sort" class="btn btn-primary" id="">
-          <?php if($sort == "up"){  
-              echo "<option value='up'  >Tree up</option>";
-              echo "<option value='down' >Tree down</option>";
-          }else{
-            echo "<option value='down' >Tree down</option>";
-            echo "<option value='up'  >Tree up</option>";
-          }
-            ?>
-          </select>
-          <div class="col-sm-6 col-md-4">
-                   <select name="sub_id" class="form-control select2"  required>
+          
+                      <div class="input-group" >
+                        <div class="input-group-btn">
+                        <a href="" class="no_print btn btn-primary ">Clear</a> 
+                        </div>
+                        <select name="sub_id" class="form-control select2"   required>
                    <option value="">- - - Search - - - </option>
                    <?php
                    $_data = array();
@@ -88,13 +78,27 @@ th, td {
                       
                       ?> 
                    </select>
-                    </div>   
-          
+                   <div class="input-group-btn">
+                   <select name="sort" class="btn btn-primary" id="">
+          <?php if($sort == "up"){  
+              echo "<option value='up'  >Tree up</option>";
+              echo "<option value='down' >Tree down</option>";
+          }else{
+            echo "<option value='down' >Tree down</option>";
+            echo "<option value='up'  >Tree up</option>";
+          }
+            ?>
+          </select>
+                        </div>
+                        <div class="input-group-btn">
+                              
                     <input type="hidden" name="search" value="search" hidden>
+    
                     <input type="submit" class="btn btn-outline-primary" value="Search">
+                    </div>
+                    
+                  </div>
         </form>          
-        
-</form>
 </div>
        <div class="card-body">
          <table id="" class="table table-hover  dataTable" style="border: 1px groove #ddd !important;" cellspacing="0" width="100%"  >
