@@ -27,6 +27,8 @@
                 <div class="form-group has-feedback">
                     <label for="dcn" class="col-sm-5 col-md-4 control-label">DCN Number</label>    
 
+                     <input type="hidden" name="dcnid" value="<?php echo $dcnid ?>">
+                     
         <div class="col-sm-6 col-md-4">
                    <select name="dcn_id" class="col-sm-5 col-md-4 control-label form-control select2" id="dcn_id"  required>
                    <option value="<?php echo $result[0]->dcn_id ?>" hidden> <?php echo $result[0]->dcn_no ?> </option>

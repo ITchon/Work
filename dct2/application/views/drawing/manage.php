@@ -12,16 +12,16 @@
   
     </h2><hr>
             
-            <form class="table form form-horizontal container" action="<?php echo base_url()?>drawing/manage" method="post" data-toggle="validator">
+            <form class="table form form-horizontal container" action="<?php echo base_url()?>drawing/show" method="post" data-toggle="validator">
             <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Drawing</label>      
           
                       <div class="col-sm-6 col-md-4">
                     <input type="hidden" name="name" value="Drawing">
-                   <select name="d_id" class="form-control select2"  required>
+                   <select name="id" class="form-control select2" required>
                    <option value="">- - - Select Drawing - - -</option>
                    <?php
-                      foreach($result as $r){?>
+                      foreach($result_d as $r){?>
              
                      <option value="<?php echo $r->d_id ?>"><?php echo $r->d_no ?></option>
                      <?php
@@ -30,14 +30,61 @@
                    </select>
                     </div>
                     </div> 
-                
-                    </div>
-   
-                  <div class="form-group">
-                  <br>
                     <button type="submit" id="btn" class="btn btn-primary btn-block">SEARCH</button>
-                  </div>
                 </form>
+
+                <br>
+
+                <form class="table form form-horizontal container" action="<?php echo base_url()?>drawing/show" method="post" data-toggle="validator">
+            <div class="form-group">
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Part</label>      
+          
+                      <div class="col-sm-6 col-md-4">
+                    <input type="hidden" name="name" value="Part">
+                   <select name="id" class="form-control select2" required>
+                   <option value="">- - - Select Drawing - - -</option>
+                   <?php
+                      foreach($result_p as $r){?>
+             
+                     <option value="<?php echo $r->p_id ?>"><?php echo $r->p_no ?></option>
+                     <?php
+                      }
+                      ?> 
+                   </select>
+                    </div>
+                    </div> 
+                    <button type="submit" id="btn" class="btn btn-primary btn-block">SEARCH</button>
+                </form>
+
+                <br>
+
+                <form class="table form form-horizontal container" action="<?php echo base_url()?>drawing/show" method="post" data-toggle="validator">
+            <div class="form-group">
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select DCN</label>      
+                      <div class="col-sm-6 col-md-4">
+                    <input type="hidden" name="name" value="DCN">
+                   <select name="id" class="form-control select2" required>
+                   <option value="">- - - Select Drawing - - -</option>
+                   <?php
+                      foreach($result_dcn as $r){?>
+             
+                     <option value="<?php echo $r->dcn_id ?>"><?php echo $r->dcn_no ?></option>
+                     <?php
+                      }
+                      ?> 
+                   </select>
+                    </div>
+                    </div> 
+                    <button type="submit" id="btn" class="btn btn-primary btn-block">SEARCH</button>
+                </form>
+
+               
+
+                    </div>
+                    
+                  
+                
+                
                 </div>
 
    

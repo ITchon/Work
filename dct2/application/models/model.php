@@ -355,6 +355,23 @@ class Model extends CI_Model
       $result =  $query->result();
     return $result;
   }
+
+  public function get_part()
+  {
+    $sql =  "SELECT * from part  where delete_flag != 0";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+
+
+  public function get_dcn()
+  {
+    $sql =  "SELECT * from dcn  where delete_flag != 0";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
   public function get_sub_by($id)
   {
     $sql =  "SELECT * from sub_part  where sub_id = $id AND delete_flag != 0";
@@ -362,29 +379,29 @@ class Model extends CI_Model
       $result =  $query->result();
     return $result;
   }
-  public function get_drawing_by($id,$search)
+  public function get_drawing_by($id,$search,$sort)
   {
       $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
-      ,p.p_id
+      ,p.p_id,dc.file_name as dcn_file
       from drawing as d
       inner join dcn as dc on dc.dcn_id = d.dcn_id
       inner join part as p on p.d_id = d.d_id 
-      where d.delete_flag != 0 AND d.d_id = $id AND d.d_no LIKE '%{$search}%'";
+      where d.delete_flag != 0 AND d.d_id = $id AND $sort LIKE '%{$search}%'";
       $query = $this->db->query($sql); 
       $result =  $query->result();
       return $result;
   }
-  public function get_drawing_ver($id,$search,$p_id)
+  public function get_drawing_ver($id,$p_id)
   {
      $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.path_file, d.file_name, d.version
-     , p.p_no,p.p_id,'v_id'
+     , p.p_no,p.p_id,'v_id',dc.file_name as dcn_file
             from drawing as d
             inner join dcn as dc on dc.dcn_id = d.dcn_id
             inner join part as p on p.d_id = d.d_id 
             where d.delete_flag != 0 AND d.d_id = $id AND p.p_id = $p_id
             UNION
                 SELECT v.d_id, v.d_no, v.dcn_id, dc.dcn_no, v.enable, v.path_file, v.file_name, v.version
-                , p.p_no,p.p_id, v.v_id
+                , p.p_no,p.p_id, v.v_id,dc.file_name as dcn_file
          from version as v
          inner join dcn as dc on dc.dcn_id = v.dcn_id
          inner join part as p on p.d_id = v.d_id 
@@ -395,26 +412,30 @@ class Model extends CI_Model
       return $result;
   }
 
-  public function get_dcn_by($id,$search)
+
+  public function get_dcn_id($id)
   {
-     $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
-     ,p.p_id
+     $sql =  "SELECT d.d_id, d.d_no, dc.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
+     ,p.p_id,dc.file_name as dcn_file
           from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
           inner join part as p on p.d_id = d.d_id 
-          where d.delete_flag != 0 AND d.dcn_id = $id AND d.d_no LIKE '%{$search}%'";
+          where d.delete_flag != 0 AND dc.dcn_no = $id";
       $query = $this->db->query($sql); 
-      $result =  $query->result();
-      return $result;
+      $data =  $query->result();
+      $dcn =  $data['result'][0]->dcn_id;
+      return $dcn;
   }
-  public function get_dcn_byid($id)
+
+
+  public function get_dcn_by($id,$search,$sort)
   {
      $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
-     ,p.p_id
+     ,p.p_id,dc.file_name as dcn_file
           from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
           inner join part as p on p.d_id = d.d_id 
-          where d.delete_flag != 0 AND d.dcn_id = $id";
+          where d.delete_flag != 0 AND d.dcn_id = $id AND $sort LIKE '%{$search}%'";
       $query = $this->db->query($sql); 
       $result =  $query->result();
       return $result;
@@ -423,7 +444,7 @@ class Model extends CI_Model
   public function get_dcn_by_dcnid($id)
   {
      $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
-     ,p.p_id
+     ,p.p_id,dc.file_name as dcn_file
           from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
           inner join part as p on p.d_id = d.d_id 
@@ -433,27 +454,15 @@ class Model extends CI_Model
       return $result;
   }
 
-  public function get_dcn_p($dcn_id,$search)
-  {
-     $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
-     ,p.p_id
-          from drawing as d
-          inner join dcn as dc on dc.dcn_id = d.dcn_id
-          inner join part as p on p.d_id = d.d_id 
-          where d.delete_flag != 0 AND d.dcn_id = $dcn_id AND p.p_no LIKE '%{$search}%'";
-      $query = $this->db->query($sql); 
-      $result =  $query->result();
-      return $result;
-  }
 
-  public function get_part_by($id,$search)
+  public function get_part_by($id,$search,$sort)
   {
      $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
-     ,p.p_id
+     ,p.p_id,dc.file_name as dcn_file
           from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
           inner join part as p on p.d_id = d.d_id 
-          where d.delete_flag != 0 AND d.d_id = $id AND p.p_no LIKE '%{$search}%'";
+          where d.delete_flag != 0 AND p.d_id = $id AND $sort LIKE '%{$search}%'";
       $query = $this->db->query($sql); 
       $result =  $query->result();
       return $result;
@@ -557,13 +566,6 @@ return false;
  }
 
 
-
- function get_dcn()
- {
-  $sql =  'SELECT * from dcn where delete_flag != 0';
-  $query = $this->db->query($sql); 
-  return $query;
- }
 
  function insert_bom($bm)
  {
@@ -692,7 +694,7 @@ if($query){
  {
   $v = $version+1;
 $path_file = quotemeta($path_file);
-  $sql ="UPDATE drawing SET d_no = '$d_no' , date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id', version = '$v', path_file = '$path_file', file_name = '$file_name' WHERE d_id = '$d_id'";
+  $sql ="UPDATE drawing SET d_no = '$d_no' , date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id', version = '$v', path_file = '$path_file', file_name = '$file_name',enable = 1 WHERE d_id = '$d_id'";
     $query = $this->db->query($sql);  
    if($query){
      return true;
