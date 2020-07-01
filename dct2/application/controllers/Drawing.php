@@ -313,8 +313,6 @@ class Drawing extends CI_Controller {
         $path = $this->input->post('path');
         $open = ("$path$file");
         exec($open);
-        echo $open;
-        exit;
         if($open){
             echo '<script language="javascript">';
                 echo 'history.go(-1);';
