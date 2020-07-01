@@ -16,10 +16,11 @@
             <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Drawing</label>      
           
-                      <div class="col-sm-6 col-md-4">
+                    <div class="col-sm-6 col-md-4">
+                    <div class="input-group" >
                     <input type="hidden" name="name" value="Drawing">
-                   <select name="id" class="form-control select2" required>
-                   <option value="">- - - Select Drawing - - -</option>
+                    <select name="id" class="form-control select2" required>
+                    <option value="">- - - Select Drawing - - -</option>
                    <?php
                       foreach($result_d as $r){?>
              
@@ -28,21 +29,24 @@
                       }
                       ?> 
                    </select>
+                          <div class="input-group-btn">    
+                       <button type="submit" id="btn" class="btn btn-primary btn-block">SEARCH</button>
+                      </form>
+                      </div>
                     </div>
-                    </div> 
-                    <button type="submit" id="btn" class="btn btn-primary btn-block">SEARCH</button>
-                </form>
-
-                <br>
+                   </div> 
+                </div> 
+      
+           
 
                 <form class="table form form-horizontal container" action="<?php echo base_url()?>drawing/show" method="post" data-toggle="validator">
             <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Part</label>      
-          
-                      <div class="col-sm-6 col-md-4">
+                    <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Part</label>      
+                    <div class="col-sm-6 col-md-4">
+                    <div class="input-group" >
                     <input type="hidden" name="name" value="Part">
                    <select name="id" class="form-control select2" required>
-                   <option value="">- - - Select Drawing - - -</option>
+                   <option value="">- - - Select Part - - -</option>
                    <?php
                       foreach($result_p as $r){?>
              
@@ -51,34 +55,36 @@
                       }
                       ?> 
                    </select>
+                   <div class="input-group-btn">    
+                       <button type="submit" id="btn" class="btn btn-primary btn-block">SEARCH</button>
+                      </form>
+                      </div>
                     </div>
-                    </div> 
-                    <button type="submit" id="btn" class="btn btn-primary btn-block">SEARCH</button>
-                </form>
-
-                <br>
+                   </div> 
+                </div> 
 
                 <form class="table form form-horizontal container" action="<?php echo base_url()?>drawing/show" method="post" data-toggle="validator">
             <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select DCN</label>      
                       <div class="col-sm-6 col-md-4">
-                    <input type="hidden" name="name" value="DCN">
-                   <select name="id" class="form-control select2" required>
-                   <option value="">- - - Select Drawing - - -</option>
-                   <?php
-                      foreach($result_dcn as $r){?>
-             
+                      <div class="input-group" >
+                      <input type="hidden" name="name" value="DCN">
+                      <select name="id" class="form-control select2" required>
+                      <option value="">- - - Select DCN - - -</option>
+                      <?php
+                      foreach($result_dcn as $r){?>            
                      <option value="<?php echo $r->dcn_id ?>"><?php echo $r->dcn_no ?></option>
-                     <?php
+                       <?php
                       }
                       ?> 
                    </select>
+                   <div class="input-group-btn">    
+                       <button type="submit" id="btn" class="btn btn-primary btn-block">SEARCH</button>
+                      </form>
+                      </div>
                     </div>
-                    </div> 
-                    <button type="submit" id="btn" class="btn btn-primary btn-block">SEARCH</button>
-                </form>
-
-               
+                   </div> 
+                </div> 
 
                     </div>
                     

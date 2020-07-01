@@ -101,6 +101,8 @@ class Bom extends CI_Controller {
         $data['bm']=$bm;
         $data['sort']=null;
         $data['bm_id']=$res[0]->b_master;
+        $bom = $res[0]->p_no;;
+      
         //Find Maxlv in array
         if($array!=null){
                  foreach($array as $row){
@@ -117,7 +119,7 @@ class Bom extends CI_Controller {
         $data['result_sub'] = $query->result();     
         if($this->input->post('csv')){
             header("Content-type: application/csv");
-            header("Content-Disposition: attachment; filename=\"test".".csv\"");
+            header("Content-Disposition: attachment; filename=\"BOM$bom".".csv\"");
             header("Pragma: no-cache");
             header("Expires: 0");
             $handle = fopen('php://output', 'w');
