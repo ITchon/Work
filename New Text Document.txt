@@ -1,0 +1,4 @@
+    $name = '\\\192.168.82.4\tbkk$\RD\Drawing\01_Drawings\A_Production Dwg\A_1300A126_06_20200309_WATER PUMP ASSY.xdw';
+
+      
+        exec($name);
