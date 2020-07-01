@@ -12,7 +12,7 @@
   
     </h2><hr>
             
-            <form class="table form form-horizontal container" action="<?php echo base_url()?>drawing/show" method="post" data-toggle="validator">
+            <form class="table form form-horizontal container" action="<?php echo base_url()?>drawing/show" method="post">
             <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Drawing</label>      
           
@@ -39,7 +39,7 @@
       
            
 
-                <form class="table form form-horizontal container" action="<?php echo base_url()?>drawing/show" method="post" >
+                <form class="table form form-horizontal container" action="<?php echo base_url()?>drawing/show" method="post">
             <div class="form-group">
                     <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Part</label>      
                     <div class="col-sm-6 col-md-4">
@@ -63,7 +63,7 @@
                    </div> 
                 </div> 
 
-                <form class="table form form-horizontal container" action="<?php echo base_url()?>drawing/show" method="post" >
+                <form class="table form form-horizontal container" action="<?php echo base_url()?>drawing/show" method="post">
             <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select DCN</label>      
                       <div class="col-sm-6 col-md-4">

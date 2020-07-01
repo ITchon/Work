@@ -66,6 +66,7 @@ class Drawing extends CI_Controller {
             $sort = "dc.dcn_no";
         }
 
+
         if($name == 'DCN'){
             $data['result'] = $this->model->get_dcn_by($id,$search,$sort);
         }else if($name == 'Part'){
@@ -285,7 +286,6 @@ class Drawing extends CI_Controller {
   
     }
 
-
     public function openfile()
     {
         $d_id =  $this->input->post('d_id');
@@ -304,20 +304,12 @@ class Drawing extends CI_Controller {
         }
 
     }
-
     public function open_dcn()
     {
         $dcn_id =  $this->input->post('dcn_id');
-
-        $sql =  "SELECT * from dcn where dcn_id = '$dcn_id' ";
-        $query = $this->db->query($sql); 
-        $data['result'] = $query->result(); 
-
-        $path =  $data['result'][0]->path_file;
-        $file =  $data['result'][0]->file_name;
-
+        $file =  $this->input->post('file');
+        $path = $this->input->post('path');
         $open = ("$path$file");
-
         exec($open);
         if($open){
             echo '<script language="javascript">';
