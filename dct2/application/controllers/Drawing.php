@@ -19,113 +19,95 @@ class Drawing extends CI_Controller {
         $this->load->view('header');
         $this->load->view('menu',$menu);
 
+
     }
 	public function index()
     {	
 
     }
-    	public function manage()
+
+    public function manage()
     {   
-        $id = $this->uri->segment('3');
-        $dcn_id =  $this->input->post('dcn_id');
-        $d_id =  $this->input->post('d_id');
-        $name =  $this->input->post('name');
-        $search =$this->input->post('p_no');
-        $p_id = $this->input->post('p_id');
-        $d_no = $this->input->post('d_no');
-        
-        if($this->session->flashdata('name')){
-            $gg = $this->session->flashdata('name');
-            $name = $gg;
-        }
-        if($this->session->flashdata('dcn_id')){
-            $dcn = $this->session->flashdata('dcn_id');
-            $dcn_id = $dcn;
-        }
-        if($this->session->flashdata('name')=='Version'){
-            $p_id = $this->session->flashdata('p_id');
-            $d_id = $this->session->flashdata('d_id');
-        }
-        if($this->session->flashdata('name')=='Drawing'){
-            $d_id = $this->session->flashdata('d_id');
-
-        }
-         if($name == 'Drawing'){
-            $search = $d_no;
-            $data['d_id'] = $d_id;  
-            $data['dcn_id'] = $dcn_id;
-            $data['search'] = $search;  
-            $data['name'] = $name;  
-            $data['title'] = $search;  
-            $data['result_dcn'] = $this->model->get_dcn(); 
-            if(isset($dcn_id)){
-            $data['result'] = $this->model->get_dcn_by($dcn_id,$search); 
-            }else{
-            $data['result'] = $this->model->get_drawing_by($d_id,$search); 
-            }
-
-        $this->load->view('drawing/show',$data);//bring $data to user_data 
-        }else if($name == 'Version'){
-            $data['p_id'] = $p_id;
-            $data['d_id'] = $d_id;  
-            $data['search'] = $search;  
-            $data['name'] = $name; 
-            $data['title'] = $search;  
-            $data['result_dcn'] = $this->model->get_dcn(); 
-            $data['result'] = $this->model->get_drawing_ver($d_id,$search,$p_id); 
-            $this->load->view('drawing/show',$data);//bring $data to user_data 
-        }else if($name == 'DCN'){
-            $data['dcn'] = $dcn_id;
-            $data['dcn_id'] = $dcn_id;  
-            $data['search'] = $search;
-            $data['name'] = $name;   
-            $data['result_dcn'] = $this->model->get_dcn(); 
-            if($search != null){
-                $data['result'] = $this->model->get_dcn_by($dcn_id,$search); 
-            }else{
-                $data['result'] = $this->model->get_dcn_byid($dcn_id);
-            }
-            
-        $this->load->view('drawing/show',$data);//bring $data to user_data 
-        }else if($name == 'Part'){
-            $d_id = $this->input->post('d_id');
-            $p_no = $this->input->post('p_no');
-            $dcn_id =  $this->input->post('dcn_id');
-            $search = $p_no;
-            $data['d_id'] = $d_id; 
-            $data['dcn_id'] = $dcn_id;   
-            $data['search'] = $search;  
-            $data['name'] = $name; 
-            $data['title'] = $search;  
-            $data['result_dcn'] = $this->model->get_dcn(); 
-            if(isset($dcn_id)){
-                $data['result'] = $this->model->get_dcn_p($dcn_id,$search);
-            }else{
-                $data['result'] = $this->model->get_part_by($d_id,$search); 
-            }
-            
-        $this->load->view('drawing/show',$data);//bring $data to user_data 
-
-        }else if($this->uri->segment('3')){
-            $dcn_id = $this->uri->segment('3');
-            $data['d_id'] = $d_id;  
-            $data['search'] = $search;  
-            $data['name'] = $name; 
-            $data['title'] = $search;  
-            $data['result_dcn'] = $this->model->get_dcn(); 
-
-            $data['result'] = $this->model->get_drawing_by($dcn_id,$search);
-
-            
-            $this->load->view('drawing/show',$data);//bring $data to user_data 
-        }else{
-        $data['result'] = $this->model->get_drawing(); 
+        $data['result_d'] = $this->model->get_drawing(); 
+        $data['result_p'] = $this->model->get_part(); 
+        $data['result_dcn'] = $this->model->get_dcn(); 
         $this->load->view('drawing/manage',$data);//bring $data to user_data 
+        $this->load->view('footer'); 
     }
-    $this->load->view('footer');
 
+    public function show()
+    {   
+
+        if($this->session->userdata('id')){
+            $id = $this->session->userdata('id');
+            $name = $this->session->userdata('name');
+        }else{
+            $id =  $this->input->post('id');
+            $name =  $this->input->post('name');
+        }
+        $ss = $this->input->post('search');
+        $sort = $this->input->post('sort');
+        $search = $ss;
+
+        if($search == null){
+            $search = null;
+        }
         
-        
+        $data['id'] = $id;
+        $data['name'] = $name;
+        $data['search'] = $search;
+        $data['sort'] = $sort;
+
+        if($sort == 'Drawing'){
+            $sort = "d.d_no";
+        }else if($sort == 'Part'){
+            $sort = "p.p_no";
+        }else{
+            $sort = "dc.dcn_no";
+        }
+
+        if($name == 'DCN'){
+            $data['result'] = $this->model->get_dcn_by($id,$search,$sort);
+        }else if($name == 'Part'){
+            $data['result'] = $this->model->get_part_by($id,$search,$sort); 
+        }else if($name == 'Drawing'){
+            $data['result'] = $this->model->get_drawing_by($id,$search,$sort); 
+        }else{
+            redirect('drawing/manage');
+        }
+        $this->load->view('drawing/show',$data);//bring $data to user_data 
+        $this->load->view('footer'); 
+    }
+
+    public function show_v()
+    {   
+        if($this->input->post('id')){
+        $id =  $this->input->post('id');
+        $name =  $this->input->post('name');
+        }else{
+        $id = $this->session->userdata('id');
+        $name = $this->session->userdata('name');
+             
+        }
+        $d_id =  $this->input->post('d_id');
+        $p_id =  $this->input->post('p_id');
+        $ss = $this->input->post('search');
+        $sort = $this->input->post('sort');
+        $search = $ss;
+
+        if($search == null){
+            $search = null;
+        }
+
+        $data['id'] = $id;
+        $data['name'] = $name;
+        $data['search'] = $search;
+        $data['sort'] = $sort;
+   
+        $data['result'] = $this->model->get_drawing_ver($d_id,$p_id); 
+        $this->load->view('drawing/show_v',$data);//bring $data to user_data 
+        $this->load->view('footer'); 
+
     }
 
     public function add()
@@ -205,122 +187,40 @@ class Drawing extends CI_Controller {
 
         //$this->model->CheckPermission($this->session->userdata('sp_id'));
         $d_id =  $this->input->post('d_id');
-        $dcn_id =  $this->input->post('dcn_id');
 
-        if($this->input->post('dcn_id')){
         $result = $this->model->enableDrawing($d_id);
-        $data = "DCN";
-        $this->session->set_flashdata('name',$data);
-        $this->session->set_flashdata('dcn_id',$dcn_id);
-        redirect('drawing/manage/','refresh');
-        }
-        else{
-        $result = $this->model->enableDrawing($d_id);
-        $data = "Drawing";
-        $this->session->set_flashdata('name',$data);
-        $this->session->set_flashdata('d_id',$d_id);
-            redirect('drawing/manage/','refresh');
-        }
+
+
+        redirect('drawing/show/','refresh');
         
-        
-
-
-
     }
 
     public function disable(){
 
         //$this->model->CheckPermission($this->session->userdata('sp_id'));
         $d_id = $this->input->post('d_id');
-        $dcn_id =  $this->input->post('dcn_id');
 
-        if($this->input->post('dcn_id')){
         $result = $this->model->disableDrawing($d_id);
 
-        $data = "DCN";
-        $this->session->set_flashdata('name',$data);
-        $this->session->set_flashdata('dcn_id',$dcn_id);
-        redirect('drawing/manage/','refresh');
-        }
-        else{
-        $result = $this->model->disableDrawing($d_id);
-        $data = "Drawing";
-        $this->session->set_flashdata('name',$data);
-        $this->session->set_flashdata('d_id',$d_id);
-        redirect('drawing/manage/','refresh');
-        }
+
+        redirect('drawing/show/','refresh');
         
         
-
-    }
-
-    public function enable_v(){
-
-        //$this->model->CheckPermission($this->session->userdata('sp_id'));
-        $d_id = $this->input->post('d_id');
-        $v_id =  $this->input->post('v_id');
-        $p_id =  $this->input->post('p_id');
-
-
-        $result = $this->model->enableDrawing_v($v_id);
-
-        $data = "Version";
-        $this->session->set_flashdata('name',$data);
-        $this->session->set_flashdata('p_id',$p_id);
-        $this->session->set_flashdata('d_id',$d_id);
-
-        redirect('drawing/manage/','refresh');
-
-    }
-
-    public function disable_v(){
-
-        //$this->model->CheckPermission($this->session->userdata('sp_id'));
-        $d_id = $this->input->post('d_id');
-        $v_id =  $this->input->post('v_id');
-        $p_id =  $this->input->post('p_id');
-
-
-        $result = $this->model->disableDrawing_v($v_id);
-
-        $data = "Version";
-        $this->session->set_flashdata('name',$data);
-        $this->session->set_flashdata('p_id',$p_id);
-        $this->session->set_flashdata('d_id',$d_id);
-
-        redirect('drawing/manage/','refresh');
 
     }
 
 
     public function deletedrawing()
     {
-        $id = $this->uri->segment('3');
-
+        $id = $this->input->post('d_id');
         $this->model->delete_drawing($id);
-        redirect('drawing/manage/'.$id.'','refresh');
+        redirect('drawing/show/','refresh');
 
     }
-
-    public function deletedrawing_v()
-    {
-        $id = $this->uri->segment('3');
-
-        $sql =  "SELECT * from version as v where v.v_id = '$id' ";
-        $query = $this->db->query($sql); 
-        $data['result'] = $query->result(); 
-
-        $d_id =  $data['result'][0]->d_id;
-
-        $this->model->delete_drawing_v($id);
-        redirect('drawing/manage/'.$d_id.'','refresh');
-
-    }
-
 
     public function version_form()
     {
-        $id = $this->uri->segment('3');
+        $id =  $this->input->post('d_id');
 
         $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, d.enable, d.file_name as file, dc.dcn_no, d.version,
         d.path_file from drawing as d
@@ -331,6 +231,7 @@ class Drawing extends CI_Controller {
         $data['result'] = $query->result(); 
 
         $dcn =  $data['result'][0]->dcn_id;
+        $data['dcnid'] = $dcn; 
 
 
         $sql1 =  "SELECT * from dcn where delete_flag != 0 AND dcn_id != $dcn ";
@@ -373,18 +274,12 @@ class Drawing extends CI_Controller {
         $version =  $this->input->post('version');
         $path_file =  $this->input->post('path');
         $file_name =  $this->input->post('file_name');
+        $dcnid =  $this->input->post('dcnid');
 
         $this->model->select_version($d_id);
         $this->model->update_version($d_id, $d_no, $dcn_id, $version, $file_name, $path_file);
-        // if($dcn_id){
-        //     $data = "DCN";
-        //     $this->session->set_flashdata('name',$data);
-        //     $this->session->set_flashdata('dcn_id',$dcn_id);
-        //     redirect('drawing/manage/','refresh');
-        // }else{
 
-            redirect('drawing/manage');
-        // }
+        redirect('drawing/show/','refresh');
 
 
   

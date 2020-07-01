@@ -16,69 +16,33 @@
             <div class="col-xs-12">
               <div class="card">
                 <div class="card-header ">
-            
+              
+              <?php
+              $this->session->set_userdata('name',$name);
+              $this->session->set_userdata('id',$id);
+             ?>
+
               <h3><a href="<?php echo base_url()?>drawing/manage">MANAGE DRAWING </a> <?php if(isset($title)){?>
                 <a class=""> </a> > <?php echo $name ?>  <?php echo $title ?>  <a  class="fa fa-undo " onClick="history.go(-1)"style="cursor: pointer;"> </a> 
                 <?php  }?> 
+                <a href="" class="btn btn-default no_print" onclick="window.history.go(-1); return false;"> Back </a>
                 </h3>
 
-                <form id='form' action="<?php echo base_url()?>drawing/manage" method="post">
-                    <?php if($name == 'Drawing'){ ?>
-                    <input type="text" class="form-control" name="d_no" placeholder="Drawing No" 
-                    value="<?php echo $search ?>">
-                    <?php }else{ ?>
-                    <input type="text" class="form-control" name="d_no" placeholder="Drawing No">
-                    <?php } ?>
 
-                    <?php if(isset($d_id)){ ?>
-                      <input type="hidden" name="d_id" value="<?php echo $d_id ?>">
-                   <?php  } ?>
-                   <?php if(isset($dcn_id)){ ?>
-                      <input type="hidden" name="dcn_id" value="<?php echo $dcn_id ?>">
-                   <?php  } ?>
-                    <input type="hidden" name="name" value="Drawing">
-                    <input hidden type="submit" name="search" value="search">
-                  </form>
+                <form id='form' class="form-inline" action="<?php echo base_url()?>drawing/show" method="post">
+                  <input type="hidden" name="id" value="<?php echo $id ?>">
+                  <input type="hidden" name="name" value="<?php echo $name ?>">
+                  <input type="text-center" class="form-control" name="search" value="<?php echo $search ?>">
 
-                  <form id='form' action="<?php echo base_url()?>drawing/manage" method="post">
-                    <?php if($name == 'Part'){ ?>
-                    <input type="text" class="form-control" name="p_no" placeholder="Part No" 
-                    value="<?php echo $search ?>">
-                    <?php }else{ ?>
-                    <input type="text" class="form-control" name="p_no" placeholder="Part No">
-                    <?php } ?>
-                    <?php if(isset($d_id)){ ?>
-                      <input type="hidden" name="d_id" value="<?php echo $d_id ?>">
-                   <?php  } ?>
-                   <?php if(isset($dcn_id)){ ?>
-                      <input type="hidden" name="dcn_id" value="<?php echo $dcn_id ?>">
-                   <?php  } ?>
-                    <input type="hidden" name="name" value="Part">
-                    <input hidden type="submit" name="search" value="search">
-                  </form>
-
-                  <form id='form' action="<?php echo base_url()?>drawing/manage" method="post">
-                    <?php if(isset($name)){ 
-                      if($name == 'Drawing') { ?>
-                    <input type="hidden" name="name" value="Drawing">
-                    <?php  }else if($name =='Part'){ ?>
-                    <input type="hidden" name="name" value="Part">
-                    <?php }else if($name =='DCN'){ ?>
-                    <input type="hidden" name="name" value="DCN">
-                    <?php }else if($name =='Version'){ ?>
-                    <input type="hidden" name="name" value="Drawing">
-                    <input type="hidden" name="d_id" value="<?php echo $d_id ?>">
-                    <?php }} ?>
-                    <?php if(isset($dcn_id)){ ?>
-                      <input type="hidden" name="dcn_id" value="<?php echo $dcn_id ?>">
-                   <?php  } ?>
-                   <?php if(isset($d_id)){ ?>
-                   <input type="hidden" name="d_id" value="<?php echo $d_id ?>">
-                   <?php  } ?>
-                    <button type="submit" class="form-control bg-primary">Clear</button>
+                  <select id="select" name="sort" class="form-control">
+                    <option value="Drawing">Drawing</option>
+                    <option value="Part">Part</option>
+                    <option value="DCN">DCN</option>
+                  </select>
+                  <button type="submit">search</button>
+                </form>
 
 
-                  </form>
 
                 </div>
                 <div class="card-body">
@@ -99,7 +63,6 @@
 
                       <?php
                     foreach($result as $r){
-
              echo "<tr>";
                 echo "<td> " ?>
                     <?php echo "<b>".$r->d_no."</b>" ?>
@@ -111,97 +74,32 @@
                     <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
                     <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
                     <button  type="submit" style=" background-color: Transparent;border:none" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><a>
-                      <?php echo $r->dcn_no ?></a></button>
+                      <?php echo $r->dcn_file ?></a></button>
 
 
                   </form>
                 </td>
 
-                <td class="text-center"><form id='form' action="<?php echo base_url()?>drawing/manage" method="post">
+                <td class="text-center"><form id='form' action="<?php echo base_url()?>drawing/show_v" method="post">
                     <input type="hidden" name="p_id" value="<?php echo $r->p_id ?>">
                     <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                    <input type="hidden" name="name" value="Version">
+                    <input type="hidden" name="id" value="<?php echo $id ?>">
+                  <input type="hidden" name="name" value="<?php echo $name ?>">
                     <button  type="submit"  style=" background-color: Transparent;border:none" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ดูVersionทั้งหมด</h5>' ><a>
                       <?php echo $r->version ?></a></button>
 
-
-
                   </form></td>
-                <?php 
-                if(isset($r->v_id)){
-                    if($r->v_id != 'v_id'){
-              if($r->enable!=1 ){?>
-                  
-                  <td class="text-center">
-                    <form id="form" action="<?php echo base_url()?>drawing/enable_v" method="post">
-                  <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                  <input type="hidden" name="v_id" value="<?php echo $r->v_id ?>">
-                  <input type="hidden" name="p_id" value="<?php echo $r->p_id ?>">
-                  <input type="hidden" name="name" value="Version">
-                  <button type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' style="border:none;"><i class='btn-danger btn-sm fa fa-times'></i></button>
-
-                  </form>
+                                         
                   <?php
-                }
-                else{?>
-                  <td class="text-center">
-                  <form id="form" action="<?php echo base_url()?>drawing/disable_v" method="post">
-                  <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                  <input type="hidden" name="v_id" value="<?php echo $r->v_id ?>">
-                  <input type="hidden" name="p_id" value="<?php echo $r->p_id ?>">
-                  <button data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งาน</h5>' style="border:none;"><i class='btn-success btn-sm fa fa-check'></i></button>
-                  
-                  </form>                                  
-                  <?php
-                }
-                }else{
-
-
-                if($r->enable!=1 ){?>
-                  
-                  <td class="text-center">
-
-                  <form id="form" action="<?php echo base_url()?>drawing/enable" method="post">
-                  <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                  <?php if(isset($dcn_id)){ ?>
-                  <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
-                  <?php  } ?>
-                  <button type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' style="border:none;"><i class='btn-danger btn-sm fa fa-times'></i></button>
-
-                  </form>
-
-                  <?php
-                }
-                else{?>
-                  <td class="text-center">
-                  <form id="form" action="<?php echo base_url()?>drawing/disable" method="post">
-                  <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                  <?php if(isset($dcn_id)){ ?>
-                  <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
-                  <?php  } ?>
-                  <button data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งาน</h5>' style="border:none;"><i class='btn-success btn-sm fa fa-check'></i></button>
-                  
-                  </form>                       
-                  <?php
-                }
-                }
-                 if($r->v_id != 'v_id'){ ?>
-              <input type="text" name="v_id" value="<?php echo $r->v_id ?>" hidden >
-              <?php
-                }
-              }
-
-              else{
                    if($r->enable!=1){?>
                   
                   <td class="text-center">
 
                   <form id="form" action="<?php echo base_url()?>drawing/enable" method="post">
                   <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                  <?php if(isset($dcn_id)){ ?>
-                  <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
-                  <?php  } ?>
-                  <button type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' style="border:none;"><i class='btn-danger btn-sm fa fa-times'></i></button>
+                  <input type="hidden" name="id" value="<?php echo $id ?>">
+                  <input type="hidden" name="name" value="<?php echo $name ?>">
+                  <button class='btn-danger btn-sm fa fa-times' type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' style="border:none;"></button>
 
                   </form>
 
@@ -211,88 +109,35 @@
                   <td class="text-center">
                   <form id="form" action="<?php echo base_url()?>drawing/disable" method="post">
                   <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                  <?php if(isset($dcn_id)){ ?>
-                  <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
-                  <?php  } ?>
-                  <button data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งาน</h5>' style="border:none;"><i class='btn-success btn-sm fa fa-check'></i></button>
+                  <input type="hidden" name="id" value="<?php echo $id ?>">
+                  <input type="hidden" name="name" value="<?php echo $name ?>">
+                  <button class='btn-success btn-sm fa fa-check' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งาน</h5>' style="border:none;"></button>
                   
                   </form>                      
                   <?php
                 }
-              }
+              
               
                 ?>
+                <form id='form' action="<?php echo base_url()?>drawing/version_form" method="post">
+                  <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
+                  <button class=" btn-primary btn-sm fa fa-plus" type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เพิ่มVersion</h5>' style="border:none;">
+                  </button>
+                  </form>
+      
+                    <form id="form" action="<?php echo base_url()?>bom/delete" method="post">
+                    <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
+                    <button class="btn-danger btn-sm fa fa-trash" onclick='return confirm("Confirm Delete Item")' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' style="border:none;"></button>
+                    </form>
 
-                <?php 
-                if(isset($r->v_id)){
-                  if($r->v_id != 'v_id'){ ?>
-                  <a type ='button' class=' ' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เพิ่มVersion</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
-                echo base_url() . 'drawing/version_form_v/' . $r->v_id;
-                ?>';"><i class='btn-info btn-sm fa fa-plus'> </i> </a>
-
-                <?php
-                }else{ ?>
-                  <a type ='button' class=' ' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เพิ่มVersion</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
-                echo base_url() . 'drawing/version_form/' . $r->d_id;
-                ?>';"><i class='btn-info btn-sm fa fa-plus'> </i> </a>
-                <?php 
-                }
-                }else{ ?>
-                  <a type ='button' class=' ' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เพิ่มVersion</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
-                echo base_url() . 'drawing/version_form/' . $r->d_id;
-                ?>';"><i class='btn-info btn-sm fa fa-plus'> </i> </a>
-                <?php } ?>
-
-
-
-
-                <?php 
-                if(isset($r->v_id)){
-                  if($r->v_id != 'v_id'){
-                  echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."drawing/deletedrawing_v/".$r->v_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a>"; 
-                  ?>
-
-                  <form id='form' action="<?php echo base_url()?>drawing/openfile" method="post">
-    <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>" >
-    <input type="hidden" name="path" value="<?php echo $r->path_file ?>\" >
-    <input type="hidden" name="file" value="<?php echo $r->file_name ?>" >
-    <button  type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><i class=" btn-primary btn-sm fa fa-inbox" aria-hidden="true"></i>
-    </button>
-                  </form></td>
-
-<?php
-                }else{
-                  echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."drawing/deletedrawing/".$r->d_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a>"; 
-                  ?>
-
-                  <form id='form' action="<?php echo base_url()?>drawing/openfile" method="post">
-    <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>" >
-    <input type="hidden" name="path" value="<?php echo $r->path_file ?>\" >
-    <input type="hidden" name="file" value="<?php echo $r->file_name ?>" >
-    <button  type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><i class=" btn-primary btn-sm fa fa-inbox" aria-hidden="true"></i>
-    </button>
-                  </form></td>
-
-<?php
-                }
-                }else{
-                  echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."drawing/deletedrawing/".$r->d_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a>";
-                  ?>
-
-                  <form id='form' action="<?php echo base_url()?>drawing/openfile" method="post">
-    <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>" >
-    <input type="hidden" name="path" value="<?php echo $r->path_file ?>\" >
-    <input type="hidden" name="file" value="<?php echo $r->file_name ?>" >
-    <button  type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><i class=" btn-primary btn-sm fa fa-inbox" aria-hidden="true"></i>
-    </button>
-                  </form></td>
-
-<?php
-
-                }
-                ?>
-                
-                
+                     <form id='form' action="<?php echo base_url()?>drawing/openfile" method="post">
+                  <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
+                  <input type="hidden" name="path" value="<?php echo $r->path_file ?>\">
+                  <input type="hidden" name="file" value="<?php echo $r->file_name ?>">
+                  <button class=" btn-primary btn-sm fa fa-inbox" type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;">
+                  </button>
+                  </form>
+      
                 <?php 
                 if($r->enable!=1 ){?>
                   
@@ -309,7 +154,6 @@
                 <?php
 
             echo "</tr>";
-
 
         }
     ?>
@@ -331,19 +175,11 @@
 });
       </script>
       <script>
-    $(document).ready(function() {
-      $("#button").click();
-  });
-</script>
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-      <script type="text/javascript">
-
-    $("#clear").on("click",function(){
-      document.getElementById("#id").submit();
-       });
-    
-
+        <?php if($sort == null){
+          $sort = "Drawing";
+        } ?>
+      document.getElementById('select').value = "<?php echo $sort ?>";
 </script>
 
 
-    
+     
