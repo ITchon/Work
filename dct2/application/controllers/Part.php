@@ -31,38 +31,16 @@ class Part extends CI_Controller {
     {	
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
-        $name =  $this->input->post('name');
-        
-        if($name == 'Part'){
             $p_id =  $this->input->post('p_id');
             $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable,p.d_id,d.d_no
             from part as p
             inner join drawing as d on d.d_id = p.d_id
-            where p.delete_flag != 0 AND p.p_id = '$p_id'";
+            where p.delete_flag != 0 ";
         $query = $this->db->query($sql); 
        $data['result'] = $query->result(); 
         $this->load->view('part/show',$data);//bring $data to user_data 
         $this->load->view('footer');
-
-        }
-        else if($this->uri->segment('3')){
-            $id = $this->uri->segment('3');
-            $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable,p.d_id,d.d_no
-            from part as p
-            inner join drawing as d on d.d_id = p.d_id
-            where p.delete_flag != 0 AND p.p_id = '$id'";
-        $query = $this->db->query($sql); 
-       $data['result'] = $query->result(); 
-        $this->load->view('part/show',$data);//bring $data to user_data 
-        $this->load->view('footer');
-        }
-        else{
-            $sql =  'SELECT * from part as p where delete_flag != 0';
-        $query = $this->db->query($sql); 
-       $data['result'] = $query->result(); 
-        $this->load->view('part/manage',$data);//bring $data to user_data 
-        $this->load->view('footer');
-        }
+        
         
 	}
 	public function add()
