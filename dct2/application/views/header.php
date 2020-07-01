@@ -71,11 +71,6 @@ a{
 .table td {
     background: none !important;
 }
-@media print{
-  .no_print{
-  display:none;
-}
-}
 </style>
 <script>
         $(document).ready(function() {
