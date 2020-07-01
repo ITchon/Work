@@ -300,6 +300,7 @@ class Drawing extends CI_Controller {
         }else{
             echo "<script>";
             echo 'alert("Data not found.");';
+            echo 'history.go(-1);';
             echo '</script>';
         }
 
@@ -318,6 +319,7 @@ class Drawing extends CI_Controller {
         }else{
             echo "<script>";
             echo 'alert("Data not found.");';
+            echo 'history.go(-1);';
             echo '</script>';
         }
   

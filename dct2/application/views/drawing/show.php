@@ -76,7 +76,7 @@
                   <input type="hidden" name="path" value="<?php echo $r->dcn_path ?>\">
                   <input type="hidden" name="file" value="<?php echo $r->dcn_file ?>">
                     <button  type="submit" style=" background-color: Transparent;border:none" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><a>
-                      <?php echo $r->dcn_file ?></a></button>
+                      <?php echo $r->dcn_no ?></a></button>
                   </form>
                 </td>
 
