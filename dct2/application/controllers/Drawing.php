@@ -6,6 +6,7 @@ class Drawing extends CI_Controller {
     function __construct() { 
     
         parent::__construct(); 
+        $this->load->library('upload');
         $this->load->helper('download');
         $this->load->helper('form');
         $this->load->database(); 
@@ -22,13 +23,15 @@ class Drawing extends CI_Controller {
 
 
     }
-	public function index()
-    {	
+    public function index()
+    {   
 
     }
 
     public function manage()
     {   
+        $this->session->set_userdata('name','');
+        $this->session->set_userdata('id','');  
         $data['result_d'] = $this->model->get_drawing(); 
         $data['result_p'] = $this->model->get_part(); 
         $data['result_dcn'] = $this->model->get_dcn(); 
@@ -139,27 +142,20 @@ class Drawing extends CI_Controller {
   $chk= $num->num_rows();
  if($chk >= 1){
     $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
-          <span> ชื่อนี้ถูกใช้เเล้ว</span>
+          <span> ชื่อนี้ถูกใช้เเล้วd</span>
         </div> ');
         $this->session->set_flashdata('d_no',$d_no);
       
  }else if($chk != 1){
     $num= $this->db->query("SELECT * FROM part where p_no = '$p_no'"); 
   $chk= $num->num_rows();
-  if($chk!=1){
+  if($chk>=1){
     $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
-          <span> ชื่อนี้ถูกใช้เเล้ว</span>
+          <span> ชื่อนี้ถูกใช้เเล้วp</span>
         </div> ');
         $this->session->set_flashdata('p_no',$p_no);
      
  }else{
-    $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
-          <span> ชื่อนี้ถูกใช้เเล้ว</span>
-        </div> ');
-        $this->session->set_flashdata('p_no',$p_no);
-        
- }
-}else{
     $last_id = $this->model->insert_drawing($d_no, $dcn_id, $path, $file);
         $d_id = $last_id;
         $result = $this->model->insert_part1($p_no,$p_name,$d_id);
@@ -167,7 +163,9 @@ class Drawing extends CI_Controller {
           <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
         </div> ');
        
-}         redirect('drawing/add','refresh');
+}
+    
+}     redirect('drawing/add','refresh');    
     }
 
     public function insert2()
@@ -270,6 +268,7 @@ class Drawing extends CI_Controller {
 
     public function update_v()
     {
+
         $d_id =  $this->input->post('d_id');
         $d_no =  $this->input->post('d_no');
         $dcn_id =  $this->input->post('dcn_id');
@@ -293,10 +292,10 @@ class Drawing extends CI_Controller {
         $file =  $this->input->post('file');
         $path = $this->input->post('path');
         $open = ("$path$file");
-
-        exec($open);
         if($open){
-            echo '<script language="javascript">';
+        $this->model->download_record($this->session->userdata('su_id'),$this->session->userdata('username'),$file);
+         force_download($open, NULL);  
+           echo '<script language="javascript">';
                 echo 'history.go(-1);';
                 echo '</script>';
         }else{
@@ -307,14 +306,17 @@ class Drawing extends CI_Controller {
         }
 
     }
+
     public function open_dcn()
     {
         $dcn_id =  $this->input->post('dcn_id');
         $file =  $this->input->post('file');
         $path = $this->input->post('path');
         $open = ("$path$file");
-        force_download($open, NULL);
+        
         if($open){
+    $this->model->download_record($this->session->userdata('su_id'),$this->session->userdata('username'),$file);
+    force_download($open, NULL);
             echo '<script language="javascript">';
                 echo 'history.go(-1);';
                 echo '</script>';
@@ -327,7 +329,71 @@ class Drawing extends CI_Controller {
   
     }
 
+    public function upload()
+    {       
+            $config['upload_path']          = './uploads/';
+            $config['allowed_types']        = '*';
+        $d_no =  $this->input->post('d_no');
+        $dcn_id =  $this->input->post('dcn_id');
+        $p_no =  $this->input->post('p_no');
+        $p_name =  $this->input->post('p_name');
+        $path =  $this->input->post('path');
+        $file = $_FILES['file_name']['name'];
 
 
+      $num= $this->db->query("SELECT * FROM drawing where d_no = '$d_no'"); 
+  $chk= $num->num_rows();
+ if($chk != 0){
+    $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
+          <span> ชื่อนี้ถูกใช้เเล้วd</span>
+        </div> ');
+        $this->session->set_flashdata('d_no',$d_no);
+      
+ }else if($chk != 1){
+    $num= $this->db->query("SELECT * FROM part where p_no = '$p_no'"); 
+  $chk= $num->num_rows();
+  if($chk>=1){
+    $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
+          <span> ชื่อนี้ถูกใช้เเล้วp</span>
+        </div> ');
+        $this->session->set_flashdata('p_no',$p_no);
+     
+ }else{
+            $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+            if ( ! $this->upload->do_upload('file_name'))
+            {
+            echo "<script>";
+            echo 'alert(" File Failed ");';
+            echo 'history.go(-1);';
+            echo '</script>';
+            exit();
+            redirect('drawing/add','refresh');   
+            }
+            else
+            {
+        if($p_no != null || $p_name != null){
+        $last_id = $this->model->insert_drawing($d_no, $dcn_id, $path, $file);
+        $d_id = $last_id;
+        $result = $this->model->insert_part1($p_no,$p_name,$d_id);
+        $this->session->set_flashdata('success','<div class="alert alert-succes hide-its">  
+          <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
+        </div> ');
+    }else{
+        $last_id = $this->model->insert_drawing($d_no, $dcn_id, $path, $file);
+        $this->session->set_flashdata('success','<div class="alert alert-succes hide-its">  
+          <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
+        </div> ');
+    } 
+
+            }
+  
+}
+    
+}     redirect('drawing/add','refresh');    
+
+
+
+}
 }
 

@@ -15,7 +15,7 @@
                   <div class="form-group">
                     <label for="name-1"  class="col-sm-3 col-md-4 control-label">Permission_Group Name</label>
                     <div class="col-sm-6 col-md-4">
-                    <input  class="form-control" type="text" placeholder="Permission_Group Name" name="gname" required>
+                    <input  class="form-control" type="text" name="gname" required>
                   </div>
                   </div>
              </div>

@@ -643,12 +643,12 @@ $num= $this->db->query("SELECT * FROM part where p_no = '$p_no'");
   return false;
  }
 
- function insert_drawing($d_no, $dcn_id,$path_file,$file_name)
+ function insert_drawing($d_no, $dcn_id, $path, $file)
  {
     
-       $path_file = quotemeta($path_file);
+       $path = quotemeta($path);
   $sql ="INSERT INTO drawing (d_no,enable, dcn_id, date_created,delete_flag,path_file,file_name,version) VALUES 
-  ( '$d_no', '1', '$dcn_id', CURRENT_TIMESTAMP,  '1','$path_file','$file_name','00');";
+  ( '$d_no', '1', '$dcn_id', CURRENT_TIMESTAMP,  '1','$path','$file','00');";
     $query = $this->db->query($sql);  
     $last_id = $this->db->insert_id();
   if($query){
@@ -1225,6 +1225,7 @@ public function save_edit_part($p_id, $p_no, $p_name,$d_id)
 
   public function insert_dcn($dcn_no,$path,$file)
   {
+    $path = quotemeta($path);
     $num= $this->db->query("SELECT * FROM dcn where dcn_no = '$dcn_no'"); 
   $chk= $num->num_rows();
 
@@ -1250,6 +1251,19 @@ public function save_edit_part($p_id, $p_no, $p_name,$d_id)
       return false; 
     }
   }
+
+  public function download_record($su_id,$su_name,$data)
+  {
+    $sql  = "INSERT INTO `download_record`(`su_id`, `su_name`, `content`, `date_download`) 
+    VALUES ('$su_id','$su_name','$data',CURRENT_TIMESTAMP)";
+  $query= $this->db->query($sql); 
+  if($query){
+      return true;
+  }else{
+    return false;
+ }
+ }
+
 
   
 }

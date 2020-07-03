@@ -6,10 +6,11 @@ class Dcn extends CI_Controller {
     function __construct() { 
     
         parent::__construct(); 
+        $this->load->library('upload');
+        $this->load->helper('download');
         $this->load->helper('form');
         $this->load->database(); 
-        $this->load->model('model');
-        $this->model->CheckSession();
+        $this->load->model('model');        $this->model->CheckSession();
         $menu['menu'] = $this->model->showmenu($this->session->userdata('sug_id'));
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
          $menu['mg']= $this->model->givemeid($url);
@@ -168,6 +169,51 @@ class Dcn extends CI_Controller {
             redirect('dcn/manage/'.$uid.'','refresh');
 
         }
+    }
+
+        public function upload()
+    {       
+
+            $config['upload_path']          = './uploads/';
+            $config['allowed_types']        = '*';
+        $dcn_no =  $this->input->post('dcn_no');
+        $path =  $this->input->post('path');
+        $file = $_FILES['file_name']['name'];
+
+    $num= $this->db->query("SELECT * FROM dcn where dcn_no = '$dcn_no' AND dcn.delete_flag != 0"); 
+  $chk= $num->num_rows();
+ if($chk >= 1){
+    $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
+          <span> ชื่อนี้ถูกใช้เเล้ว</span>
+        </div> ');
+        $this->session->set_flashdata('dcn_no',$dcn_no);
+      
+ }else{
+
+            $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+            if ( ! $this->upload->do_upload('file_name'))
+            {
+            echo "<script>";
+            echo 'alert(" File Failed ");';
+            echo 'history.go(-1);';
+            echo '</script>';
+            exit();
+            redirect('dcn/add','refresh');   
+            }
+            else
+            {
+
+        $result = $this->model->insert_dcn($dcn_no,$path,$file);
+            $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
+          <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
+        </div> ');
+            }
+
+    
+}     
+redirect('dcn/add','refresh');   
+
     }
 
 }
