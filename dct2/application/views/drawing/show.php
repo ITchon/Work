@@ -73,8 +73,9 @@
                 <td class="text-center">
                   <form id='form' action="<?php echo base_url()?>drawing/open_dcn" method="post">
                   <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
-                  <input type="hidden" name="path" value="<?php echo $r->dcn_path ?>\">
-                  <input type="hidden" name="file" value="<?php echo $r->dcn_file ?>">
+                  <input type="hidden" name="path" value="C:\inetpub\wwwroot\dct\uploads\">
+                  <input type="hidden" name="filename" value="<?php echo $r->dcn_file ?>">
+                  <input type="hidden" name="file" value="<?php echo $r->dcn_code ?>">
                     <button  type="submit" style=" background-color: Transparent;border:none" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><a>
                       <?php echo $r->dcn_no ?></a></button>
                   </form>
@@ -132,8 +133,9 @@
 
                      <form id='form' action="<?php echo base_url()?>drawing/openfile" method="post">
                   <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                  <input type="hidden" name="path" value="<?php echo $r->path_file ?>\">
-                  <input type="hidden" name="file" value="<?php echo $r->file_name ?>">
+                  <input type="hidden" name="path" value="C:\inetpub\wwwroot\dct\uploads\">
+                  <input type="hidden" name="filename" value="<?php echo $r->file_name ?>">
+                  <input type="hidden" name="file" value="<?php echo $r->file_code?>">
                   <button class=" btn-primary btn-sm fa fa-inbox" type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;">
                   </button>
                   </form>
@@ -150,7 +152,7 @@
                 }
                 ?>
 
-                <td style="font-size: 14px"><?php echo $r->path_file ?> </td>
+                <td style="font-size: 14px"><?php echo $r->path_file ?>\<?php echo $r->file_name ?> </td>
                 <?php
 
             echo "</tr>";

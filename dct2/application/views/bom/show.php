@@ -156,7 +156,7 @@ th, td {
                          ?>
                         
                         <td class="text-center no_print">
-                    <form id="form" action="<?php echo base_url()?>bom/delete" method="post">
+                    <form id="form" action="<?php echo base_url()?>bom/delete_sub" method="post">
                     <input type="hidden" name="m_id" value="<?php echo $row['sub_id'] ?>" >
                     <input type="hidden" name="bm" value="<?php echo $bm ?>" >  
                     <button type="submit" onclick='return confirm("Confirm Delete Item")' class="btn-danger btn-sm fa fa-trash" data-toggle="tooltip" data-html="true" data-placement="left" aria-describedby="passHelp" title="<h5>ลบข้อมูล</h5>"></button>

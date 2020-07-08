@@ -32,7 +32,7 @@
                     <label for="name-1" class="col-sm-3 col-md-4 control-label">Controller</label>
                     <div class="col-sm-6 col-md-3">
                   <select name="spg_id" id="" class="form-control select2" required>
-             <option value="" hidden>Select Group</option>
+             <option value="" hidden >Select Group</option>
                   <?php 
               foreach($excLoadG as $r){?>
              

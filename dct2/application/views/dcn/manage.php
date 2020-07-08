@@ -12,7 +12,7 @@
   
     </h2><hr>
             
-            <form class="table form form-horizontal container" action="<?php echo base_url()?>dcn/manage" method="post" >
+            <form class="table form form-horizontal container" action="<?php echo base_url()?>dcn/manage" method="post" data-toggle="validator">
             <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select DCN</label>      
           

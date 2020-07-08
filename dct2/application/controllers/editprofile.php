@@ -41,10 +41,6 @@ class editprofile extends CI_Controller {
 
         $gender = $data['result'][0]->gender;
 
-        $sql1 ="SELECT * FROM gender where gender != '$gender';";
-        //$sql =  'SELECT * FROM sys_users ';
-        $query = $this->db->query($sql1); 
-        $data['result_gen'] = $query->result();
 
 
 

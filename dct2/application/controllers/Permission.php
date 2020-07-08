@@ -18,8 +18,7 @@ class Permission extends CI_Controller {
          $query = $this->db->query($sql); 
          $menu['submenu']= $query->result(); 
          $this->load->view('header');
-         $this->load->view('menu',$menu);
-         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));        
+         $this->load->view('menu',$menu);      
     }
 	public function index()
     {	
@@ -29,6 +28,7 @@ class Permission extends CI_Controller {
     
 	public function manage()
     {	
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $sql =  'select * from sys_permissions where delete_flag !=0';
@@ -46,8 +46,6 @@ class Permission extends CI_Controller {
 
         public function insert()
     {
-        $this->model->CheckPermission($this->session->userdata('su_id'));
-
         $gname =  $this->input->post('gname');
         $controller =  $this->input->post('controller');
         $spg_id =  $this->input->post('spg_id');
@@ -58,7 +56,8 @@ class Permission extends CI_Controller {
 
     public function add()
     {   
-        //$this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
+        $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $sql = "SELECT * FROM sys_permission_groups where delete_flag != 0 ";
         $query = $this->db->query($sql);
@@ -70,6 +69,7 @@ class Permission extends CI_Controller {
 
     public function deletepermission()
     {
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $this->model->delete_permission($this->uri->segment('3'));
@@ -78,8 +78,8 @@ class Permission extends CI_Controller {
 
     public function enable($uid){
 
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
-
         $result = $this->model->enablePermission($uid);
 
         if($result!=FALSE){
@@ -94,6 +94,7 @@ class Permission extends CI_Controller {
 
     public function disable($uid){
 
+       $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $result = $this->model->disablePermission($uid);
@@ -111,6 +112,7 @@ class Permission extends CI_Controller {
 
     public function edit_permission()
     {
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $id = $this->uri->segment('3');

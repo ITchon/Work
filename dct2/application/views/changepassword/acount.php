@@ -26,7 +26,7 @@
                    <div class="form-group has-feedback">
                       <label for="password" class="col-sm-3 col-md-4 control-label">Current Password</label>
                       <div class="col-sm-6 col-md-4">
-                      <input id="password" class="form-control" type="password" autocomplete="off" name="cur_password" placeholder="Enter your Current Password" />
+                      <input id="password" class="form-control" type="password" autocomplete="off" name="cur_password"  />
                       <span class="form-control-feedback" aria-hidden="true">
                       <span class="icon"></span>
                       </span>
@@ -36,7 +36,7 @@
                    <div class="form-group has-feedback">
                       <label for="password" class="col-sm-3 col-md-4 control-label">New Password</label>
                       <div class="col-sm-6 col-md-4">
-                      <input id="password" class="form-control" type="password" autocomplete="off" name="new_password" placeholder="Enter your New Password" required />
+                      <input id="password" class="form-control" type="password" autocomplete="off" name="new_password"  required />
                       <span class="form-control-feedback" aria-hidden="true">
                       <span class="icon"></span>
                       </span>
@@ -46,7 +46,7 @@
                    <div class="form-group has-feedback">
                       <label for="password" class="col-sm-3 col-md-4 control-label">Confirm New Password</label>
                       <div class="col-sm-6 col-md-4">
-                      <input id="password" class="form-control" type="password" autocomplete="off" name="con_password" placeholder="Enter your Confirm Password" required />
+                      <input id="password" class="form-control" type="password" autocomplete="off" name="con_password"  required />
                       <span class="form-control-feedback" aria-hidden="true">
                       <span class="icon"></span>
                       </span>

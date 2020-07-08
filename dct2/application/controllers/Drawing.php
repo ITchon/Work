@@ -30,6 +30,8 @@ class Drawing extends CI_Controller {
 
     public function manage()
     {   
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $this->session->set_userdata('name','');
         $this->session->set_userdata('id','');  
         $data['result_d'] = $this->model->get_drawing(); 
@@ -41,7 +43,6 @@ class Drawing extends CI_Controller {
 
     public function show()
     {   
-
         if($this->session->userdata('id')){
             $id = $this->session->userdata('id');
             $name = $this->session->userdata('name');
@@ -86,6 +87,8 @@ class Drawing extends CI_Controller {
 
     public function show_v()
     {   
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         if($this->input->post('id')){
         $id =  $this->input->post('id');
         $name =  $this->input->post('name');
@@ -118,7 +121,8 @@ class Drawing extends CI_Controller {
     public function add()
 
     {   
-        //$this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
         $sql = "SELECT * FROM dcn where delete_flag != 0 ";
         $query = $this->db->query($sql);
@@ -185,7 +189,8 @@ class Drawing extends CI_Controller {
 
     public function enable(){
 
-        //$this->model->CheckPermission($this->session->userdata('sp_id'));
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $d_id =  $this->input->post('d_id');
 
         $result = $this->model->enableDrawing($d_id);
@@ -197,7 +202,8 @@ class Drawing extends CI_Controller {
 
     public function disable(){
 
-        //$this->model->CheckPermission($this->session->userdata('sp_id'));
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $d_id = $this->input->post('d_id');
 
         $result = $this->model->disableDrawing($d_id);
@@ -212,6 +218,8 @@ class Drawing extends CI_Controller {
 
     public function deletedrawing()
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $id = $this->input->post('d_id');
         $this->model->delete_drawing($id);
         redirect('drawing/show/','refresh');
@@ -220,10 +228,14 @@ class Drawing extends CI_Controller {
 
     public function version_form()
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+
         $id =  $this->input->post('d_id');
 
         $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, d.enable, d.file_name as file, dc.dcn_no, d.version,
-        d.path_file from drawing as d
+        d.path_file ,d.file_code
+        from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
           where d.d_id = $id";
 
@@ -245,6 +257,8 @@ class Drawing extends CI_Controller {
 
     public function version_form_v()
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $id = $this->uri->segment('3');
 
         $sql =  "SELECT v.v_id, d.d_id, d.d_no, v.dcn_id, dc.dcn_no, v.enable, v.file_name as file,
@@ -268,55 +282,94 @@ class Drawing extends CI_Controller {
 
     public function update_v()
     {
-
+        $config['upload_path']          = './uploads/';
+        $config['allowed_types']        = '*';
+        $config['encrypt_name'] = TRUE;
         $d_id =  $this->input->post('d_id');
         $d_no =  $this->input->post('d_no');
         $dcn_id =  $this->input->post('dcn_id');
         $version =  $this->input->post('version');
         $path_file =  $this->input->post('path');
-        $file_name =  $this->input->post('file_name');
         $dcnid =  $this->input->post('dcnid');
+        $code =  $this->input->post('code');
 
-        $this->model->select_version($d_id);
-        $this->model->update_version($d_id, $d_no, $dcn_id, $version, $file_name, $path_file);
-
+        if($_FILES['file_name']['name'] != null){
+            $file = $_FILES['file_name']['name'];
+             $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+          if ( ! $this->upload->do_upload('file_name'))
+          {
+          echo "<script>";
+          echo 'alert(" File Failed ");';
+          echo '</script>';
+          exit();
+          redirect('drawing/show','refresh');   
+          }else{
+            $uploaded = $this->upload->data();
+    $code = array('filename'  => $uploaded['file_name']);
+    foreach ($code as $c) {
+            $this->model->select_version($d_id);
+        $this->model->update_version($d_id, $d_no, $dcn_id, $version, $file, $path_file,$c);
+        redirect('drawing/show/','refresh');
+    }
+          }
+        }else{
+            $file =  $this->input->post('file_name2');
+          if ($this->input->post('file_name2') == null)
+          {
+          echo "<script>";
+          echo 'alert(" File Failed ");';
+          echo '</script>';
+          exit();
+          redirect('drawing/show','refresh');   
+          }else{
+            $this->model->select_version($d_id);
+        $this->model->update_version($d_id, $d_no, $dcn_id, $version, $file, $path_file,$code);
         redirect('drawing/show/','refresh');
 
-
+          }
+        }
+       
   
     }
 
     public function openfile()
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+
         $d_id =  $this->input->post('d_id');
         $file =  $this->input->post('file');
+        $filename =  $this->input->post('filename');
         $path = $this->input->post('path');
+        $data = file_get_contents("$path$file");
         $open = ("$path$file");
         if($open){
-        $this->model->download_record($this->session->userdata('su_id'),$this->session->userdata('username'),$file);
-         force_download($open, NULL);  
-           echo '<script language="javascript">';
-                echo 'history.go(-1);';
-                echo '</script>';
+        $this->model->download_record($this->session->userdata('su_id'),$this->session->userdata('username'),$filename);
+         force_download($filename, $data);
+           redirect('drawing/show/','refresh');
         }else{
             echo "<script>";
             echo 'alert("Data not found.");';
             echo 'history.go(-1);';
             echo '</script>';
         }
-
     }
 
     public function open_dcn()
     {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+        
         $dcn_id =  $this->input->post('dcn_id');
         $file =  $this->input->post('file');
+        $filename =  $this->input->post('filename');
         $path = $this->input->post('path');
         $open = ("$path$file");
-        
+        $data = file_get_contents("$path$file");
         if($open){
-    $this->model->download_record($this->session->userdata('su_id'),$this->session->userdata('username'),$file);
-    force_download($open, NULL);
+    $this->model->download_record($this->session->userdata('su_id'),$this->session->userdata('username'),$filename);
+    force_download($filename, $data);
             echo '<script language="javascript">';
                 echo 'history.go(-1);';
                 echo '</script>';
@@ -333,6 +386,7 @@ class Drawing extends CI_Controller {
     {       
             $config['upload_path']          = './uploads/';
             $config['allowed_types']        = '*';
+            $config['encrypt_name'] = TRUE;
         $d_no =  $this->input->post('d_no');
         $dcn_id =  $this->input->post('dcn_id');
         $p_no =  $this->input->post('p_no');
@@ -359,34 +413,42 @@ class Drawing extends CI_Controller {
         $this->session->set_flashdata('p_no',$p_no);
      
  }else{
-            $this->load->library('upload', $config);
-        $this->upload->initialize($config);
-            if ( ! $this->upload->do_upload('file_name'))
-            {
-            echo "<script>";
-            echo 'alert(" File Failed ");';
-            echo 'history.go(-1);';
-            echo '</script>';
-            exit();
-            redirect('drawing/add','refresh');   
-            }
-            else
-            {
-        if($p_no != null || $p_name != null){
-        $last_id = $this->model->insert_drawing($d_no, $dcn_id, $path, $file);
-        $d_id = $last_id;
-        $result = $this->model->insert_part1($p_no,$p_name,$d_id);
-        $this->session->set_flashdata('success','<div class="alert alert-succes hide-its">  
-          <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
-        </div> ');
-    }else{
-        $last_id = $this->model->insert_drawing($d_no, $dcn_id, $path, $file);
-        $this->session->set_flashdata('success','<div class="alert alert-succes hide-its">  
-          <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
-        </div> ');
-    } 
+      $this->load->library('upload', $config);
+      $this->upload->initialize($config);
+          if ( ! $this->upload->do_upload('file_name'))
+          {
+          echo "<script>";
+          echo 'alert(" File Failed ");';
+          echo 'history.go(-1);';
+          echo '</script>';
+          exit();
+          redirect('drawing/add','refresh');   
+          }
+          else
+          {
+      if($p_no != null || $p_name != null){
+        $uploaded = $this->upload->data();
+    $code = array('filename'  => $uploaded['file_name']);
+    foreach ($code as $c) {
+      $last_id = $this->model->insert_drawing($d_no, $dcn_id, $path, $file,$c);
+      $d_id = $last_id;
+      $result = $this->model->insert_part1($p_no,$p_name,$d_id);
+  }
+      $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
+        <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
+      </div> ');
+  }else{
+    $uploaded = $this->upload->data();
+    $code = array('filename'  => $uploaded['file_name']);
+    foreach ($code as $c) {
+        $last_id = $this->model->insert_drawing($d_no, $dcn_id, $path, $file, $c);
+    }  
+      $this->session->set_flashdata('success','<div class="alert alert-success hide-it">
+        <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
+      </div> ');
+  } 
 
-            }
+          }
   
 }
     

@@ -30,6 +30,7 @@ class Part extends CI_Controller {
 	public function manage()
     {	
         $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
             $p_id =  $this->input->post('p_id');
             $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable,p.d_id,d.d_no
@@ -46,6 +47,7 @@ class Part extends CI_Controller {
 	public function add()
     {	
         $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $sql = "SELECT * FROM drawing where delete_flag != 0 ";
         $query = $this->db->query($sql);
         $data['result_d'] = $query->result(); 
@@ -56,6 +58,7 @@ class Part extends CI_Controller {
     {	
 
         $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $id = $this->uri->segment('3');
         $p_id =  $this->input->post('id');
         $p_no =  $this->input->post('p_no');
@@ -94,7 +97,9 @@ class Part extends CI_Controller {
 		$this->load->view('footer');
 	}
 	public function add_bom_sub()
-    {	
+    {	  
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $id = $this->uri->segment('3');
         $m_id =  $this->input->post('m_id');
         $sub_id =  $this->input->post('sub_id');
@@ -182,6 +187,7 @@ class Part extends CI_Controller {
     public function enable($uid){
 
         $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
 		$result = $this->model->enablePart($uid);
 
@@ -197,6 +203,7 @@ class Part extends CI_Controller {
 	public function disable($uid){
 
         $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
 		$result = $this->model->disablePart($uid);
 
@@ -212,6 +219,7 @@ class Part extends CI_Controller {
     public function deletepart()
     {
         $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $id = $this->uri->segment('3');
         $this->model->delete_part($id);
         redirect('part/manage/'.$id.'','refresh');
@@ -220,6 +228,7 @@ class Part extends CI_Controller {
     public function edit_part()   
     {
         $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         
         if($this->input->post('bom')){
         $p_id =  $this->input->post('p_id');

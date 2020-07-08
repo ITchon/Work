@@ -28,7 +28,7 @@
                     <label for="part" class="col-sm-5 col-md-4 control-label">Part Number</label>
                     <div class="col-sm-6 col-md-4">
 
-                    <input id="part" class="form-control" value="<?php echo $p_no ?>" type="text" name="p_no" placeholder="Part Number" required>
+                    <input id="part" class="form-control" value="<?php echo $p_no ?>" type="text" name="p_no" required>
 
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
@@ -38,7 +38,7 @@
                 <div class="form-group has-feedback">
                     <label for="p_name" class="col-sm-5 col-md-4 control-label">Part Name</label>
                     <div class="col-sm-6 col-md-4">
-                    <input id="p_name" class="form-control" type="text" name="p_name" placeholder="Part Name" required>
+                    <input id="p_name" class="form-control" type="text" name="p_name" required>
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
                     </span>

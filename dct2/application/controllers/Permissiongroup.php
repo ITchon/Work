@@ -28,6 +28,8 @@ class Permissiongroup extends CI_Controller {
     
 	public function manage()
     {	
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
+        $this->model->CheckPermission($this->session->userdata('su_id'));
         
         $sql =  'select * from sys_permission_groups where delete_flag != 0';
         $query = $this->db->query($sql); 
@@ -38,7 +40,8 @@ class Permissiongroup extends CI_Controller {
 
     public function add()
     {   
-        //$this->model->CheckPermission($this->session->userdata('su_id'));
+       $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
+        $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $this->load->view('permission_group/add');//bring $data to user_data 
         $this->load->view('footer');
@@ -46,6 +49,7 @@ class Permissiongroup extends CI_Controller {
 
      public function enable($uid){
 
+       $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $result = $this->model->enablePermission_Group($uid);
@@ -63,6 +67,7 @@ class Permissiongroup extends CI_Controller {
 
     public function disable($uid){
 
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $result = $this->model->disablePermission_Group($uid);
@@ -80,7 +85,6 @@ class Permissiongroup extends CI_Controller {
 
     public function insert()
     {
-        $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $gname =  $this->input->post('gname');
         $result = $this->model->insert_permissiongroup($gname);
@@ -91,6 +95,7 @@ class Permissiongroup extends CI_Controller {
 
     public function delete_pg()
     {
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $this->model->delete_permissiongroup($this->uri->segment('3'));
@@ -99,6 +104,7 @@ class Permissiongroup extends CI_Controller {
 
     public function edit_pg()
     {
+       $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
         $id = $this->uri->segment('3');

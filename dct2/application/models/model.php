@@ -11,7 +11,7 @@ class Model extends CI_Model
         redirect('login','refresh');
      return FALSE;
      
-      }else{	return TRUE; 	}
+      }else{    return TRUE;    }
   }
   public function sub_part($id,$bm,$origin)
   { 
@@ -382,7 +382,7 @@ class Model extends CI_Model
   public function get_drawing_by($id,$search,$sort)
   {
       $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
-      ,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path
+      ,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code
       from drawing as d
       inner join dcn as dc on dc.dcn_id = d.dcn_id
       inner join part as p on p.d_id = d.d_id 
@@ -394,14 +394,14 @@ class Model extends CI_Model
   public function get_drawing_ver($id,$p_id)
   {
      $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.path_file, d.file_name, d.version
-     , p.p_no,p.p_id,'v_id',dc.file_name as dcn_file,dc.path_file as dcn_path
+     , p.p_no,p.p_id,'v_id',dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code
             from drawing as d
             inner join dcn as dc on dc.dcn_id = d.dcn_id
             inner join part as p on p.d_id = d.d_id 
             where d.delete_flag != 0 AND d.d_id = $id AND p.p_id = $p_id
             UNION
                 SELECT v.d_id, v.d_no, v.dcn_id, dc.dcn_no, v.enable, v.path_file, v.file_name, v.version
-                , p.p_no,p.p_id, v.v_id,dc.file_name as dcn_file,dc.path_file as dcn_path
+                , p.p_no,p.p_id, v.v_id,dc.file_name as dcn_file,dc.path_file as dcn_path,v.file_code,dc.file_code as dcn_code
          from version as v
          inner join dcn as dc on dc.dcn_id = v.dcn_id
          inner join part as p on p.d_id = v.d_id 
@@ -416,7 +416,7 @@ class Model extends CI_Model
   public function get_dcn_by($id,$search,$sort)
   {
      $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
-     ,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path
+     ,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code
           from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
           inner join part as p on p.d_id = d.d_id 
@@ -431,7 +431,7 @@ class Model extends CI_Model
   public function get_part_by($id,$search,$sort)
   {
      $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
-     ,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path
+     ,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code
           from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
           inner join part as p on p.d_id = d.d_id 
@@ -456,29 +456,29 @@ class Model extends CI_Model
 
 
   public function CheckPermission($para){
-		
-		$get_url = trim($this->router->fetch_class().'/'.$this->router->fetch_method());
+        
+        $get_url = trim($this->router->fetch_class().'/'.$this->router->fetch_method());
 
-		$sqlChkPerm = "SELECT sp.name,sp.controller
-		FROM
-		sys_users_permissions AS sup
-		INNER JOIN sys_permissions AS sp ON sp.sp_id = sup.sp_id
-		LEFT JOIN sys_permission_groups AS spg ON sp.spg_id = spg.spg_id
-		WHERE
-		sp.enable='1' AND spg.enable='1' AND sup.su_id='{$para}' AND sp.controller='{$get_url}';";
-		
-		$excChkPerm = $this->db->query($sqlChkPerm);
-		$numChkPerm = $excChkPerm->num_rows();
-		
-		if($numChkPerm == 0) {
-			
-			echo '<script language="javascript">';
-			echo 'alert("Permission '.$get_url.' not found.");';
-			echo 'history.go(-1);';
-			echo '</script>';
-			exit();
-			
-		}
+        $sqlChkPerm = "SELECT sp.name,sp.controller
+        FROM
+        sys_users_permissions AS sup
+        INNER JOIN sys_permissions AS sp ON sp.sp_id = sup.sp_id
+        LEFT JOIN sys_permission_groups AS spg ON sp.spg_id = spg.spg_id
+        WHERE
+        sp.enable='1' AND spg.enable='1' AND sup.su_id='{$para}' AND sp.controller='{$get_url}';";
+        
+        $excChkPerm = $this->db->query($sqlChkPerm);
+        $numChkPerm = $excChkPerm->num_rows();
+        
+        if($numChkPerm == 0) {
+            
+            echo '<script language="javascript">';
+            echo 'alert("Permission '.$get_url.' not found.");';
+            echo 'history.go(-1);';
+            echo '</script>';
+            exit();
+            
+        }
 
   }
   public function CheckPermissionGroup($para){
@@ -517,7 +517,7 @@ if($query->num_rows()!=0) {
 $result = $query->result_array();
   return $result[0];  
   }
-else{		
+else{       
 return false;
   }
 
@@ -643,12 +643,12 @@ $num= $this->db->query("SELECT * FROM part where p_no = '$p_no'");
   return false;
  }
 
- function insert_drawing($d_no, $dcn_id, $path, $file)
+ function insert_drawing($d_no, $dcn_id,$path_file,$file_name,$code)
  {
     
-       $path = quotemeta($path);
-  $sql ="INSERT INTO drawing (d_no,enable, dcn_id, date_created,delete_flag,path_file,file_name,version) VALUES 
-  ( '$d_no', '1', '$dcn_id', CURRENT_TIMESTAMP,  '1','$path','$file','00');";
+       $path_file = quotemeta($path_file);
+  $sql ="INSERT INTO drawing (d_no,enable, dcn_id, date_created,delete_flag,path_file,file_name,file_code,version) VALUES 
+  ( '$d_no', '1', '$dcn_id', CURRENT_TIMESTAMP,  '1','$path_file','$file_name','$code','00');";
     $query = $this->db->query($sql);  
     $last_id = $this->db->insert_id();
   if($query){
@@ -672,10 +672,11 @@ $num= $this->db->query("SELECT * FROM part where p_no = '$p_no'");
   $path_file =  $data[0]->path_file;
   $d_no =  $data[0]->d_no;
   $dcn_id =  $data[0]->dcn_id;
+  $file_code =  $data[0]->file_code;
   $path_file = quotemeta($path_file);
 
-  $gg ="INSERT INTO version (d_id, d_no, dcn_id, enable, date_created, delete_flag, path_file, file_name, version) VALUES ( '$d_id', '$d_no', '$dcn_id', '0',
-   CURRENT_TIMESTAMP, '1', '$path_file', '$file_name', '$version');";
+  $gg ="INSERT INTO version (d_id, d_no, dcn_id, enable, date_created, delete_flag, path_file, file_name,file_code, version) VALUES ( '$d_id', '$d_no', '$dcn_id', '0',
+   CURRENT_TIMESTAMP, '1', '$path_file', '$file_name','$file_code', '$version');";
   $query = $this->db->query($gg); 
 if($query){
      return true;
@@ -686,11 +687,11 @@ if($query){
 
  }
 
- function update_version($d_id, $d_no, $dcn_id, $version, $file_name, $path_file)
+ function update_version($d_id, $d_no, $dcn_id, $version, $file_name, $path_file,$code)
  {
   $v = $version+1;
 $path_file = quotemeta($path_file);
-  $sql ="UPDATE drawing SET d_no = '$d_no' , date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id', version = '$v', path_file = '$path_file', file_name = '$file_name',enable = 1 WHERE d_id = '$d_id'";
+  $sql ="UPDATE drawing SET d_no = '$d_no' , date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id', version = '$v', path_file = '$path_file', file_name = '$file_name', file_code = '$code',enable = 1 WHERE d_id = '$d_id'";
     $query = $this->db->query($sql);  
    if($query){
      return true;
@@ -734,9 +735,9 @@ $path_file = quotemeta($path_file);
   
   if ($exc_user){
     
-    return TRUE;	
+    return TRUE;    
     
-  }else{	return FALSE;	}
+  }else{    return FALSE;   }
   
 }
 
@@ -748,9 +749,9 @@ public function disableUser($key=''){
   
   if ($exc_user){
     
-    return TRUE;	
+    return TRUE;    
     
-  }else{	return FALSE;	}
+  }else{    return FALSE;   }
   
 }
 
@@ -1223,14 +1224,15 @@ public function save_edit_part($p_id, $p_no, $p_name,$d_id)
   }
 
 
-  public function insert_dcn($dcn_no,$path,$file)
+  public function insert_dcn($dcn_no,$path,$file,$code)
   {
     $path = quotemeta($path);
     $num= $this->db->query("SELECT * FROM dcn where dcn_no = '$dcn_no'"); 
   $chk= $num->num_rows();
 
  if($chk < 1){
-    $sql  = "INSERT INTO dcn (dcn_no, date_created, delete_flag, enable, path_file, file_name) VALUES  ('$dcn_no', CURRENT_TIMESTAMP, '1', '1','$path','$file')";
+    $sql  = "INSERT INTO dcn (dcn_no, date_created, delete_flag, enable, path_file, file_name, file_code) VALUES  
+    ('$dcn_no', CURRENT_TIMESTAMP, '1', '1','$path','$file','$code')";
   $query= $this->db->query($sql); 
   if($query){
       return true;
@@ -1240,6 +1242,7 @@ public function save_edit_part($p_id, $p_no, $p_name,$d_id)
  }
 
   }
+
 
   public function save_dcn($dcn_id,$dcn_no,$path_file,$file_name)
   {
@@ -1252,7 +1255,7 @@ public function save_edit_part($p_id, $p_no, $p_name,$d_id)
     }
   }
 
-  public function download_record($su_id,$su_name,$data)
+    public function download_record($su_id,$su_name,$data)
   {
     $sql  = "INSERT INTO `download_record`(`su_id`, `su_name`, `content`, `date_download`) 
     VALUES ('$su_id','$su_name','$data',CURRENT_TIMESTAMP)";
@@ -1263,7 +1266,6 @@ public function save_edit_part($p_id, $p_no, $p_name,$d_id)
     return false;
  }
  }
-
 
   
 }

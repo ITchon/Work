@@ -45,11 +45,9 @@
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select</label>      
           
                       <div class="col-sm-6 col-md-3">
-                   <select name="gender" class="form-control select2"  >
-                   <option value="<?php echo $result_gen[0]->gender ?>"><?php echo $result[0]->gender ?></option>
-                   <?php foreach ($result_gen as $gen) { ?>
-                      <option value="<?php echo $gen->gender ?>"><?php echo $gen->gender?></option>
-                  <?php  } ?>
+                   <select id="select" name="gender" class="form-control select2" required >
+                      <option value="male">male</option>
+                      <option value="female">female</option>
                        
                    </select>
                     </div>
@@ -88,4 +86,10 @@
 
 
 </script> -->
+
+      <script>
+        <?php if($result[0]->gender == null){
+        } ?>
+      document.getElementById('select').value = "<?php echo $result[0]->gender ?>";
+</script>
 
