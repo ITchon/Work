@@ -111,13 +111,12 @@
                         <input class="form-control" type="text" placeholder="Search…">
                         <span class="icon icon-search input-icon"></span>
                       </div>
-                    </div>
+                    </div>s
                   </form>
   
                 <?php         
         
-             $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
-              
+                   
                 foreach($menu as $r){ 
                 ?>
     
@@ -133,7 +132,7 @@
                     <?php foreach($submenu as $s)  { 
 
                              if($r->mg == $s->mg_id) { ?>
-                          <li class="<?php echo($url == $s->method)? " active ":"" ?>"><a  href="<?php echo base_url()?><?php echo $s->link ?>"><?php echo " - ".$s->name ?></a></li>
+                          <li class="<?php echo($mg[0]->method == $s->method)? " active ":"" ?>"><a  href="<?php echo base_url()?><?php echo $s->method ?>"><?php echo " - ".$s->name ?></a></li>
                              <?php }
                     }
                     ?>

@@ -38,10 +38,8 @@
                       <div class="col-sm-6 col-md-3">
                    <select name="gender" class="form-control select2"  >
                    <option value="<?php echo $result_gen[0]->gender ?>"><?php echo $result[0]->gender ?></option>
-                   <?php foreach ($result_gen as $gen) { ?>
-                      <option value="<?php echo $gen->gender ?>"><?php echo $gen->gender?></option>
-                  <?php  } ?>
-                       
+                   <option value="male"><?php echo $result[0]->gender ?></option>
+                   <option value="female"><?php echo $result[0]->gender ?></option>
                    </select>
                     </div>
                     </div>

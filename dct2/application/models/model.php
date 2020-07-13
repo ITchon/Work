@@ -534,7 +534,7 @@ return false;
     return $result;
  }
  function givemeid($para){
-  $sql ="SELECT *  FROM sys_menus 
+  $sql ="SELECT * FROM sys_menus 
   WHERE link='$para'  ";
     $query = $this->db->query($sql);  
    $data = $query->result(); 
