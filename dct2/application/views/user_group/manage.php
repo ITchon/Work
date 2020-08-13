@@ -48,15 +48,14 @@
                 ?> <a class='' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขสิทธิ์</h5>' onclick="javascript:window.location='<?php
                 echo base_url() . 'usergroup/rule_ug/' . $r->sug_id;
                 ?>';"><i class='btn-info btn-sm fa fa-gears'> </i> </a>
-                
+
                 <a type ='button' class=' ' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขข้อมูล</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
                 echo base_url() . 'usergroup/edit_ug/' . $r->sug_id;
                 ?>';"><i class='btn-info btn-sm fa fa-wrench'></i></a>
 
                 <?php 
                 echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."usergroup/deletegroup/".$r->sug_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
-            
-                echo "</tr>";
+            echo "</tr>";
         }
     ?>
                   

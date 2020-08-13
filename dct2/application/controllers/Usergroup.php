@@ -10,15 +10,13 @@ class Usergroup extends CI_Controller {
         $this->load->database(); 
         $this->load->model('model');
         $this->model->CheckSession();
+
         $menu['menu'] = $this->model->showmenu($this->session->userdata('sug_id'));
-        $url = current_url(true);               
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
          $menu['mg']= $this->model->givemeid($url);
-         $sql =  "select * from sys_menus where order_no != 0 and enable != 0 ORDER BY order_no";
-         $query = $this->db->query($sql); 
-         $menu['submenu']= $query->result(); 
+          $menu['submenu'] = $this->model->showsubmenu($this->session->userdata('su_id'));
          $this->load->view('header');
-         $this->load->view('menu',$menu);
+        $this->load->view('menu',$menu);
         
     }
 	public function index()
@@ -31,7 +29,7 @@ class Usergroup extends CI_Controller {
     {	
         $this->model->CheckPermission($this->session->userdata('su_id'));
          $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-        $sql =  'SELECT * FROM sys_user_groups WHERE delete_flag != 0';
+        $sql =  'SELECT * FROM sys_user_groups WHERE delete_flag != 0 AND sug_id != 1';
         $query = $this->db->query($sql); 
        $data['result_all'] = $query->result();
         $this->load->view('user_group/manage',$data);//bring $data to user_data 
@@ -51,7 +49,7 @@ class Usergroup extends CI_Controller {
             $query = $this->db->query($sql2); 
             $data['result']= $query->result(); 
 
-            $sql2 =  "SELECT * from sys_user_groups where delete_flag != 0 ";
+            $sql2 =  "SELECT * from sys_user_groups where delete_flag != 0 AND sug_id != 1 ";
             $query = $this->db->query($sql2); 
             $data['result_all']= $query->result(); 
 
@@ -67,9 +65,7 @@ class Usergroup extends CI_Controller {
 
     public function add()
     {   
-        $this->model->CheckPermission($this->session->userdata('su_id'));
-        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-
+        //$this->model->CheckPermission($this->session->userdata('su_id'));
 
         $this->load->view('user_group/add');//bring $data to user_data 
         $this->load->view('footer');
@@ -78,11 +74,11 @@ class Usergroup extends CI_Controller {
 
     public function insert()
     {
-        
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $gname =  $this->input->post('gname');
         $result = $this->model->insert_group($gname);
        if($result == true){
-        echo "<script>alert('Inserted Data Success')</script>";
         redirect('usergroup/manage','refresh');
        }
        if($result == false){

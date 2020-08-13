@@ -21,23 +21,13 @@
                     <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Drawing No</label>
                     <div class="col-sm-5 col-md-4">
-                    <input id="d_no" class="form-control" required type="text" value="<?php echo $d_no ?>" name="d_no">
+                    <input id="d_no" class="form-control " required type="text" value="<?php echo $d_no ?>" name="d_no" placeholder="Drawing No">
 
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
                     </span>
                     </div>
                   </div>
-
-                  <div class="form-group has-feedback">
-                    <label for="p_name" class="col-sm-3 col-md-4 control-label">Drawing Name</label>
-                    <div class="col-sm-6 col-md-4">
-                    <input id="d_name" class="form-control" type="text" name="d_name">
-                    <span class="form-control-feedback" aria-hidden="true">
-                    <span class="icon"></span>
-                    </span>
-                    </div>
-                </div>
 
 
                 <div class="form-group has-feedback">
@@ -57,23 +47,6 @@
                     </div>
                 </div>
 
-                <div class="form-group has-feedback">
-                    <label for="dcn" class="col-sm-5 col-md-4 control-label">CUSTOMERS</label>    
-
-                <div class="col-sm-5 col-md-4">
-                   <select name="cus_id" class="form-control select2" id="dcn_id" >
-                   <option value="" hidden> - - - Select CUSTOMERS- - - </option>
-                   <?php
-                   
-                      foreach($result_cus as $cus){?>
-                     <option value="<?php  echo $cus->cus_id ?>"><?php echo $cus->cus_name ?></option>
-                    <?php
-                      }
-                      ?> 
-                   </select>
-                    </div>
-                </div>
-
                 <div class="form-group">
                       <label for="email-2" class="col-sm-5 col-md-4 control-label">File</label>  
                       <div class="col-sm-6 col-md-4">
@@ -82,34 +55,23 @@
                     </div>
 
                 <div class="form-group has-feedback">
-                    <label for="dcn" class="col-sm-5 col-md-4 control-label">TYPE</label>    
-
-                <div class="col-sm-5 col-md-4">
-                   <select name="tf_id" class="form-control select2"  required>
-                   <option value="" hidden> - - - Select TYPE- - - </option>
-                   <?php
-                   
-                      foreach($result_type as $t){?>
-                     <option value="<?php  echo $t->tf_id ?>"><?php echo $t->tf_name ?></option>
-                    <?php
-                      }
-                      ?> 
-                   </select>
+                    <label for="part" class="col-sm-5 col-md-4 control-label">Path File</label>
+                    <div class="col-sm-6 col-md-4">
+                    <input id="path" class="form-control " type="text" name="path" placeholder="Path File">
+                    <span class="form-control-feedback" aria-hidden="true">
+                    <span class="icon"></span>
+                    </span>
                     </div>
-               
-
-
                     <div class="col-sm-6 col-md-2">
                     <a class="btn btn-outline-primary" onclick="myFunction()"><b>เพิ่ม Part</b></a> 
- </div>
+
                   </div>
-                  
+                  </div>
 
 
 
 
                   <div id="myDIV" style="display: none;">
-                  
                  
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Part Number</label>

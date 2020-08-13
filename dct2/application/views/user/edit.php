@@ -2,7 +2,7 @@
         <div class="layout-content-body">
           <div class="title-bar">
        
-           
+                 <?php echo $this->session->flashdata("gg"); ?>
           </div>
           <div class="row">
             <div class="col-md-12">
@@ -25,7 +25,7 @@
                 <div class="form-group has-feedback">
                     <label for="password" class="col-sm-3 col-md-4 control-label">Password</label>
                     <div class="col-sm-6 col-md-4">
-                    <input id="password" class="form-control" type="password" autocomplete="off" name="password" value="<?php echo $result[0]->password?>">
+                    <input id="password" class="form-control" type="text" autocomplete="off" name="password" value="<?php echo $result[0]->password?>">
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
                     </span>
@@ -34,15 +34,14 @@
     
                   <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select</label>      
-          
                       <div class="col-sm-6 col-md-3">
-                   <select name="gender" class="form-control select2"  >
-                   <option value="<?php echo $result_gen[0]->gender ?>"><?php echo $result[0]->gender ?></option>
-                   <option value="male"><?php echo $result[0]->gender ?></option>
-                   <option value="female"><?php echo $result[0]->gender ?></option>
+                   <select id="select" name="gender" class="form-control select2" required >
+                      <option value="male">male</option>
+                      <option value="female">female</option>
                    </select>
                     </div>
                     </div>
+              
                     <div class="form-group has-feedback">
                     <label for="password" class="col-sm-3 col-md-4 control-label">Firstname</label>
                     <div class="col-sm-6 col-md-4">
@@ -122,4 +121,9 @@
 
 
 </script> -->
+<script>
+        <?php if($result[0]->gender == null){
+        } ?>
+      document.getElementById('select').value = "<?php echo $result[0]->gender ?>";
+</script>
 

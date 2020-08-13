@@ -19,7 +19,7 @@
                     <label for="name-1" class="col-sm-3 col-md-4 control-label">GROUP NAME</label>
 
                     <div class="col-sm-6 col-md-4">
-                    <input class="form-control" type="text" name="gname" placeholder="GROUP NAME" required>
+                    <input class="form-control" type="text" name="gname" required>
                   </div>
                   </div>
           </div>
