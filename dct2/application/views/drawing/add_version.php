@@ -56,7 +56,7 @@
 
                     
                     <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">File</label>      
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Old File</label>      
                       <div class="col-sm-6 col-md-4">
                         <?php if($result[0]->file == null){ ?>
                 <input class="form-control" type="text" readonly value="Please add file">
@@ -69,7 +69,7 @@
                     </div> 
 
                     <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Change File</label>  
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">New File</label>  
                       <div class="col-sm-6 col-md-4">
                         <?php if($result[0]->file){ ?>
                               <input type="text" name="file_name2" id="file_name2" value="<?php echo $result[0]->file ?>" hidden>

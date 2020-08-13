@@ -14,9 +14,7 @@ class Bom extends CI_Controller {
         $menu['menu'] = $this->model->showmenu($this->session->userdata('sug_id'));
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
          $menu['mg']= $this->model->givemeid($url);
-         $sql =  "select * from sys_menus where order_no != 0  and enable != 0 ORDER BY order_no";
-         $query = $this->db->query($sql); 
-         $menu['submenu']= $query->result(); 
+          $menu['submenu'] = $this->model->showsubmenu();
          $this->load->view('header');
         $this->load->view('menu',$menu);
       
@@ -31,11 +29,14 @@ class Bom extends CI_Controller {
     {	        
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+        
         $sort =  $this->input->post('sort'); 
         $sql =  'SELECT * From bom inner join part p on p.p_id = bom.b_master where bom.delete_flag !=0';
         $query = $this->db->query($sql); 
         $res = $query->result(); 
         $data['result'] =$res;
+
+
 
        if( $this->input->post('bm')){
           $bm =  $this->input->post('bm'); 
@@ -88,6 +89,7 @@ class Bom extends CI_Controller {
         $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
         $query = $this->db->query($sql); 
         $data['result_sub'] = $query->result(); 
+        $data['chk'] = $this->model->opencsv($this->session->userdata('su_id'));
         $this->load->view('bom/show',$data);
         $this->load->view('footer');
        } //------------------END BOM SEARCH-----------------
@@ -102,7 +104,7 @@ class Bom extends CI_Controller {
         $data['bm']=$bm;
         $data['sort']=null;
         $data['bm_id']=$res[0]->b_master;
-        $bom = $res[0]->p_no;;
+        $data['p_no']=$res[0]->p_no;
       
         //Find Maxlv in array
         if($array!=null){
@@ -118,28 +120,16 @@ class Bom extends CI_Controller {
         $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
         $query = $this->db->query($sql); 
         $data['result_sub'] = $query->result();     
-        if($this->input->post('csv')){
-            header("Content-type: application/csv");
-            header("Content-Disposition: attachment; filename=\"BOM$bom".".csv\"");
-            header("Pragma: no-cache");
-            header("Expires: 0");
-            $handle = fopen('php://output', 'w');
-            fputcsv($handle,array("Lv","Part No","Part Name","Quantity","Unit","Drawing No"));
-            fputcsv($handle, array("1",$res[0]->p_no,$res[0]->p_name,$res[0]->quantity,$res[0]->unit,$res[0]->d_no));
-            foreach ($array as $key) {
-                $narray=array($key['lv'],$key['p_no'],$key['p_name'],$key['qty'],$key['unit'],$key['d_no']);
-                fputcsv($handle, $narray);
-                 }
-                fclose($handle);
-            exit;
-        }
+        $data['chk'] = $this->model->opencsv($this->session->userdata('su_id'));
         $this->load->view('bom/show',$data);
         $this->load->view('footer');
          }else{
+        $data['chk'] = $this->model->opencsv($this->session->userdata('su_id'));
         $this->load->view('bom/manage',$data);
         $this->load->view('footer');
          }
         }
+
 
     
     public function edit_bom()

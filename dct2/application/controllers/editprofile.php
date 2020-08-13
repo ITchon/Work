@@ -13,14 +13,11 @@ class editprofile extends CI_Controller {
         $this->model->CheckSession();
     
         $menu['menu'] = $this->model->showmenu($this->session->userdata('sug_id'));
-        $sql =  "select * from sys_menus where order_no != 0 and enable != 0 ";
-        $query = $this->db->query($sql); 
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
          $menu['mg']= $this->model->givemeid($url);
-         $menu['submenu']= $query->result(); 
+          $menu['submenu'] = $this->model->showsubmenu($this->session->userdata('su_id'));
          $this->load->view('header');
-         $this->load->view('menu',$menu);
-         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+        $this->load->view('menu',$menu);
     }
 
 	public function index()
@@ -42,8 +39,6 @@ class editprofile extends CI_Controller {
         $gender = $data['result'][0]->gender;
 
 
-
-
         $g = $data['result'][0]->sug_id;
 
 
@@ -63,16 +58,13 @@ class editprofile extends CI_Controller {
 
     public function updated_profile()
     {
+        $su_id =  $this->session->userdata('su_id');
         $fname =  $this->input->post('fname');
         $lname  =  $this->input->post('lname');
         $gender =  $this->input->post('gender');
-        $username =  $this->input->post('username');
-        $password =  $this->input->post('password');
         $email  =  $this->input->post('email');
-        $sug_id =  $this->input->post('sug_id');
 
-        $result = $this->model->updated_profile_data($fname,$lname,$username,$password,$gender,$email,$sug_id,$su_id);
-
+        $result = $this->model->updated_profile_data($fname,$lname,$gender,$email,$su_id);
        redirect('User/manage');
     }
 

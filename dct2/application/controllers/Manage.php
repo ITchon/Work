@@ -11,18 +11,45 @@ class Manage extends CI_Controller {
         $this->load->database(); 
         $this->load->model('model');
         $this->model->CheckSession();
+
         $menu['menu'] = $this->model->showmenu($this->session->userdata('sug_id'));
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
          $menu['mg']= $this->model->givemeid($url);
-         $sql =  "select * from sys_menus where order_no != 0  and enable != 0 ORDER BY order_no";
-         $query = $this->db->query($sql); 
-         $menu['submenu']= $query->result(); 
-        $this->load->view('header');
+          $menu['submenu'] = $this->model->showsubmenu($this->session->userdata('su_id'));
+         $this->load->view('header');
         $this->load->view('menu',$menu);
     }
 	public function index()
 	{	
-		$this->load->view('dashboard');
+        $sql = "SELECT COUNT(d_id) as d_id FROM Drawing";
+        $query = $this->db->query($sql);
+        $drawing = $query->result();
+        $data['drawing'] = $drawing[0]->d_id;
+
+        $sql2 = "SELECT COUNT(p_id) as p_id FROM Part";
+        $query = $this->db->query($sql2);
+        $part = $query->result();
+        $data['part'] = $part[0]->p_id;
+
+        $sql3 = "SELECT COUNT(d.d_id) as d_id
+        FROM drawing as d
+        LEFT JOIN Part as p on p.d_id = d.d_id
+        WHERE p.d_id is null";
+        $query = $this->db->query($sql3);
+        $sum = $query->result();
+        $data['sum'] = $sum[0]->d_id;
+
+        $sql4 = "SELECT COUNT(b_id) as b_id FROM BOM";
+        $query = $this->db->query($sql4);
+        $bom = $query->result();
+        $data['bom'] = $bom[0]->b_id;
+
+		$this->load->view('dashboard',$data);
 		$this->load->view('footer');
 	}
+
+    function view_list()
+{
+$this->load->view('dcn/manage');
+}
 }

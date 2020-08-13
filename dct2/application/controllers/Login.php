@@ -21,10 +21,11 @@ class Login extends CI_Controller {
         $pass = $this->input->post('password');
   
         $data= $this->model->getuser($user,$pass);
+
+
          if($data==true) {
-            $arrData = array('status'=> $data['u_enable'], 'su_id'=>$data['su_id'], 'password'=> $data['password'],'username'=> $data['username'],'sug_id'=>$data['sug_id'],'login' => "OK");	
+            $arrData = array('status'=> $data['u_enable'], 'su_id'=>$data['su_id'], 'password'=> $data['password'],'username'=> $data['username'],'sug_id'=>$data['sug_id'],'login' => "OK" ,'fname'=>$data['firstname'] , 'lname' =>$data['lastname']);	
              $this->session->set_userdata($arrData);
-             $this->session->set_userdata('gg',"55");
              $username = $this->session->userdata('username');
              if($data['u_enable'] != 1){
                $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
@@ -37,6 +38,7 @@ class Login extends CI_Controller {
              </div> ');
                 redirect('login'); 
              } else{
+                
                 redirect('manage/index');
              }
         }

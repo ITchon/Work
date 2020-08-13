@@ -20,7 +20,7 @@
                     <div class="input-group" >
                     <input type="hidden" name="name" value="Drawing">
                     <select name="id" class="form-control select2" required>
-                    <option value="">- - - Select Drawing - - -</option>
+                    <option value="">- - -  Drawing - - -</option>
                    <?php
                       foreach($result_d as $r){?>
              
@@ -46,7 +46,7 @@
                     <div class="input-group" >
                     <input type="hidden" name="name" value="Part">
                    <select name="id" class="form-control select2" required>
-                   <option value="">- - - Select Part - - -</option>
+                   <option value="">- - - Part - - -</option>
                    <?php
                       foreach($result_p as $r){?>
              
@@ -70,7 +70,7 @@
                       <div class="input-group" >
                       <input type="hidden" name="name" value="DCN">
                       <select name="id" class="form-control select2" required>
-                      <option value="">- - - Select DCN - - -</option>
+                      <option value="">- - - DCN - - -</option>
                       <?php
                       foreach($result_dcn as $r){?>            
                      <option value="<?php echo $r->dcn_id ?>"><?php echo $r->dcn_no ?></option>
