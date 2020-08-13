@@ -65,7 +65,8 @@ class Usergroup extends CI_Controller {
 
     public function add()
     {   
-        //$this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
         $this->load->view('user_group/add');//bring $data to user_data 
         $this->load->view('footer');
@@ -74,8 +75,7 @@ class Usergroup extends CI_Controller {
 
     public function insert()
     {
-        $this->model->CheckPermission($this->session->userdata('su_id'));
-         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+        
         $gname =  $this->input->post('gname');
         $result = $this->model->insert_group($gname);
        if($result == true){

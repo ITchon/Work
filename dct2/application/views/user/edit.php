@@ -2,7 +2,7 @@
         <div class="layout-content-body">
           <div class="title-bar">
        
-                 <?php echo $this->session->flashdata("gg"); ?>
+           
           </div>
           <div class="row">
             <div class="col-md-12">

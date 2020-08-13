@@ -44,6 +44,26 @@ class Manage extends CI_Controller {
         $bom = $query->result();
         $data['bom'] = $bom[0]->b_id;
 
+
+        $sql5 = "SELECT tf.tf_name,tf.tf_fol FROM type_file as tf";
+        $query = $this->db->query($sql5);
+        $file = $query->result();
+        $num = 0;
+        foreach($file as $f){
+        $directory = './uploads/'.$f->tf_fol.'/';
+        $files = glob($directory . "*");
+        if ($files){
+        $filenum = count($files); 
+        $num = $filenum+$num;
+        }
+        }
+        $data['num'] = $num;
+
+
+
+
+        
+
 		$this->load->view('dashboard',$data);
 		$this->load->view('footer');
 	}

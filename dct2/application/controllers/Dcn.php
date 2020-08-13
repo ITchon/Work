@@ -27,8 +27,10 @@ class Dcn extends CI_Controller {
         public function manage()
     {   
 
-        $sql =  "SELECT dc.dcn_id, dc.dcn_no,dc.file_name as dcn_file,dc.path_file as dcn_path,dc.file_code as dcn_code,dc.enable
+        $sql =  "SELECT dc.dcn_id, dc.dcn_no,dc.file_name as dcn_file,dc.path_file as dcn_path
+        ,dc.file_code as dcn_code,dc.enable,dc.tf_id,tf.tf_fol
           from dcn as dc
+          left join type_file as tf on tf.tf_id = dc.tf_id 
           where dc.delete_flag != 0 ";
             $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
@@ -42,7 +44,12 @@ class Dcn extends CI_Controller {
     {   
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-        $this->load->view('dcn/add');//bring $data to user_data 
+
+        $sql = "SELECT * FROM type_file where tf_name LIKE '%dcn%'";
+        $query = $this->db->query($sql);
+        $data['result_type'] = $query->result(); 
+
+        $this->load->view('dcn/add',$data);//bring $data to user_data 
         $this->load->view('footer');
         
         
@@ -156,7 +163,9 @@ class Dcn extends CI_Controller {
         public function upload()
     {       
 
-        $config['upload_path']          = './uploads/';
+        $tf_id =  $this->input->post('tf_id');
+        $folder = $this->model->checkfolder($tf_id);
+        $config['upload_path']           = './uploads/'.$folder.'/';
         $config['allowed_types']        = '*';
         $config['max_size']        = '0';
         $config['encrypt_name'] = TRUE;
@@ -192,7 +201,7 @@ class Dcn extends CI_Controller {
                 $uploaded = $this->upload->data();
     $code = array('filename'  => $uploaded['file_name']);
     foreach ($code as $c) {
-        $result = $this->model->insert_dcn($dcn_no,$path,$file,$c);
+        $result = $this->model->insert_dcn($dcn_no,$tf_id,$file,$c);
     }
             $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
           <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>

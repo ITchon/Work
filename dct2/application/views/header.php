@@ -54,12 +54,6 @@
     <?php header("Cache-Control: public, max-age=60, s-maxage=60");?> 
   </head>
   <style>
-        .no-border{
-    padding: 6px 12px;
-    font-size: 12px;
-    line-height: 1.5;
-     border-radius: 0px; 
-}
 .table th {
   text-align: center;
 }

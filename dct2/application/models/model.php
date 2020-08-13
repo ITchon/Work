@@ -480,7 +480,7 @@ class Model extends CI_Model
         if($numChkPerm == 0) {
             
             echo '<script language="javascript">';
-            echo 'alert("Permission not found.");';
+            echo 'alert("Permission '.$get_url.' not found.");';
             echo 'history.go(-1);';
             echo '</script>';
             exit();
@@ -521,8 +521,7 @@ class Model extends CI_Model
 
   public function getuser($user,$pass) {  
     $pass = base64_encode(trim($pass));
-    $sql ="SELECT u.su_id as su_id , u.enable as u_enable ,ug.enable as sug_enable ,u.username as username,u.password as password, ug.sug_id ,u.firstname,u.lastname
-    FROM sys_users as u
+    $sql ="SELECT u.su_id as su_id , u.enable as u_enable ,ug.enable as sug_enable ,u.username as username,u.password as password, ug.sug_id,u.firstname,u.lastname  FROM sys_users as u
     inner join sys_user_groups ug on u.sug_id = ug.sug_id
     
     WHERE username='$user' and password='$pass' ";
@@ -670,12 +669,11 @@ $num= $this->db->query("SELECT * FROM part where p_no = '$p_no'");
   return false;
  }
 
- function insert_drawing($d_no, $dcn_id,$path_file,$file_name,$code)
+ function insert_drawing($d_no,$d_name, $dcn_id,$cus_id, $tf_id, $file,$c)
  {
     
-       $path_file = quotemeta($path_file);
-  $sql ="INSERT INTO drawing (d_no,enable, dcn_id, date_created,delete_flag,path_file,file_name,file_code,version) VALUES 
-  ( '$d_no', '1', '$dcn_id', CURRENT_TIMESTAMP,  '1','$path_file','$file_name','$code','00');";
+  $sql ="INSERT INTO drawing (d_no,d_name,enable, dcn_id,cus_id, date_created,delete_flag,tf_id,file_name,file_code,version) VALUES 
+  ( '$d_no','$d_name','1', '$dcn_id','$cus_id', CURRENT_TIMESTAMP,  '1','$tf_id','$file','$c','00');";
     $query = $this->db->query($sql);  
     $last_id = $this->db->insert_id();
   if($query){
@@ -728,11 +726,12 @@ $path_file = quotemeta($path_file);
    }
  }
 
-  function save_edit_drawing($d_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c)
+  function save_edit_drawing($d_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$tf_id)
  {
 $path_file = quotemeta($path_file);
   $sql ="UPDATE drawing SET d_no = '$d_no' ,d_name = '$d_name', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id',cus_id = '$cus_id',
-  path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 1 WHERE d_id = '$d_id'";
+  path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 1 ,tf_id = '$tf_id'
+  WHERE d_id = '$d_id'";
     $query = $this->db->query($sql);  
    if($query){
      return true;
@@ -742,11 +741,12 @@ $path_file = quotemeta($path_file);
    }
  }
 
-   function save_edit_drawing_v($v_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c)
+   function save_edit_drawing_v($v_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$tf_id)
  {
 $path_file = quotemeta($path_file);
   $sql ="UPDATE version SET d_no = '$d_no' ,d_name = '$d_name', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id',cus_id = '$cus_id',
-  path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 1 WHERE v_id = '$v_id'";
+  path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 1 ,tf_id = '$tf_id'
+  WHERE v_id = '$v_id'";
     $query = $this->db->query($sql);  
    if($query){
      return true;
@@ -1278,15 +1278,15 @@ public function save_edit_part($p_id, $p_no, $p_name,$d_id)
   }
 
 
-  public function insert_dcn($dcn_no,$path,$file,$code)
+  public function insert_dcn($dcn_no,$tf_id,$file,$code)
   {
-    $path = quotemeta($path);
+    //$path = quotemeta($path);
     $num= $this->db->query("SELECT * FROM dcn where dcn_no = '$dcn_no'"); 
   $chk= $num->num_rows();
 
  if($chk < 1){
-    $sql  = "INSERT INTO dcn (dcn_no, date_created, delete_flag, enable, path_file, file_name, file_code) VALUES  
-    ('$dcn_no', CURRENT_TIMESTAMP, '1', '1','$path','$file','$code')";
+    $sql  = "INSERT INTO dcn (dcn_no, date_created, delete_flag, enable, tf_id, file_name, file_code) VALUES  
+    ('$dcn_no', CURRENT_TIMESTAMP, '1', '1','$tf_id','$file','$code')";
   $query= $this->db->query($sql); 
   if($query){
       return true;
@@ -1408,16 +1408,15 @@ where d.delete_flag != 0 AND d.d_no RLIKE '$s_dno' OR d.d_name RLIKE '$s_name' O
       return $result;
   }
 
-  public function button_show($id,$pg_id)        
-  {
-  $query= $this->db->query(" SELECT * FROM `sys_permissions` sp inner join sys_users_permissions sup on sup.sp_id = sp.sp_id where su_id = $id and sp.spg_id =$pg_id"); 
-            $data = $query->result(); 
-            foreach ($data as $r ) {
-                  $this->session->set_flashdata($r->button,'');
-            }
+  public function checkfolder($tf_id)
+  { 
+    $sql =  "SELECT tf_fol FROM type_file where tf_id = '$tf_id'";
+    $query = $this->db->query($sql); 
+    $result= $query->result();
+    return $result[0]->tf_fol;
 
+      
   }
-
   
 }
 

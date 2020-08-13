@@ -11,11 +11,11 @@ class Login extends CI_Controller {
         $this->load->model('model');
 
     }
-	public function index()
-    {	
+    public function index()
+    {   
         $this->load->view('login');
-	}
-	public function chklogin()
+    }
+    public function chklogin()
     {
         $user = $this->input->post('username');
         $pass = $this->input->post('password');
@@ -24,7 +24,7 @@ class Login extends CI_Controller {
 
 
          if($data==true) {
-            $arrData = array('status'=> $data['u_enable'], 'su_id'=>$data['su_id'], 'password'=> $data['password'],'username'=> $data['username'],'sug_id'=>$data['sug_id'],'login' => "OK" ,'fname'=>$data['firstname'] , 'lname' =>$data['lastname']);	
+            $arrData = array('status'=> $data['u_enable'], 'su_id'=>$data['su_id'], 'password'=> $data['password'],'username'=> $data['username'],'sug_id'=>$data['sug_id'],'login' => "OK" ,'fname'=>$data['firstname'] , 'lname' =>$data['lastname']);    
              $this->session->set_userdata($arrData);
              $username = $this->session->userdata('username');
              if($data['u_enable'] != 1){

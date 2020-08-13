@@ -11,7 +11,7 @@
              ADD VERSION
             </h2><hr>
             <form name="form1" method="post" class="table form form-horizontal containe" action="<?php echo base_url()?>drawing/update_v" enctype="multipart/form-data">
-            
+            <input type="hidden" name="search" value="<?php echo $search?>" >
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Drawing No</label>
                     <div class="col-sm-6 col-md-4">
