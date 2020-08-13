@@ -379,35 +379,32 @@ class Model extends CI_Model
       $result =  $query->result();
     return $result;
   }
-  public function get_drawing_by($search,$sort)
+  public function get_drawing_by($id,$search,$sort)
   {
-      $sql =  "SELECT d.d_id, d.d_no,d.d_name,cus.cus_id,cus.cus_name, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
+      $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
       ,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code
       from drawing as d
       inner join dcn as dc on dc.dcn_id = d.dcn_id
-      left join part as p on p.d_id = d.d_id 
-      inner join customers as cus on cus.cus_id = d.cus_id 
-      where d.delete_flag != 0 AND $sort LIKE '%{$search}%'";
+      inner join part as p on p.d_id = d.d_id 
+      where d.delete_flag != 0 AND d.d_id = $id AND $sort LIKE '%{$search}%'";
       $query = $this->db->query($sql); 
       $result =  $query->result();
       return $result;
   }
   public function get_drawing_ver($id,$p_id)
   {
-     $sql =  "SELECT d.d_id, d.d_no,d.d_name,d.cus_id,cus.cus_name, d.dcn_id, dc.dcn_no, d.enable, d.path_file, d.file_name, d.version
+     $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.path_file, d.file_name, d.version
      , p.p_no,p.p_id,'v_id',dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code
             from drawing as d
             inner join dcn as dc on dc.dcn_id = d.dcn_id
             inner join part as p on p.d_id = d.d_id 
-            inner join customers as cus on cus.cus_id = d.cus_id 
             where d.delete_flag != 0 AND d.d_id = $id AND p.p_id = $p_id
             UNION
-                SELECT v.d_id, v.d_no,v.d_name,v.cus_id,cus.cus_name, v.dcn_id, dc.dcn_no, v.enable, v.path_file, v.file_name, v.version
+                SELECT v.d_id, v.d_no, v.dcn_id, dc.dcn_no, v.enable, v.path_file, v.file_name, v.version
                 , p.p_no,p.p_id, v.v_id,dc.file_name as dcn_file,dc.path_file as dcn_path,v.file_code,dc.file_code as dcn_code
          from version as v
          inner join dcn as dc on dc.dcn_id = v.dcn_id
          inner join part as p on p.d_id = v.d_id 
-         inner join customers as cus on cus.cus_id = v.cus_id 
          where v.delete_flag != 0 AND v.d_id = $id AND p.p_id = $p_id
          ORDER by version DESC ";
       $query = $this->db->query($sql); 
@@ -416,15 +413,14 @@ class Model extends CI_Model
   }
 
 
-  public function get_dcn_by($search,$sort)
+  public function get_dcn_by($id,$search,$sort)
   {
-     $sql =  "SELECT d.d_id, d.d_no,d.d_name,cus.cus_id,cus.cus_name, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
+     $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
      ,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code
           from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
           inner join part as p on p.d_id = d.d_id 
-          inner join customers as cus on cus.cus_id = d.cus_id 
-          where d.delete_flag != 0 AND $sort LIKE '%{$search}%'";
+          where d.delete_flag != 0 AND d.dcn_id = $id AND $sort LIKE '%{$search}%'";
       $query = $this->db->query($sql); 
       $result =  $query->result();
       return $result;
@@ -432,15 +428,14 @@ class Model extends CI_Model
 
 
 
-  public function get_part_by($search,$sort)
+  public function get_part_by($id,$search,$sort)
   {
-     $sql =  "SELECT d.d_id, d.d_no,d.d_name,cus.cus_id,cus.cus_name, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
+     $sql =  "SELECT d.d_id, d.d_no, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
      ,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code
           from drawing as d
           inner join dcn as dc on dc.dcn_id = d.dcn_id
           inner join part as p on p.d_id = d.d_id 
-          inner join customers as cus on cus.cus_id = d.cus_id 
-          where d.delete_flag != 0 AND $sort LIKE '%{$search}%'";
+          where d.delete_flag != 0 AND p.d_id = $id AND $sort LIKE '%{$search}%'";
       $query = $this->db->query($sql); 
       $result =  $query->result();
       return $result;
@@ -463,10 +458,8 @@ class Model extends CI_Model
   public function CheckPermission($para){
         
         $get_url = trim($this->router->fetch_class().'/'.$this->router->fetch_method());
-        if($this->session->userdata('sug_id') == 1) {
-          
-        }else{
-       $sqlChkPerm = "SELECT sp.name,sp.controller
+
+        $sqlChkPerm = "SELECT sp.name,sp.controller
         FROM
         sys_users_permissions AS sup
         INNER JOIN sys_permissions AS sp ON sp.sp_id = sup.sp_id
@@ -486,15 +479,10 @@ class Model extends CI_Model
             exit();
             
         }
-        }
- 
 
   }
   public function CheckPermissionGroup($para){
-    if($this->session->userdata('sug_id') == 1) {
-        
-        }else{
-             $get_url = trim($this->router->fetch_class().'/'.$this->router->fetch_method());
+    $get_url = trim($this->router->fetch_class().'/'.$this->router->fetch_method());
     $sqlSelPerm = "SELECT
   p.sp_id,
   p.name,
@@ -514,14 +502,12 @@ class Model extends CI_Model
     echo '</script>';
     exit();
     
-        }
-   
     }
  }
 
   public function getuser($user,$pass) {  
     $pass = base64_encode(trim($pass));
-    $sql ="SELECT u.su_id as su_id , u.enable as u_enable ,ug.enable as sug_enable ,u.username as username,u.password as password, ug.sug_id,u.firstname,u.lastname  FROM sys_users as u
+    $sql ="SELECT u.su_id as su_id , u.enable as u_enable ,ug.enable as sug_enable ,u.username as username,u.password as password, ug.sug_id  FROM sys_users as u
     inner join sys_user_groups ug on u.sug_id = ug.sug_id
     
     WHERE username='$user' and password='$pass' ";
@@ -540,26 +526,15 @@ return false;
     $sql =  'SELECT DISTINCT smg.name AS g_name, smg.icon_menu, sm.mg_id, smg.mg_id AS mg, smg.order_no 
     FROM sys_menus AS sm 
     inner JOIN sys_menu_groups AS smg ON smg.mg_id = sm.mg_id 
-    inner join sys_permission_groups as spg ON spg.mg_id = sm.mg_id
-    inner join sys_users_groups_permissions as sugp ON sugp.spg_id = spg.spg_id
+    inner join sys_menu_show as sms on sms.mg_id=smg.mg_id 
     where sug_id = '.$sug_id.'
     ORDER BY smg.order_no ASC';    
     $query = $this->db->query($sql); 
     $result = $query->result();
     return $result;
  }
-
- function showsubmenu(){
-         $sql =  "SELECT * from sys_menus as sm
-    WHERE order_no !=0 AND enable != 0 ORDER BY sm.order_no ASC"; 
-    $query = $this->db->query($sql); 
-    $result = $query->result(); 
-    return $result;   
- }
-
-
  function givemeid($para){
-  $sql ="SELECT *  FROM sys_menus 
+  $sql ="SELECT * FROM sys_menus 
   WHERE link='$para'  ";
     $query = $this->db->query($sql);  
    $data = $query->result(); 
@@ -569,11 +544,10 @@ return false;
  function insert($fname,$lname,$username,$password,$gender,$email,$sug_id)
  {
 
-$password = base64_encode(trim($password));
-  $num= $this->db->query("SELECT * FROM sys_users where username = '$username'"); 
-  $chk= $num->result();
 
- if($chk==null){
+  $num= $this->db->query("SELECT COUNT(`username`) FROM sys_users where username = '$username'"); 
+  $chk= $num->num_rows();
+ if($chk!=1){
     $sql1 ="INSERT INTO sys_users (sug_id, username, password, firstname, lastname, gender, email, enable, date_created, date_updated,delete_flag) VALUES ( '$sug_id', '$username', '$password', '$fname', '$lname', '$gender', '$email', '1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '1' )";
   $query= $this->db->query($sql1); 
   if($query){
@@ -717,36 +691,6 @@ if($query){
   $v = $version+1;
 $path_file = quotemeta($path_file);
   $sql ="UPDATE drawing SET d_no = '$d_no' , date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id', version = '$v', path_file = '$path_file', file_name = '$file_name', file_code = '$code',enable = 1 WHERE d_id = '$d_id'";
-    $query = $this->db->query($sql);  
-   if($query){
-     return true;
-   }
-   else{
-     return false;
-   }
- }
-
-  function save_edit_drawing($d_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$tf_id)
- {
-$path_file = quotemeta($path_file);
-  $sql ="UPDATE drawing SET d_no = '$d_no' ,d_name = '$d_name', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id',cus_id = '$cus_id',
-  path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 1 ,tf_id = '$tf_id'
-  WHERE d_id = '$d_id'";
-    $query = $this->db->query($sql);  
-   if($query){
-     return true;
-   }
-   else{
-     return false;
-   }
- }
-
-   function save_edit_drawing_v($v_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$tf_id)
- {
-$path_file = quotemeta($path_file);
-  $sql ="UPDATE version SET d_no = '$d_no' ,d_name = '$d_name', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id',cus_id = '$cus_id',
-  path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 1 ,tf_id = '$tf_id'
-  WHERE v_id = '$v_id'";
     $query = $this->db->query($sql);  
    if($query){
      return true;
@@ -1141,9 +1085,10 @@ public function disablePart($key=''){
      return false;
    }
    }
-   public function updated_profile_data($fname,$lname,$gender,$email,$su_id)
+   public function updated_profile_data($fname,$lname,$username,$password,$gender,$email,$sug_id,$su_id)
   {
      $sql1 ="UPDATE sys_users SET 
+                      sug_id         = '$sug_id',
                       firstname      = '$fname',
                       lastname       = '$lname',
                       gender         = '$gender',
@@ -1321,102 +1266,6 @@ public function save_edit_part($p_id, $p_no, $p_name,$d_id)
  }
  }
 
- public function opencsv($id)
-  { 
-    if($this->session->userdata('sug_id')=="1"){
-        return true;
-    }else{
-        $sql =  "SELECT * FROM sys_users_permissions 
-    where su_id = '$id' AND sp_id = 69 ";
-    $query = $this->db->query($sql); 
-    $result= $query->result();
-    if($result != null){
-      return true;
-    }else{
-      return false;
-    }
- }
-
-  }
-
-  public function issue_by_id($id)
-{
-        $sql ="SELECT `file_code`  FROM drawing 
-        WHERE d_id='$id' AND delete_flag != 0  ";
-          $query = $this->db->query($sql);  
-         $data = $query->result(); 
-         return $data;
-
-}
-
- public function insert_cus($cusname,$cusdes)
- {
-  $num= $this->db->query("SELECT * FROM customers where cus_name = '$cusname'"); 
-  $chk= $num->num_rows();
- if($chk!=1){
-  $sql ="INSERT INTO customers (cus_name,cus_des,date_created,delete_flag) VALUES ( '$cusname', '$cusdes', CURRENT_TIMESTAMP,  '1' );";
-    $query = $this->db->query($sql);  
-   if($query){
-     return true;
-   }
-   else{
-     return 3;
-   }
-  }
-  return false;
- }
-
-public function save_edit_cus($cus_id, $cus_name,$cus_des)
-  {
-     $sql1 ="UPDATE customers SET cus_name = '$cus_name',cus_des = '$cus_des', date_updated = CURRENT_TIMESTAMP WHERE cus_id = '$cus_id'";
-    $exc_user = $this->db->query($sql1);
-    if ($exc_user ){ return true; }else{ return false; }
-  }
-
-public function delete_cus($id) {
-   $sql ="UPDATE customers SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE cus_id = '$id'";
-   $query = $this->db->query($sql);
-      if ($query) { 
-         return true; 
-      } 
-      else{
-     return false;
-   }
-   }
-
-public function drawing_search($s_dno,$s_name,$s_pno)
-  {
-if($s_dno !=0){
-    $s_dno =  implode('|',(array)$s_dno);
-  }
-if($s_name !=0){
-    $s_name =  implode('|',(array)$s_name);
-  }
-if($s_pno !=0){
-    $s_pno =  implode('|',(array)$s_pno);
-  }
-      $sql =  "SELECT d.d_id, d.d_no,d.d_name,cus.cus_id,cus.cus_name, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
-      ,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code
-      from drawing as d
-      inner join dcn as dc on dc.dcn_id = d.dcn_id
-      left join part as p on p.d_id = d.d_id 
-      inner join customers as cus on cus.cus_id = d.cus_id 
-where d.delete_flag != 0 AND d.d_no RLIKE '$s_dno' OR d.d_name RLIKE '$s_name' OR p.p_no RLIKE '$s_pno'";
-      $query = $this->db->query($sql); 
-      $result =  $query->result();
-
-      return $result;
-  }
-
-  public function checkfolder($tf_id)
-  { 
-    $sql =  "SELECT tf_fol FROM type_file where tf_id = '$tf_id'";
-    $query = $this->db->query($sql); 
-    $result= $query->result();
-    return $result[0]->tf_fol;
-
-      
-  }
   
 }
 

@@ -111,10 +111,10 @@
                         <input class="form-control" type="text" placeholder="Search…">
                         <span class="icon icon-search input-icon"></span>
                       </div>
-                    </div>
+                    </div>s
                   </form>
   
-                              <?php         
+                <?php         
         
                    
                 foreach($menu as $r){ 

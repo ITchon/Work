@@ -38,9 +38,9 @@
                     </div>
                 </div>
                 <div class="form-group has-feedback">
-                    <label for="part" class="col-sm-5 col-md-4 control-label">Old File</label>
+                    <label for="part" class="col-sm-5 col-md-4 control-label">File</label>
                     <div class="col-sm-6 col-md-5">
-                    <input id="part" class="form-control" readonly type="text" name="file_name_old" value="<?php echo $result[0]->file_name ?> ">
+                    <input id="part" class="form-control " type="text" name="file_name_old" value="<?php echo $result[0]->file_name ?> ">
 
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>

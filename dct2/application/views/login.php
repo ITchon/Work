@@ -30,10 +30,7 @@
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/elephant.min.css'; ?>">
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/login-3.min.css';?>">
   </head>
-    
-    <div class="center">
-      
-      </div>
+  <body>
     <div class="login">
       <div class="login-body">
         <a class="login-brand" href="index.html">
@@ -41,7 +38,7 @@
         </a>
         <h3 class="login-heading">Sign in</h3>
         <div class="login-form">  
-          
+        
           <form data-toggle="md-validator" action="<?php echo base_url()?>Login/chklogin" method="post">
           <?php echo $this->session->flashdata("success"); ?>            
             <div class="md-form-group md-label-floating">

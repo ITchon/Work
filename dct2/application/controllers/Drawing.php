@@ -12,12 +12,13 @@ class Drawing extends CI_Controller {
         $this->load->database(); 
         $this->load->model('model');
         $this->model->CheckSession();
-        
         $menu['menu'] = $this->model->showmenu($this->session->userdata('sug_id'));
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
          $menu['mg']= $this->model->givemeid($url);
-          $menu['submenu'] = $this->model->showsubmenu($this->session->userdata('su_id'));
-         $this->load->view('header');
+         $sql =  "select * from sys_menus where order_no != 0  and enable != 0 ORDER BY order_no";
+         $query = $this->db->query($sql); 
+         $menu['submenu']= $query->result(); 
+        $this->load->view('header');
         $this->load->view('menu',$menu);
 
 
@@ -29,145 +30,78 @@ class Drawing extends CI_Controller {
 
     public function manage()
     {   
-
-        $search = $this->input->post('search');
-        $sort = $this->input->post('sort');
-
-        $s_dno = $this->input->post('s_dno');  
-        $s_name = $this->input->post('s_name');
-        $s_pno = $this->input->post('s_pno');
-
-        
-        $data['search'] = $search;
-        $data['sort'] = $sort;
-
-        $data['s_dno'] = $s_dno;
-        $data['s_name'] = $s_name;
-        $data['s_pno'] = $s_pno;
-
-               $sql =  "SELECT d.d_id, d.d_no, d.dcn_id,c.cus_name, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code,d.d_name
-      from drawing as d
-      inner join dcn as dc on dc.dcn_id = d.dcn_id
-      left join part as p on p.d_id = d.d_id 
-      left join customers as c on c.cus_id = d.cus_id 
-      where d.delete_flag != 0 ";
-        $query = $this->db->query($sql);
-        $data['result'] = $query->result(); 
-
-
-        $sql =  "SELECT * from part
-      where delete_flag != 0 ";
-        $query = $this->db->query($sql);
-        $data['resultp'] = $query->result(); 
-
-        $this->load->view('drawing/show',$data);//bring $data to user_data 
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+        $this->session->set_userdata('name','');
+        $this->session->set_userdata('id','');  
+        $data['result_d'] = $this->model->get_drawing(); 
+        $data['result_p'] = $this->model->get_part(); 
+        $data['result_dcn'] = $this->model->get_dcn(); 
+        $this->load->view('drawing/manage',$data);//bring $data to user_data 
         $this->load->view('footer'); 
     }
 
-    // public function show()
-    // {   
-
-    //     $search = $this->input->get('search');
-    //     $sort = $this->input->get('sort');
-    //     $s_dno = $this->input->get('s_dno');  
-    //     $s_name = $this->input->get('s_name');
-    //     $s_pno = $this->input->get('s_pno');
-        
-    //     $data['search'] = $s_dno;
-    //     $data['search'] = $s_name;
-    //     $data['search'] = $s_pno;
-    //     $data['search'] = $search;
-    //     $data['sort'] = $sort;
-
-
-    //     if($sort == 'DCN'){
-    //         $sort = "d.d_name";
-    //         $data['result'] = $this->model->get_dcn_by($s_name,$sort);
-    //     }else if($sort == 'Part'){
-    //         $sort = "p.p_no";
-    //         $data['result'] = $this->model->get_part_by($s_pno,$sort); 
-    //     }else if($sort == 'Drawing'){
-    //         $sort = "d.d_no";
-    //         $data['result'] = $this->model->get_drawing_by($s_dno,$sort); 
-    //     }else{
-    //         redirect('drawing/manage');
-    //     }
-    //     $this->load->view('drawing/show',$data);//bring $data to user_data 
-    //     $this->load->view('footer'); 
-    // }
-
-        public function show()
+    public function show()
     {   
-
-        $s_dno = $this->input->get('s_dno');  
-        $s_name = $this->input->get('s_name');
-        $s_pno = $this->input->get('s_pno');
-        
-        $dno = "?s_dno=".$s_dno;
-        $dname = "&s_name=".$s_name;
-        
-        
-        $pno = null;
-        $ss = null;
-        if($s_pno != null){
-          
-          foreach($s_pno as $s){
-            $pno = "&s_pno%5B%5D=".$s;
-            $ss = $pno.$ss;
-            }
+        if($this->session->userdata('id')){
+            $id = $this->session->userdata('id');
+            $name = $this->session->userdata('name');
+        }else{
+            $id =  $this->input->post('id');
+            $name =  $this->input->post('name');
         }
-        $data['search'] = $dno.$dname.$ss;
+        $ss = $this->input->post('search');
+        $sort = $this->input->post('sort');
+        $search = $ss;
+
+        if($search == null){
+            $search = null;
+        }
         
+        $data['id'] = $id;
+        $data['name'] = $name;
+        $data['search'] = $search;
+        $data['sort'] = $sort;
 
-        $data['s_dno'] = $s_dno;
-        $data['s_name'] = $s_name;
-        $data['s_pno'] = $s_pno;
-
-
-      if($this->input->get('s_dno') == null){
-        $s_dno = 'null';
-      }
-      
-      if($this->input->get('s_name') == null){
-        $s_name = 'null';
-      }
-      
-      if($this->input->get('s_pno') == null){
-        $s_pno = 'null';
-      }
-
-      if($this->input->get('s_dno') != null || $this->input->get('s_name') != null || $this->input->get('s_pno') != null ){
-        $data['result'] = $this->model->drawing_search($s_dno,$s_name,$s_pno);
-      }else{
-        $sql =  "SELECT d.d_id, d.d_no, d.dcn_id,c.cus_name, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code,d.d_name
-        from drawing as d
-        inner join dcn as dc on dc.dcn_id = d.dcn_id
-        left join part as p on p.d_id = d.d_id 
-        left join customers as c on c.cus_id = d.cus_id 
-        where d.delete_flag != 0 ";
-          $query = $this->db->query($sql);
-          $data['result'] = $query->result(); 
-      }
-
-      
-      $sql =  "SELECT * from part
-      where delete_flag != 0 ";
-      $query = $this->db->query($sql);
-      $data['resultp'] = $query->result(); 
-      
+        if($sort == 'Drawing'){
+            $sort = "d.d_no";
+        }else if($sort == 'Part'){
+            $sort = "p.p_no";
+        }else{
+            $sort = "dc.dcn_no";
+        }
 
 
+        if($name == 'DCN'){
+            $data['result'] = $this->model->get_dcn_by($id,$search,$sort);
+        }else if($name == 'Part'){
+            $data['result'] = $this->model->get_part_by($id,$search,$sort); 
+        }else if($name == 'Drawing'){
+            $data['result'] = $this->model->get_drawing_by($id,$search,$sort); 
+        }else{
+            redirect('drawing/manage');
+        }
         $this->load->view('drawing/show',$data);//bring $data to user_data 
         $this->load->view('footer'); 
-    } 
+    }
 
     public function show_v()
     {   
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-
-        $d_id =  $this->input->get('d_id');
-        $p_id =  $this->input->get('p_id');
+        if($this->input->post('id')){
+        $id =  $this->input->post('id');
+        $name =  $this->input->post('name');
+        }else{
+        $id = $this->session->userdata('id');
+        $name = $this->session->userdata('name');
+             
+        }
+        $d_id =  $this->input->post('d_id');
+        $p_id =  $this->input->post('p_id');
+        $ss = $this->input->post('search');
+        $sort = $this->input->post('sort');
+        $search = $ss;
 
         $pid = '?p_id='.$p_id;
         $did = '&d_id='.$d_id ;
@@ -400,16 +334,13 @@ class Drawing extends CI_Controller {
 
         $d_id =  $this->input->post('d_id');
         $file =  $this->input->post('file');
-        $test = "\\\\192.168.161.205\\dct\\uploads\\test.pdf";
         $filename =  $this->input->post('filename');
         $path = $this->input->post('path');
-        $open = ("$test");
         $data = file_get_contents("$path$file");
-
-exec($test);
-
+        $open = ("$path$file");
         if($open){
         $this->model->download_record($this->session->userdata('su_id'),$this->session->userdata('username'),$filename);
+         force_download($filename, $data);
            redirect('drawing/show/','refresh');
         }else{
             echo "<script>";
@@ -417,14 +348,13 @@ exec($test);
             echo 'history.go(-1);';
             echo '</script>';
         }
-        redirect('drawing/show/','refresh');
     }
 
     public function open_dcn()
     {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-
+        
         $dcn_id =  $this->input->post('dcn_id');
         $file =  $this->input->post('file');
         $filename =  $this->input->post('filename');
@@ -462,7 +392,6 @@ exec($test);
         $p_name =  $this->input->post('p_name');
         
         $file = $_FILES['file_name']['name'];
-        
 
 
       $num= $this->db->query("SELECT * FROM drawing where d_no = '$d_no'"); 
@@ -527,223 +456,5 @@ exec($test);
 
 
 }
-
-
-    public function edit()   
-    {
-        $this->model->CheckPermission($this->session->userdata('su_id'));
-        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-        $search =  $this->input->post('search');
-        $data['search'] = $search;
-
-        $d_id =  $this->input->post('d_id');
-
-        $sql =  "SELECT * from drawing where d_id = $d_id";
-        $query = $this->db->query($sql); 
-        $data['result'] = $query->result()[0]; 
-
-        $sql1 =  "SELECT * from dcn";
-        $query = $this->db->query($sql1); 
-        $data['result_dcn'] = $query->result(); 
-
-        $sql1 =  "SELECT * from customers";
-        $query = $this->db->query($sql1); 
-        $data['result_cus'] = $query->result(); 
-        
-        $sql1 =  "SELECT * from type_file where tf_name LIKE '%drawing%'";
-        $query = $this->db->query($sql1); 
-        $data['result_type'] = $query->result(); 
-        
-        $this->load->view('drawing/edit',$data);
-        $this->load->view('footer');
-  
-    }
-
-        public function save_edit()
-    {
-      $tf_id =  $this->input->post('tf_id');
-      $folder = $this->model->checkfolder($tf_id);
-      $config['upload_path']           = './uploads/'.$folder.'/';
-      $config['allowed_types']        = '*';
-
-        if ($_FILES['file_name']['name'] != null) {
-        $file_code =  $this->input->post('file_code');
-        $config['file_name']            =  $file_code;
-        $config['overwrite']            = TRUE;
-
-        }
-        $search =  $this->input->post('search');
-        
-        $d_id =  $this->input->post('d_id');
-        $d_no =  $this->input->post('d_no');
-        $p_no =  $this->input->post('p_no');
-        $p_name =  $this->input->post('p_name');
-        $d_name =  $this->input->post('d_name');
-        $dcn_id =  $this->input->post('dcn_id');
-        $cus_id =  $this->input->post('cus_id');
-        $path_file =  $this->input->post('path');
-        $dcnid =  $this->input->post('dcnid');
-        $code =  $this->input->post('file_code');
-        $tfold =  $this->input->post('tfold');
-        $folderold = $this->model->checkfolder($tfold);
-        
-
-        if($_FILES['file_name']['name'] != null){
-            $file = $_FILES['file_name']['name'];
-             $this->load->library('upload', $config);
-        $this->upload->initialize($config);
-          if ( ! $this->upload->do_upload('file_name'))
-          {
-          echo "<script>";
-          echo 'alert(" File Failed ");';
-          echo '</script>';
-          if( strpos( $search, 'd_id' ) !== false ){
-            redirect('drawing/show_v'.$search.'','refresh');
-          }else{
-            redirect('drawing/show'.$search.'','refresh');   
-          }
-          }else{     
-    unlink('./uploads/'.$folderold.'/'.$code);
-    $uploaded = $this->upload->data();
-    $code = array('filename'  => $uploaded['file_name']);
-    foreach ($code as $c) {
-        $this->model->save_edit_drawing($d_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$tf_id);
-        if( strpos( $search, 'd_id' ) !== false ){
-          redirect('drawing/show_v'.$search.'','refresh');
-        }else{
-          redirect('drawing/show'.$search.'','refresh');   
-        }
-    }
-          }
-        }else{
-            $file =  $this->input->post('file_name2');
-          if ($this->input->post('file_name2') == null)
-          {
-          echo "<script>";
-          echo 'alert(" File Failed ");';
-          echo '</script>';
-        
-          if( strpos( $search, 'd_id' ) !== false ){
-            redirect('drawing/show_v'.$search.'','refresh');
-          }else{
-            redirect('drawing/show'.$search.'','refresh');   
-          }  
-          }else{
-            rename('./uploads/'.$folderold.'/'.$code, './uploads/'.$folder.'/'.$code);
-            $file_code =  $this->input->post('file_code');
-        $this->model->save_edit_drawing($d_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$file_code,$tf_id);
-        if( strpos( $search, 'd_id' ) !== false ){
-          redirect('drawing/show_v'.$search.'','refresh');
-        }else{
-          redirect('drawing/show'.$search.'','refresh');   
-        }
-
-          }
-        }
-       
-  
-    }
-
-
-        public function edit_v()   
-    {
-        $this->model->CheckPermission($this->session->userdata('su_id'));
-        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-        
-        $v_id =  $this->input->post('v_id');
-        $search =  $this->input->post('search');
-        $data['search'] = $search;
-
-        $sql =  "SELECT * from version where v_id = $v_id";
-        
-        $query = $this->db->query($sql); 
-        $data['result'] = $query->result()[0]; 
-
-        $sql1 =  "SELECT * from dcn";
-        $query = $this->db->query($sql1); 
-        $data['result_dcn'] = $query->result(); 
-
-        $sql1 =  "SELECT * from customers";
-        $query = $this->db->query($sql1); 
-        $data['result_cus'] = $query->result(); 
-
-        $sql1 =  "SELECT * from type_file where tf_name LIKE '%drawing%'";
-        $query = $this->db->query($sql1); 
-        $data['result_type'] = $query->result(); 
-        
-        $this->load->view('drawing/edit_v',$data);
-        $this->load->view('footer');
-  
-    }
-
-        public function save_edit_v()
-    {
-        $tf_id =  $this->input->post('tf_id');
-        $folder = $this->model->checkfolder($tf_id);
-        $config['upload_path']           = './uploads/'.$folder.'/';
-        $config['allowed_types']        = '*';
-
-        if ($_FILES['file_name']['name'] != null) {
-        $file_code =  $this->input->post('file_code');
-        $config['file_name']            =  $file_code;
-        $config['overwrite']            = TRUE;
-        }
-        
-        $v_id =  $this->input->post('v_id');
-        $d_no =  $this->input->post('d_no');
-        $d_name =  $this->input->post('d_name');
-        $dcn_id =  $this->input->post('dcn_id');
-        $cus_id =  $this->input->post('cus_id');
-        $path_file =  $this->input->post('path');
-        $dcnid =  $this->input->post('dcnid');
-        $code =  $this->input->post('file_code');
-        $search =  $this->input->post('search');
-        $tfold =  $this->input->post('tfold');
-        $folderold = $this->model->checkfolder($tfold);
-
-        if($_FILES['file_name']['name'] != null){
-            $file = $_FILES['file_name']['name'];
-             $this->load->library('upload', $config);
-        $this->upload->initialize($config);
-          if ( ! $this->upload->do_upload('file_name'))
-          {
-          echo "<script>";
-          echo 'alert(" File Failed ");';
-          echo '</script>';
-          exit();
-          redirect('drawing/show_v'.$search.'','refresh');   
-          }else{
-    unlink('./uploads/'.$folderold.'/'.$code);
-    $uploaded = $this->upload->data();
-    $code = array('filename'  => $uploaded['file_name']);
-    foreach ($code as $c) {
-        $this->model->save_edit_drawing_v($v_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$tf_id);
-        redirect('drawing/show_v/'.$search.'','refresh');
-    }
-          }
-        }else{
-            $file =  $this->input->post('file_name2');
-          if ($this->input->post('file_name2') == null)
-          {
-          echo "<script>";
-          echo 'alert(" File Failed ");';
-          echo '</script>';
-          exit();
-          redirect('drawing/show_v'.$search.'','refresh');   
-          }else{
-            rename('./uploads/'.$folderold.'/'.$code, './uploads/'.$folder.'/'.$code);
-            $file_code =  $this->input->post('file_code');
-            
-        $this->model->save_edit_drawing_v($v_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$file_code,$tf_id);
-        redirect('drawing/show_v/'.$search.'','refresh');
-
-          }
-        }
-       
-  
-    }
-
-
-
 }
 

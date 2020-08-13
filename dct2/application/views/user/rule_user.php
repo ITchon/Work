@@ -28,13 +28,13 @@ backdrop: 'static'
           ?>
 
                 <div class="col-xs-6" style="padding-top: 20px;">
-              <input type="checkbox" value="<?php echo $r->sp_id ?>" name="sp_id[]" id="<?php echo $r->sp_id ?>" <?php
+              <input type="checkbox" value="<?php echo $r->sp_id ?>" name="sp_id[]" id="sp_id" <?php
               foreach($result_user as $rs ){
                     if($r ->sp_id == $rs->sp_id){   
                     echo 'checked';
                   }
                   }?>  > 
-          <label  for="<?php echo $r->sp_id ?>" style="cursor: pointer;color:#5b6572"> <?php echo $r->name ?></label>
+          <?php echo $r->name ?>
               
  </div>
             <?php

@@ -12,13 +12,14 @@ class User extends CI_Controller {
         $this->load->model('model');
         $this->load->model('model_permis');
         $this->model->CheckSession();
-        
         $menu['menu'] = $this->model->showmenu($this->session->userdata('sug_id'));
+        $sql =  "select * from sys_menus where order_no != 0 and enable != 0 ORDER BY order_no";
+        $query = $this->db->query($sql); 
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
          $menu['mg']= $this->model->givemeid($url);
-          $menu['submenu'] = $this->model->showsubmenu($this->session->userdata('su_id'));
+         $menu['submenu']= $query->result(); 
          $this->load->view('header');
-        $this->load->view('menu',$menu);
+         $this->load->view('menu',$menu);
        
     }
     public function manage()
@@ -28,7 +29,7 @@ class User extends CI_Controller {
         $sql =  'SELECT su.su_id,su.username, su.firstname ,su.lastname, su.gender,su.email,su.enable,su.delete_flag, sug.name as name
     FROM
     sys_users  AS su 
-    INNER JOIN sys_user_groups AS sug ON sug.sug_id = su.sug_id where su.delete_flag != 0 AND sug.sug_id != "1"';
+    INNER JOIN sys_user_groups AS sug ON sug.sug_id = su.sug_id where su.delete_flag != 0 AND su.username != "sadmin"';
         $query = $this->db->query($sql); 
        $data['result'] = $query->result(); 
         $this->load->view('user/manage',$data);//bring $data to user_data 
@@ -46,7 +47,7 @@ class User extends CI_Controller {
 
 
 
-        $sqlSelG = "SELECT * FROM sys_user_groups WHERE sug_id <>'1' AND enable='1' AND delete_flag != 0;";
+        $sqlSelG = "SELECT * FROM sys_user_groups WHERE sug_id<>'0' AND enable='1' AND delete_flag != 0";
         $query = $this->db->query($sqlSelG); 
         $data['excLoadG'] = $query->result(); 
 
@@ -76,14 +77,14 @@ class User extends CI_Controller {
             $query = $this->db->query($sql); 
             $data['result_name']= $query->result(); 
 
-            $sql =  'SELECT * FROM sys_permissions sp INNER JOIN sys_users_groups_permissions sugp ON sugp.spg_id = sp.spg_id where sugp.sug_id= '.$data['result_name'][0]->sug_id.' ORDER BY `sp`.`name` ASC';
+            $sql =  'SELECT * FROM sys_permissions sp INNER JOIN sys_users_groups_permissions sugp ON sugp.spg_id = sp.spg_id where sugp.sug_id= '.$data['result_name'][0]->sug_id.'';
             $query = $this->db->query($sql); 
             $data['result_group'] = $query->result();
      
          $this->load->view('user/manage',$data);//bring $data to user_data 
          $this->load->view('user/rule_user', $data);//bring $data to user_data 
      
-        $this->load->view('footer');
+            $this->load->view('footer');
    
     }
 
@@ -97,7 +98,6 @@ class User extends CI_Controller {
         $lname  =  $this->input->post('lname');
         $gender =  $this->input->post('gender');
         $username =  $this->input->post('username');
-
         $password =  $this->input->post('password');
         $email  =  $this->input->post('email');
         $sug_id =  $this->input->post('sug_id');
@@ -111,7 +111,7 @@ class User extends CI_Controller {
        }
        if($result == false){
         //echo "<script>alert('Username already exist')</script>";
-        $this->session->set_flashdata('error','<div class="alert alert-warning ">  
+        $this->session->set_flashdata('error','<div class="alert alert-warning hide-it">  
           <span>  <b> Warning - </b> Username already exist</span>
         </div> ');
         redirect('user/add','refresh'); 
@@ -196,10 +196,13 @@ class User extends CI_Controller {
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
         $gender = $data['result'][0]->gender;
+
+
+
         $g = $data['result'][0]->sug_id;
 
 
-        $sqlSelG = "SELECT * FROM sys_user_groups WHERE sug_id<>'1' AND enable='1' AND delete_flag != 0 AND sug_id != $g;";
+        $sqlSelG = "SELECT * FROM sys_user_groups WHERE sug_id<>'0' AND enable='1' AND delete_flag != 0 AND sug_id != $g;";
         $query = $this->db->query($sqlSelG); 
         $data['excLoadG'] = $query->result(); 
 

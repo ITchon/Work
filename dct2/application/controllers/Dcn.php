@@ -10,14 +10,15 @@ class Dcn extends CI_Controller {
         $this->load->helper('download');
         $this->load->helper('form');
         $this->load->database(); 
-        $this->load->model('model');     
-
+        $this->load->model('model');        $this->model->CheckSession();
         $menu['menu'] = $this->model->showmenu($this->session->userdata('sug_id'));
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
          $menu['mg']= $this->model->givemeid($url);
-          $menu['submenu'] = $this->model->showsubmenu($this->session->userdata('su_id'));
+         $sql =  "select * from sys_menus where order_no != 0 and enable != 0 ORDER BY order_no";
+         $query = $this->db->query($sql); 
+         $menu['submenu']= $query->result(); 
          $this->load->view('header');
-        $this->load->view('menu',$menu);
+         $this->load->view('menu',$menu);
 
     }
     public function index()
@@ -26,17 +27,36 @@ class Dcn extends CI_Controller {
     }
         public function manage()
     {   
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+        $name =  $this->input->post('name');
 
-        $sql =  "SELECT dc.dcn_id, dc.dcn_no,dc.file_name as dcn_file,dc.path_file as dcn_path
-        ,dc.file_code as dcn_code,dc.enable,dc.tf_id,tf.tf_fol
-          from dcn as dc
-          left join type_file as tf on tf.tf_id = dc.tf_id 
-          where dc.delete_flag != 0 ";
-            $query = $this->db->query($sql); 
+        if($name =='DCN'){
+            $dcn_id =  $this->input->post('dcn_id');
+        $sql =  "SELECT * from dcn as dcn where dcn.delete_flag != 0 ";
+        $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
         $this->load->view('dcn/show',$data);//bring $data to user_data 
         $this->load->view('footer');
 
+        }
+        else if($this->uri->segment('3')){
+            $id = $this->uri->segment('3');
+        $sql =  "SELECT * from dcn as dcn where dcn.delete_flag != 0 ";
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+        $this->load->view('dcn/show',$data);//bring $data to user_data 
+        $this->load->view('footer');
+        }
+        else{
+        $sql =  'select * from dcn where delete_flag != 0';
+        $query = $this->db->query($sql); 
+        $data['result'] = $query->result(); 
+        $this->load->view('dcn/show',$data);//bring $data to user_data 
+        $this->load->view('footer');
+        }
+
+        
         
     }
 

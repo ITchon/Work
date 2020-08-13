@@ -3,17 +3,6 @@
   display: inline-block;
 }
 </style>
-
-
-
-<script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
-
-  <!-- Trigger the modal with a button -->
-
-  <!-- Modal -->
-
-
-
       <div class="layout-content">
         <div class="layout-content-body">
           <div class="title-bar">
@@ -29,50 +18,29 @@
                 <div class="card-header ">
               
               <?php
+              $this->session->set_userdata('name',$name);
+              $this->session->set_userdata('id',$id);
              ?>
 
-              <h3><a href="<?php echo base_url()?>drawing/show">MANAGE DRAWING </a> <?php if(isset($title)){?>
-                <a class=""> </a> >   <?php echo $title ?>  <a  class="fa fa-undo " onClick="history.go(-1)"style="cursor: pointer;"> </a> 
+              <h3><a href="<?php echo base_url()?>drawing/manage">MANAGE DRAWING </a> <?php if(isset($title)){?>
+                <a class=""> </a> > <?php echo $name ?>  <?php echo $title ?>  <a  class="fa fa-undo " onClick="history.go(-1)"style="cursor: pointer;"> </a> 
                 <?php  }?> 
                 <a href="" class="btn btn-default no_print" onclick="window.history.go(-1); return false;"> Back </a>
+                <b><?php echo $sort ?> : <?php echo $search ?></b>
                 </h3>
-                <?php  
-                $s_pno[] =null;
-
-                ?>
 
 
-                <form id='form' class="form-inline" action="<?php echo base_url()?>drawing/show" method="get">
-                  <div class="col-xs-3">
-                  <input type="hidden" class="form-control">
-                  <a class="form-control btn btn-primary">Drawing No.</a>
-                    <input type="text" class="form-control" name="s_dno" value="<?php echo $s_dno; ?>">
-                  </div>
+                <form id='form' class="form-inline" action="<?php echo base_url()?>drawing/show" method="post">
+                  <input type="hidden" name="id" value="<?php echo $id ?>">
+                  <input type="hidden" name="name" value="<?php echo $name ?>">
+                  <input type="text-center" class="form-control" name="search" placeholder="Search..." value="<?php echo $search ?>">
 
-                  <div class="col-xs-3">
-                    <a class="form-control btn btn-primary">Drawing Name</a>
-                    <input type="text" class="form-control" name="s_name" value="<?php echo $s_name; ?>">
-                  </div>
-
-                  <div class="col-xs-3">
-                    <a class="form-control btn btn-primary">Part No.</a>
-                  <select class="lol" id="demo-select2-3" name="s_pno[]" class="form-control" multiple="multiple">
-                    <?php foreach ($resultp as $r) { ?>
-                     <option value="<?php echo $r->p_no ?>" <?php 
-                foreach ($s_pno as $s) {
-                  if($r->p_no == $s){
-                    echo 'selected';
-                  }
-                  }?>>
-                  <?php echo $r->p_no?></option>
-                    <?php } ?>
-                </select>
-                  </div>
-
-
-                  <div class="col-xs-3">
+                  <select id="select" name="sort" class="form-control btn btn-primary">
+                    <option value="Drawing">Drawing</option>
+                    <option value="Part">Part</option>
+                    <option value="DCN">DCN</option>
+                  </select>
                   <button type="submit" class="btn btn-primary">SEARCH</button>
-                  </div>
                 </form>
 
 
@@ -82,10 +50,8 @@
                 <table id="demo-datatables-buttons-1" class="table table-hover  table-nowrap dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
-                        <th width="15%">Drawing No</th>
-                        <th width="15%">Drawing Name</th>
+                        <th width="10%">Drawing No</th>
                         <th width="10%">Part No</th>
-                        <th width="5%">Customer</th>
                         <th width="10%">DCN</th>
                         <th width="3%">Version</th>
                         <th width="10%">Manage</th>
@@ -98,12 +64,12 @@
 
                       <?php
                     foreach($result as $r){
-             echo "<tr>";?>
-                    <td><?php echo "<b>".$r->d_no."</b>" ?></td>
-                    <td><?php echo "<b>".$r->d_name."</b>" ?></td>
+             echo "<tr>";
+                echo "<td> " ?>
+                    <?php echo "<b>".$r->d_no."</b>" ?>
                     <td><?php echo "<b>".$r->p_no."</b>" ?></td>
-                    <td><?php echo "<b>".$r->cus_name."</b>" ?></td>
-
+                    <?php
+                echo"</td>";?>
                 <td class="text-center">
                   <form id='form' action="<?php echo base_url()?>drawing/open_dcn" method="post">
                   <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
@@ -115,33 +81,25 @@
                   </form>
                 </td>
 
-                <td class="text-center">
-                  <form id='form' action="<?php echo base_url()?>drawing/show_v" method="get">
+                <td class="text-center"><form id='form' action="<?php echo base_url()?>drawing/show_v" method="post">
                     <input type="hidden" name="p_id" value="<?php echo $r->p_id ?>">
                     <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
+                    <input type="hidden" name="id" value="<?php echo $id ?>">
+                  <input type="hidden" name="name" value="<?php echo $name ?>">
                     <button  type="submit"  style=" background-color: Transparent;border:none" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ดูVersionทั้งหมด</h5>' ><a>
                       <?php echo $r->version ?></a></button>
 
-                  </form>
-                </td>
-                  <td class="text-center">
-                  <a href="javascript:void(0)"  data-id="<?php echo $r->d_id;?>" class="view_img"><i class='btn-success btn-sm fa fa-search'> </i></a>
-                  <form id='form' action="<?php echo base_url()?>drawing/openfile" method="post">
-                  <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                  <input type="hidden" name="path" value="\\192.168.82.4\tbkk$\RD\Drawing\01_Drawings\A_Production Dwg\">
-                  <input type="hidden" name="filename" value="<?php echo $r->file_name ?>">
-                  <input type="hidden" name="file" value="_FLANGE_cancelled.XDW">
-                  <button class=" btn-primary btn-sm fa fa-inbox" type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;">
-                  </button>
-                  </form>
+                  </form></td>
                                          
                   <?php
                    if($r->enable!=1){?>
+                  
+                  <td class="text-center">
 
                   <form id="form" action="<?php echo base_url()?>drawing/enable" method="post">
                   <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                  <input type="hidden" name="search" value="<?php echo $search ?>">
-
+                  <input type="hidden" name="id" value="<?php echo $id ?>">
+                  <input type="hidden" name="name" value="<?php echo $name ?>">
                   <button class='btn-danger btn-sm fa fa-times' type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' style="border:none;"></button>
 
                   </form>
@@ -149,11 +107,11 @@
                   <?php
                 }
                 else{?>
-                
+                  <td class="text-center">
                   <form id="form" action="<?php echo base_url()?>drawing/disable" method="post">
                   <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                  <input type="hidden" name="search" value="<?php echo $search ?>">
-
+                  <input type="hidden" name="id" value="<?php echo $id ?>">
+                  <input type="hidden" name="name" value="<?php echo $name ?>">
                   <button class='btn-success btn-sm fa fa-check' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งาน</h5>' style="border:none;"></button>
                   
                   </form>                      
@@ -162,29 +120,25 @@
               
               
                 ?>
-
-                <form id='form' action="<?php echo base_url()?>drawing/edit" method="post">
-                  <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                  <input type="hidden" name="search" value="<?php echo $search ?>">
-                  <button class=" btn-primary btn-sm fa fa-wrench" type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' style="border:none;">
-                  </button>
-                  </form>
-
                 <form id='form' action="<?php echo base_url()?>drawing/version_form" method="post">
                   <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                  <input type="hidden" name="search" value="<?php echo $search ?>">
                   <button class=" btn-primary btn-sm fa fa-plus" type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เพิ่มVersion</h5>' style="border:none;">
                   </button>
                   </form>
       
                     <form id="form" action="<?php echo base_url()?>drawing/deletedrawing" method="post">
                     <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                    <input type="hidden" name="search" value="<?php echo $search ?>">
-                    <button class="btn-default btn-sm fa fa-trash" onclick='return confirm("Confirm Delete Item")' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' style="border:none;"></button>
+                    <button class="btn-danger btn-sm fa fa-trash" onclick='return confirm("Confirm Delete Item")' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' style="border:none;"></button>
                     </form>
 
-                     
-
+                     <form id='form' action="<?php echo base_url()?>drawing/openfile" method="post">
+                  <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
+                  <input type="hidden" name="path" value="C:\inetpub\wwwroot\dct\uploads\">
+                  <input type="hidden" name="filename" value="<?php echo $r->file_name ?>">
+                  <input type="hidden" name="file" value="<?php echo $r->file_code?>">
+                  <button class=" btn-primary btn-sm fa fa-inbox" type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;">
+                  </button>
+                  </form>
       
                 <?php 
                 if($r->enable!=1 ){?>
@@ -198,9 +152,7 @@
                 }
                 ?>
 
-                <td style="font-size: 14px"><?php echo $r->path_file ?>\<?php echo $r->file_name ?>
-
-                </td>
+                <td style="font-size: 14px"><?php echo $r->path_file ?>\<?php echo $r->file_name ?> </td>
                 <?php
 
             echo "</tr>";
@@ -221,76 +173,14 @@
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
                 <script>
         $(document).ready(function() {
-    $('body').on('click', '.view_img', function () {
- var id = $(this).data("id");
- console.log(id);
- 
- $.ajax({
-    type: "Post",
-    url:'<?php echo base_url() ?>/ajax/view_pdf',
-    data: {
-       id: id
-    },
-    dataType: "json",
-    success: function (res) {
-      var html = '';
-      // if(res.success != false){ 
-      var path ='uploads/'+res.data[0].file_code;
- 
-      pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
-             var container=document.getElementById("pageContainer")
-    var origCanvas=document.getElementById("the-canvas");
-    var wmCanvas=document.createElement("canvas");
-    wmCanvas.id="watermark";
-    wmCanvas.setAttribute("style","position:absolute; ")
-
-if(container.firstChild)
-    container.insertBefore(wmCanvas, container.firstChild);
-else
-    container.appendChild(wmCanvas);
-
-var wmContext=wmCanvas.getContext('2d');
-
-// setup text for filling
-wmContext.font = "24px Comic Sans MS" ;
-wmContext.fillStyle = "red";
-// get the metrics with font settings
-var metrics = wmContext.measureText("WaterMark Demo");
-var width = metrics.width;
-// height is font size
-var height = 72;
-
-// change the origin coordinate to the middle of the context
-wmContext.translate(origCanvas.width/2, origCanvas.height/2);
-// rotate the context (so it's rotated around its center)
-wmContext.rotate(-Math.atan(origCanvas.height/origCanvas.width));
-// as the origin is now at the center, just need to center the text
-wmContext.fillText("<?php echo $this->session->userdata('fname')."  ". $this->session->userdata('lname'); ?>",-width/2,height/2);
-  
-      pdfDoc = pdfDoc_;
-      document.getElementById('page_count').textContent = pdfDoc.numPages;
-  // Initial/first page rendering
-      renderPage(pageNum);
-      });
-
-             $('#modal_form').modal('show'); 
-        // }else{
-
-        // alert('No PDF File');
-        // }
-       
-    },
-    error: function (res) {
-    console.log(res);
-     
-    alert('NO DATA');
-    }
- });
+    $('.select2').select2();
 });
-
-});
-
-
+      </script>
+      <script>
+        <?php if($sort == null){
+          $sort = "Drawing";
+        } ?>
+      document.getElementById('select').value = "<?php echo $sort ?>";
 </script>
 
 <style>
@@ -486,9 +376,5 @@ function reset() {
 
 document.getElementById('reset').addEventListener('click', reset);
 </script>
-
-     
-
-
 
      
