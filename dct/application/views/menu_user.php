@@ -129,13 +129,7 @@
                     
 
                   <?php
-      
-                   if($r->link == "editprofile/manage" ) { ?> 
-                    <ul class="sidenav-subnav collapse <?php echo($r->mg == $mg[0]->mg_id)? " ":"" ?>">
-                          <li class="<?php echo($url == "editprofile/manage")?"active":"" ?>"><a  href="<?php echo base_url()?>editprofile/manage">- Edit Profile</a></li>
-                          <li class="<?php echo($url == "changepassword/account")?"active":"" ?>"><a  href="<?php echo base_url()?>changepassword/account">- Change Password</a></li>
-                    </ul>
-                  <?php }?>
+
                   
                 </li> 
 

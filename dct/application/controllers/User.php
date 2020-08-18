@@ -19,12 +19,7 @@ class User extends CI_Controller {
     {   
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-        $sql =  'SELECT su.su_id,su.password,su.username, su.firstname ,su.lastname, su.gender,su.email,su.enable,su.delete_flag, sug.name as name
-    FROM
-    sys_users  AS su 
-    INNER JOIN sys_user_groups AS sug ON sug.sug_id = su.sug_id where su.delete_flag != 0 AND sug.sug_id != "1"';
-        $query = $this->db->query($sql); 
-       $data['result'] = $query->result(); 
+        $data['result'] = $this->model->show_user(); 
         $this->load->view('user/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
     }
@@ -52,14 +47,8 @@ class User extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $decrypted_id = $this->uri->segment('3');
         $id = base64_decode($decrypted_id);
-          $sql =  'SELECT su.su_id,su.password,su.username, su.firstname ,su.lastname, su.gender,su.email,su.enable,su.delete_flag, sug.name as name
-    FROM
-    sys_users  AS su 
-    INNER JOIN sys_user_groups AS sug ON sug.sug_id = su.sug_id where su.delete_flag != 0 AND sug.sug_id != "1"';
-            //$sql =  'select * from sys_users where delete_flag != 0';
-            $query = $this->db->query($sql); 
-            $data['result'] = $query->result(); 
 
+            $data['result'] = $this->model->show_user(); 
             $sql =  'select * from sys_users_permissions where su_id = '.$id.'';
             $query = $this->db->query($sql); 
             $data['result_user']= $query->result(); 
@@ -120,6 +109,19 @@ class User extends CI_Controller {
        
 
     }
+    public function mobile($uid){
+        $id = base64_decode($uid);
+       $result = $this->model->mobile($id);
+
+       if($result!=FALSE){
+           redirect('user/manage','refresh');
+
+       }else{
+       
+           echo "<script>alert('Simting wrong')</script>";
+      redirect('user/manage','refresh');
+       }
+   }
     public function enable($uid){
          $id = base64_decode($uid);
         $this->model->CheckPermission($this->session->userdata('su_id'));
@@ -133,23 +135,6 @@ class User extends CI_Controller {
         
             echo "<script>alert('Simting wrong')</script>";
        redirect('user/manage','refresh');
-        }
-    }
-
-    public function disable($uid){
-        $id = base64_decode($uid);
-        $this->model->CheckPermission($this->session->userdata('su_id'));
-        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-        $result = $this->model->disableUser($id);
-
-        if($result!=FALSE){
-            redirect('user/manage','refresh');
-            
-
-        }else{
-            echo "<script>alert('Simting wrong')</script>";
-            redirect('user/manage','refresh');
-
         }
     }
 

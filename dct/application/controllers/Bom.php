@@ -11,8 +11,6 @@ class Bom extends CI_Controller {
         $this->load->model('model');
         $this->model->CheckSession();
         $this->model->load_menu();
-      
-
 
     }
 	public function index()
@@ -30,8 +28,6 @@ class Bom extends CI_Controller {
         $res = $query->result(); 
         $data['result'] =$res;
 
-
-
        if( $this->input->post('bm')){
           $bm =  $this->input->post('bm'); 
           redirect('bom/manage/'.$bm.'');
@@ -39,7 +35,6 @@ class Bom extends CI_Controller {
         $bm = $this->uri->segment('3');
        }
 
-      
        if($sort){   //---------------------------BOM SEARCH----------------------------
         $sort =  $this->input->post('sort'); 
         $sub_id =  $this->input->post('sub_id'); 

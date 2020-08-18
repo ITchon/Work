@@ -30,20 +30,18 @@
                     <tbody>
                     <?php
                     foreach($result_all as $r){
-            echo "<tr>";
+                echo "<tr>";
                 echo "<td>".$r->cus_name."</td>";
                 echo "<td>".$r->cus_des."</td>";
-                ?><td> 
-                <a type ='button' class=' ' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขข้อมูล</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
-                echo base_url() . 'customers/edit/' . $r->cus_id;
-                ?>';"><i class='btn-info btn-sm fa fa-wrench'></i></a>
-
-                <?php 
-                echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."customers/delete/".$r->cus_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
-            echo "</tr>";
-        }
-    ?>
-                  
+                if($this->session->flashdata("edit")!== null )
+                echo "<td><a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' data-original-title='Rule' href='".base_url()."customers/edit/".$r->cus_id."'  ><i class='btn-info no-border fa fa-wrench'></i></a>";
+                
+                if($this->session->flashdata("delete")!== null )
+                echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."customers/delete/".$r->cus_id ."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a></td>";  
+      
+                echo "</tr>";
+                }
+                ?>
                     </tbody>
                   </table>
                 </div>

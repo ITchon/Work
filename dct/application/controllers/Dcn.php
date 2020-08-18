@@ -12,7 +12,7 @@ class Dcn extends CI_Controller {
         $this->load->database(); 
         $this->load->model('model');     
         $this->model->load_menu();
-
+        $this->model->button_show($this->session->userdata('su_id'),8);
     }
     public function index()
     {   
