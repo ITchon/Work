@@ -34,20 +34,7 @@ class Model extends CI_Model
 
       
   }
-   function showmenu($sug_id){
-    $sql =  'SELECT DISTINCT smg.name AS g_name, smg.icon_menu, sm.mg_id, smg.mg_id AS mg, smg.order_no ,smg.link
-    FROM sys_menus AS sm 
-    inner JOIN sys_menu_groups AS smg ON smg.mg_id = sm.mg_id 
-    inner join sys_permission_groups as spg ON spg.mg_id = sm.mg_id
-    inner join sys_users_groups_permissions as sugp ON sugp.spg_id = spg.spg_id
-
-    where sug_id = '.$sug_id.' 
-    ORDER BY smg.order_no ASC';    
-    $query = $this->db->query($sql); 
-    $result = $query->result();
-    return $result;
- }
-    function showmenu_user($sug_id,$su_id){
+   function showmenu_user($sug_id,$su_id){
     $sql =  'SELECT DISTINCT smg.name AS g_name, smg.icon_menu, sm.mg_id, smg.mg_id AS mg, smg.order_no ,smg.link,sp.sp_id,sup.su_id
     FROM sys_menus AS sm 
     inner JOIN sys_menu_groups AS smg ON smg.mg_id = sm.mg_id 
@@ -61,10 +48,26 @@ class Model extends CI_Model
     $result = $query->result();
     return $result;
  }
+ 
+ function showmenu($sug_id,$su_id){
+  $sql =  'SELECT DISTINCT smg.name AS g_name, smg.icon_menu, sm.mg_id, smg.mg_id AS mg, smg.order_no ,smg.link
+  FROM sys_menus AS sm 
+  inner JOIN sys_menu_groups AS smg ON smg.mg_id = sm.mg_id 
+  inner join sys_permission_groups as spg ON spg.mg_id = sm.mg_id
+  inner join sys_users_groups_permissions as sugp ON sugp.spg_id = spg.spg_id
 
- function showsubmenu(){
-         $sql =  "SELECT * from sys_menus as sm
-    WHERE order_no !=0 AND enable != 0 ORDER BY sm.order_no ASC"; 
+  where sug_id = '.$sug_id.' 
+  ORDER BY smg.order_no ASC';    
+  $query = $this->db->query($sql); 
+  $result = $query->result();
+  return $result;
+}
+
+ function showsubmenu($id){
+         $sql =  "SELECT  sm.name,sm.mg_id,sm.method from sys_menus as sm
+         inner join sys_permissions as sp on sp.controller = sm.link
+        inner join sys_users_permissions as sup on sup.sp_id = sp.sp_id
+        WHERE order_no !=0 AND sm.enable != 0 AND sp.enable != 0 ANd sup.su_id = $id ORDER BY sm.order_no ASC"; 
     $query = $this->db->query($sql); 
     $result = $query->result(); 
     return $result;   
@@ -414,6 +417,42 @@ class Model extends CI_Model
     return $array;
    
   }
+
+  public function get_part_drawing_byid($d_id)
+  {
+    $sql =  "SELECT * from part_drawing  as pd
+        left join part as p on p.p_id = pd.p_id
+        where pd.d_id = $d_id";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+  public function get_pid_bypd($d_id)
+  {
+    $sql =  "SELECT pd.p_id from part_drawing  as pd
+        where pd.d_id = $d_id";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+
+  public function get_customers()
+  {
+    $sql =  "SELECT * from customers where delete_flag != 0";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+
+  public function get_type_drawing()
+  {
+    $sql =  "SELECT * from type_file where tf_group = 1 OR tf_group = 0";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+
+
   public function get_drawing()
   {
     $sql =  "SELECT * from drawing  where delete_flag != 0";
