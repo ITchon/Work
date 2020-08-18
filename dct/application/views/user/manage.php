@@ -61,7 +61,7 @@
                   if($this->session->flashdata("rule")!== null ) echo "<a  href='".base_url()."user/rule/".$encrypted_id."'  ><i class='btn-info no-border fa fa-gear'></i></a>";
                   if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."user/edit_u/".$encrypted_id."'  ><i class='btn-info no-border fa fa-wrench'></i></a>";
                   if($this->session->userdata('sug_id')==1){
-                  if($r->mobile!=1 || $this->session->userdata('sug_id')==1){
+                  if($r->mobile!=1 ){
                       $icon = "btn-danger no-border fa fa-building-o";
                       $text = "Enable mobile device";
                     }else{

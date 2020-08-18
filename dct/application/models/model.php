@@ -35,7 +35,7 @@ class Model extends CI_Model
          $this->load->view('header');
         $this->load->view('menu',$menu);
     }else{
-        $menu['menu'] = $this->model->showmenu($this->session->userdata('sug_id'),$this->session->userdata('su_id'));
+        $menu['menu'] = $this->model->showmenu_user($this->session->userdata('sug_id'),$this->session->userdata('su_id'));
         $url = trim($this->router->fetch_class().'/'.$this->router->fetch_method()); 
         $menu['mg']= $this->model->givemeid($url);
         $menu['submenu'] = $this->model->showsubmenu($this->session->userdata('su_id'));
@@ -47,19 +47,31 @@ class Model extends CI_Model
       
   }
    function showmenu($sug_id,$su_id){
-    $sql =  'SELECT DISTINCT smg.name AS g_name, smg.icon_menu, sm.mg_id, smg.mg_id AS mg, smg.order_no ,smg.link,sp.sp_id,sup.su_id
+    $sql =  'SELECT DISTINCT smg.name AS g_name, smg.icon_menu, sm.mg_id, smg.mg_id AS mg, smg.order_no ,smg.link
     FROM sys_menus AS sm 
     inner JOIN sys_menu_groups AS smg ON smg.mg_id = sm.mg_id 
     inner join sys_permission_groups as spg ON spg.mg_id = sm.mg_id
     inner join sys_users_groups_permissions as sugp ON sugp.spg_id = spg.spg_id
-    inner join sys_permissions as sp on sp.controller = smg.link
-    inner join sys_users_permissions as sup on sup.sp_id = sp.sp_id
-    where sug_id = '.$sug_id.' and sup.su_id = '.$su_id.'
+    where sug_id = '.$sug_id.' 
     ORDER BY smg.order_no ASC';    
     $query = $this->db->query($sql); 
     $result = $query->result();
     return $result;
  }
+ function showmenu_user($sug_id,$su_id){
+  $sql =  'SELECT DISTINCT smg.name AS g_name, smg.icon_menu, sm.mg_id, smg.mg_id AS mg, smg.order_no ,smg.link,sp.sp_id,sup.su_id
+  FROM sys_menus AS sm 
+  inner JOIN sys_menu_groups AS smg ON smg.mg_id = sm.mg_id 
+  inner join sys_permission_groups as spg ON spg.mg_id = sm.mg_id
+  inner join sys_users_groups_permissions as sugp ON sugp.spg_id = spg.spg_id
+  inner join sys_permissions as sp on sp.controller = smg.link
+  inner join sys_users_permissions as sup on sup.sp_id = sp.sp_id
+  where sug_id = '.$sug_id.' and sup.su_id = '.$su_id.'
+  ORDER BY smg.order_no ASC';    
+  $query = $this->db->query($sql); 
+  $result = $query->result();
+  return $result;
+}
 
 
  function showsubmenu($id){
