@@ -39,10 +39,10 @@ form {
                 <a href="" class="btn btn-default no_print" onclick="window.history.go(-1); return false;"> Back </a>
                 </h3>
                 <?php  
-                $s_pno[] =null;
                 $search = $this->session->flashdata('search');
                 $this->session->set_flashdata('search',$search)
                 ?>
+
 
                 <form   action="<?php echo base_url()?>drawing/show" method="get">
                   <div class="col-xs-3">
@@ -70,17 +70,8 @@ form {
                               <a href="" class="no_print btn btn-primary ">Part No.</a> 
                          </div>
 
-                  <select class="lol" id="demo-select2-3" name="s_pno[]" class="form-control" multiple="multiple">
-                    <?php foreach ($resultp as $r) { ?>
-                     <option value="<?php echo $r->p_no ?>" <?php 
-                foreach ($s_pno as $s) {
-                  if($r->p_no == $s){
-                    echo 'selected';
-                  }
-                  }?>>
-                  <?php echo $r->p_no?></option>
-                    <?php } ?>
-                </select>
+                  <input type="text" name="s_pno" class="form-control" value="<?php echo $s_pno ?>">
+
                   </div>
 
             </div>
@@ -136,7 +127,8 @@ form {
 
                     <button  type="submit"  style=" background-color: Transparent;border:none" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ดูVersionทั้งหมด</h5>' ><a>
                       <?php echo $r->version ?></a></button>
-                    </form>
+
+                  </form>
                 </td>
                 <?php 
                 echo "<td class='text-center'>";
@@ -157,10 +149,13 @@ form {
                       echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขสิทธิ์</h5>' data-original-title='Rule' href='".base_url()."drawing/enable/".$r->d_id ."'><i class='btn-danger no-border fa fa-check'> DISABLE</i></a>";
                   }else{
                     echo "<b class='text-danger'>DISABLE</b>";
-                    }
-                  }
+                   }
+       
+                      }
                 else{ 
                    if($this->session->flashdata("disable")!== null ){
+
+
                  echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขสิทธิ์</h5>' data-original-title='Rule' href='".base_url()."drawing/disable/".$r->d_id."'><i class='btn-success no-border fa fa-check'> ENABLE</i></a>";
                 }else{
                     echo "<b style='color:#43a047'>ENABLE</b>";

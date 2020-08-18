@@ -52,21 +52,30 @@
                 </td>
                 <td style="font-size: 14px"><?php echo $r->dcn_path ?> </td>
         
+        
+
+                    <?php
+                echo"</td>";
+                if($r->enable!=1 ){?>
+                  
+                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
+                  echo base_url() . 'dcn/enable/' . $r->dcn_id;
+                  ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
+                  <?php
+                }
+                else{?>
+
+                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งาน</h5>'  data-original-title='Rule' onclick="javascript:window.location='<?php
+                  echo base_url() . 'dcn/disable/' . $r->dcn_id;
+                  ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                     
+                  <?php
+                }
+                ?> <a type ='button' class=' ' data-original-title='Rule'  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' onclick="javascript:window.location='<?php
+                echo base_url() . 'dcn/edit_dcn/' . $r->dcn_id;
+                ?>';"><i class='btn-info btn-sm fa fa-wrench'> </i> </a>
                 <?php 
-                echo "<td class='text-center'>";
-                if($r->enable!=1 ){
-                   if($this->session->flashdata("disable")!== null )
-                   echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขสิทธิ์</h5>' data-original-title='Rule' href='".base_url()."dcn/enable/".$r->dcn_id."'><i class='btn-danger no-border fa fa-close'></i></a>";
-                   }
-                else{ 
-                 if($this->session->flashdata("enable")!== null )
-                 echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขสิทธิ์</h5>' data-original-title='Rule' href='".base_url()."dcn/disable/".$r->dcn_id."'><i class='btn-success no-border fa fa-check'></i></a>";  
-                 }
-                  if($this->session->flashdata("edit")!== null )
-                  echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' data-original-title='Rule' href='".base_url()."dcn/edit_dcn/".$r->dcn_id."'  ><i class='btn-info no-border fa fa-wrench'></i></a>";
-                  if($this->session->flashdata("delete") !==null)
-                  echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."dcn/deletedcn/".$r->dcn_id ."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a></td>";  
-                  echo "</td>";
+                echo "<a type='button' href='".base_url()."dcn/deletedcn/".$r->dcn_id."'  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>"; ?>
+                <?php
             echo "</tr>";
         }
     ?>
