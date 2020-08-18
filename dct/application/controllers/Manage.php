@@ -11,9 +11,10 @@ class Manage extends CI_Controller {
         $this->load->database(); 
         $this->load->model('model');
         $this->model->CheckSession();
-      $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $this->model->load_menu();
+        
     }
 	public function index()
 	{	
@@ -26,6 +27,8 @@ class Manage extends CI_Controller {
         $query = $this->db->query($sql2);
         $part = $query->result();
         $data['part'] = $part[0]->p_id;
+
+
 
         $sql4 = "SELECT COUNT(b_id) as b_id FROM BOM";
         $query = $this->db->query($sql4);

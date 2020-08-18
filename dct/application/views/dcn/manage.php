@@ -23,11 +23,10 @@
                    <option value="">- - - Select DCN - - -</option>
                    <?php
                       foreach($result as $r){?>
-             
                      <option value="<?php  echo $r->dcn_id ?>"><?php echo $r->dcn_no ?></option>
                     <?php
                       }
-                      ?> 
+                    ?> 
                    </select>
 
                   <div class="input-group-btn">  
