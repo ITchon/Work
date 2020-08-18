@@ -96,6 +96,24 @@
                       ?> 
                    </select>
                     </div>
+                    </div>
+
+                    <div class="form-group has-feedback">
+                    <label for="dcn" class="col-sm-5 col-md-4 control-label">PART</label>    
+
+                <div class="col-sm-5 col-md-4">
+                   <select name="p_id" class="form-control select2" id="dcn_id" multiple="multiple">
+                   <option value="" hidden> - - - Select PART- - - </option>
+                   <?php
+                   
+                      foreach($result_p as $p){?>
+                     <option value="<?php  echo $p->p_id ?>"><?php echo $p->p_no ?></option>
+                    <?php
+                      }
+                      ?> 
+                   </select>
+                    </div>
+
                
 
 
