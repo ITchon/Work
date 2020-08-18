@@ -131,8 +131,8 @@ class User extends CI_Controller {
 
         }else{
         
-            echo "<script>alert('Simting wrong')</script>";
-       redirect('user/manage','refresh');
+        echo "<script>alert('Simting wrong')</script>";
+        redirect('user/manage','refresh');
         }
     }
 
