@@ -11,7 +11,7 @@ class Customers extends CI_Controller {
         $this->load->model('model');
         $this->model->CheckSession();
         $this->model->load_menu();
-        
+        $this->model->button_show($this->session->userdata('su_id'),11);
     }
 	public function index()
   {	

@@ -1,17 +1,3 @@
-<style>
-tr{
-  color:#495057;
-  font-size:16px; 
-  font-weight: bold;
-  background-color: white;
-  
-}
-
-.hidden {
-  display: none;
-}
-
-</style>
 <div class="layout-content">
         <div class="layout-content-body">
           <div class="title-bar">
@@ -24,7 +10,6 @@ tr{
               <h2 class=" text-center text-primary">
              EDIT DRAWING
             </h2><hr>
-            <?php echo $this->session->flashdata("success"); ?>
             <?php $d_no = $this->session->flashdata('d_no'); ?>
             <?php $p_no = $this->session->flashdata('p_no'); ?>
             
@@ -117,7 +102,6 @@ $this->session->set_flashdata('search',$search);
 
 
 
-
                     <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Change File</label>  
                       <div class="col-sm-6 col-md-4">
@@ -129,72 +113,10 @@ $this->session->set_flashdata('search',$search);
                           <input type="file" name="file_name" class="form-control" id="file_name" required>
 
                       <?php } ?>
-                      </div>
-                    </div>
 
-                      <div class="form-group has-feedback">
-                    <label for="dcn" class="col-sm-5 col-md-4 control-label">ADD PART</label>    
-
-                <div class="col-sm-5 col-md-4">
-                   <select name="p_id" class="form-control select2" id="dcn_id" multiple="multiple">
-                   <option value="" hidden> - - - Select PART- - - </option>
-                   <?php
-                   
-                      foreach($result_p as $p){?>
-                     <option value="<?php  echo $p->p_id ?>"><?php echo $p->p_no ?></option>
-                    <?php
-                      }
-                      ?> 
-                   </select>
-                      
-                      <button class="btn btn-outline-primary" type="button" id="add">Add NEW PART</button>
-                    <button type="button" class="btn btn-outline-danger btn_remove hidden">Remove</button><br>
-                      <div id="dynamic_field"></div>
-                      </div>
-                    </div>
-                      
-                    
-                    
-
-                    
-
-                    
-
-                      
-                      <div class="form-group">
-                      <div class="col-sm-6 col-md-12">
-                      <table class="table text-center">
-                      <thead>
-                      <tr>
-                      
-                      </tr>
-                      </thead>
-
-                      <?php 
-                      foreach($result_pd as $r){ ?>
-                      
-                      <tbody>
-                      <td style='text-align:center;'>
-                 <label class='pos-rel'>
-                     <input type='checkbox' name='chk_uid[]' value='<?php echo $r->pd_id ?>'/>
-                     <span class='lbl'></span>
-                   </label>
-               </td>
-                      <td><?php echo $r->p_no ?></td>
-                  <?php
-                      }
-                       ?>
-                       <?php if($result_pd != null){ ?>
-                       <input type="button" class="btn btn-danger" id="toggle" value="delete all" onClick="do_this()" />
-                       <?php } ?>
-                      </tbody>
-                      </table>
-
-                      </div>
-                    </div>
-                  </div>
-
-
+                   </div>
+                 </div>
+            </div>
                   <div class="form-group">
                     <button type="submit" id="btn" class="btn btn-primary btn-block">Save Changes</button>
                   </div>
@@ -202,23 +124,6 @@ $this->session->set_flashdata('search',$search);
                 </div>
                 
       <script>
-      function do_this(){
-
-var checkboxes = document.getElementsByName('chk_uid[]');
-var button = document.getElementById('toggle');
-
-if(button.value == 'delete all'){
-    for (var i in checkboxes){
-        checkboxes[i].checked = 'FALSE';
-    }
-    button.value = 'undelete all'
-}else{
-    for (var i in checkboxes){
-        checkboxes[i].checked = '';
-    }
-    button.value = 'delete all';
-}
-}
         $(document).ready(function() {
 document.getElementById('tf').value = "<?php echo $result->tf_id ?>";
 document.getElementById('dcn').value = "<?php echo $result->dcn_id ?>";
@@ -238,27 +143,6 @@ function myFunction() {
 }
 </script>
 
-<script>
-$(document).ready(function() {
-  var i = 1;
-  $('#add').click(function() {
-    if (i <= 5) {
-      $('#dynamic_field').append('<div id="row' + i + '"><label>Part No</label><input type="text" class="form-control" name="p_no[]" value="" required><br><label>Part Name</label><input type="text" class="form-control" name="p_name[]" value="" required><br><hr style="height:2px;border-width:0;color:gray;background-color:gray"></div>')
-      //$('#dynamic_field').append('<div id="row' + i + '"><label for="email-2">Part No (' + i + ')</label><input type="text" class="form-control" name="p_no[]" value=""></div></div><div class="form-group"><label class="col-sm-3 col-md-4 control-label">Part Name (' + i + ')</label><div class="col-sm-6 col-md-4"><input type="text" class="form-control" name="p_name[]" value=""></div></div><br><hr style="height:2px;border-width:0;color:gray;background-color:red"></div>')
-      i++;
-      $('.btn_remove').removeClass('hidden');
-    }
-  });
-  $(document).on('click', '.btn_remove', function() {
-    var button_id = $(this).attr("id");
-    i--;
-    $('#row' + $('#dynamic_field div').length).remove();
-    if (i<=1) {
-      $('.btn_remove').addClass('hidden');
-    }
-  });
-});
-</script>
       <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
       <script type="text/javascript">
     $("#form").submit(function(){

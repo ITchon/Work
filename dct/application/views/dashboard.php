@@ -43,21 +43,20 @@
                 <div class="card-body">
                   <div class="media">
                     <div class="media-middle media-left">
-                      <span class="bg-primary circle sq-48">
-                        <span class="fa fa-wpforms"></span>
+                      <span class="bg-danger circle sq-48">
+                        <span class="fa fa-file-o"></span>
                       </span>
                     </div>
                     <div class="media-middle media-body">
-                      <h6 class="media-heading">File</h6>
+                      <h6 class="media-heading">Drawing with no part</h6>
                       <h3 class="media-heading">
-                        <span class="fw-l"><?php echo $num;; ?></span>
+                        <span class="fw-l"><?php echo $sum; ?></span>
                       </h3>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            
 <div class="col-md-6 col-lg-3 col-lg-pull-3">
               <div class="card">
                 <div class="card-body">
@@ -97,6 +96,31 @@
                           echo $bom;
                           ?>
                         </span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-md-6 col-lg-3 col-lg-push-0">
+              <div class="card">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-middle media-left">
+                      <span class="bg-primary circle sq-48">
+                        <span class="fa fa-wpforms"></span>
+                      </span>
+                    </div>
+                    <div class="media-middle media-body">
+                      <h6 class="media-heading">File</h6>
+                      <h3 class="media-heading">
+                        <span class="fw-l">
+                          <?php
+                        echo $num;
+                        
+                        ?></span>
                       </h3>
                     </div>
                   </div>
