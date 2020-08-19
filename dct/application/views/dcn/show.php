@@ -7,8 +7,6 @@
         <div class="layout-content-body">
           <div class="title-bar">
             <h1 class="title-bar-title">
-        
-
             </h1>
             <p class="title-bar-description">
             </p>
@@ -19,7 +17,7 @@
               <div class="card">
                 <div class="card-header">
 
-                  <h3>MANAGE DCN</h3>
+                <h3 class=" "><a href="<?php echo base_url()?>dcn/manage">MANAGE DCN</a> </h3>
 
                 </div>
                 <div class="card-body">

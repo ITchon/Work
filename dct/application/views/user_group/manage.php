@@ -33,28 +33,29 @@
                 echo "<td>".$r->name."</td>";
                 if($r->enable!=1 ){?>
                   <!-- <td><a href='".base_url()."index.php/user/permission/".$r->user_id."' class='btn btn-danger'>Disable</a>"; -->
-                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <td class="text-center"><a type="button" onclick="javascript:window.location='<?php
                   echo base_url() . 'usergroup/enable/' . $r->sug_id;
-                  ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
+                  ?>';"><i class='btn-danger no-border btn-sm fa fa-times'></i></a>
                   <?php
                 }
                 else{?>
                   <!-- echo "<td><a href='".base_url()."index.php/user/permission/".$r->user_id."' class='btn btn-success'>Enable</a>"; -->
-                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งาน</h5>'  data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <td class="text-center"><a type="button"  onclick="javascript:window.location='<?php
                   echo base_url() . 'usergroup/disable/' . $r->sug_id;
-                  ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
+                  ?>';"><i class='btn-success no-border btn-sm fa fa-check'></i></a>                      
                   <?php
                 }
-                ?> <a class='' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขสิทธิ์</h5>' onclick="javascript:window.location='<?php
-                echo base_url() . 'usergroup/rule_ug/' . $r->sug_id;
-                ?>';"><i class='btn-info btn-sm fa fa-gears'> </i> </a>
-
-                <a type ='button' class=' ' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขข้อมูล</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
+                ?>
+                <a  onclick="javascript:window.location='<?php
                 echo base_url() . 'usergroup/edit_ug/' . $r->sug_id;
-                ?>';"><i class='btn-info btn-sm fa fa-wrench'></i></a>
+                ?>';"><i class='btn-info no-border btn-sm fa fa-wrench'></i></a>
+
+                 <a onclick="javascript:window.location='<?php
+                echo base_url() . 'usergroup/rule_ug/' . $r->sug_id;
+                ?>';"><i class='btn-info no-border btn-sm fa fa-key'> </i> </a>
 
                 <?php 
-                echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."usergroup/deletegroup/".$r->sug_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";
+                echo "<a  href='".base_url()."usergroup/deletegroup/".$r->sug_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border btn-sm fa fa-trash'></i></a></td>";
             echo "</tr>";
         }
     ?>

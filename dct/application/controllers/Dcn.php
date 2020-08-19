@@ -20,10 +20,16 @@ class Dcn extends CI_Controller {
     }
         public function manage()
     {   
-
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+        $text = null;
+        if($this->uri->segment('3')){
+            $dcn_id = $this->uri->segment('3');
+            $text = "and dc.dcn_id = $dcn_id ";
+        }
         $sql =  "SELECT dc.dcn_id, dc.dcn_no,dc.file_name as dcn_file,dc.path_file as dcn_path,dc.file_code as dcn_code,dc.enable
           from dcn as dc
-          where dc.delete_flag != 0 ";
+          where dc.delete_flag != 0 $text";
             $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
         $this->load->view('dcn/show',$data);//bring $data to user_data 
