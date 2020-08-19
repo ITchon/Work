@@ -43,16 +43,22 @@ form {
                 ?>
                 <form action="<?php echo base_url()?>drawing/show" method="get">
                 <div class="col-md-3"> 
-                <input type="checkbox" name="all" value="21313" id="all" checked>      
+                <input type="checkbox" checked>      
                 <label  for="all" style="cursor: pointer;color:#5b6572" >ALL</label><br>  
-                <?php  
+                <?php
                 foreach($result_type as $r){ ?>
-                   <input type="checkbox" name="type[]" value="" id="<?php echo $r->tf_id ?>" >      
+                   <input type="checkbox" name="type[]"
+                   <?php foreach($type as $t){ 
+                     if($r->tf_id == $t){
+                       echo 'checked';
+                     }
+                   } ?>
+                  value="<?php echo $r->tf_id ?>" > 
                    <label  for="<?php echo $r->tf_id ?>" style="cursor: pointer;color:#5b6572" ><?php echo $r->tf_name ?></label><br>  
                 <?php  } ?>
                 </div>
                 <br>
-                <div class="col-md-2"> 
+                <div class="col-md-3"> 
                   <div class="input-group" >
                     <div class="input-group-btn">
                         <a href="" class="no_print btn btn-primary ">Part No.</a> 

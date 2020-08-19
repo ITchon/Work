@@ -67,17 +67,27 @@ public function show()
           $s_dno = $this->input->get('s_dno');  
           $s_name = $this->input->get('s_name');
           $s_pno = $this->input->get('s_pno');
+          $type = $this->input->get('type');
           
-          $dno = "?s_dno=".$s_dno;
+          $ss = null;
+          $type[] = null;
+          if($type != null){
+            foreach($type as $t){
+              $ty = "?type%5B%5D=".$t;
+              $tt = $ty.$ss;
+              }
+          }
+          $dno = "&s_dno=".$s_dno;
           $dname = "&s_name=".$s_name;
           $pno = "&s_pno=".$s_pno;
           
-          $this->session->set_flashdata('search',$dno.$dname.$pno);
-          $data['search'] = $dno.$dname.$pno;
+          $this->session->set_flashdata('search',$tt.$dno.$dname.$pno);
+          $data['search'] = $tt.$dno.$dname.$pno;
 
       $data['s_dno'] = $s_dno;
       $data['s_name'] = $s_name;
       $data['s_pno'] = $s_pno;
+      $data['type'] = $type;
       $data['result_type']= $this->model->get_type_drawing();
   
       if($this->input->get('s_dno') == null){
@@ -91,9 +101,12 @@ public function show()
       if($this->input->get('s_pno') == null){
         $s_pno = 'null';
       }
+      if($this->input->get('type') == null){
+        $type = 'null';
+      }
   
-      if($this->input->get('s_dno') != null || $this->input->get('s_name') != null || $this->input->get('s_pno') != null ){
-        $data['result'] = $this->model->drawing_search($s_dno,$s_name,$s_pno);
+      if($this->input->get('s_dno') != null || $this->input->get('s_name') != null || $this->input->get('s_pno') != null || $this->input->get('type') != null ){
+        $data['result'] = $this->model->drawing_search($s_dno,$s_name,$s_pno,$type);
       }else{
         $data['result'] = $this->model->get_partdrawing();
       }
