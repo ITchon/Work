@@ -225,27 +225,13 @@ public function show()
       $this->model->CheckPermission($this->session->userdata('su_id'));
       $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
       $d_id = $this->uri->segment('3');
-      $search =  $this->session->flashdata('search');
+      $search =  null ;
+      $this->session->flashdata('search');
       $result = $this->model->enableDrawing($d_id);
 
 
       redirect('drawing/show/'.$search.'','refresh');
       
-  }
-
-  public function disable(){
-
-      $this->model->CheckPermission($this->session->userdata('su_id'));
-      $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-      $d_id = $this->uri->segment('3'); 
-      $search =  $this->session->flashdata('search');
-
-      $result = $this->model->disableDrawing($d_id);
-
-      redirect('drawing/show/'.$search.'','refresh');
-      
-      
-
   }
 
   public function deletedrawing()

@@ -144,14 +144,19 @@ form {
                   if($this->session->flashdata("delete") !==null) echo "<a href='".base_url()."drawing/deletedrawing/".$r->d_id ."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a></td>";  
                 
                   echo "<td class='text-center'>";
-                  if($r->enable!=1 ){  
-                    if($this->session->flashdata("enable")!== null ){ echo "<a  href='".base_url()."drawing/enable/".$r->d_id ."'><i class='btn-danger no-border fa fa-check'> DISABLE</i></a>";}
-                     else{ echo "<b class='text-danger'>DISABLE</b>"; }
+                  if($r->enable==1 ){  
+                    $icon = "btn-success no-border fa fa-check";
+                    $text = "ENABLE";
+                    $color = "color:#43a047";
                     }
                 else{ 
-                  if($this->session->flashdata("disable")!== null ){ echo "<a  href='".base_url()."drawing/disable/".$r->d_id."'><i class='btn-success no-border fa fa-check'> ENABLE</i></a>";}
-                  else{echo "<b style='color:#43a047'>ENABLE</b>"; }
+                  $icon = "btn-danger no-border fa fa-close";
+                  $text = "DISABLE";
+                  $color = "color:#D50000";
                 }
+                if($this->session->flashdata("enable")!== null ){ echo "<a  href='".base_url()."drawing/enable/".$r->d_id ."'><i class='$icon'> $text</i></a>";}
+                else{ echo "<span style='$color'>$text </span>"; }
+
                     echo "</td>";
                     echo "<td style='font-size: 14px'>".$r->path_file.''.$r->file_name ."</td>";
 

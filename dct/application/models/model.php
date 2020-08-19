@@ -742,21 +742,28 @@ public function disableDcn($key=''){
   
 }
 
-
-
-
-public function enableDrawing($key=''){
-
-  $sqlEdt = "UPDATE drawing SET enable='1', date_updated=CURRENT_TIMESTAMP WHERE d_id={$key};";
+public function enableDrawing($key){
+  $query = $this->db->query("SELECT * from drawing WHERE d_id = $key "); 
+  $result = $query->result()[0];
+  if( $result->enable==0){
+  $sqlEdt = "UPDATE drawing SET enable='1' , date_updated=CURRENT_TIMESTAMP WHERE d_id={$key};";
   $exc_user = $this->db->query($sqlEdt);
-  
+  }
+  else{
+    $sqlEdt = "UPDATE drawing SET enable='0' , date_updated=CURRENT_TIMESTAMP WHERE d_id={$key};";
+    $exc_user = $this->db->query($sqlEdt);
+  }
+
   if ($exc_user){
     
-    return TRUE;  
+    return TRUE;    
     
-  }else{  return FALSE; }
+  }else{    return FALSE;   }
   
 }
+
+
+
 
 
 public function disableDrawing($key=''){
