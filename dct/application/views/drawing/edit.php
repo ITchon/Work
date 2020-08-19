@@ -160,19 +160,9 @@ $this->session->set_flashdata('search',$search);
                       <button class="btn btn-outline-primary" type="button" id="add">Add NEW PART</button>
                     <button type="button" class="btn btn-outline-danger btn_remove hidden">Remove</button><br>
                       <div id="dynamic_field"></div>
-                      </div>
-                    </div>
                       
-                    
-                    
+                     
 
-                    
-
-                    
-
-                      
-                      <div class="form-group">
-                      <div class="col-sm-6 col-md-12">
                       <table class="table text-center">
                       <thead>
                       <tr>
@@ -199,9 +189,9 @@ $this->session->set_flashdata('search',$search);
                        <?php } ?>
                       </tbody>
                       </table>
-
                       </div>
                     </div>
+                      
                   </div>
 
 
