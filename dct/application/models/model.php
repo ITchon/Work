@@ -6,24 +6,12 @@ class Model extends CI_Model
 
   public function CheckSession()        
   {
-    if ($this->agent->is_mobile())
-        {
-          $id =  $this->session->userdata('su_id');
-          $query = $this->db->query("SELECT * from sys_users WHERE su_id = $id AND enable != 0 "); 
-          $result = $query->result()[0];
-          if( $result->mobile==0){
-          echo "<script>alert('No Moblie Permission')</script>";
-          redirect('login','refresh');   
-          exit;
-          }
-        }
       if($this->session->userdata('su_id')=="") {
         echo "<script>alert('Please Login')</script>";
         redirect('login','refresh');
-        return FALSE;
-      }else{    
-        return TRUE;  
-        }
+     return FALSE;
+     
+      }else{    return TRUE;    }
   }
     public function load_menu()
   { 
@@ -41,7 +29,7 @@ class Model extends CI_Model
         $menu['submenu'] = $this->model->showsubmenu($this->session->userdata('su_id'));
 
          $this->load->view('header');
-         $this->load->view('menu_user',$menu);
+        $this->load->view('menu_user',$menu);
     }
 
       
@@ -73,12 +61,9 @@ class Model extends CI_Model
   return $result;
 }
 
-
- function showsubmenu($id){
-         $sql =  "SELECT  sm.name,sm.mg_id,sm.method from sys_menus as sm
-         inner join sys_permissions as sp on sp.controller = sm.link
-        inner join sys_users_permissions as sup on sup.sp_id = sp.sp_id
-        WHERE order_no !=0 AND sm.enable != 0 AND sp.enable != 0 ANd sup.su_id = $id ORDER BY sm.order_no ASC"; 
+ function showsubmenu(){
+         $sql =  "SELECT * from sys_menus as sm
+    WHERE order_no !=0 AND enable != 0 ORDER BY sm.order_no ASC"; 
     $query = $this->db->query($sql); 
     $result = $query->result(); 
     return $result;   
@@ -427,17 +412,6 @@ class Model extends CI_Model
   }
     return $array;
    
-  }
-  
-  public function show_user()
-  {
-    $sql =  'SELECT su.su_id,su.password,su.username, su.firstname ,su.lastname, su.gender,su.email,su.enable,su.mobile,su.delete_flag, sug.name as name
-    FROM
-    sys_users  AS su 
-    INNER JOIN sys_user_groups AS sug ON sug.sug_id = su.sug_id where su.delete_flag != 0 and sug.sug_id != 1';
-    $query = $this->db->query($sql); 
-    $result =  $query->result();
-    return $result;
   }
   public function get_drawing()
   {
@@ -849,37 +823,38 @@ $path_file = quotemeta($path_file);
      return false;
    }
  }
- public function mobile($key=''){
-  
-  $query = $this->db->query("SELECT * from sys_users WHERE su_id = $key  "); 
-  $result = $query->result()[0];
-  if( $result->mobile==0){
-    $sqlEdt = "UPDATE sys_users SET mobile='1' , date_updated=CURRENT_TIMESTAMP WHERE su_id={$key};";
-    $exc_user = $this->db->query($sqlEdt);
-  }else{
-    $sqlEdt = "UPDATE sys_users SET mobile='0' , date_updated=CURRENT_TIMESTAMP WHERE su_id={$key};";
-    $exc_user = $this->db->query($sqlEdt);
-  }
-  if ($exc_user){ return TRUE;   }
-  else{   return FALSE;   }
-  
-}
+
 
 
  public function enableUser($key=''){
-  $query = $this->db->query("SELECT * from sys_users WHERE su_id = $key  "); 
-  $result = $query->result()[0];
-  if( $result->enable==0){
-    $sqlEdt = "UPDATE sys_users SET enable='1' , date_updated=CURRENT_TIMESTAMP WHERE su_id={$key};";
-    $exc_user = $this->db->query($sqlEdt);
-  }else{
-    $sqlEdt = "UPDATE sys_users SET enable='0' , date_updated=CURRENT_TIMESTAMP WHERE su_id={$key};";
-    $exc_user = $this->db->query($sqlEdt);
-  }
-  if ($exc_user){ return TRUE;   }
-  else{   return FALSE;   }
+
+  $sqlEdt = "UPDATE sys_users SET enable='1' , date_updated=CURRENT_TIMESTAMP WHERE su_id={$key};";
+  $exc_user = $this->db->query($sqlEdt);
+  
+  if ($exc_user){
+    
+    return TRUE;    
+    
+  }else{    return FALSE;   }
   
 }
+
+
+public function disableUser($key=''){
+
+  $sqlEdt = "UPDATE sys_users SET enable='0' , date_updated=CURRENT_TIMESTAMP WHERE su_id={$key};";
+  $exc_user = $this->db->query($sqlEdt);
+  
+  if ($exc_user){
+    
+    return TRUE;    
+    
+  }else{    return FALSE;   }
+  
+}
+
+
+
 
 
  public function enableGroup($key=''){
