@@ -413,6 +413,41 @@ class Model extends CI_Model
     return $array;
    
   }
+  public function get_part_drawing_byid($d_id)
+  {
+    $sql =  "SELECT * from part_drawing  as pd
+        left join part as p on p.p_id = pd.p_id
+        where pd.d_id = $d_id";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+  public function get_pid_bypd($d_id)
+  {
+    $sql =  "SELECT pd.p_id from part_drawing  as pd
+        where pd.d_id = $d_id";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+
+  public function get_customers()
+  {
+    $sql =  "SELECT * from customers where delete_flag != 0";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+
+  public function get_type_drawing()
+  {
+    $sql =  "SELECT * from type_file where tf_group = 1 OR tf_group = 0";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+
+
   public function get_drawing()
   {
     $sql =  "SELECT * from drawing  where delete_flag != 0";
@@ -424,6 +459,15 @@ class Model extends CI_Model
   public function get_part()
   {
     $sql =  "SELECT * from part  where delete_flag != 0";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+
+  public function get_nopart($p_id)
+  {
+      $p_id =  implode(',',$p_id);
+    $sql =  "SELECT * from part where delete_flag != 0 AND p_id NOT IN ($p_id)";
        $query = $this->db->query($sql);
       $result =  $query->result();
     return $result;
