@@ -116,7 +116,7 @@ form {
                     <td><?php echo "<b>".$r->d_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->p_no."</b>" ?></td>
                     <td><?php echo "<b>".$r->cus_name."</b>" ?></td>
-                    <td class="text-center"><?php echo "<a  href='".base_url()."dcn/show/".$r->d_id."'  > $r->dcn_no </a>"?></td>
+                    <td class="text-center"><?php echo "<a  href='".base_url()."dcn/manage/".$r->d_id."'  > $r->dcn_no </a>"?></td>
                      
                     <td class="text-center">
                        <form  action="<?php echo base_url()?>drawing/show_v" method="get">
