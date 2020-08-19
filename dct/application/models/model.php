@@ -656,6 +656,18 @@ $path_file = quotemeta($path_file);
      return false;
    }
  }
+
+ function insert_type($type_name,$fol_name)
+ {
+  $sql ="INSERT INTO type_file (tf_name,tf_fol,delete_flag,tf_group) VALUES ( '$type_name', '$fol_name', '1','1' );";
+    $query = $this->db->query($sql);  
+   if($query){
+     return true;
+   }
+   else{
+     return false;
+   }
+ }
  public function mobile($key){
   $query = $this->db->query("SELECT * from sys_users WHERE su_id = $key "); 
   $result = $query->result()[0];
