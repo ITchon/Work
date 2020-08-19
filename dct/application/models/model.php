@@ -72,9 +72,11 @@ class Model extends CI_Model
   return $result;
 }
 
- function showsubmenu(){
-         $sql =  "SELECT * from sys_menus as sm
-    WHERE order_no !=0 AND enable != 0 ORDER BY sm.order_no ASC"; 
+ function showsubmenu($id){
+    $sql =  "SELECT  sm.name,sm.mg_id,sm.method from sys_menus as sm
+    inner join sys_permissions as sp on sp.controller = sm.link
+    inner join sys_users_permissions as sup on sup.sp_id = sp.sp_id
+    WHERE order_no !=0 AND sm.enable != 0 AND sp.enable != 0 ANd sup.su_id = $id ORDER BY sm.order_no ASC"; 
     $query = $this->db->query($sql); 
     $result = $query->result(); 
     return $result;   
@@ -424,6 +426,17 @@ class Model extends CI_Model
     return $array;
    
   }
+
+      public function get_user()
+      {
+        $sql =  'SELECT su.su_id,su.password,su.username, su.firstname ,su.lastname, su.gender,su.email,su.enable,su.delete_flag, sug.name as name,su.mobile
+        FROM
+        sys_users  AS su 
+        INNER JOIN sys_user_groups AS sug ON sug.sug_id = su.sug_id where su.delete_flag != 0 AND sug.sug_id != "1"';
+        $query = $this->db->query($sql); 
+        $result =  $query->result();
+        return $result;
+      }
   public function get_part_drawing_byid($d_id)
   {
     $sql =  "SELECT * from part_drawing  as pd
