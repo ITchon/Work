@@ -4,7 +4,7 @@
     <div class="layout-header">
       <div class="navbar navbar-default">
         <div class="navbar-header ">
-          <a class="navbar-brand navbar-brand-center" href="Manage">
+          <a class="navbar-brand navbar-brand-center" href="<?php echo base_url()?>manage/index"">
            DRAWING CENTER
           </a>
           <button class="navbar-toggler visible-xs-block collapsed" type="button" data-toggle="collapse" data-target="#sidenav">

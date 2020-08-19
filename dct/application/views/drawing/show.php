@@ -37,7 +37,6 @@ form {
                 <a href="" class="btn btn-default no_print" onclick="window.history.go(-1); return false;"> Back </a>
                 </h3>
                 <?php  
-                $s_pno[] =null;
                 $search = $this->session->flashdata('search');
                 $this->session->set_flashdata('search',$search)
                 ?>
@@ -69,17 +68,8 @@ form {
                               <a href="" class="no_print btn btn-primary ">Part No.</a> 
                          </div>
 
-                  <select class="lol" id="demo-select2-3" name="s_pno[]" class="form-control" multiple="multiple">
-                    <?php foreach ($resultp as $r) { ?>
-                     <option value="<?php echo $r->p_no ?>" <?php 
-                foreach ($s_pno as $s) {
-                  if($r->p_no == $s){
-                    echo 'selected';
-                  }
-                  }?>>
-                  <?php echo $r->p_no?></option>
-                    <?php } ?>
-                </select>
+                  <input type="text" name="s_pno" class="form-control" value="<?php echo $s_pno ?>">
+
                   </div>
 
             </div>

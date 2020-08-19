@@ -55,6 +55,16 @@ $this->session->set_flashdata('search',$search);
                     </div>
                 </div>
 
+                <div class="form-group has-feedback">
+                    <label for="p_name" class="col-sm-3 col-md-4 control-label">POS NUMBER</label>
+                    <div class="col-sm-6 col-md-4">
+                    <input type="text" name="pos" style="width:120px;" class="form-control" value="<?php echo $result->pos ?>">
+                    <span class="form-control-feedback" aria-hidden="true">
+                    <span class="icon"></span>
+                    </span>
+                    </div>
+                </div>
+
                 <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select DCN</label>      
           
@@ -136,7 +146,7 @@ $this->session->set_flashdata('search',$search);
                     <label for="dcn" class="col-sm-5 col-md-4 control-label">ADD PART</label>    
 
                 <div class="col-sm-5 col-md-4">
-                   <select name="p_id" class="form-control select2" id="dcn_id" multiple="multiple">
+                   <select name="p_id[]" class="form-control select2" id="dcn_id" multiple="multiple">
                    <option value="" hidden> - - - Select PART- - - </option>
                    <?php
                    
@@ -150,19 +160,9 @@ $this->session->set_flashdata('search',$search);
                       <button class="btn btn-outline-primary" type="button" id="add">Add NEW PART</button>
                     <button type="button" class="btn btn-outline-danger btn_remove hidden">Remove</button><br>
                       <div id="dynamic_field"></div>
-                      </div>
-                    </div>
                       
-                    
-                    
+                     
 
-                    
-
-                    
-
-                      
-                      <div class="form-group">
-                      <div class="col-sm-6 col-md-12">
                       <table class="table text-center">
                       <thead>
                       <tr>
@@ -189,9 +189,9 @@ $this->session->set_flashdata('search',$search);
                        <?php } ?>
                       </tbody>
                       </table>
-
                       </div>
                     </div>
+                      
                   </div>
 
 

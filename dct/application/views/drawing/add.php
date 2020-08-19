@@ -19,7 +19,7 @@
                 <?php $p_no = $this->session->flashdata('p_no'); ?>
 
                     <div class="form-group has-feedback">
-                    <label for="part" class="col-sm-5 col-md-4 control-label">Drawing No</label>
+                    <label for="part" class="col-sm-5 col-md-4 control-label">DRAWING NO</label>
                     <div class="col-sm-5 col-md-4">
                     <input id="d_no" class="form-control" required type="text" value="<?php echo $d_no ?>" name="d_no">
 
@@ -30,9 +30,19 @@
                   </div>
 
                   <div class="form-group has-feedback">
-                    <label for="p_name" class="col-sm-3 col-md-4 control-label">Drawing Name</label>
+                    <label for="p_name" class="col-sm-3 col-md-4 control-label">DRAWING NAME</label>
                     <div class="col-sm-6 col-md-4">
                     <input id="d_name" class="form-control" type="text" name="d_name">
+                    <span class="form-control-feedback" aria-hidden="true">
+                    <span class="icon"></span>
+                    </span>
+                    </div>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <label for="p_name" class="col-sm-3 col-md-4 control-label">POS NUMBER</label>
+                    <div class="col-sm-6 col-md-4">
+                    <input type="text" name="pos" style="width:120px;" class="form-control">
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
                     </span>
@@ -44,7 +54,7 @@
                     <label for="dcn" class="col-sm-5 col-md-4 control-label">DCN Number</label>    
 
                 <div class="col-sm-5 col-md-4">
-                   <select name="dcn_id" class="form-control select2" id="dcn_id"  required>
+                   <select name="dcn_id" class="form-control select2" id="dcn_id">
                    <option value="" hidden> - - - Select DCN- - - </option>
                    <?php
                    
@@ -75,7 +85,7 @@
                 </div>
 
                 <div class="form-group">
-                      <label for="email-2" class="col-sm-5 col-md-4 control-label">File</label>  
+                      <label for="email-2" class="col-sm-5 col-md-4 control-label">FILE</label>  
                       <div class="col-sm-6 col-md-4">
                           <input type="file" name="file_name" class="form-control" id="file_name" required>
                    </div>
@@ -96,48 +106,27 @@
                       ?> 
                    </select>
                     </div>
-               
+                    </div>
 
+                    <div class="form-group has-feedback">
+                    <label for="dcn" class="col-sm-5 col-md-4 control-label">ADD PART</label>    
 
-                    <div class="col-sm-6 col-md-2">
-                    <a class="btn btn-outline-primary" onclick="myFunction()"><b>เพิ่ม Part</b></a> 
- </div>
+                <div class="col-sm-5 col-md-4">
+                   <select name="p_id[]" class="form-control select2" id="dcn_id" multiple="multiple">
+                   <option value="" hidden> - - - Select PART- - - </option>
+                   <?php
+                   
+                      foreach($result_p as $p){?>
+                     <option value="<?php  echo $p->p_id ?>"><?php echo $p->p_no ?></option>
+                    <?php
+                      }
+                      ?> 
+                   </select>
+                   <button class="btn btn-outline-primary" type="button" id="add">Add NEW PART</button>
+                    <button type="button" class="btn btn-outline-danger btn_remove hidden">Remove</button><br>
+                      <div id="dynamic_field"></div>
+                    </div>
                   </div>
-                  
-
-
-
-
-                  <div id="myDIV" style="display: none;">
-                  
-                 
-                <div class="form-group has-feedback">
-                    <label for="part" class="col-sm-5 col-md-4 control-label">Part Number</label>
-
-                    <div class="col-sm-6 col-md-4">
-
-                    <input id="part" class="form-control" value="<?php echo $p_no ?>" type="text" name="p_no" placeholder="Part Number">
-
-                    <span class="form-control-feedback" aria-hidden="true">
-                    <span class="icon"></span>
-                    </span>
-                    </div>
-                </div>
-                <div class="form-group has-feedback">
-                    <label for="p_name" class="col-sm-5 col-md-4 control-label">Part Name</label>
-                    <div class="col-sm-6 col-md-4">
-                    <input id="p_name" class="form-control" type="text" name="p_name" placeholder="Part Name">
-                    <span class="form-control-feedback" aria-hidden="true">
-                    <span class="icon"></span>
-                    </span>
-                    </div>
-                </div>
-
-                </div>
-
-                    
-
-                    
 
 
             </div>
@@ -163,5 +152,27 @@ function myFunction() {
     x.style.display = "none";
   }
 }
+</script>
+
+<script>
+$(document).ready(function() {
+  var i = 1;
+  $('#add').click(function() {
+    if (i <= 5) {
+      $('#dynamic_field').append('<div id="row' + i + '"><label>Part No</label><input type="text" class="form-control" name="p_no[]" value="" required><br><label>Part Name</label><input type="text" class="form-control" name="p_name[]" value="" required><br><hr style="height:2px;border-width:0;color:gray;background-color:gray"></div>')
+      //$('#dynamic_field').append('<div id="row' + i + '"><label for="email-2">Part No (' + i + ')</label><input type="text" class="form-control" name="p_no[]" value=""></div></div><div class="form-group"><label class="col-sm-3 col-md-4 control-label">Part Name (' + i + ')</label><div class="col-sm-6 col-md-4"><input type="text" class="form-control" name="p_name[]" value=""></div></div><br><hr style="height:2px;border-width:0;color:gray;background-color:red"></div>')
+      i++;
+      $('.btn_remove').removeClass('hidden');
+    }
+  });
+  $(document).on('click', '.btn_remove', function() {
+    var button_id = $(this).attr("id");
+    i--;
+    $('#row' + $('#dynamic_field div').length).remove();
+    if (i<=1) {
+      $('.btn_remove').addClass('hidden');
+    }
+  });
+});
 </script>
 
