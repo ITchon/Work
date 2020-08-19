@@ -62,18 +62,18 @@ class Drawing extends CI_Controller {
 
 
 public function show()
-{   
+        {   
+          $this->model->link_to_dcn($this->session->userdata('su_id'));
+          $s_dno = $this->input->get('s_dno');  
+          $s_name = $this->input->get('s_name');
+          $s_pno = $this->input->get('s_pno');
           
-      $s_dno = $this->input->get('s_dno');  
-      $s_name = $this->input->get('s_name');
-      $s_pno = $this->input->get('s_pno');
-      
-      $dno = "?s_dno=".$s_dno;
-      $dname = "&s_name=".$s_name;
-      $pno = "&s_pno=".$s_pno;
-      
-      $this->session->set_flashdata('search',$dno.$dname.$pno);
-      $data['search'] = $dno.$dname.$pno;
+          $dno = "?s_dno=".$s_dno;
+          $dname = "&s_name=".$s_name;
+          $pno = "&s_pno=".$s_pno;
+          
+          $this->session->set_flashdata('search',$dno.$dname.$pno);
+          $data['search'] = $dno.$dname.$pno;
 
       $data['s_dno'] = $s_dno;
       $data['s_name'] = $s_name;
@@ -201,27 +201,13 @@ public function show()
       $this->model->CheckPermission($this->session->userdata('su_id'));
       $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
       $d_id = $this->uri->segment('3');
-      $search =  $this->session->flashdata('search');
+      $search =  null ;
+      $this->session->flashdata('search');
       $result = $this->model->enableDrawing($d_id);
 
 
       redirect('drawing/show/'.$search.'','refresh');
       
-  }
-
-  public function disable(){
-
-      $this->model->CheckPermission($this->session->userdata('su_id'));
-      $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-      $d_id = $this->uri->segment('3'); 
-      $search =  $this->session->flashdata('search');
-
-      $result = $this->model->disableDrawing($d_id);
-
-      redirect('drawing/show/'.$search.'','refresh');
-      
-      
-
   }
 
   public function deletedrawing()

@@ -61,7 +61,7 @@ var pdfDoc = null,
     pageNum = 1,
     pageRendering = false,
     pageNumPending = null,
-      scale = 1,
+    scale = 0.5,
     canvas = document.getElementById('the-canvas'),
     ctx = canvas.getContext('2d');
   var container=document.getElementById("pageContainer")
@@ -165,7 +165,7 @@ function onNextPage() {
 document.getElementById('next').addEventListener('click', onNextPage);
 
 function zoomIn() {
-  if (pageNum >= pdfDoc.numPages) {
+  if (scale >= 10) {
     return;
   }
    scale = scale + 0.5  ;
@@ -175,7 +175,7 @@ function zoomIn() {
 document.getElementById('zoom_in').addEventListener('click', zoomIn);
 
 function zoomOut() {
-  if (scale <=1) {
+  if (scale <1) {
     return;
   }
    scale = scale - 0.5  ;
@@ -184,7 +184,7 @@ function zoomOut() {
 
 document.getElementById('zoom_out').addEventListener('click', zoomOut);
 function reset() {
-   scale = 1  ;
+   scale = 0.5  ;
  queueRenderPage(pageNum);
  }
 

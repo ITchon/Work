@@ -1,6 +1,6 @@
    
 
-  <body class="layout layout-header-fixed">
+  <body class="layout layout-header-fixed layout-sidebar-sticky">
     <div class="layout-header">
       <div class="navbar navbar-default">
         <div class="navbar-header ">
@@ -186,7 +186,7 @@
                   <div class="theme-settings-label">Sidebar fixed</div>
                   <div class="theme-settings-switch">
                     <label class="switch switch-primary">
-                      <input class="switch-input" type="checkbox" name="layout-sidebar-fixed" data-sync="true">
+                      <input class="switch-input" type="checkbox" name="layout-sidebar-fixed" data-sync="true" checked>
                       <span class="switch-track"></span>
                       <span class="switch-thumb"></span>
                     </label>
@@ -196,7 +196,7 @@
                   <div class="theme-settings-label">Sidebar sticky*</div>
                   <div class="theme-settings-switch">
                     <label class="switch switch-primary">
-                      <input class="switch-input" type="checkbox" name="layout-sidebar-sticky" data-sync="true">
+                      <input class="switch-input " type="checkbox" name="layout-sidebar-sticky" data-sync="true" >
                       <span class="switch-track"></span>
                       <span class="switch-thumb"></span>
                     </label>
@@ -222,62 +222,10 @@
                     </label>
                   </div>
                 </li>
-                <li class="theme-settings-description">
-                  <span>
-                    <strong>Sidebar sticky*</strong> - by scrolling up and down the page, the menu placed on the sidebar moves along with the content until the bottom of the menu is reached. <a href="page-layouts.html">Learn more</a></span>
-                </li>
+               
               </ul>
               <hr class="theme-divider">
-              <ul class="theme-variants">
-                <li class="theme-variants-item">
-                  <a class="theme-variants-link" href="/elephant-v1.4.0/theme-1/" title="Theme 1">
-                  </a>
-                </li>
-                <li class="theme-variants-item">
-                  <a class="theme-variants-link" href="/elephant-v1.4.0/theme-2/" title="Theme 2">
-                  </a>
-                </li>
-                <li class="theme-variants-item">
-                  <a class="theme-variants-link" href="/elephant-v1.4.0/theme-3/" title="Theme 3">
-                  </a>
-                </li>
-                <li class="theme-variants-item">
-                  <a class="theme-variants-link" href="/elephant-v1.4.0/theme-4/" title="Theme 4">
-                  </a>
-                </li>
-                <li class="theme-variants-item">
-                  <a class="theme-variants-link" href="/elephant-v1.4.0/theme-5/" title="Theme 5">
-                  </a>
-                </li>
-                <li class="theme-variants-item">
-                  <a class="theme-variants-link" href="/elephant-v1.4.0/theme-6/" title="Theme 6">
-                  </a>
-                </li>
-                <li class="theme-variants-item">
-                  <a class="theme-variants-link" href="/elephant-v1.4.0/theme-7/" title="Theme 7">
-                  </a>
-                </li>
-                <li class="theme-variants-item">
-                  <a class="theme-variants-link" href="/elephant-v1.4.0/theme-8/" title="Theme 8">
-                  </a>
-                </li>
-                <li class="theme-variants-item">
-                  <a class="theme-variants-link" href="/elephant-v1.4.0/theme-9/" title="Theme 9">
-                  </a>
-                </li>
-                <li class="theme-variants-item">
-                  <a class="theme-variants-link" href="/elephant-v1.4.0/theme-10/" title="Theme 10">
-                  </a>
-                </li>
-                <li class="theme-variants-item">
-                  <a class="theme-variants-link" href="/elephant-v1.4.0/theme-11/" title="Theme 11">
-                  </a>
-                </li>
-                <li class="theme-variants-item">
-                  <a class="theme-variants-link" href="/elephant-v1.4.0/theme-12/" title="Theme 12">
-                  </a>
-                </li>
-              </ul>
+              
             </div>
           </div>
         </div>

@@ -24,23 +24,23 @@
                 echo "<td>".$r->name."</td>";
                  if($r->enable!=1 ){?>
                   
-                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดการใช้งาน</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <td class="text-center"><a type="button"  onclick="javascript:window.location='<?php
                   echo base_url() . 'permission/enable/' . $r->sp_id;
                   ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
                   <?php
                 }
                 else{?>
 
-                  <td class="text-center"><a type="button" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ปิดการใช้งาน</h5>'  data-original-title='Rule' onclick="javascript:window.location='<?php
+                  <td class="text-center"><a   onclick="javascript:window.location='<?php
                   echo base_url() . 'permission/disable/' . $r->sp_id;
                   ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
                   <?php
                 }
-                ?> <a type ='button' class=' ' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขข้อมูล</h5>' data-original-title='Rule' onclick="javascript:window.location='<?php
+                ?> <a type ='button' class=' '  onclick="javascript:window.location='<?php
                 echo base_url() . 'permission/edit_permission/' . $r->sp_id;
                 ?>';"><i class='btn-info btn-sm fa fa-wrench'> </i> </a>
                 <?php 
-                echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."permission/deletepermission/".$r->sp_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";  
+                echo "<a  href='".base_url()."permission/deletepermission/".$r->sp_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";  
        
            
            
