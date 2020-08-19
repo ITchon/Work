@@ -8,21 +8,36 @@
             <div class="col-md-12">
               <div class="demo-form-wrapper card" style="padding-top:8px">
               <h2 class=" text-center text-primary">
-            ADD PERMISSION GROUP
+            ADD TYPE
             </h2><hr>
-            <form class="table form form-horizontal container" action="<?php echo base_url()?>permissiongroup/insert" method="post" data-toggle="validator">
+              
+            <form class="table form form-horizontal container" action="<?php echo base_url()?>type/insert"  method="post" class="text-center" >
+
                  
                   <div class="form-group">
-                    <label for="name-1"  class="col-sm-3 col-md-4 control-label">Permission_Group Name</label>
+                    <label for="name-1" class="col-sm-3 col-md-4 control-label">TYPE NAME</label>
+
                     <div class="col-sm-6 col-md-4">
-                    <input  class="form-control" type="text" name="gname" required>
+                    <input class="form-control" type="text" name="type_name" required>
                   </div>
                   </div>
-             </div>
-            <div class="form-group">
-                    <button type="submit" id="btn" class="btn btn-primary form-control ">Save Changes</button>
+
+                 
+                  <div class="form-group">
+                    <label for="name-1" class="col-sm-3 col-md-4 control-label">FOLDER NAME</label>
+
+                    <div class="col-sm-6 col-md-4">
+                    <input class="form-control" type="text" name="fol_name" required>
+                  </div>
+                  </div>
+
+          </div>
+          <div class="form-group">
+                    <button type="submit" id="btn" class="btn btn-primary btn-block ">Save Changes</button>
                   </div>
                 </form>
+              </div>
+            </div>
           </div>
          
         </div>

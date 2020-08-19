@@ -32,10 +32,10 @@ class Type extends CI_Controller {
 
     public function add()
     {   
-       $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
-        $this->load->view('permission_group/add');//bring $data to user_data 
+        $this->load->view('type/add');//bring $data to user_data 
         $this->load->view('footer');
     }
 
@@ -59,10 +59,15 @@ class Type extends CI_Controller {
 
     public function insert()
     {
-
-        $gname =  $this->input->post('gname');
-        $result = $this->model->insert_permissiongroup($gname);
-        redirect('permissiongroup/manage');
+        $type_name =  $this->input->post('type_name');
+        $fol_name =  $this->input->post('fol_name');
+        if (!file_exists('./uploads/' . $fol_name))/* Check folder exists or not */
+        {
+            @mkdir($output_dir . $folder_name, 0777);/* Create folder by using mkdir function */
+            echo "Folder Created";/* Success Message */
+        }
+        $result = $this->model->insert_type($type_name,$fol_name);
+        redirect('type/add');
 
 
     }
