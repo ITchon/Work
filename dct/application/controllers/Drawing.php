@@ -63,7 +63,7 @@ class Drawing extends CI_Controller {
 
 public function show()
         {   
-          
+          $this->model->link_to_dcn($this->session->userdata('su_id'));
           $s_dno = $this->input->get('s_dno');  
           $s_name = $this->input->get('s_name');
           $s_pno = $this->input->get('s_pno');

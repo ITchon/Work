@@ -116,8 +116,12 @@ form {
                     <td><?php echo "<b>".$r->d_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->p_no."</b>" ?></td>
                     <td><?php echo "<b>".$r->cus_name."</b>" ?></td>
-                    <td class="text-center"><?php echo "<a  href='".base_url()."dcn/manage/".$r->d_id."'  > $r->dcn_no </a>"?></td>
-                     
+                    <?php  if($this->session->flashdata("link")!== null ){ 
+                      echo "<td><a href='".base_url()."dcn/manage/".$r->dcn_id."'>$r->dcn_no</a></td>"; 
+                    }
+                    else{ 
+                      echo "<td>$r->dcn_no</td>";
+                       }  ?>                   
                     <td class="text-center">
                        <form  action="<?php echo base_url()?>drawing/show_v" method="get">
                          <input type="hidden" name="p_id" value="<?php echo $r->p_id ?>">

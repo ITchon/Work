@@ -1553,6 +1553,17 @@ where d.delete_flag != 0 AND d.d_no RLIKE '$s_dno' OR d.d_name RLIKE '$s_name' O
             }
 
   }
+  public function link_to_dcn($id)        
+  {
+            $query= $this->db->query(" SELECT * FROM `sys_permissions` sp inner join sys_users_permissions sup on sup.sp_id = sp.sp_id where su_id = $id and sp.controller = 'dcn/manage'"); 
+            $data = $query->result(); 
+            if(!$data){
+            }
+            else{
+              $this->session->set_flashdata($data[0]->button,'');
+            }
+
+  }
 
   public function get_tfid($d_id)
   { 
