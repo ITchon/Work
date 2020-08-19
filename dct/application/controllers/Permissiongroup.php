@@ -97,11 +97,10 @@ class Permissiongroup extends CI_Controller {
 
     public function edit_pg()
     {
-       $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
-
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $id = $this->uri->segment('3');
-        $sql =  "SELECT spg.spg_id, spg.name as spg_name from sys_permission_groups as spg  where delete_flag !=0";
+        $sql =  "SELECT * from sys_permission_groups where spg_id = $id";
 
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 

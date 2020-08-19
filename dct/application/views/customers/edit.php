@@ -27,7 +27,6 @@
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">CUSTOMER DESCRIPTION</label>
                     <div class="col-sm-6 col-md-4">
-                      <input type="text" name="cus_id" value="<?php echo $result[0]->cus_id?>" hidden>
                       <textarea class="form-control" name="cus_des" rows="5" cols="50"><?php echo $result[0]->cus_des ?></textarea>
                     </span>
                     </div>

@@ -16,7 +16,7 @@
                     <label for="part" class="col-sm-5 col-md-4 control-label">Permission_Group Name</label>
                     <div class="col-sm-6 col-md-4">
                       <input type="text" name="spg_id" value="<?php echo $result[0]->spg_id?>" hidden>
-                    <input id="spg_name" class="form-control " type="text" name="spg_name" value="<?php echo $result[0]->spg_name ?>">
+                    <input id="spg_name" class="form-control " type="text" name="spg_name" value="<?php echo $result[0]->name ?>">
 
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
