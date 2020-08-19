@@ -6,6 +6,17 @@ class Model extends CI_Model
 
   public function CheckSession()        
   {
+    if ($this->agent->is_mobile())
+    {
+      $id =  $this->session->userdata('su_id');
+      $query = $this->db->query("SELECT * from sys_users WHERE su_id = $id AND enable != 0 "); 
+      $result = $query->result()[0];
+      if( $result->mobile==0){
+      echo "<script>alert('No Moblie Permission')</script>";
+      redirect('login','refresh');   
+      exit;
+      }
+    }
       if($this->session->userdata('su_id')=="") {
         echo "<script>alert('Please Login')</script>";
         redirect('login','refresh');
@@ -867,14 +878,39 @@ $path_file = quotemeta($path_file);
      return false;
    }
  }
+ public function mobile($key){
+  $query = $this->db->query("SELECT * from sys_users WHERE su_id = $key "); 
+  $result = $query->result()[0];
+  if( $result->mobile==0){
+  $sqlEdt = "UPDATE sys_users SET mobile='1' , date_updated=CURRENT_TIMESTAMP WHERE su_id={$key};";
+  $exc_user = $this->db->query($sqlEdt);
+  }
+  else{
+    $sqlEdt = "UPDATE sys_users SET mobile='0' , date_updated=CURRENT_TIMESTAMP WHERE su_id={$key};";
+    $exc_user = $this->db->query($sqlEdt);
+  }
+
+  if ($exc_user){
+    
+    return TRUE;    
+    
+  }else{    return FALSE;   }
+  
+}
 
 
-
- public function enableUser($key=''){
-
+ public function enableUser($key){
+  $query = $this->db->query("SELECT * from sys_users WHERE su_id = $key "); 
+  $result = $query->result()[0];
+  if( $result->enable==0){
   $sqlEdt = "UPDATE sys_users SET enable='1' , date_updated=CURRENT_TIMESTAMP WHERE su_id={$key};";
   $exc_user = $this->db->query($sqlEdt);
-  
+  }
+  else{
+    $sqlEdt = "UPDATE sys_users SET enable='0' , date_updated=CURRENT_TIMESTAMP WHERE su_id={$key};";
+    $exc_user = $this->db->query($sqlEdt);
+  }
+
   if ($exc_user){
     
     return TRUE;    
@@ -884,18 +920,6 @@ $path_file = quotemeta($path_file);
 }
 
 
-public function disableUser($key=''){
-
-  $sqlEdt = "UPDATE sys_users SET enable='0' , date_updated=CURRENT_TIMESTAMP WHERE su_id={$key};";
-  $exc_user = $this->db->query($sqlEdt);
-  
-  if ($exc_user){
-    
-    return TRUE;    
-    
-  }else{    return FALSE;   }
-  
-}
 
 
 

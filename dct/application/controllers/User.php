@@ -125,33 +125,26 @@ class User extends CI_Controller {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $result = $this->model->enableUser($id);
-
         if($result!=FALSE){
             redirect('user/manage','refresh');
-
         }else{
         
             echo "<script>alert('Simting wrong')</script>";
        redirect('user/manage','refresh');
         }
     }
-
-    public function disable($uid){
+    public function mobile($uid){
         $id = base64_decode($uid);
-        $this->model->CheckPermission($this->session->userdata('su_id'));
-        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-        $result = $this->model->disableUser($id);
+       $result = $this->model->mobile($id);
+       if($result!=FALSE){
+           redirect('user/manage','refresh');
+       }else{
+       
+           echo "<script>alert('Simting wrong')</script>";
+      redirect('user/manage','refresh');
+       }
+   }
 
-        if($result!=FALSE){
-            redirect('user/manage','refresh');
-            
-
-        }else{
-            echo "<script>alert('Simting wrong')</script>";
-            redirect('user/manage','refresh');
-
-        }
-    }
 
     public function deleteuser()
     {

@@ -52,24 +52,27 @@
                 
     
                 if($r->name == "MEMBER" || $this->session->userdata('sug_id')==1){
-                  if($r->enable!=1 ){  
-                    if($this->session->flashdata("enable")!== null )
-                   echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขสิทธิ์</h5>' data-original-title='Rule' href='".base_url()."user/enable/".$encrypted_id."'><i class='btn-danger no-border fa fa-close'></i></a>";
+                  if($r->enable!=1 ){               
+                  $icon = "btn-danger no-border fa fa-close";
                       }
                 else{ 
-                   if($this->session->flashdata("disable")!== null )
-                 echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขสิทธิ์</h5>' data-original-title='Rule' href='".base_url()."user/disable/".$encrypted_id."'><i class='btn-success no-border fa fa-check'></i></a>";
+                  $icon = "btn-success no-border fa fa-check";
                 }
-
-                 if($this->session->flashdata("rule")!== null )
-                echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขสิทธิ์</h5>' data-original-title='Rule' href='".base_url()."user/rule/".$encrypted_id."'  ><i class='btn-info no-border fa fa-gear'></i></a>";
-                 if( $this->session->flashdata("edit")!== null )
-                  echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เเก้ไขข้อมูล</h5>' data-original-title='Rule' href='".base_url()."user/edit_u/".$encrypted_id."'  ><i class='btn-info no-border fa fa-wrench'></i></a>";
-
-                 if($this->session->flashdata("delete") !==null)
-                     echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."user/deleteuser/".$encrypted_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a></td>";  
-                  
-             
+                  if($this->session->flashdata("enable")!== null ) echo "<a  href='".base_url()."user/enable/".$encrypted_id."'><i class='$icon'></i></a>";
+                  if($this->session->flashdata("rule")!== null ) echo "<a  href='".base_url()."user/rule/".$encrypted_id."'  ><i class='btn-info no-border fa fa-gear'></i></a>";
+                  if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."user/edit_u/".$encrypted_id."'  ><i class='btn-info no-border fa fa-wrench'></i></a>";
+                  if($this->session->userdata('sug_id')==1){
+                  if($r->mobile!=1 ){
+                      $icon = "btn-danger no-border fa fa-building-o";
+                      $text = "Enable mobile device";
+                    }else{
+                      $icon = "btn-success no-border fa fa-building-o";
+                      $text = "Disable mobile device?";
+                    }
+                    echo "<a href='".base_url()."user/mobile/".$encrypted_id."' onclick='return confirm(\"$text\")' ><i class='$icon'></i></a>";  
+                  }
+                  if($this->session->flashdata("delete") !==null) echo "<a  href='".base_url()."user/deleteuser/".$encrypted_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a></td>";  
+                
                 }
               
             echo "</tr>";
