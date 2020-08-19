@@ -1,39 +1,58 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller {
+class Manage extends CI_Controller {
 
     function __construct() { 
     
         parent::__construct(); 
         $this->load->helper('form');
+        $this->load->helper('url');
         $this->load->database(); 
-        
+        $this->load->model('model');
+        $this->model->CheckSession();
+      $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+        $this->model->load_menu();
     }
-	public function manage()
-    {	
-        $sql =  'select * from sys_users';
-        $query = $this->db->query($sql); 
-       $data['result'] = $query->result(); 
-        $sql =  'SELECT
-		DISTINCT smg.name AS g_name,
-		smg.icon_menu,
-		sm.mg_id,
-        smg.mg_id AS mg,
-		smg.order_no
-		FROM
-		sys_menus AS sm 
-		LEFT JOIN sys_menu_groups AS smg ON smg.mg_id = sm.mg_id
-        ORDER BY smg.order_no ASC;';    
-        $query = $this->db->query($sql); 
-         $menu['menu'] = $query->result();
-        
-         $sql =  "select * from sys_menus ";
-         $query = $this->db->query($sql); 
-         $menu['submenu']= $query->result(); 
-       $this->load->view('header',$menu);
-        $this->load->view('user/manage',$data);//bring $data to user_data 
+	public function index()
+	{	
+        $sql = "SELECT COUNT(d_id) as d_id FROM Drawing";
+        $query = $this->db->query($sql);
+        $drawing = $query->result();
+        $data['drawing'] = $drawing[0]->d_id;
+
+        $sql2 = "SELECT COUNT(p_id) as p_id FROM Part";
+        $query = $this->db->query($sql2);
+        $part = $query->result();
+        $data['part'] = $part[0]->p_id;
+
+        $sql4 = "SELECT COUNT(b_id) as b_id FROM BOM";
+        $query = $this->db->query($sql4);
+        $bom = $query->result();
+        $data['bom'] = $bom[0]->b_id;
+
+
+        $sql5 = "SELECT tf.tf_name,tf.tf_fol FROM type_file as tf";
+        $query = $this->db->query($sql5);
+        $filea = $query->result();
+        $num = 0;
+        foreach($filea as $f){
+        $directory = './uploads/'.$f->tf_fol.'/';
+        $files = glob($directory . "*");
+        if ($files){
+        $fileall = count($files); 
+        $num = $fileall+$num;
+        }
+        }
+        $data['num'] = $num;
+
+		$this->load->view('dashboard',$data);
 		$this->load->view('footer');
 	}
-}
 
+    function view_list()
+{
+$this->load->view('dcn/manage');
+}
+}
