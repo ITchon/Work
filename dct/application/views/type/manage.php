@@ -26,7 +26,7 @@
                       
                     <?php
                     foreach($result as $r){
-            echo "<tr>";
+                echo "<tr>";
                 echo "<td>".$r->tf_name."</td>";
                 echo "<td>".$r->tf_fol."</td>";
                 if($this->session->flashdata("edit")!== null )

@@ -78,7 +78,7 @@ public function show()
       $data['s_dno'] = $s_dno;
       $data['s_name'] = $s_name;
       $data['s_pno'] = $s_pno;
-  
+      $data['result_type']= $this->model->get_type_drawing();
   
       if($this->input->get('s_dno') == null){
         $s_dno = 'null';
@@ -225,17 +225,13 @@ public function show()
   {
       $this->model->CheckPermission($this->session->userdata('su_id'));
       $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-
       $d_id = $this->uri->segment('3');
-
       $data['result'] = $this->model->get_drawing_byid($d_id);
       $data['result_dcn'] = $this->model->get_dcn();
       $data['result_cus'] = $this->model->get_customers();
-      $data['result_type'] = $this->model->get_type_drawing();
-
+      $data['result_type']= $this->model->get_type_drawing();
       $this->load->view('drawing/add_version',$data);
       $this->load->view('footer');
-
   } 
     //  public function test()
     // {

@@ -197,7 +197,7 @@ class Model extends CI_Model
 
   public function get_type_drawing()
   {
-    $sql =  "SELECT * from type_file where tf_group = 1 OR tf_group = 0";
+    $sql =  "SELECT * from type_file where tf_group = 1 and delete_flag != 0 OR tf_group = 0";
        $query = $this->db->query($sql);
       $result =  $query->result();
     return $result;
@@ -668,6 +668,22 @@ $path_file = quotemeta($path_file);
      return false;
    }
  }
+ public function save_edit_tf($tf_id, $tf_name,$tf_fol)
+  {
+     $sql1 ="UPDATE type_file SET tf_name = '$tf_name',tf_fol = '$tf_fol', date_updated = CURRENT_TIMESTAMP WHERE tf_id = '$tf_id'";
+    $exc_user = $this->db->query($sql1);
+    if ($exc_user ){ return true; }else{ return false; }
+  }
+  public function delete_type($id) {
+    $sql ="UPDATE type_file SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE tf_id = '$id'";
+    $query = $this->db->query($sql);
+       if ($query) { 
+          return true; 
+       } 
+       else{
+      return false;
+    }
+    }
  public function mobile($key){
   $query = $this->db->query("SELECT * from sys_users WHERE su_id = $key "); 
   $result = $query->result()[0];

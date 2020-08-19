@@ -77,8 +77,8 @@ class Type extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
-        $this->model->delete_permissiongroup($this->uri->segment('3'));
-        redirect('permissiongroup/manage');
+        $this->model->delete_type($this->uri->segment('3'));
+        redirect('type/manage');
     }
 
     public function edit()

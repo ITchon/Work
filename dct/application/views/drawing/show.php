@@ -29,30 +29,40 @@ form {
           
 
           <div class="row gutter-xs">
-            <div class="col-xs-12">
+            <div class="col-md-12">
               <div class="card">
                 <div class="card-header ">
 
-              <h3><a href="<?php echo base_url()?>drawing/show">MANAGE DRAWING</a> 
+                <h3>
+                <a href="<?php echo base_url()?>drawing/show">MANAGE DRAWING</a> 
                 <a href="" class="btn btn-default no_print" onclick="window.history.go(-1); return false;"> Back </a>
                 </h3>
                 <?php  
                 $search = $this->session->flashdata('search');
-                $this->session->set_flashdata('search',$search)
+                $this->session->set_flashdata('search',$search);
                 ?>
-
-
-                <form   action="<?php echo base_url()?>drawing/show" method="get">
-                  <div class="col-xs-3">
-                      <div class="input-group" >
-                         <div class="input-group-btn">
-                              <a href="" class="no_print btn btn-primary ">Drawing No.</a> 
-                         </div>
-                              <input type="text" class="form-control" name="s_dno" value="<?php echo $s_dno; ?>">
-                      </div>
+                <form action="<?php echo base_url()?>drawing/show" method="get">
+                <div class="col-md-3"> 
+                <input type="checkbox" name="all" value="21313" id="all" checked>      
+                <label  for="all" style="cursor: pointer;color:#5b6572" >ALL</label><br>  
+                <?php  
+                foreach($result_type as $r){ ?>
+                   <input type="checkbox" name="type[]" value="" id="<?php echo $r->tf_id ?>" >      
+                   <label  for="<?php echo $r->tf_id ?>" style="cursor: pointer;color:#5b6572" ><?php echo $r->tf_name ?></label><br>  
+                <?php  } ?>
+                </div>
+                <br>
+                <div class="col-md-2"> 
+                  <div class="input-group" >
+                    <div class="input-group-btn">
+                        <a href="" class="no_print btn btn-primary ">Part No.</a> 
+                    </div>
+                    <input type="text" name="s_pno" class="form-control" value="<?php echo $s_pno ?>">
                   </div>
+                </div>
+  
 
-                  <div class="col-xs-3">
+                  <div class="col-md-3">
                              <div class="input-group" >
                          <div class="input-group-btn">
                               <a href="" class="no_print btn btn-primary ">Drawing Name</a> 
@@ -61,20 +71,16 @@ form {
                    </div> 
                  </div>
 
-                  <div class="col-xs-3">
-
-                               <div class="input-group" >
+                 <div class="col-md-3">
+                      <div class="input-group" >
                          <div class="input-group-btn">
-                              <a href="" class="no_print btn btn-primary ">Part No.</a> 
+                              <a href="" class="no_print btn btn-primary ">Drawing No.</a> 
                          </div>
-
-                  <input type="text" name="s_pno" class="form-control" value="<?php echo $s_pno ?>">
-
+                              <input type="text" class="form-control" name="s_dno" value="<?php echo $s_dno; ?>">
+                      </div>
                   </div>
-
-            </div>
-                           <div class="col-xs-3">
-                  <button type="submit" class="btn btn-primary">SEARCH</button>
+                           <div class="col-md">
+                  <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
             </div>
                 </form>
 
@@ -146,13 +152,8 @@ form {
                 }
                 if($this->session->flashdata("enable")!== null ){ echo "<a  href='".base_url()."drawing/enable/".$r->d_id ."'><i class='$icon'> $text</i></a>";}
                 else{ echo "<span style='$color'>$text </span>"; }
-
                     echo "</td>";
-                    echo "<td style='font-size: 14px'>".$r->path_file.''.$r->file_name ."</td>";
-
-    
-            
-
+                    echo "<td style='font-size: 14px'>".$r->path_file.''.$r->file_name ."</td>";   
             echo "</tr>";
 
         }

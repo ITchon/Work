@@ -13,8 +13,8 @@
             <form name="form1" method="post" class="table form form-horizontal containe" action="<?php echo base_url()?>drawing/update_v" enctype="multipart/form-data">
             <?php $search =  $this->session->flashdata('search');
                   $this->session->set_flashdata('search',$search);
-                  ?>
-<input hidden type="text" name="tfold" value="<?php echo $result->tf_id ?>" >
+                 ?>
+              <input hidden type="text" name="tfold" value="<?php echo $result->tf_id ?>" >
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Drawing Number</label>
                     <div class="col-sm-6 col-md-4">
