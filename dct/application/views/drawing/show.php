@@ -113,7 +113,7 @@ form {
                       <?php
                     foreach($result as $r){
              echo "<tr>";?>
-                    <td><?php echo "<b>".$r->d_no."</b>" ?></td>
+                    <td><?php echo "<b>".$r->d_no.$r->tf_id."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->p_no."</b>" ?></td>
                     <td><?php echo "<b>".$r->cus_name."</b>" ?></td>

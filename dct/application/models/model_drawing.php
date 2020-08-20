@@ -314,26 +314,20 @@ $path_file = quotemeta($path_file);
 
   public function drawing_search($s_dno,$s_name,$s_pno,$type)
   {
-if($s_dno !=0){
-    $s_dno =  implode('|',(array)$s_dno);
-  }
-if($s_name !=0){
-    $s_name =  implode('|',(array)$s_name);
-  }
-if($s_pno !=0){
-    $s_pno =  implode('|',(array)$s_pno);
-  }
+    $s_dno = "";
+    $s_name = "";
+    $s_pno = "";
 if($type !=0){
-    $type =  implode('|',(array)$type);
+    $type =  implode(',',array_map('intval',$type));
   }
-      $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,c.cus_id,c.cus_name, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no,dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code
+      $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,c.cus_id,c.cus_name, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no,dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code ,d.tf_id
       from drawing as d
         left join part_drawing as pd on pd.d_id = d.d_id
         left join customers as c on c.cus_id = d.cus_id
         left join dcn as dc on dc.dcn_id = d.dcn_id
         left join part as p on p.p_id = pd.p_id
-where d.delete_flag != 0 AND d.d_no RLIKE '$s_dno' OR d.d_name RLIKE '$s_name' OR p.p_no RLIKE '$s_pno' OR d.tf_id = '$type'";
-      $query = $this->db->query($sql); 
+where d.delete_flag != 0 AND d.tf_id IN ($type) AND (d.d_no RLIKE '$s_dno' OR d.d_name RLIKE '$s_name' OR p.p_no RLIKE '$s_pno')";
+      $query = $this->db->query($sql);
       $result =  $query->result();
 
       return $result;
@@ -341,7 +335,7 @@ where d.delete_flag != 0 AND d.d_no RLIKE '$s_dno' OR d.d_name RLIKE '$s_name' O
 
   public function get_partdrawing()
   {
-    $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,c.cus_id,c.cus_name, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no,dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code
+    $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,c.cus_id,c.cus_name, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no,dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code, d.tf_id
           from drawing as d
             left join part_drawing as pd on pd.d_id = d.d_id
             left join customers as c on c.cus_id = d.cus_id
