@@ -92,85 +92,6 @@ class Model extends CI_Model
  }
 
 
-  public function get_user()
-  {
-    $sql =  'SELECT su.su_id,su.password,su.username, su.firstname ,su.lastname, su.gender,su.email,su.enable,su.delete_flag, sug.name as name,su.mobile
-    FROM
-    sys_users  AS su 
-    INNER JOIN sys_user_groups AS sug ON sug.sug_id = su.sug_id where su.delete_flag != 0 AND sug.sug_id != "1"';
-    $query = $this->db->query($sql); 
-    $result =  $query->result();
-    return $result;
-  }
- 
-
-
-  public function get_drawing()
-  {
-    $sql =  "SELECT * from drawing  where delete_flag != 0";
-       $query = $this->db->query($sql);
-      $result =  $query->result();
-    return $result;
-  }
-
-
-  public function get_sub_by($id)
-  {
-    $sql =  "SELECT * from sub_part  where sub_id = $id AND delete_flag != 0";
-       $query = $this->db->query($sql);
-      $result =  $query->result();
-    return $result;
-  }
-  public function get_drawing_by($search,$sort)
-  {
-      $sql =  "SELECT d.d_id, d.d_no,d.d_name,cus.cus_id,cus.cus_name, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no
-      ,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code
-      from drawing as d
-      inner join dcn as dc on dc.dcn_id = d.dcn_id
-      left join part as p on p.d_id = d.d_id 
-      inner join customers as cus on cus.cus_id = d.cus_id 
-      where d.delete_flag != 0 AND $sort LIKE '%{$search}%'";
-      $query = $this->db->query($sql); 
-      $result =  $query->result();
-      return $result;
-  }
-
-
-
-  public function get_dcn_by($search,$sort)
-  {
-     $sql =  "SELECT d.d_id, d.d_no,d.d_name,cus.cus_id,cus.cus_name, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
-     ,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code
-          from drawing as d
-          inner join dcn as dc on dc.dcn_id = d.dcn_id
-          inner join part as p on p.d_id = d.d_id 
-          inner join customers as cus on cus.cus_id = d.cus_id 
-          where d.delete_flag != 0 AND $sort LIKE '%{$search}%'";
-      $query = $this->db->query($sql); 
-      $result =  $query->result();
-      return $result;
-  }
-
-
-
-  public function get_part_by($search,$sort)
-  {
-     $sql =  "SELECT d.d_id, d.d_no,d.d_name,cus.cus_id,cus.cus_name, d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no 
-     ,p.p_id,dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code
-          from drawing as d
-          inner join dcn as dc on dc.dcn_id = d.dcn_id
-          inner join part as p on p.d_id = d.d_id 
-          inner join customers as cus on cus.cus_id = d.cus_id 
-          where d.delete_flag != 0 AND $sort LIKE '%{$search}%'";
-      $query = $this->db->query($sql); 
-      $result =  $query->result();
-      return $result;
-  }
-  
-
-
-
-
   public function CheckPermission($para){
         
         $get_url = trim($this->router->fetch_class().'/'.$this->router->fetch_method());
@@ -199,7 +120,6 @@ class Model extends CI_Model
         }
         }
  
-
   }
   public function CheckPermissionGroup($para){
     if($this->session->userdata('sug_id') == 1) {
@@ -252,7 +172,7 @@ class Model extends CI_Model
         $fetch_pass=$this->db->query("SELECT * from sys_users where su_id='$session_id'");
         $res=$fetch_pass->result();
       }
-   public function change_pass($session_id,$new_password)
+     public function change_pass($session_id,$new_password)
       {
         $new_password = base64_encode(trim($new_password));
         $update_pass=$this->db->query("UPDATE sys_users set password='$new_password'  where su_id='$session_id'");
@@ -281,40 +201,9 @@ class Model extends CI_Model
 
 
 
- public function insert_cus($cusname,$cusdes)
- {
-  $num= $this->db->query("SELECT * FROM customers where cus_name = '$cusname'"); 
-  $chk= $num->num_rows();
- if($chk!=1){
-  $sql ="INSERT INTO customers (cus_name,cus_des,date_created,delete_flag) VALUES ( '$cusname', '$cusdes', CURRENT_TIMESTAMP,  '1' );";
-    $query = $this->db->query($sql);  
-   if($query){
-     return true;
-   }
-   else{
-     return 3;
-   }
-  }
-  return false;
- }
 
-public function save_edit_cus($cus_id, $cus_name,$cus_des)
-  {
-     $sql1 ="UPDATE customers SET cus_name = '$cus_name',cus_des = '$cus_des', date_updated = CURRENT_TIMESTAMP WHERE cus_id = '$cus_id'";
-    $exc_user = $this->db->query($sql1);
-    if ($exc_user ){ return true; }else{ return false; }
-  }
 
-public function delete_cus($id) {
-   $sql ="UPDATE customers SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE cus_id = '$id'";
-   $query = $this->db->query($sql);
-      if ($query) { 
-         return true; 
-      } 
-      else{
-     return false;
-   }
-   }
+
 
 
 // public function drawing_search($s_dno,$s_name,$s_pno)

@@ -5,7 +5,7 @@ class Model_drawing extends CI_Model
 
     public function get_type_drawing()
   {
-    $sql =  "SELECT * from type_file where tf_group = 1 OR tf_group = 0";
+    $sql =  "SELECT * from type_file where delete_flag != 0 AND tf_group = 1 OR tf_group = 0";
        $query = $this->db->query($sql);
       $result =  $query->result();
     return $result;
@@ -72,7 +72,7 @@ class Model_drawing extends CI_Model
   
   public function get_dcn()
   {
-    $sql =  "SELECT * from dcn  where delete_flag != 0";
+    $sql =  "SELECT * from dcn where delete_flag != 0";
        $query = $this->db->query($sql);
       $result =  $query->result();
     return $result;
@@ -91,7 +91,7 @@ class Model_drawing extends CI_Model
 
   public function checkfolder($tf_id)
   { 
-    $sql =  "SELECT tf_fol FROM type_file where tf_id = '$tf_id'";
+    $sql =  "SELECT tf_fol FROM type_file where delete_flag != 0 AND tf_id = '$tf_id'";
     $query = $this->db->query($sql); 
     $result= $query->result();
     return $result[0]->tf_fol;

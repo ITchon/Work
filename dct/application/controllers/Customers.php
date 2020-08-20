@@ -9,7 +9,7 @@ class Customers extends CI_Controller {
         $this->load->helper('form');
         $this->load->database(); 
         $this->load->model('model');
-        $this->load->model('customers');
+        $this->load->model('model_customers');
         $this->model->CheckSession();
         $this->model->load_menu();
         $this->model->button_show($this->session->userdata('su_id'),11);
@@ -48,7 +48,7 @@ class Customers extends CI_Controller {
 
         $cus_name =  $this->input->post('cusname');
         $cus_des =  $this->input->post('cusdes');
-        $result = $this->model->insert_cus($cus_name,$cus_des);
+        $result = $this->model_customers->insert_cus($cus_name,$cus_des);
        if($result == true){
         redirect('customers/add','refresh');
        }
@@ -69,7 +69,7 @@ class Customers extends CI_Controller {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
-        $this->model->delete_cus($this->uri->segment('3'));
+        $this->model_customers->delete_cus($this->uri->segment('3'));
         redirect('customers/manage');
     }
 
@@ -95,7 +95,7 @@ class Customers extends CI_Controller {
         $cus_name =  $this->input->post('cus_name');
         $cus_des =  $this->input->post('cus_des');
 
-        $this->model->save_edit_cus($cus_id,$cus_name, $cus_des);
+        $this->model_customers->save_edit_cus($cus_id,$cus_name, $cus_des);
         redirect('customers/manage');
     }
 
