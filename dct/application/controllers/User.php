@@ -10,7 +10,7 @@ class User extends CI_Controller {
         $this->load->helper('url');
         $this->load->database(); 
         $this->load->model('model');
-        $this->load->model('user');
+        $this->load->model('model_user');
         $this->model->CheckSession();
         $this->model->button_show($this->session->userdata('su_id'),2);     
         $this->model->load_menu();
