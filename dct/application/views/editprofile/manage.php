@@ -10,7 +10,9 @@
               <h2 class=" text-center text-primary">
              Edit Profile
             </h2><hr>
+
             <form class="table form form-horizontal container" action="<?php echo base_url()?>editprofile/updated_profile" method="post" data-toggle="validator">
+            <?php echo $this->session->flashdata("success"); ?>
             			<?php echo form_hidden('su_id',$result[0]->su_id);  ?>
 	              <div class="form-group has-feedback">
 	                    <label for="password" class="col-sm-3 col-md-4 control-label">Firstname</label>

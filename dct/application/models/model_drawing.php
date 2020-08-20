@@ -3,6 +3,13 @@
 class Model_drawing extends CI_Model
 {
 
+  public function get_drawing()
+  {
+    $sql =  "SELECT * from drawing  where delete_flag != 0";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
     public function get_type_drawing()
   {
     $sql =  "SELECT * from type_file where delete_flag != 0 AND tf_group = 1 OR tf_group = 0";

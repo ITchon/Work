@@ -183,7 +183,7 @@ form {
  
        $.ajax({
        type: "Post",
-       url:'<?php echo base_url() ?>/ajax/view_pdf',
+       url:'<?php echo base_url() ?>ajax/view_pdf',
       data: {
        id: id
       },
