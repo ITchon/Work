@@ -156,9 +156,9 @@ $this->session->set_flashdata('search',$search);
                       }
                       ?> 
                    </select>
-                   <div class="col-sm-5 col-md-4">
+                 
                       <button class="btn btn-outline-primary " type="button" id="add">Add NEW PART</button>
-                      </div>
+                      <div></div>
                     <button type="button" class="btn btn-outline-danger btn_remove hidden">Remove</button><br>
                       <div id="dynamic_field"></div>
                       

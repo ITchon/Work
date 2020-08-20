@@ -9,7 +9,7 @@ class Type extends CI_Controller {
         $this->load->helper('form');
         $this->load->database(); 
         $this->load->model('model');
-        $this->load->model('type');
+        $this->load->model('model_type');
         $this->model->CheckSession();
         $this->model->load_menu();
         $this->model->button_show($this->session->userdata('su_id'),12);
@@ -40,24 +40,6 @@ class Type extends CI_Controller {
         $this->load->view('footer');
     }
 
-     public function enable($uid){
-
-       $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
-        $this->model->CheckPermission($this->session->userdata('su_id'));
-
-        $result = $this->model->enablePermission_Group($uid);
-
-        if($result!=FALSE){
-            redirect('permissiongroup/manage','refresh');
-
-        }else{
-        
-            echo "<script>alert('Simting wrong')</script>";
-       redirect('permissiongroup/manage','refresh');
-        }
-    }
-
-
     public function insert()
     {
         $type_name =  $this->input->post('type_name');
@@ -67,7 +49,7 @@ class Type extends CI_Controller {
             @mkdir($output_dir . $folder_name, 0777);/* Create folder by using mkdir function */
             echo "Folder Created";/* Success Message */
         }
-        $result = $this->model->insert_type($type_name,$fol_name);
+        $result = $this->model_type->insert_type($type_name,$fol_name);
         redirect('type/add');
 
 
@@ -78,7 +60,7 @@ class Type extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
-        $this->model->delete_type($this->uri->segment('3'));
+        $this->model_type->delete_type($this->uri->segment('3'));
         redirect('type/manage');
     }
 
@@ -103,7 +85,7 @@ class Type extends CI_Controller {
         $tf_name =  $this->input->post('tf_name');
         $tf_fol =  $this->input->post('tf_fol');
 
-        $this->model->save_edit_tf($tf_id, $tf_name, $tf_fol);
+        $this->model_type->save_edit_tf($tf_id, $tf_name, $tf_fol);
         redirect('type/manage');
 
 

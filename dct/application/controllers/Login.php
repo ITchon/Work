@@ -9,6 +9,7 @@ class Login extends CI_Controller {
         $this->load->helper('form');
         $this->load->database(); 
         $this->load->model('model');
+        $this->load->model('model_user');
         $this->load->model('login');
 
     }
@@ -21,7 +22,7 @@ class Login extends CI_Controller {
         $user = $this->input->post('username');
         $pass = $this->input->post('password');
   
-        $data= $this->model->getuser($user,$pass);
+        $data= $this->model_user->getuser($user,$pass);
 
 
          if($data==true) {

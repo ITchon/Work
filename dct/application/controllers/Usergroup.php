@@ -9,7 +9,7 @@ class Usergroup extends CI_Controller {
         $this->load->helper('form');
         $this->load->database(); 
         $this->load->model('model');
-        $this->load->model('usergroup');
+        $this->load->model('model_usergroup');
         $this->model->CheckSession();
         $this->model->load_menu();
         
@@ -72,7 +72,7 @@ class Usergroup extends CI_Controller {
         $this->model->CheckPermission($this->session->userdata('su_id'));
          $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $gname =  $this->input->post('gname');
-        $result = $this->model->insert_group($gname);
+        $result = $this->model_usergroup->insert_group($gname);
        if($result == true){
         redirect('usergroup/manage','refresh');
        }
@@ -91,7 +91,7 @@ class Usergroup extends CI_Controller {
 
         $this->model->CheckPermission($this->session->userdata('su_id'));
          $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-        $result = $this->model->enableGroup($uid);
+        $result = $this->model_usergroup->enableGroup($uid);
 
         if($result!=FALSE){
             redirect('Usergroup/manage','refresh');
@@ -107,7 +107,7 @@ class Usergroup extends CI_Controller {
 
         $this->model->CheckPermission($this->session->userdata('su_id'));
          $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-        $result = $this->model->disableGroup($uid);
+        $result = $this->model_usergroup->disableGroup($uid);
 
         if($result!=FALSE){
             redirect('Usergroup/manage','refresh');
@@ -124,7 +124,7 @@ class Usergroup extends CI_Controller {
     {
         $this->model->CheckPermission($this->session->userdata('su_id'));
          $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-        $this->model->delete_group($this->uri->segment('3'));
+        $this->model_usergroup->delete_group($this->uri->segment('3'));
         redirect('Usergroup/manage');
     }
 
@@ -134,10 +134,10 @@ class Usergroup extends CI_Controller {
         $sug_id =  $this->input->post('sug_id');
   
         $spg_id =  $this->input->post('spg_id');
-           $this->model->deluserg_permission($sug_id);
+           $this->model_usergroup->deluserg_permission($sug_id);
            if($spg_id != ''){
             foreach ($spg_id as $spg) {
-         $this->model->insertuserg_permission($sug_id,$spg);
+         $this->model_usergroup->insertuserg_permission($sug_id,$spg);
      }
            }
 
@@ -166,7 +166,7 @@ class Usergroup extends CI_Controller {
         $sug_id =  $this->input->post('sug_id');
         $sug_name =  $this->input->post('sug_name');
 
-        $this->model->save_edit_ug($sug_id, $sug_name);
+        $this->model_usergroup->save_edit_ug($sug_id, $sug_name);
         redirect('Usergroup/manage');
     }
 

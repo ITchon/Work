@@ -9,7 +9,7 @@ class Permissiongroup extends CI_Controller {
         $this->load->helper('form');
         $this->load->database(); 
         $this->load->model('model');
-        $this->load->model('permission_group');
+        $this->load->model('model_permission_group');
         $this->model->CheckSession();
         $this->model->load_menu();
 
@@ -46,7 +46,7 @@ class Permissiongroup extends CI_Controller {
        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
-        $result = $this->model->enablePermission_Group($uid);
+        $result = $this->model_permission_group->enablePermission_Group($uid);
 
         if($result!=FALSE){
             redirect('permissiongroup/manage','refresh');
@@ -64,7 +64,7 @@ class Permissiongroup extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
-        $result = $this->model->disablePermission_Group($uid);
+        $result = $this->model_permission_group->disablePermission_Group($uid);
 
         if($result!=FALSE){
             redirect('permissiongroup/manage','refresh');
@@ -81,7 +81,7 @@ class Permissiongroup extends CI_Controller {
     {
 
         $gname =  $this->input->post('gname');
-        $result = $this->model->insert_permissiongroup($gname);
+        $result = $this->model_permission_group->insert_permissiongroup($gname);
         redirect('permissiongroup/manage');
 
 
@@ -92,7 +92,7 @@ class Permissiongroup extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
-        $this->model->delete_permissiongroup($this->uri->segment('3'));
+        $this->model_permission_group->delete_permissiongroup($this->uri->segment('3'));
         redirect('permissiongroup/manage');
     }
 
@@ -116,7 +116,7 @@ class Permissiongroup extends CI_Controller {
         $spg_id =  $this->input->post('spg_id');
         $spg_name =  $this->input->post('spg_name');
 
-        $this->model->save_edit_pg($spg_id, $spg_name);
+        $this->model_permission_group->save_edit_pg($spg_id, $spg_name);
         redirect('permissiongroup/manage');
 
 

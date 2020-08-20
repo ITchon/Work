@@ -21,7 +21,7 @@ class User extends CI_Controller {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
        
-         $data['result'] =  $this->model->get_user(); 
+        $data['result'] =  $this->model_user->get_user(); 
         $this->load->view('user/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
     }
@@ -49,7 +49,7 @@ class User extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $decrypted_id = $this->uri->segment('3');
         $id = base64_decode($decrypted_id);
-            $data['result'] =  $this->model->get_user(); 
+            $data['result'] =  $this->model_user->get_user(); 
             $sql =  'select * from sys_users_permissions where su_id = '.$id.'';
             $query = $this->db->query($sql); 
             $data['result_user']= $query->result(); 
@@ -85,7 +85,7 @@ class User extends CI_Controller {
         $password =  $this->input->post('password');
         $email  =  $this->input->post('email');
         $sug_id =  $this->input->post('sug_id');
-       $result = $this->model->insert($fname,$lname,$username,$password,$gender,$email,$sug_id);
+       $result = $this->model_user->insert($fname,$lname,$username,$password,$gender,$email,$sug_id);
        if($result == true){
        // echo "<script>alert('Inserted Data Success')</script>";
          $this->session->set_flashdata('error','<div class="alert alert-success hide-it">  
@@ -114,7 +114,7 @@ class User extends CI_Controller {
          $id = base64_decode($uid);
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-        $result = $this->model->enableUser($id);
+        $result = $this->model_user->enableUser($id);
         if($result!=FALSE){
             redirect('user/manage','refresh');
         }else{
@@ -125,7 +125,7 @@ class User extends CI_Controller {
     }
     public function mobile($uid){
         $id = base64_decode($uid);
-       $result = $this->model->mobile($id);
+       $result = $this->model_user->mobile($id);
        if($result!=FALSE){
            redirect('user/manage','refresh');
        }else{
@@ -143,7 +143,7 @@ class User extends CI_Controller {
 
         $decrypted_id = $this->uri->segment('3');
         $id = base64_decode($decrypted_id);
-        $this->model->delete_user($id);
+        $this->model_user->delete_user($id);
         $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
         <span>  Delete Success</span>
       </div> ');
@@ -156,10 +156,10 @@ class User extends CI_Controller {
         $id =  $this->input->post('su_id');
         $sp_id =  $this->input->post('sp_id');
         $su_id = base64_decode($id);
-           $this->model->deluser_permission($su_id);
+           $this->model_user->deluser_permission($su_id);
            if($sp_id != ''){
             foreach ($sp_id as $sp) {
-         $this->model->insertuser_permission($su_id,$sp);
+         $this->model_user->insertuser_permission($su_id,$sp);
      }
            }
 
@@ -211,7 +211,7 @@ class User extends CI_Controller {
         $email =  $this->input->post('email');
         $sug_id =  $this->input->post('sug_id');
 
-        $this->model->save_edit_u($su_id, $username, $password,$gender, $fname, $lname, $email, $sug_id);
+        $this->model_user->save_edit_u($su_id, $username, $password,$gender, $fname, $lname, $email, $sug_id);
         redirect('User/manage');
     }
 

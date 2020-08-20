@@ -10,7 +10,7 @@ class Part extends CI_Controller {
         $this->load->helper('url');
         $this->load->database(); 
         $this->load->model('model');
-        $this->load->model('part');
+        $this->load->model('model_part');
         $this->model->CheckSession();
         $this->model->load_menu();
     }
@@ -31,7 +31,7 @@ class Part extends CI_Controller {
             left join drawing as d on d.d_id = p.d_id
             where p.delete_flag != 0 ";
         $query = $this->db->query($sql); 
-       $data['result'] = $query->result(); 
+        $data['result'] = $query->result(); 
         $this->load->view('part/show',$data);//bring $data to user_data 
         $this->load->view('footer');
         
@@ -57,7 +57,7 @@ class Part extends CI_Controller {
         $p_no =  $this->input->post('p_no');
         $sub_id =  $this->input->post('sub_id');
         $origin =  $this->input->post('origin');
-        $array = $this->model->filter($sub_id,$id);
+        $array = $this->model_part->filter($sub_id,$id);
         $_data = array();
         foreach ($array as $v) {
           if (isset($_data[$v['m_id']])) {
@@ -125,7 +125,7 @@ class Part extends CI_Controller {
        if(isset($master)){
        $master =  $this->input->post('master');
        }
-       $result = $this->model->insert_part($p_no,$p_name, $d_no,$master);
+       $result = $this->model_part->insert_part($p_no,$p_name, $d_no,$master);
 
         if($result == true){
        $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
@@ -157,7 +157,7 @@ class Part extends CI_Controller {
         $sub_id =  $this->input->post('sub_id');
         $origin =  $this->input->post('origin');
         foreach ($p_id as $p_id) {
-            $chk= $this->model->insert_sub_part($bm,$b_master,$p_id,$origin);
+            $chk= $this->model_part->insert_sub_part($bm,$b_master,$p_id,$origin);
            }
            redirect('bom/manage/'.$bm.'','refresh');
     }
@@ -170,8 +170,8 @@ class Part extends CI_Controller {
         $sub_id =  $this->input->post('sub_id');
 
         foreach ($p_id as $p_id) {
-            $sub_id= $this->model->insert_sub_part($bm,$b_master,$p_id,$bm);
-            $chk= $this->model->update_sub_id($sub_id);
+            $sub_id= $this->model_part->insert_sub_part($bm,$b_master,$p_id,$bm);
+            $chk= $this->model_part->update_sub_id($sub_id);
            }
            redirect('bom/manage/'.$bm.'','refresh');
     }
@@ -182,7 +182,7 @@ class Part extends CI_Controller {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
-		$result = $this->model->enablePart($uid);
+		$result = $this->model_part->enablePart($uid);
 
 		if($result!=FALSE){
             redirect('part/manage/'.$uid.'','refresh');
@@ -198,7 +198,7 @@ class Part extends CI_Controller {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
-		$result = $this->model->disablePart($uid);
+		$result = $this->model_part->disablePart($uid);
 
 		if($result!=FALSE){
             redirect('part/manage/'.$uid.'','refresh');
@@ -214,7 +214,7 @@ class Part extends CI_Controller {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $id = $this->uri->segment('3');
-        $this->model->delete_part($id);
+        $this->model_part->delete_part($id);
         redirect('part/manage/'.$id.'','refresh');
     }
 
@@ -259,7 +259,7 @@ class Part extends CI_Controller {
         $p_name =  $this->input->post('p_name');
         $d_id =  $this->input->post('d_id');
 
-        $this->model->save_edit_part($p_id, $p_no, $p_name,$d_id);
+        $this->model_part->save_edit_part($p_id, $p_no, $p_name,$d_id);
         redirect('part/manage/'.$p_id.'','refresh');
         
     }  
@@ -272,7 +272,7 @@ class Part extends CI_Controller {
         $p_name =  $this->input->post('p_name');
         $d_id =  $this->input->post('d_id');
         
-        $this->model->save_edit_partb($p_id, $p_no, $p_name,$d_id);
+        $this->model_part->save_edit_partb($p_id, $p_no, $p_name,$d_id);
         redirect('bom/manage/'.$bom.'','refresh');
         
     }

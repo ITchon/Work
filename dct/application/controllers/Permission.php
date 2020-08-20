@@ -9,7 +9,7 @@ class Permission extends CI_Controller {
         $this->load->helper('form');
         $this->load->database(); 
         $this->load->model('model');
-        $this->load->model('permission');
+        $this->load->model('model_permission');
         $this->load->helper('url'); 
         $this->model->CheckSession();
           $this->model->load_menu(); 
@@ -43,7 +43,7 @@ class Permission extends CI_Controller {
         $gname =  $this->input->post('gname');
         $controller =  $this->input->post('controller');
         $spg_id =  $this->input->post('spg_id');
-        $result = $this->model->insert_permission($gname, $controller, $spg_id);
+        $result = $this->model_permission->insert_permission($gname, $controller, $spg_id);
         redirect('permission/manage');
 
     }
@@ -66,7 +66,7 @@ class Permission extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
-        $this->model->delete_permission($this->uri->segment('3'));
+        $this->model_permission->delete_permission($this->uri->segment('3'));
         redirect('permission/manage');
     }
 
@@ -74,7 +74,7 @@ class Permission extends CI_Controller {
 
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
-        $result = $this->model->enablePermission($uid);
+        $result = $this->model_permission->enablePermission($uid);
 
         if($result!=FALSE){
             redirect('permission/manage','refresh');
@@ -91,7 +91,7 @@ class Permission extends CI_Controller {
        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
 
-        $result = $this->model->disablePermission($uid);
+        $result = $this->model_permission->disablePermission($uid);
 
         if($result!=FALSE){
             redirect('permission/manage','refresh');
@@ -133,7 +133,7 @@ class Permission extends CI_Controller {
         $sp_name =  $this->input->post('sp_name');
         $spg_id =  $this->input->post('spg_id');
 
-        $this->model->save_edit_p($sp_id, $spg_id, $sp_name);
+        $this->model_permission->save_edit_p($sp_id, $spg_id, $sp_name);
         redirect('permission/manage');
 
 

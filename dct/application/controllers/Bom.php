@@ -9,7 +9,8 @@ class Bom extends CI_Controller {
         $this->load->helper('form');
         $this->load->database(); 
         $this->load->model('model');
-        $this->load->model('bom');
+        $this->load->model('model_bom');
+        $this->load->model('model_part');
         $this->model->CheckSession();
         $this->model->load_menu();      
     }
@@ -41,11 +42,11 @@ class Bom extends CI_Controller {
        if($sort){   //---------------------------BOM SEARCH----------------------------
         $sort =  $this->input->post('sort'); 
         $sub_id =  $this->input->post('sub_id'); 
-        $array_bom= $this->model->bom($bm) ;
+        $array_bom= $this->model_bom->bom($bm) ;
         if($sort == "up"){
-            $data= $this->model->tree_up($sub_id,$bm) ;
+            $data= $this->model_bom->tree_up($sub_id,$bm) ;
         }else{
-            $data= $this->model->tree_down($sub_id,$bm) ;
+            $data= $this->model_bom->tree_down($sub_id,$bm) ;
         }
         $array=[];
             foreach($data as $row){
@@ -81,13 +82,13 @@ class Bom extends CI_Controller {
         $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
         $query = $this->db->query($sql); 
         $data['result_sub'] = $query->result(); 
-        $data['chk'] = $this->model->opencsv($this->session->userdata('su_id'));
+        $data['chk'] = $this->model_bom->opencsv($this->session->userdata('su_id'));
         $this->load->view('bom/show',$data);
         $this->load->view('footer');
        } //------------------END BOM SEARCH-----------------
 
         else if(isset($bm)){
-        $array= $this->model->bom($bm) ;
+        $array= $this->model_bom->bom($bm) ;
         $data['result_bom'] = $array;  
         $sql ='SELECT * from bom inner join part on part.p_id=bom.b_master inner join drawing d on d.d_id=part.d_id where b_id = '.$bm.'';
         $query=$this->db->query($sql);
@@ -112,11 +113,11 @@ class Bom extends CI_Controller {
         $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
         $query = $this->db->query($sql); 
         $data['result_sub'] = $query->result();     
-        $data['chk'] = $this->model->opencsv($this->session->userdata('su_id'));
+        $data['chk'] = $this->model_bom->opencsv($this->session->userdata('su_id'));
         $this->load->view('bom/show',$data);
         $this->load->view('footer');
          }else{
-        $data['chk'] = $this->model->opencsv($this->session->userdata('su_id'));
+        $data['chk'] = $this->model_bom->opencsv($this->session->userdata('su_id'));
         $this->load->view('bom/manage',$data);
         $this->load->view('footer');
          }
@@ -178,7 +179,7 @@ class Bom extends CI_Controller {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $bm = $this->uri->segment('3');
-        $this->model->delete_bom($bm);
+        $this->model_bom->delete_bom($bm);
         redirect('bom/manage','refresh');
     }
     public function insert_bom()
@@ -192,10 +193,10 @@ class Bom extends CI_Controller {
             echo 'history.go(-1);';
             echo '</script>';
         }
-        $lasted_id = $this->model->insert_bom($bm);
+        $lasted_id = $this->model_bom->insert_bom($bm);
         foreach ($p_id as $p) {
-        $sub_id= $this->model->insert_sub_part($lasted_id,$bm,$p,$p);
-        $sub_id= $this->model->update_sub_id($sub_id);
+        $sub_id= $this->model_part->insert_sub_part($lasted_id,$bm,$p,$p);
+        $sub_id= $this->model_part->update_sub_id($sub_id);
         }
         redirect('bom/manage/'.$lasted_id.'','refresh');
     }
@@ -207,7 +208,7 @@ class Bom extends CI_Controller {
         $qty =  $this->input->post('quantity');
         $unit =  $this->input->post('unit');
         $c_p =  $this->input->post('common_part');
-        $lasted_id = $this->model->insert_edit_part($m_id,$qty,$unit ,$c_p );
+        $lasted_id = $this->model_bom->insert_edit_part($m_id,$qty,$unit ,$c_p );
         redirect('bom/manage/'.$bm.'','refresh');
     }
     public function insert_edit_bom()
@@ -216,7 +217,7 @@ class Bom extends CI_Controller {
         $qty =  $this->input->post('quantity');
         $unit =  $this->input->post('unit');
         $c_p =  $this->input->post('common_part');
-        $lasted_id = $this->model->insert_edit_bom($bm,$qty,$unit ,$c_p );
+        $lasted_id = $this->model_bom->insert_edit_bom($bm,$qty,$unit ,$c_p );
         redirect('bom/manage/'.$bm.'','refresh');
     }
     public function insert_sub()
@@ -228,7 +229,7 @@ class Bom extends CI_Controller {
         $res_bom= $query->result();
         $b_master = $res_bom[0]->b_master;
         foreach ($p_id as $p) {
-        $chk= $this->model->insert_sub_part($bm,$b_master,$p,$p);
+        $chk= $this->model_bom->insert_sub_part($bm,$b_master,$p,$p);
         }
         redirect('bom/manage/'.$bm.'','refresh');
     }
