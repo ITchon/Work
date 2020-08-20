@@ -109,8 +109,8 @@ public function delete_sub($id) {
   public function bom($bm)
   {
     $array=[];
-    $res_bom= $this->model->hook_bom($bm) ;
-    $data= $this->model->sub_bom($res_bom[0]->b_master,$res_bom[0]->b_id) ;
+    $res_bom= $this->model_bom->hook_bom($bm) ;
+    $data= $this->model_bom->sub_bom($res_bom[0]->b_master,$res_bom[0]->b_id) ;
     $bm =  $res_bom[0]->b_id;
     if($data != false){  
         $m_id =$data[0]->p_id;

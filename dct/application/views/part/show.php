@@ -40,21 +40,21 @@
                   
                   <td class="text-center"><a type="button"  onclick="javascript:window.location='<?php
                   echo base_url() . 'part/enable/' . $r->p_id;
-                  ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
+                  ?>';"><i class='btn-danger btn-sm no-border fa fa-times'></i></a>
                   <?php
                 }
                 else{?>
 
                   <td class="text-center"><a type="button"  onclick="javascript:window.location='<?php
                   echo base_url() . 'part/disable/' . $r->p_id;
-                  ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
+                  ?>';"><i class='btn-success btn-sm no-border fa fa-check'></i></a>                      
                   <?php
                 }
                 ?> <a type ='button' class=' ' onclick="javascript:window.location='<?php
                 echo base_url() . 'part/edit_part/' . $r->p_id;
-                ?>';"><i class='btn-info btn-sm fa fa-wrench'> </i> </a>
+                ?>';"><i class='btn-info btn-sm no-border fa fa-wrench'> </i> </a>
                 <?php 
-                echo "<a type='button' href='".base_url()."part/deletepart/".$r->p_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";  
+                echo "<a type='button' href='".base_url()."part/deletepart/".$r->p_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border btn-sm fa fa-trash'></i></a></td>";  
 
             echo "</tr>";
         }
