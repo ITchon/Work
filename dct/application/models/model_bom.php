@@ -68,6 +68,44 @@ public function delete_sub($id) {
     if ($exc){ return true; }else{ return false; }
   }
 
+  public function hook_bom($bm)
+  {
+    $sql =  'SELECT * FROM bom where b_id = '.$bm.'   AND delete_flag != 0';
+    $query = $this->db->query($sql); 
+    if($query ){
+      return $query->result(); 
+    }
+    else{
+      return false;
+    }
+  }
+
+  public function sub_bom($id,$bm)
+  { 
+    $sql =  'SELECT * FROM sub_part inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id where m_id = '.$id.'  AND sub_part.delete_flag != 0 and b_id = '.$bm.'';
+    $query = $this->db->query($sql); 
+    if($query){
+      $result= $query->result();
+      return $result;
+    }else{
+      return false;
+    }
+      
+  }
+
+  public function sub_part($id,$bm,$origin)
+  { 
+    $sql =  'SELECT * FROM sub_part inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id where m_id = '.$id.'  AND sub_part.delete_flag != 0 and b_id = '.$bm.' AND origin='.$origin.'';
+    $query = $this->db->query($sql); 
+    if($query){
+      $result= $query->result();
+      return $result;
+    }else{
+      return false;
+    }
+      
+  }
+  
   public function bom($bm)
   {
     $array=[];

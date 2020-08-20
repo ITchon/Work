@@ -91,42 +91,17 @@ class Model extends CI_Model
    return $data;
  }
 
-  public function sub_part($id,$bm,$origin)
-  { 
-    $sql =  'SELECT * FROM sub_part inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id where m_id = '.$id.'  AND sub_part.delete_flag != 0 and b_id = '.$bm.' AND origin='.$origin.'';
-    $query = $this->db->query($sql); 
-    if($query){
-      $result= $query->result();
-      return $result;
-    }else{
-      return false;
-    }
-      
-  }
-  public function sub_bom($id,$bm)
-  { 
-    $sql =  'SELECT * FROM sub_part inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id where m_id = '.$id.'  AND sub_part.delete_flag != 0 and b_id = '.$bm.'';
-    $query = $this->db->query($sql); 
-    if($query){
-      $result= $query->result();
-      return $result;
-    }else{
-      return false;
-    }
-      
-  }
- 
 
-      public function get_user()
-      {
-        $sql =  'SELECT su.su_id,su.password,su.username, su.firstname ,su.lastname, su.gender,su.email,su.enable,su.delete_flag, sug.name as name,su.mobile
-        FROM
-        sys_users  AS su 
-        INNER JOIN sys_user_groups AS sug ON sug.sug_id = su.sug_id where su.delete_flag != 0 AND sug.sug_id != "1"';
-        $query = $this->db->query($sql); 
-        $result =  $query->result();
-        return $result;
-      }
+  public function get_user()
+  {
+    $sql =  'SELECT su.su_id,su.password,su.username, su.firstname ,su.lastname, su.gender,su.email,su.enable,su.delete_flag, sug.name as name,su.mobile
+    FROM
+    sys_users  AS su 
+    INNER JOIN sys_user_groups AS sug ON sug.sug_id = su.sug_id where su.delete_flag != 0 AND sug.sug_id != "1"';
+    $query = $this->db->query($sql); 
+    $result =  $query->result();
+    return $result;
+  }
  
 
 
@@ -137,8 +112,6 @@ class Model extends CI_Model
       $result =  $query->result();
     return $result;
   }
-
-
 
 
   public function get_sub_by($id)
@@ -195,17 +168,7 @@ class Model extends CI_Model
   }
   
 
-  public function hook_bom($bm)
-  {
-    $sql =  'SELECT * FROM bom where b_id = '.$bm.'   AND delete_flag != 0';
-    $query = $this->db->query($sql); 
-    if($query ){
-      return $query->result(); 
-    }
-    else{
-      return false;
-    }
-  }
+
 
 
   public function CheckPermission($para){
@@ -267,184 +230,6 @@ class Model extends CI_Model
     }
  }
 
-
-
-
- 
-
-
-
-
- function insert_part1($p_no,$p_name,$d_id)
- {
-    $num= $this->db->query("SELECT * FROM part where p_no = '$p_no'"); 
-  $chk= $num->num_rows();
-
- if($chk < 1){
-    $sql ="INSERT INTO part (p_no,p_name,d_id,enable,date_created,delete_flag) VALUES ( '$p_no', '$p_name','1',CURRENT_TIMESTAMP,'1');";
-    $query = $this->db->query($sql);  
-  if($query){
-      return true;
-  }
- }else{
-    return false;
- }
- }
-
-
-
- function check_newpart($p_no,$p_name)
- {
-    $num= $this->db->query("SELECT * FROM part where p_no = '$p_no'"); 
-  $chk= $num->num_rows();
- if($chk < 1){
-  return true;
- }else{
-   return false;
- }
-}
-
-
-
- function insert_group($gname)
- {
-  $num= $this->db->query("SELECT * FROM sys_user_groups where name = '$gname'"); 
-  $chk= $num->num_rows();
- if($chk!=1){
-  $sql ="INSERT INTO sys_user_groups (name,enable,date_created,delete_flag) VALUES ( '$gname', '1', CURRENT_TIMESTAMP,  '1' );";
-    $query = $this->db->query($sql);  
-   if($query){
-     return true;
-   }
-   else{
-     return 3;
-   }
-  }
-  return false;
- }
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public function disableDrawing($key=''){
-
-  $sqlEdt = "UPDATE drawing SET enable='0', date_updated=CURRENT_TIMESTAMP WHERE d_id={$key};";
-  $exc_user = $this->db->query($sqlEdt);
-  
-  if ($exc_user){
-    
-    return TRUE;  
-    
-  }else{  return FALSE; }
-  
-}
-
-
-public function enableDrawing_v($key=''){
-
-  $sqlEdt = "UPDATE version SET enable='1', date_updated=CURRENT_TIMESTAMP WHERE v_id={$key};";
-  $exc_user = $this->db->query($sqlEdt);
-  
-  if ($exc_user){
-    
-    return TRUE;  
-    
-  }else{  return FALSE; }
-  
-}
-
-
-
-public function disableDrawing_v($key=''){
-
-  $sqlEdt = "UPDATE version SET enable='0', date_updated=CURRENT_TIMESTAMP WHERE v_id={$key};";
-  $exc_user = $this->db->query($sqlEdt);
-  
-  if ($exc_user){
-    
-    return TRUE;  
-    
-  }else{  return FALSE; }
-  
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-   
-  
-  
-
-
-
-
-   public function delete_drawing_v($id) {
-   $sql ="UPDATE version SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE v_id = '$id'";
-   $query = $this->db->query($sql);
-      if ($query) { 
-         return true; 
-      } 
-      else{
-     return false;
-   }
-   }
-
-
-
-
-
-
    public function updated_profile_data($fname,$lname,$gender,$email,$su_id)
   {
      $sql1 ="UPDATE sys_users SET 
@@ -494,27 +279,7 @@ public function disableDrawing_v($key=''){
 
 
 
-  public function issue_by_id($id)
-{
-        $sql ="SELECT d.file_code,tf.tf_fol  FROM drawing as d
-        left join type_file as tf on tf.tf_id = d.tf_id
-        WHERE d_id='$id' AND delete_flag != 0  ";
-          $query = $this->db->query($sql);  
-         $data = $query->result(); 
-         return $data;
 
-}
-
-public function issue_by_vid($id)
-{
-        $sql ="SELECT v.file_code,tf.tf_fol  FROM version as v
-        left join type_file as tf on tf.tf_id = v.tf_id
-        WHERE v.v_id='$id' AND v.delete_flag != 0  ";
-          $query = $this->db->query($sql);  
-         $data = $query->result(); 
-         return $data;
-
-}
 
  public function insert_cus($cusname,$cusdes)
  {

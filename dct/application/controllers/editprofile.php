@@ -59,7 +59,10 @@ class editprofile extends CI_Controller {
         $email  =  $this->input->post('email');
 
         $result = $this->model->updated_profile_data($fname,$lname,$gender,$email,$su_id);
-       redirect('User/manage');
+        $this->session->set_flashdata('success','<div class="alert text-center alert-success hide-it">  
+        <span> Success</span>
+      </div> ');
+       redirect('editprofile/manage');
     }
 
 
