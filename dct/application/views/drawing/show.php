@@ -42,9 +42,7 @@ form {
                 $this->session->set_flashdata('search',$search);
                 ?>
                 <form action="<?php echo base_url()?>drawing/show" method="get">
-                <div class="col-md-2"> 
-                <input type="checkbox" checked>      
-                <label  for="all" style="cursor: pointer;color:#5b6572" >ALL</label><br>  
+                <div class="col-md-3"> 
                 <?php
                 foreach($result_type as $r){ ?>
                    <input type="checkbox" name="type[]"
