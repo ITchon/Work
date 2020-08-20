@@ -42,7 +42,7 @@ form {
                 $this->session->set_flashdata('search',$search);
                 ?>
                 <form action="<?php echo base_url()?>drawing/show" method="get">
-                <div class="col-md-3"> 
+                <div class="col-md-2"> 
                 <?php
                 foreach($result_type as $r){ ?>
                    <input type="checkbox" name="type[]"
