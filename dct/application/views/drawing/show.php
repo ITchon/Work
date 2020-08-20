@@ -45,7 +45,7 @@ form {
                 <div class="col-md-2"> 
                 <?php
                 foreach($result_type as $r){ ?>
-                   <input type="checkbox" name="type[]"
+                   <input type="checkbox" name="type[]" id="<?php echo $r->tf_id ?>"
                    <?php foreach($type as $t){ 
                      if($r->tf_id == $t){
                        echo 'checked';
@@ -96,9 +96,9 @@ form {
                 <table id="demo-datatables-buttons-1" class="table table-hover  table-nowrap dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
-                        <th width="15%">Drawing No</th>
-                        <th width="15%">Drawing Name</th>
                         <th width="10%">Part No</th>
+                        <th width="15%">Drawing Name</th>
+                        <th width="15%">Drawing No</th>
                         <th width="5%">Customer</th>
                         <th width="10%">DCN</th>
                         <th width="3%">Rev</th>
@@ -113,9 +113,9 @@ form {
                       <?php
                     foreach($result as $r){
              echo "<tr>";?>
-                    <td><?php echo "<b>".$r->d_no."</b>" ?></td>
-                    <td><?php echo "<b>".$r->d_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->p_no."</b>" ?></td>
+                    <td><?php echo "<b>".$r->d_name."</b>" ?></td>
+                    <td><?php echo "<b>".$r->d_no."</b>" ?></td>
                     <td><?php echo "<b>".$r->cus_name."</b>" ?></td>
                     <?php  if($this->session->flashdata("link")!== null ){ 
                       echo "<td><a href='".base_url()."dcn/manage/".$r->dcn_id."'>$r->dcn_no</a></td>"; 
