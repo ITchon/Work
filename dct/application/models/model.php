@@ -4,6 +4,27 @@ class Model extends CI_Model
 {
 
 
+public function getuser($user,$pass) {  
+    $pass = base64_encode(trim($pass));
+    $sql ="SELECT u.su_id as su_id , u.enable as u_enable ,ug.enable as sug_enable ,u.username as username,u.password as password, ug.sug_id ,u.firstname,u.lastname
+    FROM sys_users as u
+    inner join sys_user_groups ug on u.sug_id = ug.sug_id
+    
+    WHERE username='$user' and password='$pass' ";
+  $query = $this->db->query($sql);  
+
+if($query->num_rows()!=0) {
+$result = $query->result_array();
+  return $result[0];  
+  }
+else{       
+return false;
+  }
+
+} 
+
+
+
   public function CheckSession()        
   {
     if ($this->agent->is_mobile())
