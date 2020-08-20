@@ -59,17 +59,16 @@ form {
                 <div class="col-md-3"> 
                   <div class="input-group" >
                     <div class="input-group-btn">
-                        <a href="" class="no_print btn btn-primary ">Part No.</a> 
+                        <a href="" class=" btn btn-primary ">Part No.</a> 
                     </div>
                     <input type="text" name="s_pno" class="form-control" value="<?php echo $s_pno ?>">
                   </div>
-                </div>
+                 </div>
   
-
                   <div class="col-md-3">
                              <div class="input-group" >
                          <div class="input-group-btn">
-                              <a href="" class="no_print btn btn-primary ">Drawing Name</a> 
+                              <a href="" class=" btn btn-primary ">Drawing Name</a> 
                          </div>
                     <input type="text" class="form-control" name="s_name" value="<?php echo $s_name; ?>">
                    </div> 
@@ -78,12 +77,14 @@ form {
                  <div class="col-md-3">
                       <div class="input-group" >
                          <div class="input-group-btn">
-                              <a href="" class="no_print btn btn-primary ">Drawing No.</a> 
+                              <a href="" class=" btn btn-primary ">Drawing No.</a> 
                          </div>
                               <input type="text" class="form-control" name="s_dno" value="<?php echo $s_dno; ?>">
                       </div>
+
                   </div>
-                           <div class="col-md">
+                                      
+                  <div class="col-md">
                   <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
             </div>
                 </form>
