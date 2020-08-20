@@ -9,6 +9,7 @@ class Permission extends CI_Controller {
         $this->load->helper('form');
         $this->load->database(); 
         $this->load->model('model');
+        $this->load->model('permission');
         $this->load->helper('url'); 
         $this->model->CheckSession();
           $this->model->load_menu(); 

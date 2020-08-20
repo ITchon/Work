@@ -9,6 +9,7 @@ class Customers extends CI_Controller {
         $this->load->helper('form');
         $this->load->database(); 
         $this->load->model('model');
+        $this->load->model('customers');
         $this->model->CheckSession();
         $this->model->load_menu();
         $this->model->button_show($this->session->userdata('su_id'),11);

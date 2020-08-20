@@ -10,6 +10,7 @@ class User extends CI_Controller {
         $this->load->helper('url');
         $this->load->database(); 
         $this->load->model('model');
+        $this->load->model('user');
         $this->model->CheckSession();
         $this->model->button_show($this->session->userdata('su_id'),2);     
         $this->model->load_menu();
@@ -126,11 +127,10 @@ class User extends CI_Controller {
         $id = base64_decode($uid);
        $result = $this->model->mobile($id);
        if($result!=FALSE){
-
            redirect('user/manage','refresh');
        }else{
        
-           echo "<script>alert('Simting wrong')</script>";
+           echo "<script>alert('Error')</script>";
       redirect('user/manage','refresh');
        }
    }

@@ -10,6 +10,7 @@ class Part extends CI_Controller {
         $this->load->helper('url');
         $this->load->database(); 
         $this->load->model('model');
+        $this->load->model('part');
         $this->model->CheckSession();
         $this->model->load_menu();
     }

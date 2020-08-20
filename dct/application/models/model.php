@@ -685,23 +685,24 @@ $path_file = quotemeta($path_file);
     }
     }
  public function mobile($key){
-  $query = $this->db->query("SELECT * from sys_users WHERE su_id = $key "); 
-  $result = $query->result()[0];
-  if( $result->mobile==0){
-  $sqlEdt = "UPDATE sys_users SET mobile='1' , date_updated=CURRENT_TIMESTAMP WHERE su_id={$key};";
-  $exc_user = $this->db->query($sqlEdt);
-  }
-  else{
-    $sqlEdt = "UPDATE sys_users SET mobile='0' , date_updated=CURRENT_TIMESTAMP WHERE su_id={$key};";
+   
+  if ($key){
+    $query = $this->db->query("SELECT * from sys_users WHERE su_id = $key "); 
+    $result = $query->result()[0];
+    if( $result->mobile==0 ){
+    $sqlEdt = "UPDATE sys_users SET mobile='1' , date_updated=CURRENT_TIMESTAMP WHERE su_id={$key};";
     $exc_user = $this->db->query($sqlEdt);
-  }
+    }
+    else{
+      $sqlEdt = "UPDATE sys_users SET mobile='0' , date_updated=CURRENT_TIMESTAMP WHERE su_id={$key};";
+      $exc_user = $this->db->query($sqlEdt);
+    }
 
-  if ($exc_user){
-    
     return TRUE;    
-    
-  }else{    return FALSE;   }
-  
+ 
+  }
+ 
+  else{    return FALSE;   }
 }
 
 

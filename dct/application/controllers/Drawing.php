@@ -11,6 +11,7 @@ class Drawing extends CI_Controller {
         $this->load->helper('form');
         $this->load->database(); 
         $this->load->model('model');
+        $this->load->model('drawing');
         $this->model->CheckSession();
         $this->model->button_show($this->session->userdata('su_id'),6);
         $this->model->load_menu();

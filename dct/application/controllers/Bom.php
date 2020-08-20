@@ -9,11 +9,9 @@ class Bom extends CI_Controller {
         $this->load->helper('form');
         $this->load->database(); 
         $this->load->model('model');
+        $this->load->model('bom');
         $this->model->CheckSession();
-        $this->model->load_menu();
-      
-
-
+        $this->model->load_menu();      
     }
 	public function index()
     {	
