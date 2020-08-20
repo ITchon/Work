@@ -26,9 +26,8 @@ class Part extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
             $p_id =  $this->input->post('p_id');
-            $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable,p.d_id,d.d_no
+            $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable
             from part as p
-            left join drawing as d on d.d_id = p.d_id
             where p.delete_flag != 0 ";
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
@@ -225,27 +224,26 @@ class Part extends CI_Controller {
         
         if($this->input->post('bom')){
         $p_id =  $this->input->post('p_id');
-        $sql =  "SELECT p.p_id, p.p_no, p.p_name,p.d_id, d.d_no from part as p
-        left join drawing as d on d.d_id = p.d_id
-        where p.p_id = $p_id";
+        $sql =  "SELECT p.p_id, p.p_no, p.p_name,pd.d_id ,d.d_no
+        from part as p
+        left join part_drawing as pd on pd.p_id = p.p_id
+        left join drawing as d on d.d_id = pd.d_id
+        where p.p_id = $id";
         
         $data['gg'] = $this->input->post('bom');
 
         }else{
         $id = $this->uri->segment('3');
-        $sql =  "SELECT p.p_id, p.p_no, p.p_name,p.d_id, d.d_no from part as p
-        left join drawing as d on d.d_id = p.d_id
+        $sql =  "SELECT p.p_id, p.p_no, p.p_name,pd.d_id ,d.d_no
+        from part as p
+        left join part_drawing as pd on pd.p_id = p.p_id
+        left join drawing as d on d.d_id = pd.d_id
         where p.p_id = $id";
         }
         
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
 
-        $d =  $data['result'][0]->d_id;
-
-        $sql1 =  "SELECT * from drawing where d_id != '$d'";
-        $query = $this->db->query($sql1); 
-        $data['result_g'] = $query->result(); 
         
         $this->load->view('part/edit',$data);
         $this->load->view('footer');

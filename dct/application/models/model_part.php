@@ -15,6 +15,17 @@ class Model_part extends CI_Model
         return false;
       }  
     }
+
+    public function get_nopart($d_id)
+    {
+        $d_id =  implode(',',$d_id);
+      $sql =  "SELECT * from drawing where delete_flag != 0 AND d_id NOT IN ($p_id)";
+         $query = $this->db->query($sql);
+        $result =  $query->result();
+      return $result;
+    }
+
+
     function insert_part($p_no,$p_name,$d_id,$master )
     {
    
@@ -45,6 +56,15 @@ class Model_part extends CI_Model
          return false;
          }
     }
+
+
+    public function save_edit_part($p_id, $p_no, $p_name)
+  {
+     $sql1 ="UPDATE part SET p_no = '$p_no', p_name = '$p_name', date_updated = CURRENT_TIMESTAMP, delete_flag = '1' WHERE p_id = '$p_id'";
+    $exc_user = $this->db->query($sql1);
+    if ($exc_user ){ return true; }else{ return false; }
+  }
+
 
     public function save_edit_partb($p_id, $p_no, $p_name,$d_id)
     {

@@ -25,7 +25,7 @@
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Part Number</label>
                     <div class="col-sm-6 col-md-4">
-                    <input hidden type="text" name="p_id " value="<?php echo $result[0]->p_id ?>" >
+                    <input type="text" name="p_id " value="<?php echo $result[0]->p_id ?>"hidden>
                     <input id="part" class="form-control " type="text" name="p_no" value="<?php echo $result[0]->p_no ?>">
 
                     <span class="form-control-feedback" aria-hidden="true">
@@ -42,30 +42,11 @@
                     </span>
                     </div>
                 </div>
-
-                <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Drawing</label>      
-          
-                      <div class="col-sm-6 col-md-4">
-                   <select name="d_id" class="form-control select2" >
-                   <option selected value="<?php echo $result[0]->d_id ?>"><?php echo $result[0]->d_no ?></option>
-                   <?php
-                      foreach($result_g as $rg){?>
-             
-                     <option value="<?php  echo $rg->d_id ?>"><?php echo $rg->d_no ?></option>
-                    <?php
-                      }
-                      ?> 
-                   </select>
-                    </div>
-                    </div> 
-
-                
+           
                     </div>
                    
             
                   <div class="form-group">
-                <br>
                     <button type="submit" id="btn" class="btn btn-primary btn-block">Save Changes</button>
                   </div>
                 </form>

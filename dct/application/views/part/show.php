@@ -25,7 +25,6 @@
                     <tr>
                       <th width="10%">Part No</th>
                       <th width="10%">Part Name</th>
-                      <th width="10%">Drawing No</th>
                       <th class="no_print" width="10%">Manage</th>
                        
                       </tr>
@@ -36,7 +35,6 @@
                 echo "<tr>";
                 echo "<td>".$r->p_no."</td>";
                 echo "<td>".$r->p_name."</td>";
-                echo "<td>".$r->d_no."</td>";
                 
                 if($r->enable!=1 ){?>
                   
