@@ -26,21 +26,21 @@
                   
                   <td class="text-center"><a type="button"  onclick="javascript:window.location='<?php
                   echo base_url() . 'permission/enable/' . $r->sp_id;
-                  ?>';"><i class='btn-danger btn-sm fa fa-times'></i></a>
+                  ?>';"><i class='btn-danger no-border btn-sm fa fa-times'></i></a>
                   <?php
                 }
                 else{?>
 
                   <td class="text-center"><a   onclick="javascript:window.location='<?php
                   echo base_url() . 'permission/disable/' . $r->sp_id;
-                  ?>';"><i class='btn-success btn-sm fa fa-check'></i></a>                      
+                  ?>';"><i class='btn-success no-border btn-sm fa fa-check'></i></a>                      
                   <?php
                 }
                 ?> <a type ='button' class=' '  onclick="javascript:window.location='<?php
                 echo base_url() . 'permission/edit_permission/' . $r->sp_id;
-                ?>';"><i class='btn-info btn-sm fa fa-wrench'> </i> </a>
+                ?>';"><i class='btn-info no-border btn-sm fa fa-wrench'> </i> </a>
                 <?php 
-                echo "<a  href='".base_url()."permission/deletepermission/".$r->sp_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default btn-sm fa fa-trash'></i></a></td>";  
+                echo "<a  href='".base_url()."permission/deletepermission/".$r->sp_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border btn-sm fa fa-trash'></i></a></td>";  
        
            
            
