@@ -35,10 +35,10 @@
                       <?php
                     foreach($result as $r){
              echo "<tr>";
-             echo "<td>" ?>
-                    <?php echo"<b>".$r->dcn_no."</b>" ?>
-
-        <td class="text-center">
+             echo "<td>" ;
+             echo"<b>".$r->dcn_no."</b>" ;
+             if($this->session->flashdata("download")!== null ){?>
+               <td >
                   <form id='form' action="<?php echo base_url()?>drawing/open_dcn" method="post">
                   <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
                   <input type="hidden" name="path" value="C:\inetpub\wwwroot\dct\uploads\">
@@ -47,7 +47,13 @@
                     <button  type="submit" style=" background-color: Transparent;border:none" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><a>
                       <?php echo $r->dcn_file ?></a></button>
                   </form>
-                </td>
+                </td> 
+            <?php }else{
+                 echo"<td>".$r->dcn_file."</td>" ;
+                  }
+             ?>
+
+     
                 <td style="font-size: 14px"><?php echo $r->dcn_path ?> </td>
         
                     <?php

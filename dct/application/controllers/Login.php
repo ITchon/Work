@@ -10,7 +10,7 @@ class Login extends CI_Controller {
         $this->load->database(); 
         $this->load->model('model');
         $this->load->model('model_user');
-        $this->load->model('login');
+
 
     }
 	public function index()
@@ -22,7 +22,7 @@ class Login extends CI_Controller {
         $user = $this->input->post('username');
         $pass = $this->input->post('password');
   
-        $data= $this->model_user->getuser($user,$pass);
+        $data= $this->model->get_user_by($user,$pass);
 
 
          if($data==true) {
