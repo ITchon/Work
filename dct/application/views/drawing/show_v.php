@@ -38,7 +38,7 @@
                         <th width="10%">Part No</th>
                         <th width="5%">Customer</th>
                         <th width="10%">DCN</th>
-                        <th width="3%">Version</th>
+                        <th width="3%">Rev</th>
                         <th width="10%">Manage</th>
                         <th width="10%">Status</th>
                         <th>Path File</th>
