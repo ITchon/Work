@@ -37,16 +37,19 @@ form {
                 <a href="<?php echo base_url()?>drawing/show">MANAGE DRAWING</a> 
                 <a href="" class="btn btn-default no_print" onclick="window.history.go(-1); return false;"> Back </a>
                 </h3>
-                <?php  
+                <?php
+                $type[] = '';
                 $search = $this->session->flashdata('search');
                 $this->session->set_flashdata('search',$search);
+                echo $search;
                 ?>
                 <form action="<?php echo base_url()?>drawing/show" method="get">
                 <div class="col-md-2"> 
                 <?php
                 foreach($result_type as $r){ ?>
-                   <input type="checkbox" checked name="type[]" id="<?php echo $r->tf_id ?>"
-                   <?php foreach($type as $t){ 
+                   <input type="checkbox" name="type[]" id="<?php echo $r->tf_id ?>"
+                   <?php
+                   foreach($type as $t){ 
                      if($r->tf_id == $t){
                        echo 'checked';
                      }
@@ -99,6 +102,7 @@ form {
                         <th width="10%">Part No</th>
                         <th width="15%">Drawing Name</th>
                         <th width="15%">Drawing No</th>
+                        <th width="3%">POS</th>
                         <th width="5%">Customer</th>
                         <th width="10%">DCN</th>
                         <th width="3%">Rev</th>
@@ -116,6 +120,7 @@ form {
                     <td><?php echo "<b>".$r->p_no."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_no."</b>" ?></td>
+                    <td><?php echo "<b>".$r->pos."</b>" ?></td>
                     <td><?php echo "<b>".$r->cus_name."</b>" ?></td>
                     <?php  if($this->session->flashdata("link")!== null ){ 
                       echo "<td><a href='".base_url()."dcn/manage/".$r->dcn_id."'>$r->dcn_no</a></td>"; 
@@ -175,6 +180,7 @@ form {
         </div>
       </div>
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
                 <script>
         $(document).ready(function() {
     $('body').on('click', '.view_img', function () {

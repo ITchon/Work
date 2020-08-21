@@ -62,26 +62,18 @@ class Drawing extends CI_Controller {
 
 public function show()
 {   
-          $this->model_drawing->link_to_dcn($this->session->userdata('su_id'));
-          $s_dno = $this->input->get('s_dno');  
-          $s_name = $this->input->get('s_name');
-          $s_pno = $this->input->get('s_pno');
-          $type = $this->input->get('type');
+      $this->model_drawing->link_to_dcn($this->session->userdata('su_id'));
+      $s_dno = $this->input->get('s_dno');  
+      $s_name = $this->input->get('s_name');
+      $s_pno = $this->input->get('s_pno');
+      $type = $this->input->get('type');
+
           
-          $ss = null;
-          $type[] = null;
-          if($type != null){
-            foreach($type as $t){
-              $ty = "?type%5B%5D=".$t;
-              $tt = $ty.$ss;
-              }
-          }
-          $dno = "&s_dno=".$s_dno;
-          $dname = "&s_name=".$s_name;
-          $pno = "&s_pno=".$s_pno;
-          
-          $this->session->set_flashdata('search',$tt.$dno.$dname.$pno);
-          $data['search'] = $tt.$dno.$dname.$pno;
+
+      $params = $_SERVER['QUERY_STRING'];
+
+      
+      $this->session->set_flashdata('search',$params);
 
       $data['s_dno'] = $s_dno;
       $data['s_name'] = $s_name;
@@ -90,18 +82,18 @@ public function show()
       $data['result_type']= $this->model_drawing->get_type_drawing();
   
       if($this->input->get('s_dno') == null){
-        $s_dno = 'null';
+        $s_dno = '';
       }
       
       if($this->input->get('s_name') == null){
-        $s_name = 'null';
+        $s_name = '';
       }
       
       if($this->input->get('s_pno') == null){
-        $s_pno = 'null';
+        $s_pno = '';
       }
       if($this->input->get('type') == null){
-        $type = 'null';
+        $type = '';
       }
   
       if($this->input->get('s_dno') != null || $this->input->get('s_name') != null || $this->input->get('s_pno') != null || $this->input->get('type') != null ){
@@ -217,7 +209,7 @@ public function show()
       
       $result = $this->model_drawing->enableDrawing($d_id);
 
-      redirect('drawing/show/'.$search.'','refresh');
+      redirect('drawing/show?'.$search.'','refresh');
       
   }
 
@@ -228,7 +220,7 @@ public function show()
       $d_id = $this->uri->segment('3');
       $search = $this->input->post('search');
       $this->model_drawing->delete_drawing($d_id);
-      redirect('drawing/show/'.$search.'','refresh');
+      redirect('drawing/show'.$search.'','refresh');
 
   }
 
