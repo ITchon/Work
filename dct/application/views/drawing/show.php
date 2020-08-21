@@ -45,7 +45,7 @@ form {
                 <div class="col-md-2"> 
                 <?php
                 foreach($result_type as $r){ ?>
-                   <input type="checkbox" name="type[]" id="<?php echo $r->tf_id ?>"
+                   <input type="checkbox" checked name="type[]" id="<?php echo $r->tf_id ?>"
                    <?php foreach($type as $t){ 
                      if($r->tf_id == $t){
                        echo 'checked';
