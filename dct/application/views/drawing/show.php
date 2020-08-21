@@ -33,9 +33,6 @@ form {
               <div class="card">
                 <div class="card-header ">
                 <div class="row-fluid" id="set_alarm">
-    <label class="checkbox inline"><input type="checkbox" id="select_all"><b>Select All</b></label><br>
-    <label class="checkbox inline days"><input type="checkbox" class="days" id="Mon"><b>Mon</b></label>
-    <label class="checkbox inline days"><input type="checkbox"  class="days" id="Tue"><b>Tue</b></label>
 
 </div>
 
@@ -51,10 +48,10 @@ form {
                 ?>
                 <form action="<?php echo base_url()?>drawing/show" method="get">
                 <div class="col-md-2"> 
-                <input type="checkbox" id="select_all">all <br>
+                <input type="checkbox" id="select_all"><label style="cursor: pointer;color:#5b6572"> ALL</label> <br>
                 <?php
                 foreach($result_type as $r){ ?>
-                   <input type="checkbox" name="type[]" id="<?php echo $r->tf_id ?>" class="case"
+                   <input type="checkbox" name="type[]" id="<?php echo $r->tf_id ?>" class="days"
                    <?php
                    foreach($type as $t){ 
                      if($r->tf_id == $t){
@@ -62,7 +59,7 @@ form {
                      }
                    } ?>
                   value="<?php echo $r->tf_id ?>" > 
-                   <label  for="<?php echo $r->tf_id ?>" style="cursor: pointer;color:#5b6572" ><?php echo $r->tf_name ?></label><br>  
+                   <label for="<?php echo $r->tf_id ?>" style="cursor: pointer;color:#5b6572" ><?php echo $r->tf_name ?></label><br>  
                 <?php  } ?>
                 </div>
                 <br>
@@ -241,15 +238,13 @@ form {
 </script>
 
 <SCRIPT language="javascript">
+$("input:checkbox").attr('checked', true);
 $('#select_all').change(function() {
- 
-    
- $('.days').prop("checked", this.checked);
+  $('.days').prop("checked", this.checked);
 
 });
 
 $('.days').change(function(){
-
 if($('input:checkbox:checked.days').length === $("input:checkbox.days").length)
 {
  $('#select_all').prop("checked",true);
