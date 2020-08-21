@@ -44,11 +44,11 @@ form {
                 $type[] = '';
                 $search = $this->session->flashdata('search');
                 $this->session->set_flashdata('search',$search);
-                echo $search;
+            
                 ?>
                 <form action="<?php echo base_url()?>drawing/show" method="get">
                 <div class="col-md-2"> 
-                <input type="checkbox" id="select_all"><label style="cursor: pointer;color:#5b6572"> ALL</label> <br>
+                <input type="checkbox" name="type[]" id="select_all" value="0"> <label for="select_all" style="cursor: pointer;color:#5b6572">  ALL</label> <br>
                 <?php
                 foreach($result_type as $r){ ?>
                    <input type="checkbox" name="type[]" id="<?php echo $r->tf_id ?>" class="days"
@@ -238,26 +238,30 @@ form {
 </script>
 
 <SCRIPT language="javascript">
-$("input:checkbox").attr('checked', true);
-$('#select_all').change(function() {
-  $('.days').prop("checked", this.checked);
-
+$(function() {
+  $('#select_all').on('change', function() {
+    $('.days').prop('checked', this.checked);
+  });
+  $('.days').on('change', function() {
+    $('#select_all').prop('checked', $('.days:checked').length===$('.days').length);
+  });
 });
 
-$('.days').change(function(){
-if($('input:checkbox:checked.days').length === $("input:checkbox.days").length)
-{
- $('#select_all').prop("checked",true);
-}
-else
-{
- $('#select_all').prop("checked",false);
-}
 
-})
+
 </SCRIPT>
 
+<script>
+$(document).ready(function() { 
+  var str = <?php echo $type ?>;
 
+    for (i=0; i!=str.length;i++) {
+        var checkbox = $("input[type='checkbox'][value='"+str[i]+"']");
+        checkbox.attr("checked","checked");
+    }
+
+});
+</script>
      
 
 
