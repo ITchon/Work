@@ -314,6 +314,7 @@ $path_file = quotemeta($path_file);
 
   public function drawing_search($s_dno,$s_name,$s_pno,$type)
   {
+
 if($type !=0){
     $type =  implode(',',array_map('intval',$type));
   }
