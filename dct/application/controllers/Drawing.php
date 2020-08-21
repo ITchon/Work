@@ -82,19 +82,17 @@ public function show()
       $data['result_type']= $this->model_drawing->get_type_drawing();
   
       if($this->input->get('s_dno') == null){
-        $s_dno = '';
+        $s_dno = 'null';
       }
       
       if($this->input->get('s_name') == null){
-        $s_name = '';
+        $s_name = 'null';
       }
       
       if($this->input->get('s_pno') == null){
-        $s_pno = '';
+        $s_pno = 'null';
       }
-      if($this->input->get('type') == null){
-        $type = '';
-      }
+
   
       if($this->input->get('s_dno') != null || $this->input->get('s_name') != null || $this->input->get('s_pno') != null || $this->input->get('type') != null ){
         $data['result'] = $this->model_drawing->drawing_search($s_dno,$s_name,$s_pno,$type);

@@ -32,6 +32,12 @@ form {
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header ">
+                <div class="row-fluid" id="set_alarm">
+    <label class="checkbox inline"><input type="checkbox" id="select_all"><b>Select All</b></label><br>
+    <label class="checkbox inline days"><input type="checkbox" class="days" id="Mon"><b>Mon</b></label>
+    <label class="checkbox inline days"><input type="checkbox"  class="days" id="Tue"><b>Tue</b></label>
+
+</div>
 
                 <h3>
                 <a href="<?php echo base_url()?>drawing/show">MANAGE DRAWING</a> 
@@ -45,9 +51,10 @@ form {
                 ?>
                 <form action="<?php echo base_url()?>drawing/show" method="get">
                 <div class="col-md-2"> 
+                <input type="checkbox" id="select_all">all <br>
                 <?php
                 foreach($result_type as $r){ ?>
-                   <input type="checkbox" name="type[]" id="<?php echo $r->tf_id ?>"
+                   <input type="checkbox" name="type[]" id="<?php echo $r->tf_id ?>" class="case"
                    <?php
                    foreach($type as $t){ 
                      if($r->tf_id == $t){
@@ -179,7 +186,7 @@ form {
           </div>
         </div>
       </div>
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 
                 <script>
         $(document).ready(function() {
@@ -232,6 +239,28 @@ form {
 
 
 </script>
+
+<SCRIPT language="javascript">
+$('#select_all').change(function() {
+ 
+    
+ $('.days').prop("checked", this.checked);
+
+});
+
+$('.days').change(function(){
+
+if($('input:checkbox:checked.days').length === $("input:checkbox.days").length)
+{
+ $('#select_all').prop("checked",true);
+}
+else
+{
+ $('#select_all').prop("checked",false);
+}
+
+})
+</SCRIPT>
 
 
      
