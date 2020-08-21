@@ -22,8 +22,8 @@
                    <option value="">- - - Select Bom - - -</option>
                    <?php
                       foreach($result as $r){?>
-             
-                     <option value="<?php  echo $r->b_id ?>"><?php echo $r->p_no ?></option>
+            
+                     <option value="<?php  echo $r->pd_id ?>"><?php echo $r->p_no." - ".$r->d_no ?></option>
                     <?php
                       }
                       ?> 

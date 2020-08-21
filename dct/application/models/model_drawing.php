@@ -326,7 +326,7 @@ if($type !=0){
         left join customers as c on c.cus_id = d.cus_id
         left join dcn as dc on dc.dcn_id = d.dcn_id
         left join part as p on p.p_id = pd.p_id
-where d.delete_flag != 0 AND d.tf_id IN ($type) AND (d.d_no RLIKE '$s_dno' OR d.d_name RLIKE '$s_name' OR p.p_no RLIKE '$s_pno')";
+where d.delete_flag != 0 AND d.tf_id IN ($type) AND (d.d_no LIKE '%$s_dno%' OR d.d_name LIKE '%$s_name%' OR p.p_no LIKE '%$s_pno%')";
       $query = $this->db->query($sql);
       $result =  $query->result();
 

@@ -13,7 +13,15 @@ public function __construct()
         $this->load->model('model_ajax');
 
     }
- 
+    
+    function fetch_drawing()
+    {
+     if($this->input->post('p_id'))
+     
+     {
+      echo $this->model_ajax->fetch_drawing($this->input->post('p_id'));
+     }
+    }
  
     public function view_pdf()
     {

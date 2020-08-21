@@ -20,9 +20,23 @@ class Model_ajax extends CI_Model
             WHERE v.v_id='$id' AND v.delete_flag != 0  ";
               $query = $this->db->query($sql);  
              $data = $query->result(); 
-             return $data;
+             return $data;  
     
     }
+ 
+  
+    function fetch_drawing($p_id)
+    {
+      $sql ="SELECT *  FROM part_drawing pd left join drawing d on d.d_id = pd.d_id where pd.p_id = '$p_id'";
+     $query = $this->db->query($sql);
+     $output = '<option value="">Select State</option>';
+     foreach($query->result() as $row)
+     {
+      $output .= '<option value="'.$row->d_id.'">'.$row->d_no.'</option>';
+     }
+     return $output;
+    }
+   
 
 }
 

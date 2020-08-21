@@ -24,7 +24,8 @@ class Bom extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         
         $sort =  $this->input->post('sort'); 
-        $sql =  'SELECT * From bom inner join part p on p.p_id = bom.b_master where bom.delete_flag !=0';
+        $sql =  'SELECT pd.pd_id,d.d_no , p.p_no From part_drawing pd inner join part p on p.p_id = pd.p_id 
+            inner join drawing d on d.d_id = pd.d_id';
         $query = $this->db->query($sql); 
         $res = $query->result(); 
         $data['result'] =$res;
@@ -157,13 +158,11 @@ class Bom extends CI_Controller {
     {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-        $sql =  'SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 ';
-        $query = $this->db->query($sql); 
-        $data['result_p'] = $query->result(); 
+        $data['part'] = $this->model_bom->fetch_part();
         $this->load->view('bom/add',$data);
 		$this->load->view('footer');
     }
-
+  
 
     public function delete_sub()
     {
@@ -184,20 +183,15 @@ class Bom extends CI_Controller {
     }
     public function insert_bom()
     {
-        $bm =  $this->input->post('bm');
-        $p_id =  $this->input->post('p_id');
+        $p_id =  $this->input->post('part');
+        $d_id =  $this->input->post('drawing');
   
-        if(in_array($bm,$p_id)){
-            echo "<script>";
-            echo 'alert("ไม่สามารถเลือก Part เดียวกับ BOM ได้");';
-            echo 'history.go(-1);';
-            echo '</script>';
-        }
-        $lasted_id = $this->model_bom->insert_bom($bm);
-        foreach ($p_id as $p) {
-        $sub_id= $this->model_part->insert_sub_part($lasted_id,$bm,$p,$p);
-        $sub_id= $this->model_part->update_sub_id($sub_id);
-        }
+    
+        $lasted_id = $this->model_bom->insert_bom($p_id,$d_id);
+        // foreach ($p_id as $p) {
+        // $sub_id= $this->model_part->insert_sub_part($lasted_id,$bm,$p,$p);
+        // $sub_id= $this->model_part->update_sub_id($sub_id);
+        // }
         redirect('bom/manage/'.$lasted_id.'','refresh');
     }
 

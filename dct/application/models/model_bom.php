@@ -2,7 +2,12 @@
 
 class Model_bom extends CI_Model
 {
-     
+  function fetch_part()
+    {
+      $sql ="SELECT *  FROM part ";
+     $query = $this->db->query($sql);
+     return $query->result();
+    }
   public function opencsv($id)
   { 
     if($this->session->userdata('sug_id')=="1"){
@@ -43,9 +48,9 @@ public function delete_sub($id) {
       return false;
     }
     }
-    function insert_bom($bm)
+    function insert_bom($p_id,$d_id)
     {
-     $sql ="INSERT INTO bom (b_master,unit,date_created,delete_flag) VALUES ($bm,'pcs',CURRENT_TIMESTAMP,1);";
+     $sql ="INSERT INTO bom (part_master,drawing_master,unit,date_created,delete_flag) VALUES ($p_id,$d_id,'pcs',CURRENT_TIMESTAMP,1);";
        $query = $this->db->query($sql);  
        $insert_id = $this->db->insert_id($query );
       if($query){
@@ -82,7 +87,9 @@ public function delete_sub($id) {
 
   public function sub_bom($id,$bm)
   { 
-    $sql =  'SELECT * FROM sub_part inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id where m_id = '.$id.'  AND sub_part.delete_flag != 0 and b_id = '.$bm.'';
+    $sql =  'SELECT * FROM sub_part inner join part on part.p_id = sub_part.p_id inner join part_drawing pd on pd.d_id=part.d_id where m_id = '.$id.'  AND sub_part.delete_flag != 0 and b_id = '.$bm.'';
+    echo $sql;
+    exit;
     $query = $this->db->query($sql); 
     if($query){
       $result= $query->result();
@@ -108,12 +115,16 @@ public function delete_sub($id) {
   
   public function bom($bm)
   {
+  
     $array=[];
     $res_bom= $this->model_bom->hook_bom($bm) ;
-    $data= $this->model_bom->sub_bom($res_bom[0]->b_master,$res_bom[0]->b_id) ;
-    $bm =  $res_bom[0]->b_id;
-    if($data != false){  
-        $m_id =$data[0]->p_id;
+    // echo $res_bom[0]->part_master ;
+    // echo $res_bom[0]->drawing_master ;
+    // exit;
+    // $data= $this->model_bom->sub_bom($res_bom[0]->part_master,$res_bom[0]->b_id) ;
+    // $bm =  $res_bom[0]->b_id;
+    // if($data != false){  
+        $m_id =$res_bom[0]->part_master;
         foreach($data as $r){
             $data= $this->model->sub_part($r->p_id,$bm,$r->origin) ;
             $a=array('lv'=>2,'m_id'=>$r->m_id,'id'=>$r->p_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->p_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
@@ -194,7 +205,7 @@ public function delete_sub($id) {
                 }
             }
         }
-     }
+    //  }
     }
     return  $array;
   
