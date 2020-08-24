@@ -16,10 +16,10 @@ public function __construct()
     
     function fetch_drawing()
     {
-     if($this->input->post('pd_id'))
+     if($this->input->post('p_id'))
      
      {
-      echo $this->model_ajax->fetch_drawing($this->input->post('pd_id'));
+      echo $this->model_ajax->fetch_drawing($this->input->post('p_id'));
      }
     }
  
