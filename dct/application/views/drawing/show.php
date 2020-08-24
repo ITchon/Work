@@ -34,7 +34,7 @@ form {
                 <div class="card-header ">
                 <div class="row-fluid" id="set_alarm">
 
-</div>
+                </div>
 
                 <h3>
                 <a href="<?php echo base_url()?>drawing/show">MANAGE DRAWING</a> 
@@ -46,7 +46,7 @@ form {
                 $this->session->set_flashdata('search',$search);
             
                 ?>
-                <form action="<?php echo base_url()?>drawing/show" method="get">
+                <form name="search" action="<?php echo base_url()?>drawing/show" method="get">
                 <div class="col-md-2"> 
                 <input type="checkbox" name="type[]" id="select_all"> <label for="select_all" style="cursor: pointer;color:#5b6572">  ALL</label> <br>
                 <?php
@@ -92,7 +92,7 @@ form {
                   </div>
                                       
                   <div class="col-md">
-                  <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                  <button type="submit" class="btn btn-primary" "><i class="fa fa-search"></i></button>
             </div>
                 </form>
 
@@ -237,6 +237,7 @@ form {
 </script>
 
 <SCRIPT language="javascript">
+
 $(function() {
   $('#select_all').on('change', function() {
     $('.days').prop('checked', this.checked);
