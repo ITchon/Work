@@ -11,19 +11,21 @@
          BOM
   
     </h2><hr>
-            
+            <?php $space = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"; ?>
             <form class="table form form-horizontal " action="<?php echo base_url()?>bom/manage" method="post" data-toggle="validator">
             <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select BOM</label>      
           
                       <div class="col-sm-6 col-md-4">
                       <div class="input-group" >
-                   <select name="bm" class="form-control select2"  required>
-                   <option value="">- - - Select Bom - - -</option>
+                   <select name="bm" id="selectSubstance" class="form-control select2"  required>
+                   <option value="" ><b>PART NO | DRAWING NO</b></option>
+                   
                    <?php
                       foreach($result as $r){?>
             
-                     <option value="<?php  echo $r->pd_id ?>"><?php echo $r->p_no." - ".$r->d_no ?></option>
+                     <option value="<?php  echo $r->b_id ?>"><?php echo "P/NO ".$r->p_no." | DWG ".$r->d_no?></option>
+
                     <?php
                       }
                       ?> 
@@ -47,7 +49,19 @@
       </div>
       <script>
         $(document).ready(function() {
-    $('.select2').select2();
+          $('#selectSubstance').select2({
+    templateResult: function(data) {
+        var r = data.text.split('|');
+        var $result = $(
+            '<div class="row">' +
+                '<div class="col-md-6">' + r[0] + '</div>' +
+                '<div class="col-md-6">' + r[1] + '</div>' +
+            '</div>'
+        );
+        return $result;
+    }
+}); 
+
 });
       </script>
       <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

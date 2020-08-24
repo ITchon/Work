@@ -27,20 +27,23 @@
           
                       <div class="col-sm-6 col-md-4">
                    <select name="p_id[]" class="form-control select2" multiple="multiple" required>
+                   <optgroup  label='P/NO|DWG/NO' style="" data-head='head'>
+
                    <?php
                         $genres = array();
                         foreach($res_chk as $sg){ 
-                           $genres[] = $sg['m_id'];
+                           $genres[] = $sg['parent_id'];
                         }
                         $genres[] = $p_id;
                       foreach($result_p as $r){ 
                         if (!in_array($r->p_id,$genres)) {?>
-                          <option value="<?php  echo $r->p_id ?>"><?php echo $r->p_no ?></option>
+                          <option value="<?php  echo $r->pd_id ?>"><?php echo $r->p_no." | ".$r->d_no ?></option>
                           
                         <?php
                         }
                       }
                       ?> 
+                      </option>
                    </select>
                     </div>
             <?php echo anchor(base_url().'part/add/'.$bm.'', 'Create Part',array('class'=>'btn btn-primary'));        ?>
@@ -64,8 +67,19 @@
       </div>
       <script>
         $(document).ready(function() {
-    $('.select2').select2();
-});
+          $('.select2').select2({
+         templateResult: function(data) {
+        var r = data.text.split('|');
+        var $result = $(
+            '<div class="row">' +
+                '<div class="col-md-6">' + r[0] + '</div>' +
+                '<div class="col-md-6">' + r[1] + '</div>' +
+            '</div>'
+           );
+         return $result;
+         }
+        }); 
+      });
       </script>
       <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
       <script type="text/javascript">
