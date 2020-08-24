@@ -44,23 +44,6 @@
                     </span>
                     </div>
                 </div>
-                <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Drawing</label>      
-          
-                      <div class="col-sm-6 col-md-4">
-                   <select name="d_no" class="form-control select2" required>
-                   <option value="">- - - Select Drawing - - -</option>
-                   <?php
-                      foreach($result_d as $r){?>
-             
-                     <option value="<?php  echo $r->d_id ?>"><?php echo $r->d_no ?></option>
-                    <?php
-                      }
-                      ?> 
-                   </select>
-                    </div>
-                    </div> 
-                  
                   </div>
                   <div class="form-group">
                     <button type="submit" id="btn" class="btn btn-primary btn-block">Save Changes</button>

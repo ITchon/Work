@@ -12,7 +12,7 @@ class Model_drawing extends CI_Model
   }
     public function get_type_drawing()
   {
-    $sql =  "SELECT * from type_file where delete_flag != 0 AND tf_group = 1 OR tf_group = 0";
+    $sql =  "SELECT * from type_file where delete_flag != 0 AND tf_group = 1";
        $query = $this->db->query($sql);
       $result =  $query->result();
     return $result;
@@ -90,6 +90,15 @@ class Model_drawing extends CI_Model
   public function get_drawing_byid($d_id)
   {
     $sql =  "SELECT * from drawing where d_id = $d_id";
+       $query = $this->db->query($sql);
+      $result =  $query->result()[0];
+    return $result;
+  }
+
+
+  public function get_did($v_id)
+  {
+    $sql =  "SELECT * from version where v_id = $v_id";
        $query = $this->db->query($sql);
       $result =  $query->result()[0];
     return $result;
@@ -314,10 +323,10 @@ $path_file = quotemeta($path_file);
 
   public function drawing_search($s_dno,$s_name,$s_pno,$type)
   {
+    if($type !=null){
+      $type =  implode(',',array_map('intval',$type));
+    }
 
-if($type !=0){
-    $type =  implode(',',array_map('intval',$type));
-  }
       $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,c.cus_id,c.cus_name,
        d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no,dc.file_name as dcn_file,
        dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code ,d.tf_id,d.pos
@@ -353,7 +362,7 @@ where d.delete_flag != 0 AND d.tf_id IN ($type) AND (d.d_no LIKE '%$s_dno%' OR d
   public function get_drawing_ver($id)
   {
      $sql =  "SELECT d.d_id, d.d_no,d.d_name,d.cus_id,cus.cus_name, d.dcn_id, dc.dcn_no, d.enable, d.path_file, d.file_name, d.version
-     , p.p_no,p.p_id,'v_id',dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code
+     , p.p_no,p.p_id,'v_id',dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code ,d.pos
             from drawing as d
             left join part_drawing as pd on pd.d_id = d.d_id
             left join dcn as dc on dc.dcn_id = d.dcn_id
@@ -362,7 +371,7 @@ where d.delete_flag != 0 AND d.tf_id IN ($type) AND (d.d_no LIKE '%$s_dno%' OR d
             where d.delete_flag != 0 AND d.d_id = $id
             UNION
                 SELECT v.d_id, v.d_no,v.d_name,v.cus_id,cus.cus_name, v.dcn_id, dc.dcn_no, v.enable, v.path_file, v.file_name, v.version
-                , p.p_no,p.p_id, v.v_id,dc.file_name as dcn_file,dc.path_file as dcn_path,v.file_code,dc.file_code as dcn_code
+                , p.p_no,p.p_id, v.v_id,dc.file_name as dcn_file,dc.path_file as dcn_path,v.file_code,dc.file_code as dcn_code ,v.pos
          from version as v
          left join part_drawing as pd on pd.d_id = v.d_id
          left join dcn as dc on dc.dcn_id = v.dcn_id
@@ -376,11 +385,11 @@ where d.delete_flag != 0 AND d.tf_id IN ($type) AND (d.d_no LIKE '%$s_dno%' OR d
   }
 
 
-  public function save_edit_drawing_v($v_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$tf_id)
+  public function save_edit_drawing_v($v_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$tf_id,$pos)
   {
  $path_file = quotemeta($path_file);
    $sql ="UPDATE version SET d_no = '$d_no' ,d_name = '$d_name', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id',cus_id = '$cus_id',
-   path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 1 ,tf_id = '$tf_id'
+   path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 0 ,tf_id = '$tf_id',pos = '$pos'
    WHERE v_id = '$v_id'";
      $query = $this->db->query($sql);  
     if($query){

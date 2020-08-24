@@ -120,18 +120,18 @@ class Part extends CI_Controller {
         $d_id =  $this->input->post('d_id');
        $d_no =  $this->input->post('d_no');
        $master =  $this->input->post('master');
-       $master =0;
+       $master = 0;
        if(isset($master)){
        $master =  $this->input->post('master');
        }
-       $result = $this->model_part->insert_part($p_no,$p_name, $d_no,$master);
+       $result = $this->model_part->insert_part($p_no,$p_name,$master);
 
         if($result == true){
        $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
           <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
         </div> ');
 
-        redirect('part/add','refresh'); 
+        redirect('part/manage','refresh'); 
        }
        else if($result == false){
         //echo "<script>alert('Username already exist')</script>";
@@ -142,7 +142,7 @@ class Part extends CI_Controller {
         $this->session->set_flashdata('p_no',$p_no);
         $this->session->set_flashdata('p_name',$p_name);
         $this->session->set_flashdata('d_id',$d_id);
-        redirect('part/add','refresh'); 
+        redirect('part/manage','refresh'); 
        }
        
   

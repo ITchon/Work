@@ -111,6 +111,7 @@ class Model_user extends CI_Model
 
         public function save_edit_u($su_id, $username, $password,$gender, $fname, $lname, $email, $sug_id)
         {
+          $password = base64_encode(trim($password));
            $sql ="UPDATE sys_users SET sug_id = '$sug_id', username = '$username', password = '$password', firstname = '$fname', lastname = '$lname',
             gender = '$gender', email = '$email', date_updated = CURRENT_TIMESTAMP WHERE su_id = '$su_id'";
           $exc_user = $this->db->query($sql);
