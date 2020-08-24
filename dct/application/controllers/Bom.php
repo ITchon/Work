@@ -18,30 +18,78 @@ class Bom extends CI_Controller {
     {	
         
     }
-    	public function manage()    
+    	public function manage()
     {	        
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         
         $sort =  $this->input->post('sort'); 
-        $sql =  'SELECT  bom.b_id,pd.pd_id,p.p_no,p.p_name,d.d_no,d.d_name,bom.quantity,bom.unit,bom.common_part  from bom inner join part_drawing pd on pd.pd_id = bom.pd_id 
-        inner join part p on p.p_id = pd.p_id 
-        inner join drawing d on d.d_id = pd.d_id
-        where bom.delete_flag != 0';
+        $sql =  'SELECT pd.pd_id,d.d_no , p.p_no From part_drawing pd inner join part p on p.p_id = pd.p_id 
+            inner join drawing d on d.d_id = pd.d_id';
         $query = $this->db->query($sql); 
         $res = $query->result(); 
         $data['result'] =$res;
 
-        if( $this->input->post('bm')){
+
+
+       if( $this->input->post('bm')){
           $bm =  $this->input->post('bm'); 
           redirect('bom/manage/'.$bm.'');
-         }else{
-          $bm = $this->uri->segment('3');
+       }else{
+        $bm = $this->uri->segment('3');
+       }
+
+      
+       if($sort){   //---------------------------BOM SEARCH----------------------------
+        $sort =  $this->input->post('sort'); 
+        $sub_id =  $this->input->post('sub_id'); 
+        $array_bom= $this->model_bom->bom($bm) ;
+        if($sort == "up"){
+            $data= $this->model_bom->tree_up($sub_id,$bm) ;
+        }else{
+            $data= $this->model_bom->tree_down($sub_id,$bm) ;
         }
+        $array=[];
+            foreach($data as $row){
+                // echo $row['p_no']."<br>";
+            foreach($array_bom as $r){  
+            if($r['sub_id']==$row['sub_id']){ 
+            $a=array('lv'=>$r['lv'],'p_no'=>$r['p_no'],'p_name'=>$r['p_name'],'qty'=>$r['qty'],'unit'=>$r['unit'],'d_no'=>$r['d_no'],'sub_id'=>$r['sub_id'],'p_id'=>$r['p_id'] ,'origin'=>$r['origin'] );
+            array_push($array,$a);
+                          }
+                       }
+                   }
+        $data['result_bom'] = $array;  
+        $query=$this->db->query("SELECT * from bom inner join part on part.p_id=bom.b_master inner join drawing d on d.d_id=part.d_id where b_id = $bm");
+        $res = $query->result();
+        $data['bom']=$res;
+        $data['bm']=$bm;
+        $data['sort']=$sort;
+        $data['bm_id']=$res[0]->b_master;   
+        $sql =  "SELECT  * FROM sub_part inner join part on part.p_id=sub_part.p_id where sub_id=$sub_id";
+        $query = $this->db->query($sql); 
+        $res =  $query->result(); 
+        $data['p_no'] = $res[0]->p_no;
+        if($array!=null){
+            foreach($array as $row){
+               $max[] = array($row['lv']); 
+            }
+               $maxlv = max($max);
+               }else{
+                $max[]=array(1);
+                $maxlv = max($max);
+               }
+        $data['maxlv']= $maxlv[0];
+        $sql =  'SELECT DISTINCT * FROM part where part.delete_flag !=0';
+        $query = $this->db->query($sql); 
+        $data['result_sub'] = $query->result(); 
+        $data['chk'] = $this->model_bom->opencsv($this->session->userdata('su_id'));
+        $this->load->view('bom/show',$data);
+        $this->load->view('footer');
+       } //------------------END BOM SEARCH-----------------
 
-        if(isset($bm)){
+        else if(isset($bm)){
         $array= $this->model_bom->bom($bm) ;
-
         $data['result_bom'] = $array;  
         $sql ="SELECT  pd.pd_id,p.p_no,p.p_name,d.d_no,d.d_name,bom.quantity,bom.unit,bom.common_part  from bom inner join part_drawing pd on pd.pd_id = bom.pd_id 
         inner join part p on p.p_id = pd.p_id 
@@ -113,12 +161,7 @@ class Bom extends CI_Controller {
     {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-        $sql =  'SELECT  pd.p_id,pd.pd_id,p.p_no,p.p_name,d.d_no,d.d_name from part_drawing pd
-        inner join part p on p.p_id = pd.p_id 
-        inner join drawing d on d.d_id = pd.d_id';
-        $query = $this->db->query($sql); 
-        $res = $query->result(); 
-        $data['result'] =$res;
+        $data['part'] = $this->model_bom->fetch_part();
         $this->load->view('bom/add',$data);
 		$this->load->view('footer');
     }
@@ -130,7 +173,7 @@ class Bom extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $bm =  $this->input->post('bm');
         $m_id =  $this->input->post('m_id');
-        $this->model_bom->delete_sub($m_id);
+        $this->model->delete_sub($m_id);
         redirect('bom/manage/'.$bm.'','refresh');
     }
     public function delete_bom()
@@ -138,23 +181,20 @@ class Bom extends CI_Controller {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $bm = $this->uri->segment('3');
-       
         $this->model_bom->delete_bom($bm);
         redirect('bom/manage','refresh');
     }
     public function insert_bom()
     {
-        $pd_id =  $this->input->post('pd_id');
-        $child_id =  $this->input->post('child_id');
+        $p_id =  $this->input->post('part');
+        $d_id =  $this->input->post('drawing');
   
-   
-        $lasted_id = $this->model_bom->insert_bom($pd_id);
+    
+        $lasted_id = $this->model_bom->insert_bom($p_id,$d_id);
         $res = $this->model_bom->hook_bom($lasted_id);
-        $parent_id = $res[0]->pd_id;
- 
-        foreach ($child_id as $id) {
-        $sub_id= $this->model_part->insert_sub_part($lasted_id,$parent_id,$id,$id);
-        $res= $this->model_part->update_sub_id($sub_id);
+        foreach ($p_id as $p) {
+        $sub_id= $this->model_part->insert_sub_part($lasted_id,$res[0]->b_id,$p,$p);
+        $sub_id= $this->model_part->update_sub_id($sub_id);
         }
         redirect('bom/manage/'.$lasted_id.'','refresh');
     }

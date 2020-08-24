@@ -25,20 +25,15 @@ class Model_ajax extends CI_Model
     }
  
   
-    function fetch_drawing($pd_id)
+    function fetch_drawing($p_id)
     {
-      $sql ="SELECT  pd.p_id,pd.pd_id,p.p_no,p.p_name,d.d_no,d.d_name from part_drawing pd
-      inner join part p on p.p_id = pd.p_id 
-      inner join drawing d on d.d_id = pd.d_id where pd.p_id != $pd_id";
-     $query = $this->db->query($sql); 
-
-     $output = '<optgroup  label="P/NO|DWG/NO" >';
+      $sql ="SELECT *  FROM part_drawing pd left join drawing d on d.d_id = pd.d_id where pd.p_id = '$p_id'";
+     $query = $this->db->query($sql);
+     $output = '<option value="">Select State</option>';
      foreach($query->result() as $row)
      {
-       
-      $output .= '<option value="'.$row->pd_id.'">'.$row->p_no." | ".$row->d_no.'</option>';
+      $output .= '<option value="'.$row->d_id.'">'.$row->d_no.'</option>';
      }
-
      return $output;
     }
    
