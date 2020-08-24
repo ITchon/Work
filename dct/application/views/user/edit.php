@@ -25,7 +25,7 @@
                 <div class="form-group has-feedback">
                     <label for="password" class="col-sm-3 col-md-4 control-label">Password</label>
                     <div class="col-sm-6 col-md-4">
-                    <input id="password" class="form-control" type="text" autocomplete="off" name="password" value="<?php echo base64_decode(trim($result[0]->password));?>">
+                    <input id="password" class="form-control" type="text" autocomplete="off" name="password" value="<?php echo $result[0]->password?>">
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
                     </span>

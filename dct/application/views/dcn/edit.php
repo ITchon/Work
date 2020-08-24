@@ -15,57 +15,52 @@
             <form class="form form-horizontal container" action="<?php echo base_url()?>dcn/save_edit_dcn" method="post" >
             
 
+
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">DCN Number</label>
                     <div class="col-sm-6 col-md-4">
-                    <input type="text" name="dcn_id" value="<?php echo $result->dcn_id ?>" hidden>
-                    <input type="text" name="tfold" value="<?php echo $result->tf_id ?>" hidden>
-                    <input id="part" class="form-control " type="text" name="dcn_no" value="<?php echo $result->dcn_no ?>">
+                    <input type="text" name="dcn_id" value="<?php echo $result[0]->dcn_id ?>" hidden>
+                    <input id="part" class="form-control " type="text" name="dcn_no" value="<?php echo $result[0]->dcn_no ?>">
 
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
                     </span>
                     </div>
                 </div>
-                <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Type</label>      
-          
-                      <div class="col-sm-6 col-md-4">
-                   <select id="tf" name="tf_id" class="form-control select2" >
-                   <?php
-                      foreach($result_type as $tf){?>
-                     <option value="<?php echo $tf->tf_id ?>"><?php echo $tf->tf_name ?></option>
-                    <?php
-                      }
-                      ?> 
-                   </select>
-                    </div>
-                    </div> 
-                    <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">File</label>      
-                      <div class="col-sm-6 col-md-4">
-                        <?php if($result->file_name == null){ ?>
-                <input class="form-control" type="text" readonly value="Please add file">
-                <input class="form-control" type="hidden" name="path" value="<?php echo $result->path_file ?>">
-                       <?php  }else { ?>
-                <input class="form-control" type="text" readonly value="<?php echo $result->file_name ?>">
-                <input class="form-control" type="hidden" name="path" value="<?php echo $result->path_file ?>">
-                   <?php } ?>
-                    </div>
-                    </div> 
-                <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Change File</label>  
-                      <div class="col-sm-6 col-md-4">
-                        <?php if($result->file_name){ ?>
-                              <input type="text" name="file_name2" id="file_name2" value="<?php echo $result->file_name ?>" hidden>
-                            <input type="hidden" name="file_code" id="file_code" hidden value="<?php echo $result->file_code ?>" class="form-control">
-                              <input type="file" name="file_name" class="form-control" id="file_name" >
-                      <?php }else{ ?>
-                          <input type="file" name="file_name" class="form-control" id="file_name" required>
+                <div class="form-group has-feedback">
+                    <label for="part" class="col-sm-5 col-md-4 control-label">Path File</label>
+                    <div class="col-sm-6 col-md-4">
+                    <input id="part" class="form-control " type="text" name="path_file" value="<?php echo $result[0]->path_file ?>">
 
-                      <?php } ?>
-                      </div>
+                    <span class="form-control-feedback" aria-hidden="true">
+                    <span class="icon"></span>
+                    </span>
                     </div>
+                </div>
+                <div class="form-group has-feedback">
+                    <label for="part" class="col-sm-5 col-md-4 control-label">Old File</label>
+                    <div class="col-sm-6 col-md-5">
+                    <input id="part" class="form-control" readonly type="text" name="file_name_old" value="<?php echo $result[0]->file_name ?> ">
+
+                    <span class="form-control-feedback" aria-hidden="true">
+                    <span class="icon"></span>
+                    </span>
+                    </div>
+                </div>
+                <div class="form-group has-feedback">
+                    <label for="part" class="col-sm-5 col-md-4 control-label">New File</label>
+                    <div class="col-sm-6 col-md-4">
+                    <input id="part" class="form-control " type="file" name="file_name" value="<?php echo $result[0]->file_name ?>">
+
+                    <span class="form-control-feedback" aria-hidden="true">
+                    <span class="icon"></span>
+                    </span>
+                    </div>
+                </div>
+
+
+
+                
                     </div>
                    
             
@@ -81,7 +76,6 @@
       </div>
       <script>
         $(document).ready(function() {
-        document.getElementById('tf').value = "<?php echo $result->tf_id ?>";
     $('.select2').select2();
 });
       </script>

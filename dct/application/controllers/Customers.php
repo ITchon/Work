@@ -46,11 +46,11 @@ class Customers extends CI_Controller {
     public function insert()
     {
 
-        $cus_name =  $this->input->post('cus_name');
-        $cus_des =  $this->input->post('cus_des');
+        $cus_name =  $this->input->post('cusname');
+        $cus_des =  $this->input->post('cusdes');
         $result = $this->model_customers->insert_cus($cus_name,$cus_des);
        if($result == true){
-        redirect('customers/manage','refresh');
+        redirect('customers/add','refresh');
        }
        if($result == false){
         echo "<script>alert('Name already exist')</script>";

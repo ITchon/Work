@@ -12,7 +12,6 @@ class Dcn extends CI_Controller {
         $this->load->database(); 
         $this->load->model('model');     
         $this->load->model('model_dcn');
-        $this->load->model('model_drawing');
         $this->model->load_menu();
         $this->model->button_show($this->session->userdata('su_id'),8);
     }
@@ -25,15 +24,11 @@ class Dcn extends CI_Controller {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $text = null;
-        $dcn_id = null;
-        $data['chk'] = $dcn_id;
         if($this->uri->segment('3')){
             $dcn_id = $this->uri->segment('3');
             $text = "and dc.dcn_id = $dcn_id ";
-            $data['chk'] = $dcn_id;
         }
         $data['result'] = $this->model_dcn->get_dcn_byid($text); 
-        
         $this->load->view('dcn/show',$data);//bring $data to user_data 
         $this->load->view('footer');
 
@@ -103,12 +98,11 @@ class Dcn extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
         $id = $this->uri->segment('3');
-        
+
         $sql =  "SELECT * from dcn
         where dcn_id = $id";
         $query = $this->db->query($sql); 
-        $data['result'] = $query->result()[0]; 
-        $data['result_type'] =  $this->model_dcn->get_type_dcn($id);
+        $data['result'] = $query->result(); 
         $this->load->view('dcn/edit',$data);
         $this->load->view('footer');
   
@@ -116,38 +110,15 @@ class Dcn extends CI_Controller {
 
     public function save_edit_dcn()
     {
-      $tf_id =  $this->input->post('tf_id');
-      $folder = $this->model_drawing->checkfolder($tf_id);
-      $config['upload_path']           = './uploads/'.$folder;
-      $config['allowed_types']        = '*';
-
-        if ($_FILES['file_name']['name'] != null) {
-        $file_code =  $this->input->post('file_code');
-        $config['file_name']            =  $file_code;
-        $config['overwrite']            = TRUE;
-        }
     
         $dcn_id =  $this->input->post('dcn_id');
         $dcn_no  =  $this->input->post('dcn_no');
-        $tfold =  $this->input->post('tfold');
-        $folderold = $this->model_drawing->checkfolder($tfold);
+        $path_file =  $this->input->post('path_file');
         $file_name =  $this->input->post('file_name');
-        if($_FILES['file_name']['name'] != null){
-            $file = $_FILES['file_name']['name'];
-             $this->load->library('upload', $config);
-        $this->upload->initialize($config);
-          if ( !$this->upload->do_upload('file_name'))
-          {
-          echo "<script>";
-          echo 'alert(" File Failed ");';
-          echo '</script>';
-          redirect('drawing/edit_v/'.$d_id.'','refresh');
-          }else{
-          $this->model_dcn->save_dcn($dcn_id,$dcn_no,$path_file,$file_name,$tf_id);
-          }
-        }else{
-
+        if($file_name==null){
+            $file_name =  $this->input->post('file_name_old');
         }
+       $this->model_dcn->save_dcn($dcn_id,$dcn_no,$path_file,$file_name);
 
         redirect('dcn/manage/'.$dcn_id.'','refresh');
   
@@ -159,12 +130,13 @@ class Dcn extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
         $result = $this->model_dcn->enableDcn($uid);
-        $chk = $this->session->flashdata('chk');
-        if($chk!=null){
-            redirect('dcn/manage/'.$chk.'','refresh');
+
+        if($result!=FALSE){
+            redirect('dcn/manage/'.$uid.'','refresh');
 
         }else{
-             redirect('dcn/manage/','refresh');
+            echo "<script>alert('Somting wrong')</script>";
+         redirect('dcn/manage/'.$uid.'','refresh');
         }
     }
 
@@ -174,12 +146,12 @@ class Dcn extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
         $result = $this->model_dcn->disableDcn($uid);
-        $chk = $this->session->flashdata('chk');
 
-        if($chk!=null){
-            redirect('dcn/manage/'.$chk.'','refresh');
+        if($result!=FALSE){
+            redirect('dcn/manage/'.$uid.'','refresh');
         }else{
-            redirect('dcn/manage/','refresh');
+            echo "<script>alert('Somting wrong')</script>";
+            redirect('dcn/manage/'.$uid.'','refresh');
 
         }
     }
