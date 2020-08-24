@@ -3,9 +3,9 @@
 class Model_part extends CI_Model
 {
          
-    function insert_sub_part($bm,$m,$p,$origin)
+    function insert_sub_part($bm,$parent,$child,$origin)
     {
-      $sql ="INSERT INTO sub_part (b_id,m_id,p_id,origin,unit,date_created,delete_flag) VALUES ($bm,$m,$p,$origin,'pcs',CURRENT_TIMESTAMP,1);";
+      $sql ="INSERT INTO sub_part (b_id,parent_id,child_id,origin,unit,date_created,delete_flag) VALUES ($bm,$parent,$child,$origin,'pcs',CURRENT_TIMESTAMP,1);";
       $query = $this->db->query($sql);  
       $insert_id = $this->db->insert_id($query);
       if($query){

@@ -91,15 +91,18 @@ class Bom extends CI_Controller {
         else if(isset($bm)){
         $array= $this->model_bom->bom($bm) ;
         $data['result_bom'] = $array;  
-        $sql ='SELECT * from bom inner join part on part.p_id=bom.b_master inner join drawing d on d.d_id=part.d_id where b_id = '.$bm.'';
+        $sql ="SELECT  pd.pd_id,p.p_no,p.p_name,d.d_no,d.d_name,bom.quantity,bom.unit,bom.common_part  from bom inner join part_drawing pd on pd.pd_id = bom.pd_id 
+        inner join part p on p.p_id = pd.p_id 
+        inner join drawing d on d.d_id = pd.d_id
+        where bom.b_id = $bm";
         $query=$this->db->query($sql);
         $res = $query->result();
         $data['bom']=$res;
         $data['bm']=$bm;
         $data['sort']=null;
-        $data['bm_id']=$res[0]->b_master;
+        $data['bm_id']=$res[0]->pd_id;
         $data['p_no']=$res[0]->p_no;
-      
+
         //Find Maxlv in array
         if($array!=null){
                  foreach($array as $row){
@@ -188,10 +191,11 @@ class Bom extends CI_Controller {
   
     
         $lasted_id = $this->model_bom->insert_bom($p_id,$d_id);
-        // foreach ($p_id as $p) {
-        // $sub_id= $this->model_part->insert_sub_part($lasted_id,$bm,$p,$p);
-        // $sub_id= $this->model_part->update_sub_id($sub_id);
-        // }
+        $res = $this->model_bom->hook_bom($lasted_id);
+        foreach ($p_id as $p) {
+        $sub_id= $this->model_part->insert_sub_part($lasted_id,$res[0]->b_id,$p,$p);
+        $sub_id= $this->model_part->update_sub_id($sub_id);
+        }
         redirect('bom/manage/'.$lasted_id.'','refresh');
     }
 
