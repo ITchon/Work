@@ -59,23 +59,25 @@ class Part extends CI_Controller {
         $array = $this->model_part->filter($sub_id,$id);
         $_data = array();
         foreach ($array as $v) {
-          if (isset($_data[$v['m_id']])) {
+          if (isset($_data[$v['parent_id']])) {
             // found duplicate
             continue;
           }
           // remember unique item
-          $_data[$v['m_id']] = $v;
+          $_data[$v['parent_id']] = $v;
         }
         // if you need a zero-based array, otheriwse work with $_data
         $array = array_values($_data);
         
         $query = $this->db->query('SELECT * FROM bom where b_id = '.$id.'   AND delete_flag != 0');
         $res_bom= $query->result();
-        $b_master = $res_bom[0]->b_master;
+        $b_master = $res_bom[0]->pd_id;
         $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 and p.p_id = '$p_id.'";
         $query = $this->db->query($sql); 
         $res = $query->result(); 
-        $query = $this->db->query("SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 and p.p_id != '$b_master.'"); 
+        $query = $this->db->query("SELECT  pd.p_id,pd.pd_id,p.p_no,p.p_name,d.d_no,d.d_name from part_drawing pd
+        inner join part p on p.p_id = pd.p_id 
+        inner join drawing d on d.d_id = pd.d_id where pd.pd_id != '$b_master.'"); 
         $res_part = $query->result(); 
         $data['res_chk'] =$array;
         $data['bm'] =$id;
@@ -99,7 +101,9 @@ class Part extends CI_Controller {
         $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 and p.p_id = $m_id";
         $query = $this->db->query($sql); 
         $res = $query->result(); 
-        $query = $this->db->query("SELECT p.p_id, p.p_no, p.p_name, p.enable from part as p where delete_flag != 0 and p.p_id != $m_id"); 
+        $query = $this->db->query("SELECT  pd.p_id,pd.pd_id,p.p_no,p.p_name,d.d_no,d.d_name from part_drawing pd
+        inner join part p on p.p_id = pd.p_id 
+        inner join drawing d on d.d_id = pd.d_id where pd.pd_id !=$m_id"); 
         $res_part = $query->result(); 
         $data['bm'] =$id;
         $data['p_no'] =$res[0]->p_no;
