@@ -98,8 +98,13 @@ public function show()
         $s_dno = '';
 
       }
-
       if($this->input->get('s_dno') != null || $this->input->get('s_name') != null || $this->input->get('s_pno') != null || $this->input->get('type') != null ){
+        if($type ==null){
+          $data = $this->model_drawing->get_type_drawing();
+          foreach($data as $t){
+            $type[] = $t->tf_id;
+          }
+        }
         $data['result'] = $this->model_drawing->drawing_search($s_dno,$s_name,$s_pno,$type);
       }else{
         $data['result'] = $this->model_drawing->get_partdrawing();
@@ -118,11 +123,14 @@ public function show()
           $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
   
           $d_id =  $this->input->get('d_id');
-          $p_id =  $this->input->get('p_id');
   
-          $pid = '?p_id='.$p_id;
           $did = '&d_id='.$d_id ;
-          $data['search'] = $pid.$did;
+          $data['search'] = $did;
+
+          $params = $_SERVER['QUERY_STRING'];
+          $this->session->set_flashdata('search',$params);
+          
+          $d_id = intval(preg_replace('/[^0-9]+/', '', $params), 10);
   
      
           $data['result'] = $this->model_drawing->get_drawing_ver($d_id);
@@ -280,7 +288,6 @@ public function show()
         $folder = $this->model_drawing->checkfolder($tf_id);
         $config['upload_path']           = './uploads/'.$folder.'/';
         $config['allowed_types']        = '*';
-        $config['encrypt_name'] = TRUE;
   
         $pos =  $this->input->post('pos');
         $d_id =  $this->input->post('d_id');
@@ -306,14 +313,15 @@ public function show()
           echo 'alert(" File Failed ");';
           echo '</script>';
           
-          redirect('drawing/show_v'.$search.'','refresh');   
+          redirect('drawing/show?'.$search.'','refresh');   
           }else{
     $uploaded = $this->upload->data();
     $code = array('filename'  => $uploaded['file_name']);
     foreach ($code as $c) {
+      $c = base64_encode(trim($c));
         $this->model_drawing->select_version($d_id);
         $this->model_drawing->update_version($d_id,$d_name,$cus_id, $d_no, $dcn_id, $version, $file, $path_file,$c,$tf_id,$pos);
-        redirect('drawing/show_v'.$search.'','refresh');
+        redirect('drawing/show?'.$search.'','refresh');
     }
           }
         }else{
@@ -324,13 +332,13 @@ public function show()
           echo 'alert(" File Failed ");';
           echo '</script>';
           
-          redirect('drawing/show_v'.$search.'','refresh');   
+          redirect('drawing/show?'.$search.'','refresh');   
           }else{
         $file_code =  $this->input->post('file_code');
         copy('./uploads/'.$folderold.'/'.$code, './uploads/'.$folder.'/'.$code);
         $this->model_drawing->select_version($d_id);
         $this->model_drawing->update_version($d_id,$d_name,$cus_id, $d_no, $dcn_id, $version, $file, $path_file,$file_code,$tf_id,$pos);
-        redirect('drawing/show_v'.$search.'','refresh');
+        redirect('drawing/show?'.$search.'','refresh');
 
           }
         }
@@ -350,6 +358,37 @@ public function show()
         
 
         $path = './uploads/'.$folder.$filecode;
+        $open = ("$path");
+        $data = file_get_contents("$path");
+
+        if($open){
+        $this->model_drawing->download_record($this->session->userdata('su_id'),$this->session->userdata('username'),$filename);
+        force_download($filename, $data);
+           echo '<script language="javascript">';
+                echo 'history.go(-1);';
+                echo '</script>';
+        }else{
+            echo "<script>";
+            echo 'alert("Data not found.");';
+            echo 'history.go(-1);';
+            echo '</script>';
+        }
+        redirect('drawing/show/','refresh');
+    }
+
+    public function openfile_v()
+    {
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+        $v_id = $this->uri->segment('3');
+        $result = $this->model_drawing->get_did($v_id);
+        $tf_id = $result->tf_id;
+        $filecode = $result->file_code;
+        $filename = $result->file_name;
+        $folder = $this->model_drawing->checkfolder($tf_id);
+        
+        $path = './uploads/'.$folder.$filecode;
+
         $open = ("$path");
         $data = file_get_contents("$path");
 
@@ -400,7 +439,6 @@ public function show()
         $folder = $this->model_drawing->checkfolder($tf_id);
         $config['upload_path']           = './uploads/'.$folder;
         $config['allowed_types']        = '*';
-        $config['encrypt_name'] = TRUE;
 
         $d_no =  $this->input->post('d_no');
         $d_name =  $this->input->post('d_name');
@@ -438,6 +476,7 @@ public function show()
         $uploaded = $this->upload->data();
         $code = array('filename'  => $uploaded['file_name']);
         foreach ($code as $c) {
+          $c = base64_encode(trim($c));
           $last_id = $this->model_drawing->insert_drawing($d_no,$d_name, $dcn_id,$cus_id, $tf_id, $file,$c,$pos);
           $d_id = $last_id;
       }
@@ -476,6 +515,7 @@ public function show()
     $uploaded = $this->upload->data();
     $code = array('filename'  => $uploaded['file_name']);
     foreach ($code as $c) {
+      $c = base64_encode(trim($c));
         $d_id = $this->model_drawing->insert_drawing($d_no,$d_name, $dcn_id, $cus_id, $tf_id, $file, $c,$pos);
     }  
       $this->session->set_flashdata('success','<div class="alert alert-success hide-it">
@@ -557,10 +597,11 @@ public function show()
       $folder = $this->model_drawing->checkfolder($tf_id);
       $config['upload_path']           = './uploads/'.$folder;
       $config['allowed_types']        = '*';
-
+      $tfold =  $this->input->post('tfold');
+      $folderold = $this->model_drawing->checkfolder($tfold);
         if ($_FILES['file_name']['name'] != null) {
-        $file_code =  $this->input->post('file_code');
-        $config['file_name']            =  $file_code;
+        $file_name2 =  $this->input->post('file_name2');
+        unlink('./uploads/'.$folderold.$file_name2);
         $config['overwrite']            = TRUE;
         }
         $search =  $this->session->flashdata('search');
@@ -577,26 +618,27 @@ public function show()
         $path_file =  $this->input->post('path');
         $dcnid =  $this->input->post('dcnid');
         $code =  $this->input->post('file_code');
-        $tfold =  $this->input->post('tfold');
-        $folderold = $this->model_drawing->checkfolder($tfold);
+        
+        
 
 
         if($_FILES['file_name']['name'] != null){
             $file = $_FILES['file_name']['name'];
              $this->load->library('upload', $config);
         $this->upload->initialize($config);
-          if ( ! $this->upload->do_upload('file_name'))
+          if ( !$this->upload->do_upload('file_name'))
           {
           echo "<script>";
           echo 'alert(" File Failed ");';
           echo '</script>';
           if( strpos( $search, 'd_id' ) !== false ){
-            redirect('drawing/edit_v/'.$d_id.'','refresh');
+            redirect('drawing/show_v?'.$search.'','refresh');
           }else{
-            redirect('drawing/edit/'.$d_id.'','refresh');
+            redirect('drawing/show?'.$search.'','refresh');
           }
 
           }else{    
+            
     if($p_id != null){
       foreach($p_id as $p){
         $result = $this->model_drawing->insert_part_drawing($p,$d_id);
@@ -631,14 +673,14 @@ public function show()
         $this->model_drawing->del_img($id);
       }
     }
-    unlink('./uploads/'.$folderold.$code);
+
     $uploaded = $this->upload->data();
     $code = array('filename'  => $uploaded['file_name']);
     foreach ($code as $c) {
+      $c = base64_encode(trim($c));
         $this->model_drawing->save_edit_drawing($d_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$tf_id,$pos);
     }
   }
-
         }else{
             $file =  $this->input->post('file_name2');
           if ($this->input->post('file_name2') == null)
@@ -647,7 +689,7 @@ public function show()
           echo 'alert(" File Failed ");';
           echo '</script>';
           }else{
-            rename('./uploads/'.$folderold.$code, './uploads/'.$folder.$code);
+            rename('./uploads/'.$folderold.$file, './uploads/'.$folder.$file);
             $file_code =  $this->input->post('file_code');
             if($p_id != null){
               foreach($p_id as $p){
@@ -684,13 +726,15 @@ public function show()
             $this->model_drawing->del_img($id);
           }
         }
+        $file_code = base64_encode(trim($file_code));
         $this->model_drawing->save_edit_drawing($d_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$file_code,$tf_id,$pos);
           }
         }
+        
         if( strpos( $search, 'd_id' ) !== false ){
-          redirect('drawing/edit_v/'.$d_id.'','refresh');
+          redirect('drawing/show_v?'.$search.'','refresh');
         }else{
-          redirect('drawing/edit/'.$d_id.'','refresh');
+          redirect('drawing/show?'.$search.'','refresh');
         }
         
        
@@ -702,10 +746,12 @@ public function show()
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         
-        $v_id =  $this->input->post('v_id');
+        $v_id = $this->uri->segment('3');
         $sql =  "SELECT * from version where v_id = $v_id";
         $query = $this->db->query($sql); 
         $data['result'] = $query->result()[0]; 
+        $d_id = $data['result']->d_id;
+      
 
         $sql1 =  "SELECT * from dcn";
         $query = $this->db->query($sql1); 
@@ -714,7 +760,17 @@ public function show()
         $sql1 =  "SELECT * from customers";
         $query = $this->db->query($sql1); 
         $data['result_cus'] = $query->result(); 
-        
+        $data['result_type'] = $this->model_drawing->get_type_drawing();
+        $data['result_pd'] = $this->model_drawing->get_part_drawing_byid($d_id);
+        $pid = $this->model_drawing->get_pid_bypd($d_id);
+        foreach($pid as $p){
+          $num[] = $p->p_id;
+        }
+        if($pid){
+          $data['result_p'] = $this->model_drawing->get_nopart($num);
+        }else{
+          $data['result_p'] = $this->model_drawing->get_part();
+        }
         $this->load->view('drawing/edit_v',$data);
         $this->load->view('footer');
   
@@ -722,23 +778,34 @@ public function show()
 
         public function save_edit_v()
     {
-        $config['upload_path']          = './uploads/';
+      $tf_id =  $this->input->post('tf_id');
+      $folder = $this->model_drawing->checkfolder($tf_id);
+      $config['upload_path']           = './uploads/'.$folder;
         $config['allowed_types']        = '*';
-
+        $tfold =  $this->input->post('tfold');
+        $folderold = $this->model_drawing->checkfolder($tfold);
         if ($_FILES['file_name']['name'] != null) {
-        $file_code =  $this->input->post('file_code');
-        $config['file_name']            =  $file_code;
+        $file_name2 =  $this->input->post('file_name2');
+        unlink('./uploads/'.$folderold.$file_name2);
         $config['overwrite']            = TRUE;
         }
         
         $v_id =  $this->input->post('v_id');
         $d_no =  $this->input->post('d_no');
+        $d_id =  $this->input->post('d_id');
         $d_name =  $this->input->post('d_name');
         $dcn_id =  $this->input->post('dcn_id');
         $cus_id =  $this->input->post('cus_id');
         $path_file =  $this->input->post('path');
         $dcnid =  $this->input->post('dcnid');
         $code =  $this->input->post('code');
+        $tf_id =  $this->input->post('tf_id');
+        $pos =  $this->input->post('pos');
+        $p_id =  $this->input->post('p_id');
+        $p_no =  $this->input->post('p_no');
+        $p_name =  $this->input->post('p_name');
+        $search =  $this->session->flashdata('search');
+        
 
         if($_FILES['file_name']['name'] != null){
             $file = $_FILES['file_name']['name'];
@@ -749,14 +816,49 @@ public function show()
           echo "<script>";
           echo 'alert(" File Failed ");';
           echo '</script>';
-          exit();
-          redirect('drawing/manage','refresh');   
+          redirect('drawing/show_v?'.$search.'','refresh');   
           }else{
-            $uploaded = $this->upload->data();
+      if($p_id != null){
+        foreach($p_id as $p){
+          $result = $this->model_drawing->insert_part_drawing($p,$d_id);
+          if($result == false){
+            $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
+            <span> ชื่อนี้ถูกใช้เเล้ว</span>
+          </div>');
+          $this->session->set_flashdata('p_no',$p_no);
+         }
+        }
+      }
+      if($p_no != null || $p_name != null){
+        $arr_count = sizeof($p_no);
+        for($i=0; $i<$arr_count; $i++)
+        {
+          $pno = $p_no[$i];
+          $pname = $p_name[$i];
+          $last_id = $this->model_drawing->insert_newpart($pno,$pname);
+          if($last_id == false){
+            $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
+            <span> ชื่อนี้ถูกใช้เเล้ว</span>
+          </div> ');
+          $this->session->set_flashdata('p_no',$p_no);   
+        }else{
+          $this->model_drawing->insert_part_drawing($last_id,$d_id);
+          }
+        }
+      }
+      if($this->input->post('chk_uid') != null){
+        $del =  $this->input->post('chk_uid');
+        foreach($del as $id){
+          $this->model_drawing->del_img($id);
+        }
+      }
+    
+    $uploaded = $this->upload->data();
     $code = array('filename'  => $uploaded['file_name']);
     foreach ($code as $c) {
-        $this->model_drawing->save_edit_drawing_v($v_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c);
-        redirect('drawing/manage/','refresh');
+      $c = base64_encode(trim($c));
+        $this->model_drawing->save_edit_drawing_v($v_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$tf_id,$pos);
+        redirect('drawing/show_v?'.$search.'','refresh');   
     }
           }
         }else{
@@ -767,12 +869,48 @@ public function show()
           echo 'alert(" File Failed ");';
           echo '</script>';
           exit();
-          redirect('drawing/manage','refresh');   
+          redirect('drawing/show_v?'.$search.'','refresh');     
           }else{
-            $file_code =  $this->input->post('file_code');
-            
-        $this->model_drawing->save_edit_drawing_v($v_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$file_code);
-        redirect('drawing/manage/','refresh');
+            if($p_id != null){
+              foreach($p_id as $p){
+                $result = $this->model_drawing->insert_part_drawing($p,$d_id);
+                if($result == false){
+                  $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
+                  <span> ชื่อนี้ถูกใช้เเล้ว</span>
+                </div>');
+                $this->session->set_flashdata('p_no',$p_no);
+               }
+              }
+            }
+            if($p_no != null || $p_name != null){
+              $arr_count = sizeof($p_no);
+              for($i=0; $i<$arr_count; $i++)
+              {
+                $pno = $p_no[$i];
+                $pname = $p_name[$i];
+                $last_id = $this->model_drawing->insert_newpart($pno,$pname);
+                if($last_id == false){
+                  $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
+                  <span> ชื่อนี้ถูกใช้เเล้ว</span>
+                </div> ');
+                $this->session->set_flashdata('p_no',$p_no);   
+              }else{
+                $this->model_drawing->insert_part_drawing($last_id,$d_id);
+                }
+              }
+            }
+            if($this->input->post('chk_uid') != null){
+              $del =  $this->input->post('chk_uid');
+              foreach($del as $id){
+                $this->model_drawing->del_img($id);
+              }
+            }
+            rename('./uploads/'.$folderold.$file, './uploads/'.$folder.$file);
+            $c =  $this->input->post('file_code');
+            $c = base64_encode(trim($c));
+        $this->model_drawing->save_edit_drawing_v($v_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$tf_id,$pos);
+        
+        redirect('drawing/show_v?'.$search.'','refresh');   
 
           }
         }

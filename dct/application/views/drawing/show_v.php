@@ -24,8 +24,8 @@
                 </h3>
               </font>
               <?php $search =  $this->session->flashdata('search');
-                  $this->session->set_flashdata('search',$search);
-                  ?>
+              $this->session->set_flashdata('search',$search);
+              ?>
 
 
                 </div>
@@ -33,9 +33,10 @@
                 <table id="demo-datatables-buttons-1" class="table table-hover  table-nowrap dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
-                        <th width="15%">Drawing No</th>
+                      <th width="10%">Part No</th>
                         <th width="15%">Drawing Name</th>
-                        <th width="10%">Part No</th>
+                        <th width="15%">Drawing No</th>
+                        <th width="15%">POS</th>
                         <th width="5%">Customer</th>
                         <th width="10%">DCN</th>
                         <th width="3%">Rev</th>
@@ -50,66 +51,34 @@
                       <?php
                     foreach($result as $r){
              echo "<tr>";?>
-                    <td><?php echo "<b>".$r->d_no."</b>" ?></td>
-                    <td><?php echo "<b>".$r->d_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->p_no."</b>" ?></td>
+                    <td><?php echo "<b>".$r->d_name."</b>" ?></td>
+                    <td><?php echo "<b>".$r->d_no."</b>" ?></td>
+                    <td><?php echo "<b>".$r->pos."</b>" ?></td>
                     <td><?php echo "<b>".$r->cus_name."</b>" ?></td>
+                    <?php  if($this->session->flashdata("link")!== null ){ 
+                      echo "<td><a href='".base_url()."dcn/manage/".$r->dcn_id."'>$r->dcn_no</a></td>"; 
+                    }
+                    else{ 
+                      echo "<td>$r->dcn_no</td>";
+                       }  ?>
+
                 <td class="text-center">
-                  <form id="form" action="<?php echo base_url()?>drawing/open_dcn" method="post">
-                  <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
-                  <input type="hidden" name="path" value="C:\inetpub\wwwroot\dct\uploads\">
-                  <input type="hidden" name="file" value="<?php echo $r->dcn_file ?>">
-                  <input type="hidden" name="file" value="<?php echo $r->dcn_code ?>">
-                    <button  type="submit" style=" background-color: Transparent;border:none" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><a>
-                      <?php echo $r->dcn_no ?></a></button>
-                  </form>
-                </td>
-
-                <td class="text-center"><form  action="<?php echo base_url()?>drawing/show_v" method="post">
-                    <input type="hidden" name="p_id" value="<?php echo $r->p_id ?>">
-                    <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                    <button  type="submit"  style=" background-color: Transparent;border:none" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ดูVersionทั้งหมด</h5>' ><a>
-                      <?php echo $r->version ?></a></button>
-
-                  </form></td>                               
+                <?php echo $r->version ?>
+                </td>                               
                 <td>
                   <?php if ($r->v_id !='v_id') {
                   echo " <a href='javascript:void(0)'  data-id='".$r->v_id."' class='view_imgv'><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
-                  ?>
-                  <form id="form" action="<?php echo base_url()?>drawing/openfile" method="post">
-                  <input type="hidden" name="d_id" value="<?php echo $r->v_id ?>">
-                  <input type="hidden" name="path" value="C:\inetpub\wwwroot\dct\uploads\">
-                  <input type="hidden" name="filename" value="<?php echo $r->file_name ?>">
-                  <input type="hidden" name="file" value="<?php echo $r->file_code?>">
-                  <button class=" btn-primary btn-sm fa fa-inbox" type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;">
-                  </button>
-                  </form>
+                  if($this->session->flashdata("download")!== null ) echo "<a href='".base_url()."drawing/openfile_v/".$r->v_id."'  ><i class='btn-info no-border fa fa-inbox'></i></a>";
+                  if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."drawing/edit_v/".$r->v_id."'  ><i class='btn-info no-border fa fa-wrench'></i></a>";
 
-                  
-                  <form id="form" action="<?php echo base_url()?>drawing/edit_v" method="post">
-                  <input type="hidden" name="v_id" value="<?php echo $r->v_id ?>">
-                  <button class=" btn-primary btn-sm fa fa-wrench" type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' style="border:none;">
-                  </button>
-                  </form>
+                  ?>
 
                   <?php }else{ 
                   echo " <a href='javascript:void(0)'  data-id='".$r->d_id."' class='view_img'><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
+                  if($this->session->flashdata("download")!== null ) echo "<a href='".base_url()."drawing/openfile/".$r->d_id."'  ><i class='btn-info no-border fa fa-inbox'></i></a>";
+                  if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."drawing/edit/".$r->d_id."'  ><i class='btn-info no-border fa fa-wrench'></i></a>";
                   ?>
-                  <form id="form" action="<?php echo base_url()?>drawing/openfile" method="post">
-                  <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                  <input type="hidden" name="path" value="\\192.168.82.4\tbkk$\RD\Drawing\01_Drawings\A_Production Dwg\">
-                  <input type="hidden" name="filename" value="<?php echo $r->file_name ?>">
-                  <input type="hidden" name="file" value="<?php echo $r->file_code?>">
-                  <button class=" btn-primary btn-sm fa fa-inbox" type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;">
-                  </button>
-                  </form>
-
-                  <form id="form" action="<?php echo base_url()?>drawing/edit" method="post">
-                  <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-                  <button class=" btn-primary btn-sm fa fa-wrench" type="submit" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' style="border:none;">
-                  </button>
-                  </form>
-
                   <?php } ?>
 
 
@@ -180,7 +149,7 @@
 
       // if(res.success != false){ 
         var path ='uploads/'+res.data[0].tf_fol+res.data[0].file_code;
- 
+        console.log(path);
       pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
           
   
@@ -232,7 +201,7 @@
 
       // if(res.success != false){ 
         var path ='uploads/'+res.data[0].tf_fol+res.data[0].file_code;
- 
+        console.log(path);
       pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
           
   

@@ -48,7 +48,7 @@ form {
                 ?>
                 <form action="<?php echo base_url()?>drawing/show" method="get">
                 <div class="col-md-2"> 
-                <input type="checkbox" name="type[]" id="select_all" value="0"> <label for="select_all" style="cursor: pointer;color:#5b6572">  ALL</label> <br>
+                <input type="checkbox" name="type[]" id="select_all"> <label for="select_all" style="cursor: pointer;color:#5b6572">  ALL</label> <br>
                 <?php
                 foreach($result_type as $r){ ?>
                    <input type="checkbox" name="type[]" id="<?php echo $r->tf_id ?>" class="days"
@@ -135,7 +135,6 @@ form {
                        if($this->session->flashdata("show_version")!== null){ ?>           
                        <td class="text-center">
                         <form  action="<?php echo base_url()?>drawing/show_v" method="get">
-                          <input type="hidden" name="p_id" value="<?php echo $r->p_id ?>">
                           <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
       
                           <button  type="submit"  style=" background-color: Transparent;border:none" ><a>
@@ -207,7 +206,7 @@ form {
 
       // if(res.success != false){ 
       var path ='uploads/'+res.data[0].tf_fol+res.data[0].file_code;
- 
+      console.log(path);
       pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
           
   
