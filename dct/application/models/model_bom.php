@@ -48,12 +48,9 @@ public function delete_sub($id) {
       return false;
     }
     }
-    function insert_bom($p_id,$d_id)
+    function insert_bom($pd_id)
     {
-      $sql="SELECT * FROM part_drawing pd where p_id = $p_id and d_id = $d_id ";
-      $query = $this->db->query($sql);  
-      $result = $query->result()[0];
-       $sql ="INSERT INTO bom (pd_id,unit,date_created,delete_flag) VALUES ($result->pd_id,'pcs',CURRENT_TIMESTAMP,1);";
+       $sql ="INSERT INTO bom (pd_id,unit,date_created,delete_flag) VALUES ($pd_id,'pcs',CURRENT_TIMESTAMP,1);";
        $query = $this->db->query($sql);  
        $insert_id = $this->db->insert_id($query );
       if($query){
@@ -91,9 +88,9 @@ public function delete_sub($id) {
   public function sub_bom($id,$bm)
   { 
     // $sql =  'SELECT * FROM sub_part inner join part on part.p_id = sub_part.p_id inner join part_drawing pd on pd.d_id=part.d_id where parent_id = '.$id.'  AND sub_part.delete_flag != 0 and b_id = '.$bm.'';
-    $sql = "SELECT pd.pd_id,sb.sub_id,sb.b_id,sb.parent_id,sb.child_id,sb.origin,
-    sb.quantity,sb.unit,sb.common_part,p.p_no,p.p_name,d.d_no,d.d_name
-    FROM part_drawing pd inner join sub_part sb on sb.parent_id = pd.pd_id
+    $sql = "SELECT sb.sub_id,sb.b_id,sb.parent_id,sb.child_id,sb.origin, sb.quantity,sb.unit,sb.common_part,p.p_no,p.p_name,d.d_no,d.d_name 
+    
+    FROM part_drawing pd inner join sub_part sb on sb.child_id = pd.pd_id
     inner join part p on p.p_id = pd.p_id 
     inner join drawing d on d.d_id = pd.d_id
     where sb.parent_id= $id and sb.b_id = $bm ";
@@ -112,12 +109,12 @@ public function delete_sub($id) {
 
     // $sql =  'SELECT * FROM sub_part inner join part on part.p_id = sub_part.p_id inner join drawing on drawing.d_id=part.d_id where parent_id = '.$id.'  AND sub_part.delete_flag != 0 and b_id = '.$bm.' AND origin='.$origin.'';
 
-   $sql = "SELECT pd.pd_id,sb.sub_id,sb.b_id,sb.parent_id,sb.child_id,sb.origin,
+   $sql = "SELECT sb.sub_id,sb.b_id,sb.parent_id,sb.child_id,sb.origin,
     sb.quantity,sb.unit,sb.common_part,p.p_no,p.p_name,d.d_no,d.d_name
-    FROM part_drawing pd inner join sub_part sb on sb.parent_id = pd.pd_id
+    FROM part_drawing pd inner join sub_part sb on sb.child_id = pd.pd_id
     inner join part p on p.p_id = pd.p_id 
     inner join drawing d on d.d_id = pd.d_id
-    where sb.parent_id= $id and sb.b_id = $bm and sb.origin = $origin ";
+    where sb.parent_id= $id and sb.b_id = $bm and sb.origin = $origin and sb.delete_flag != 0";
     $query = $this->db->query($sql); 
     if($query){
       $result= $query->result();
@@ -127,10 +124,26 @@ public function delete_sub($id) {
     }
       
   }
+
+
+  // $res_bom= $this->model_bom->hook_bom($bm) ;
+  // $data= $this->model_bom->sub_bom($res_bom[0]->pd_id,$res_bom[0]->b_id) ;
+  // $chk=0;
+  // foreach($data as $r){
+
+  //   // do{
   
+  //     $res= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
+      
+  //     print_r($res);
+
+  //   //    $chk++;
+  //   // }while($chk <= 2);
+  // }
+  // exit;
   public function bom($bm)
   {
-
+   
     $array=[];
     $res_bom= $this->model_bom->hook_bom($bm) ;
     // echo $res_bom[0]->pd_id ;
@@ -139,89 +152,48 @@ public function delete_sub($id) {
     $data= $this->model_bom->sub_bom($res_bom[0]->pd_id,$res_bom[0]->b_id) ;
 
     $bm =  $res_bom[0]->b_id;
-    if($data != false){  
-        $parent_id =$res_bom[0]->pd_id;
-        foreach($data as $r){
+
+     foreach($data as $r){
+      
+          $a=array('lv'=>2,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
+          array_push($array,$a);
+          $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
+          foreach($data as $r){
+            $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;   
+            $a=array('lv'=>3,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
+            array_push($array,$a);
+           foreach($data as $r){   
+            $a=array('lv'=>4,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
+            array_push($array,$a);
             $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
-
-            if($data != false){  
+            foreach($data as $r){
+              $a=array('lv'=>5,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
+              array_push($array,$a);
+              $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
+              foreach($data as $r){
+                $a=array('lv'=>6,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
+                array_push($array,$a);
+                $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
                 foreach($data as $r){
-                    $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
-                    $a=array('lv'=>2,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-                    
+                  $a=array('lv'=>7,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
+                  array_push($array,$a);
+                  $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
+                  foreach($data as $r){
+                    $a=array('lv'=>8,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
                     array_push($array,$a);
-                    if($data != false){  
-            
-                        foreach($data as $r){
-
-                            $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
-                            $a=array('lv'=>3,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-                            
-                            array_push($array,$a);
-                            if($data != false){  
-                    
-                                foreach($data as $r){
-
-                                    $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
-                                    $a=array('lv'=>4,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-                                    
-                                    array_push($array,$a);
-                                    if($data != false){  
-                            
-                                        foreach($data as $r){
-
-                                            $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
-                                            $a=array('lv'=>5,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-                                            
-                                            array_push($array,$a);
-                                            if($data != false){  
-                                    
-                                                foreach($data as $r){
-
-                                                    $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
-                                                    $a=array('lv'=>7,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-                                                    
-                                                    array_push($array,$a);
-                                                    if($data != false){  
-                                            
-                                                        foreach($data as $r){
-
-                                                            $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
-                                                            $a=array('lv'=>8,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-                                                            
-                                                            array_push($array,$a);
-                                                            if($data != false){                                                             
-                                                                foreach($data as $r){
-
-                                                                    $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
-                                                                    $a=array('lv'=>9,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-                                                                    
-                                                                    array_push($array,$a);
-                                                                    if($data != false){                                                             
-                                                                        foreach($data as $r){
-   
-                                                                            $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
-                                                                            $a=array('lv'=>10,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-                                                                            
-                                                                            array_push($array,$a);
-                                                                        }
-                                                                    }
-                                                               }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                    $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
+                    foreach($data as $r){
+                      $a=array('lv'=>9,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
+                      array_push($array,$a);
+                      $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
                     }
+                  }
                 }
+              }
             }
+          }
         }
-     }
-    }
+      }
     return  $array;
   
   }

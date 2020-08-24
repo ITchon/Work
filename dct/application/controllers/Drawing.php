@@ -98,6 +98,7 @@ public function show()
         $s_dno = '';
 
       }
+        
       if($this->input->get('s_dno') != null || $this->input->get('s_name') != null || $this->input->get('s_pno') != null || $this->input->get('type') != null ){
         if($type ==null){
           $data = $this->model_drawing->get_type_drawing();
