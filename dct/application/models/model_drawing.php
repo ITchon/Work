@@ -324,7 +324,15 @@ $path_file = quotemeta($path_file);
   public function drawing_search($s_dno,$s_name,$s_pno,$type)
   {
       if($type == null ){
-        $type = "1,2,3";
+      $sql1 =  "SELECT tf_id from type_file where delete_flag != 0 AND tf_group = 1";
+      $query = $this->db->query($sql1);
+      $result =  $query->result();
+      $sum = '';
+      foreach($result as $r){
+        $sum = $sum.$r->tf_id.',';
+      }
+      $type = rtrim($sum,',');
+      
       }else{
         $type =  implode(',',array_map('intval',$type));
       }
