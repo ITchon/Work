@@ -49,7 +49,7 @@
                       </optgroup>
                    </select>
                     </div>
-            <?php echo anchor(base_url().'part/add/'.$bm.'', 'Create Part',array('class'=>'btn btn-primary'));        ?>
+            <?php echo anchor(base_url().'drawing/add/'.$bm.'', 'Create Part',array('class'=>'btn btn-primary'));        ?>
                     </div> 
                  
             

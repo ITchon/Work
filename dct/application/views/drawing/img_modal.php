@@ -1,7 +1,12 @@
 
 <style>
 
-
+@media (min-width: 768px) {
+  .modal-xl {
+    width: 90%;
+   max-width:1300px;
+  }
+}
 #the-canvas {
   border: 1px solid black;
   direction: ltr;
@@ -18,13 +23,11 @@
   padding-top: 10%
 }
 </style>
-
-
 <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
 
   <!-- Trigger the modal with a button -->
-  <div class="modal fade text-center" id="modal_form" role="dialog">
-    <div id="header" class="modal-dialog" style="width:1350px;height:900px">
+  <div class="modal fade text-center " id="modal_form" role="dialog">
+    <div id="header" class="modal-dialog modal-xl" >
         <div class="modal-content" >
 
             <div class="modal-body  " onContextMenu="return false;">
@@ -43,7 +46,7 @@
 
   </div>
 
-             <div id="pageContainer" style="width:1300px;height:870px; border: 3px solid">
+             <div id="pageContainer">
                   <canvas id="the-canvas" ></canvas>
               </div>
         </div><!-- /.modal-content -->

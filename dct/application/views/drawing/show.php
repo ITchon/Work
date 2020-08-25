@@ -32,10 +32,6 @@ form {
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header ">
-                <div class="row-fluid" id="set_alarm">
-
-                </div>
-
                 <h3>
                 <a href="<?php echo base_url()?>drawing/show">MANAGE DRAWING</a> 
                 <a href="" class="btn btn-default no_print" onclick="window.history.go(-1); return false;"> Back </a>

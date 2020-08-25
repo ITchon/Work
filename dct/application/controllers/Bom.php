@@ -24,13 +24,7 @@ class Bom extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         
         $sort =  $this->input->post('sort'); 
-        $sql =  'SELECT  bom.b_id,pd.pd_id,p.p_no,p.p_name,d.d_no,d.d_name,bom.quantity,bom.unit,bom.common_part  from bom inner join part_drawing pd on pd.pd_id = bom.pd_id 
-        inner join part p on p.p_id = pd.p_id 
-        inner join drawing d on d.d_id = pd.d_id
-        where bom.delete_flag != 0';
-        $query = $this->db->query($sql); 
-        $res = $query->result(); 
-        $data['result'] =$res;
+        $data['result'] =$this->model_bom->get_bom();
 
         if( $this->input->post('bm')){
           $bm =  $this->input->post('bm'); 
@@ -38,17 +32,11 @@ class Bom extends CI_Controller {
          }else{
           $bm = $this->uri->segment('3');
         }
-
         if(isset($bm)){
         $array= $this->model_bom->bom($bm) ;
 
         $data['result_bom'] = $array;  
-        $sql ="SELECT  pd.pd_id,p.p_no,p.p_name,d.d_no,d.d_name,bom.quantity,bom.unit,bom.common_part  from bom inner join part_drawing pd on pd.pd_id = bom.pd_id 
-        inner join part p on p.p_id = pd.p_id 
-        inner join drawing d on d.d_id = pd.d_id
-        where bom.b_id = $bm";
-        $query=$this->db->query($sql);
-        $res = $query->result();
+        $res = $this->model_bom->get_bom_by($bm) ;;
         $data['bom']=$res;
         $data['bm']=$bm;
         $data['sort']=null;
@@ -85,12 +73,11 @@ class Bom extends CI_Controller {
     {
         $bm = $this->uri->segment('3');
         $p_id =  $this->input->post('id');
-        $m_id =  $this->input->post('m_id');
-        $query=$this->db->query("SELECT * from bom inner join part on part.p_id=bom.b_master where b_id = $bm");
-        $data['result'] = $query->result();
+        $id =  $this->input->post('m_id');
+        $data['result'] =$this->model_bom->get_bom_by($bm);
         $data['bm'] =$bm;
         $data['p_id'] =$p_id;
-        $data['m_id'] =$m_id;
+        $data['m_id'] =$id;
         $this->load->view('bom/edit_bom',$data);
 		$this->load->view('footer');
     }
@@ -151,11 +138,13 @@ class Bom extends CI_Controller {
         $lasted_id = $this->model_bom->insert_bom($pd_id);
         $res = $this->model_bom->hook_bom($lasted_id);
         $parent_id = $res[0]->pd_id;
- 
-        foreach ($child_id as $id) {
-        $sub_id= $this->model_part->insert_sub_part($lasted_id,$parent_id,$id,$id);
-        $res= $this->model_part->update_sub_id($sub_id);
+        if($this->input->post('child_id') != null){
+            foreach ($child_id as $id) {
+                $sub_id= $this->model_part->insert_sub_part($lasted_id,$parent_id,$id,$id);
+                $res= $this->model_part->update_sub_id($sub_id);
+                }
         }
+
         redirect('bom/manage/'.$lasted_id.'','refresh');
     }
 

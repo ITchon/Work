@@ -15,9 +15,10 @@
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Bom </label>      
           
                       <div class="col-sm-6 col-md-4">
-                   <select name="pd_id" id="pd_id" class="form-control select2"  required>
-                     <optgroup  label='P/NO|DWG/NO' style="" data-head='head'>
-                     <option value="">Select Part | Select Drawing </option>
+                   <select name="pd_id" id="pd_id" class="form-control select2"  data-placeholder=""  required>
+                    <option></option>
+                    <optgroup  label='P/NO|DWG/NO' style="" data-head='head'>
+                     
               
                    <?php
                       foreach($result as $r){?>

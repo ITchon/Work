@@ -18,9 +18,10 @@
           
                       <div class="col-sm-6 col-md-4">
                       <div class="input-group" >
-                   <select name="bm" id="selectSubstance" class="form-control select2"  required>
-                   <option value="" ><b>PART NO | DRAWING NO</b></option>
-                   
+                   <select name="bm" id="selectSubstance" class="form-control select2"  data-placeholder="" required>
+                   <option></option>
+                   <optgroup  label='P/NO|DWG/NO' style="" data-head='head'>
+              
                    <?php
                       foreach($result as $r){?>
             
@@ -29,6 +30,7 @@
                     <?php
                       }
                       ?> 
+                      </optgroup>
                    </select>
                     <div class="input-group-btn"> 
                     <button type="submit" id="btn" class="btn btn-primary btn-block">SEARCH</button>
@@ -50,7 +52,8 @@
       <script>
         $(document).ready(function() {
           $('#selectSubstance').select2({
-    templateResult: function(data) {
+    
+        templateResult: function(data) {
         var r = data.text.split('|');
         var $result = $(
             '<div class="row">' +

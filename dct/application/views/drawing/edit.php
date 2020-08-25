@@ -158,8 +158,9 @@ $this->session->set_flashdata('search',$search);
                    </select>
                  
                       <button class="btn btn-outline-primary " type="button" id="add">Add NEW PART</button>
-                      <div></div>
-                    <button type="button" class="btn btn-outline-danger btn_remove hidden">Remove</button><br>
+                  
+                    <button type="button" class="btn btn-outline-danger btn_remove hidden" >Remove</button>
+                  
                       <div id="dynamic_field"></div>
                       
                      
@@ -186,6 +187,7 @@ $this->session->set_flashdata('search',$search);
                       }
                        ?>
                        <?php if($result_pd != null){ ?>
+                       <hr>
                        <input type="button" class="btn btn-danger" id="toggle" value="delete all" onClick="do_this()" />
                        <?php } ?>
                       </tbody>
@@ -195,8 +197,8 @@ $this->session->set_flashdata('search',$search);
                       
                   </div>
 
-
-                  <div class="form-group">
+           
+                  <div class="form-group" style="paddig-bottom:20px">
                     <button type="submit" id="btn" class="btn btn-primary btn-block">Save Changes</button>
                   </div>
                 </form>
