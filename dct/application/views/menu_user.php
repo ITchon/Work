@@ -1,5 +1,5 @@
 
-  <body class="layout layout-header-fixed layout-sidebar-sticky">
+  <body class="layout layout-header-fixed layout-sidebar-fixed">
     <div class="layout-header">
       <div class="navbar navbar-default">
         <div class="navbar-header ">

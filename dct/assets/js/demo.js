@@ -1686,7 +1686,7 @@
 
     if (!!Cookies.get('shareMessage')) return;
 
-    message = 'If you like Elephant, please share it with your friends ' + 'and followers, this way you will help the elephant grow.';
+    message = 'If you need to change anythings in this website , please contact systems department' ;
 
     toastr.info(message, title, {
       progressBar: true,
