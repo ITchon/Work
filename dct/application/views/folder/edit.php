@@ -10,7 +10,7 @@
               <h2 class=" text-center text-primary">
              EDIT TYPE
             </h2><hr>
-            <form class="table form form-horizontal container" action="<?php echo base_url()?>type/save_edit" method="post" data-toggle="validator">
+            <form class="table form form-horizontal container" action="<?php echo base_url()?>folder/save_edit" method="post" data-toggle="validator">
             
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Type name</label>

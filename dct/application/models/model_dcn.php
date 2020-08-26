@@ -42,7 +42,7 @@ public function disableDcn($key=''){
   
 }
 
-public function get_type_dcn()
+public function get_folder_dcn()
 {
   $sql =  "SELECT * from folder where delete_flag != 0 AND fg_id = 2";
      $query = $this->db->query($sql);

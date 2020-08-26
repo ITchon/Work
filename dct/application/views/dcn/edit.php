@@ -33,7 +33,7 @@
                       <div class="col-sm-6 col-md-4">
                    <select id="f" name="f_id" class="form-control select2" >
                    <?php
-                      foreach($result_type as $f){?>
+                      foreach($result_folder as $f){?>
                      <option value="<?php echo $f->f_id ?>"><?php echo $f->name ?></option>
                     <?php
                       }

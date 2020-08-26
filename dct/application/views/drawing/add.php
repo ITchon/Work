@@ -99,7 +99,7 @@
                    <option value="" hidden> - - - Select TYPE- - - </option>
                    <?php
                    
-                      foreach($result_type as $t){?>
+                      foreach($result_folder as $t){?>
                      <option value="<?php  echo $t->f_id ?>"><?php echo $t->name ?></option>
                     <?php
                       }

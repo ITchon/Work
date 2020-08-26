@@ -1,10 +1,10 @@
 <?php
 
-class Model_type extends CI_Model
+class Model_folder extends CI_Model
 {
-    function insert_type($type_name,$fol_name)
+    function insert_folder($folder_name,$fol_name)
     {
-     $sql ="INSERT INTO folder (name,folder_name,delete_flag,fg_id) VALUES ( '$type_name', '$fol_name', '1','1' );";
+     $sql ="INSERT INTO folder (name,folder_name,delete_flag,fg_id) VALUES ( '$folder_name', '$fol_name', '1','1' );";
        $query = $this->db->query($sql);  
       if($query){
         return true;
@@ -14,7 +14,7 @@ class Model_type extends CI_Model
       }
     }
 
-    public function delete_type($id) {
+    public function delete_folder($id) {
         $sql ="UPDATE folder SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE f_id = '$id'";
         $query = $this->db->query($sql);
            if ($query) { 
