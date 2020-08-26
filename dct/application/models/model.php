@@ -26,17 +26,18 @@ class Model extends CI_Model
 
   public function CheckSession()        
   {
+
     if ($this->agent->is_mobile())
     {
       $id =  $this->session->userdata('su_id');
       $query = $this->db->query("SELECT * from sys_users WHERE su_id = $id AND enable != 0 "); 
       $result = $query->result()[0];
-      if( $result->mobile==0){
+      if( $result->mobile==0)
       echo "<script>alert('No Moblie Permission')</script>";
       redirect('login','refresh');   
       exit;
-      }
     }
+
       if($this->session->userdata('su_id')=="") {
         echo "<script>alert('Please Login')</script>";
         redirect('login','refresh');

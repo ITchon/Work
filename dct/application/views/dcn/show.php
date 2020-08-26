@@ -27,7 +27,7 @@
                   <thead>
                       <tr>
                       <th>DCN no</th>
-                      <th>Manage</th>
+                      <th width="16%">Manage</th>
                       <th>Status</th>
                       </tr>
                     </thead>
@@ -42,7 +42,8 @@
              ?>
 
                     <?php
-                      echo "<td class='text-center'>";
+                      echo "<td><div class='text-center'>";
+                      if (file_exists("uploads/A_TYPE-dcn/$r->file_name")) echo "<a href='javascript:void(0)'  data-id='".$r->dcn_id."' class='view_img '><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
                       if($this->session->flashdata("download")!== null ){?>
                      
                            <form id='form' action="<?php echo base_url()?>drawing/open_dcn" method="post">
@@ -56,12 +57,12 @@
                        
                      <?php
                           }
-                        if (file_exists("uploads/A_TYPE-drawing/test.pdf"))echo " <a href='javascript:void(0)'  data-id='".$r->dcn_id."' class='view_img'><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
                         if($this->session->flashdata("edit")!== null )
                         echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' data-original-title='Rule' href='".base_url()."dcn/edit_dcn/".$r->dcn_id."'  ><i class='btn-info no-border fa fa-wrench'></i></a>";
                         if($this->session->flashdata("delete") !==null)
                         echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."dcn/deletedcn/".$r->dcn_id ."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a></td>";  
-                        echo "</td>";
+                        echo "</div></td>";
+                        echo "<td class='text-center'>";
                         if($r->enable==1 ){  
                           $icon = "btn-success no-border fa fa-check";
                           $text = "ENABLE";
@@ -72,8 +73,10 @@
                         $text = "DISABLE";
                         $color = "color:#D50000";
                       }
-                      if($this->session->flashdata("enable")!== null ){ echo "<td class='text-center'><a  href='".base_url()."dcn/enable/".$r->dcn_id ."'><i class='$icon'> $text</i></a></td>";}
-                        echo "</tr>";
+                      if($this->session->flashdata("enable")!== null ){ echo "<a  href='".base_url()."dcn/enable/".$r->dcn_id ."'><i class='$icon'> $text</i></a></td>";}
+                      else{ echo "<span style='$color'>$text </span>"; }
+                      echo "</td>";
+                      echo "</tr>";
                   
                   } ?>
             
@@ -95,7 +98,7 @@
  
        $.ajax({
        type: "Post",
-       url:'<?php echo base_url() ?>ajax/view_pdf_dcn',
+       url:'<?php echo base_url() ?>ajax/view_dcn_pdf',
       data: {
        id: id
       },
@@ -108,7 +111,7 @@
       pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
       // if(res.success != false){ 
-      var path ='uploads/'+res.data[0].foldername+res.data[0].file_name;
+      var path ='uploads/'+res.data[0].folder_name+res.data[0].file_name;
       console.log(path);
       pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
           

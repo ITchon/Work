@@ -430,11 +430,19 @@ public function show()
 
     public function upload()
     {   
+        $file = $_FILES['file_name']['name'];
         $f_id =  $this->input->post('f_id');
+  
         $folder = $this->model_drawing->checkfolder($f_id);
         $config['upload_path']           = './uploads/'.$folder;
         $config['allowed_types']        = '*';
-
+        if (file_exists("uploads/$folder/$file")){
+          echo '<script language="javascript">';
+          echo 'alert("File already exist!");';
+          echo 'history.go(-1);';
+          echo '</script>';
+          exit();
+      }
         $d_no =  $this->input->post('d_no');
         $d_name =  $this->input->post('d_name');
         $pos =  $this->input->post('pos');
@@ -443,7 +451,7 @@ public function show()
         $p_id =  $this->input->post('p_id');
         $p_no =  $this->input->post('p_no');
         $p_name =  $this->input->post('p_name');
-        $file = $_FILES['file_name']['name'];
+
 
 
       $num= $this->db->query("SELECT * FROM drawing where d_no = '$d_no'"); 

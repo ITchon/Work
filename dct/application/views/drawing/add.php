@@ -87,7 +87,7 @@
                 <div class="form-group">
                       <label for="email-2" class="col-sm-5 col-md-4 control-label">FILE</label>  
                       <div class="col-sm-6 col-md-4">
-                          <input type="file" name="file_name" class="form-control" id="file_name" required> 
+                          <input type="file" name="file_name" class="form-control" id="file_name" onchange="file()" required> 
                    </div>
                     </div>
 
@@ -137,6 +137,20 @@
                 </div>
                 
       <script>
+//       function file() {
+//   var x = document.getElementById("file_name").value;
+//   var file = x.split("\\");
+//   var fileName = file[file.length-1];
+//  var url='<?php echo base_url() ?>uploads/A_TYPE-drawing/'+fileName;
+//    console.log(fileName);
+//    $.get(url)
+//     .done(function() { 
+//       alert('File already exist!');
+//     }).fail(function() { 
+//         // not exists code
+//     })
+ 
+// };
         $(document).ready(function() {
     $('.select2').select2();
 
