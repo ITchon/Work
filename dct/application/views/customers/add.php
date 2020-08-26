@@ -30,6 +30,14 @@
                       <textarea class="form-control" name="cus_des" rows="5" cols="50"></textarea>
                   </div>
                   </div>
+
+                  <div class="form-group">
+                    <label for="name-1" class="col-sm-3 col-md-4 control-label">FOLDER NAME</label>
+
+                    <div class="col-sm-12 col-md-4">
+                    <input class="form-control" type="text" name="fol_name" required>
+                  </div>
+                  </div>
           </div>
           <div class="form-group">
                     <button type="submit" id="btn" class="btn btn-primary btn-block ">Save Changes</button>

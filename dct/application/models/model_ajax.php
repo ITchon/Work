@@ -5,9 +5,9 @@ class Model_ajax extends CI_Model
 
     public function dwg_by($id)
     {
-            $sql ="SELECT d.file_name as file_code,tf.tf_fol  FROM drawing as d
-            left join type_file as tf on tf.tf_id = d.tf_id
-            WHERE d.d_id='$id' AND tf.delete_flag != 0  ";
+            $sql ="SELECT d.file_name as file_code,f.folder_name  FROM drawing as d
+            left join type_file as f on f.f_id = d.f_id
+            WHERE d.d_id='$id' AND f.delete_flag != 0  ";
               $query = $this->db->query($sql);  
              $data = $query->result(); 
              return $data;
@@ -15,8 +15,8 @@ class Model_ajax extends CI_Model
     }
     public function dwg_by_version($id)
     {
-            $sql ="SELECT v.file_name as file_code,tf.tf_fol  FROM version as v
-            left join type_file as tf on tf.tf_id = v.tf_id
+            $sql ="SELECT v.file_name as file_code,f.folder_name  FROM version as v
+            left join type_file as f on f.f_id = v.f_id
             WHERE v.v_id='$id' AND v.delete_flag != 0  ";
               $query = $this->db->query($sql);  
              $data = $query->result(); 

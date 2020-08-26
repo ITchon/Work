@@ -24,7 +24,7 @@ class Type extends CI_Controller {
     {	
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
-        $sql =  'select * from type_file where delete_flag != 0';
+        $sql =  'select * from folder where delete_flag != 0';
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
         $this->load->view('type/manage',$data);//bring $data to user_data 
@@ -69,7 +69,7 @@ class Type extends CI_Controller {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $id = $this->uri->segment('3');
-        $sql =  "SELECT * from type_file where tf_id = $id";
+        $sql =  "SELECT * from folder where f_id = $id";
 
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
@@ -81,11 +81,11 @@ class Type extends CI_Controller {
 
     public function save_edit()
     {
-        $tf_id =  $this->input->post('tf_id');
-        $tf_name =  $this->input->post('tf_name');
-        $tf_fol =  $this->input->post('tf_fol');
+        $f_id =  $this->input->post('f_id');
+        $f_name =  $this->input->post('f_name');
+        $f_fol =  $this->input->post('f_fol');
 
-        $this->model_type->save_edit_tf($tf_id, $tf_name, $tf_fol);
+        $this->model_type->save_edit_f($f_id, $f_name, $f_fol);
         redirect('type/manage');
 
 

@@ -148,7 +148,7 @@
       pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
       // if(res.success != false){ 
-        var path ='uploads/'+res.data[0].tf_fol+res.data[0].file_code;
+        var path ='uploads/'+res.data[0].folder_name+res.data[0].file_name;
         console.log(path);
       pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
           
@@ -200,7 +200,7 @@
       pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
       // if(res.success != false){ 
-        var path ='uploads/'+res.data[0].tf_fol+res.data[0].file_code;
+        var path ='uploads/'+res.data[0].folder_name+res.data[0].file_name;
         console.log(path);
       pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
           

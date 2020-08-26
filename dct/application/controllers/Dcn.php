@@ -46,7 +46,7 @@ class Dcn extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
 
-        $sql = "SELECT * FROM type_file where tf_group = 2 OR tf_group = 0";
+        $sql = "SELECT * FROM folder where fg_id = 2";
         $query = $this->db->query($sql);
         $data['result_type'] = $query->result(); 
 
@@ -116,8 +116,8 @@ class Dcn extends CI_Controller {
 
     public function save_edit_dcn()
     {
-      $tf_id =  $this->input->post('tf_id');
-      $folder = $this->model_drawing->checkfolder($tf_id);
+      $f_id =  $this->input->post('f_id');
+      $folder = $this->model_drawing->checkfolder($f_id);
       $config['upload_path']           = './uploads/'.$folder;
       $config['allowed_types']        = '*';
 
@@ -129,8 +129,8 @@ class Dcn extends CI_Controller {
     
         $dcn_id =  $this->input->post('dcn_id');
         $dcn_no  =  $this->input->post('dcn_no');
-        $tfold =  $this->input->post('tfold');
-        $folderold = $this->model_drawing->checkfolder($tfold);
+        $fold =  $this->input->post('fold');
+        $folderold = $this->model_drawing->checkfolder($fold);
         $file_name =  $this->input->post('file_name');
         if($_FILES['file_name']['name'] != null){
             $file = $_FILES['file_name']['name'];
@@ -143,7 +143,7 @@ class Dcn extends CI_Controller {
           echo '</script>';
           redirect('drawing/edit_v/'.$d_id.'','refresh');
           }else{
-          $this->model_dcn->save_dcn($dcn_id,$dcn_no,$path_file,$file_name,$tf_id);
+          $this->model_dcn->save_dcn($dcn_id,$dcn_no,$path_file,$file_name,$f_id);
           }
         }else{
 
@@ -187,8 +187,8 @@ class Dcn extends CI_Controller {
         public function upload()
     {       
 
-        $tf_id =  $this->input->post('tf_id');
-        $folder = $this->model_drawing->checkfolder($tf_id);
+        $f_id =  $this->input->post('f_id');
+        $folder = $this->model_drawing->checkfolder($f_id);
         $config['upload_path']           = './uploads/'.$folder.'/';
         $config['allowed_types']        = '*';
         $config['max_size']        = '0';
@@ -196,7 +196,7 @@ class Dcn extends CI_Controller {
         
         $dcn_no =  $this->input->post('dcn_no');
         $path =  $this->input->post('path');
-        $tf_id =  $this->input->post('tf_id');
+        $f_id =  $this->input->post('f_id');
         $file = $_FILES['file_name']['name'];
 
 
@@ -226,7 +226,7 @@ class Dcn extends CI_Controller {
                 $uploaded = $this->upload->data();
     $code = array('filename'  => $uploaded['file_name']);
     foreach ($code as $c) {
-        $result = $this->model_dcn->insert_dcn($dcn_no,$path,$file,$c,$tf_id);
+        $result = $this->model_dcn->insert_dcn($dcn_no,$path,$file,$c,$f_id);
     }
             $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
           <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>

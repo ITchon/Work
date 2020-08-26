@@ -4,7 +4,7 @@ class Model_type extends CI_Model
 {
     function insert_type($type_name,$fol_name)
     {
-     $sql ="INSERT INTO type_file (tf_name,tf_fol,delete_flag,tf_group) VALUES ( '$type_name', '$fol_name', '1','1' );";
+     $sql ="INSERT INTO folder (name,folder_name,delete_flag,fg_id) VALUES ( '$type_name', '$fol_name', '1','1' );";
        $query = $this->db->query($sql);  
       if($query){
         return true;
@@ -15,7 +15,7 @@ class Model_type extends CI_Model
     }
 
     public function delete_type($id) {
-        $sql ="UPDATE type_file SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE tf_id = '$id'";
+        $sql ="UPDATE folder SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE f_id = '$id'";
         $query = $this->db->query($sql);
            if ($query) { 
               return true; 
@@ -25,9 +25,9 @@ class Model_type extends CI_Model
         }
         }
 
-    public function save_edit_tf($tf_id, $tf_name,$tf_fol)
+    public function save_edit_f($f_id, $f_name,$folder_name)
         {
-           $sql1 ="UPDATE type_file SET tf_name = '$tf_name',tf_fol = '$tf_fol', date_updated = CURRENT_TIMESTAMP WHERE tf_id = '$tf_id'";
+           $sql1 ="UPDATE folder SET name = '$f_name',folder_name = '$folder_name', date_updated = CURRENT_TIMESTAMP WHERE f_id = '$f_id'";
           $exc_user = $this->db->query($sql1);
           if ($exc_user ){ return true; }else{ return false; }
         }

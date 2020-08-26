@@ -47,15 +47,15 @@ form {
                 <input type="checkbox" name="type[]" id="select_all"> <label for="select_all" style="cursor: pointer;color:#5b6572">  ALL</label> <br>
                 <?php
                 foreach($result_type as $r){ ?>
-                   <input type="checkbox" name="type[]" id="<?php echo $r->tf_id ?>" class="days"
+                   <input type="checkbox" name="type[]" id="<?php echo $r->f_id ?>" class="days"
                    <?php
                    foreach($type as $t){ 
-                     if($r->tf_id == $t){
+                     if($r->f_id == $t){
                        echo 'checked';
                      }
                    } ?>
-                  value="<?php echo $r->tf_id ?>" > 
-                   <label for="<?php echo $r->tf_id ?>" style="cursor: pointer;color:#5b6572" ><?php echo $r->tf_name ?></label><br>  
+                  value="<?php echo $r->f_id ?>" > 
+                   <label for="<?php echo $r->f_id ?>" style="cursor: pointer;color:#5b6572" ><?php echo $r->name ?></label><br>  
                 <?php  } ?>
                 </div>
                 <br>
@@ -201,7 +201,7 @@ form {
       pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
       // if(res.success != false){ 
-      var path ='uploads/'+res.data[0].tf_fol+res.data[0].file_code;
+      var path ='uploads/'+res.data[0].foldername+res.data[0].file_name;
       console.log(path);
       pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
           

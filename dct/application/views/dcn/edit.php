@@ -19,7 +19,7 @@
                     <label for="part" class="col-sm-5 col-md-4 control-label">DCN Number</label>
                     <div class="col-sm-6 col-md-4">
                     <input type="text" name="dcn_id" value="<?php echo $result->dcn_id ?>" hidden>
-                    <input type="text" name="tfold" value="<?php echo $result->tf_id ?>" hidden>
+                    <input type="text" name="fold" value="<?php echo $result->f_id ?>" hidden>
                     <input id="part" class="form-control " type="text" name="dcn_no" value="<?php echo $result->dcn_no ?>">
 
                     <span class="form-control-feedback" aria-hidden="true">
@@ -31,10 +31,10 @@
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Type</label>      
           
                       <div class="col-sm-6 col-md-4">
-                   <select id="tf" name="tf_id" class="form-control select2" >
+                   <select id="f" name="f_id" class="form-control select2" >
                    <?php
-                      foreach($result_type as $tf){?>
-                     <option value="<?php echo $tf->tf_id ?>"><?php echo $tf->tf_name ?></option>
+                      foreach($result_type as $f){?>
+                     <option value="<?php echo $f->f_id ?>"><?php echo $f->name ?></option>
                     <?php
                       }
                       ?> 
@@ -81,7 +81,7 @@
       </div>
       <script>
         $(document).ready(function() {
-        document.getElementById('tf').value = "<?php echo $result->tf_id ?>";
+        document.getElementById('f').value = "<?php echo $result->f_id ?>";
     $('.select2').select2();
 });
       </script>

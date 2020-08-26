@@ -43,7 +43,7 @@
                <td >
                   <form id='form' action="<?php echo base_url()?>drawing/open_dcn" method="post">
                   <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
-                  <input type="hidden" name="path" value="./uploads/<?php echo $r->tf_fol ?>">
+                  <input type="hidden" name="path" value="./uploads/<?php echo $r->folder_name ?>">
                   <input type="hidden" name="filename" value="<?php echo $r->dcn_file ?>">
                   <input type="hidden" name="file" value="<?php echo $r->dcn_code ?>">
                     <button  type="submit" style=" background-color: Transparent;border:none" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><a>
@@ -56,7 +56,7 @@
              ?>
 
      
-                <td style="font-size: 14px">/uploads/<?php echo $r->tf_fol ?> </td>
+                <td style="font-size: 14px">/uploads/<?php echo $r->folder_name ?> </td>
         
                     <?php
                       echo "<td class='text-center'>";

@@ -27,7 +27,7 @@ class Customers extends CI_Controller {
         $sql =  'SELECT * FROM customers WHERE delete_flag != 0';
         $query = $this->db->query($sql); 
        $data['result_all'] = $query->result();
-        $this->load->view('customers/manage',$data);//bring $data to user_data 
+        $this->load->view('customersf/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
         
     }

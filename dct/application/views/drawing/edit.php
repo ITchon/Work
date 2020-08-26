@@ -30,7 +30,7 @@ tr{
             
 <form name="form1" method="post" class="table form form-horizontal containe" action="<?php echo base_url()?>drawing/save_edit" enctype="multipart/form-data">
 <input hidden type="text" name="search" value="<?php echo $search ?>" >
-<input hidden type="text" name="tfold" value="<?php echo $result->tf_id ?>" >
+<input hidden type="text" name="fold" value="<?php echo $result->f_id ?>" >
 <?php $search =  $this->session->flashdata('search');
 $this->session->set_flashdata('search',$search);
 ?>
@@ -114,10 +114,10 @@ $this->session->set_flashdata('search',$search);
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Type</label>      
           
                       <div class="col-sm-6 col-md-4">
-                   <select id="tf" name="tf_id" class="form-control select2" >
+                   <select id="f" name="f_id" class="form-control select2" >
                    <?php
-                      foreach($result_type as $tf){?>
-                     <option value="<?php  echo $tf->tf_id ?>"><?php echo $tf->tf_name ?></option>
+                      foreach($result_type as $f){?>
+                     <option value="<?php  echo $f->f_id ?>"><?php echo $f->name ?></option>
                     <?php
                       }
                       ?> 
@@ -223,7 +223,7 @@ if(button.value == 'delete all'){
 }
 }
         $(document).ready(function() {
-document.getElementById('tf').value = "<?php echo $result->tf_id ?>";
+document.getElementById('f').value = "<?php echo $result->f_id ?>";
 document.getElementById('dcn').value = "<?php echo $result->dcn_id ?>";
 document.getElementById('cus').value = "<?php echo $result->cus_id ?>";
     $('.select2').select2();

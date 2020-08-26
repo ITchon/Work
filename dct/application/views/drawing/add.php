@@ -95,12 +95,12 @@
                     <label for="dcn" class="col-sm-5 col-md-4 control-label">TYPE</label>    
 
                 <div class="col-sm-5 col-md-4">
-                   <select name="tf_id" class="form-control select2"  required>
+                   <select name="f_id" class="form-control select2"  required>
                    <option value="" hidden> - - - Select TYPE- - - </option>
                    <?php
                    
                       foreach($result_type as $t){?>
-                     <option value="<?php  echo $t->tf_id ?>"><?php echo $t->tf_name ?></option>
+                     <option value="<?php  echo $t->f_id ?>"><?php echo $t->name ?></option>
                     <?php
                       }
                       ?> 

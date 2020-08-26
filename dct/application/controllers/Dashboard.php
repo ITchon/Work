@@ -33,12 +33,12 @@ class Manage extends CI_Controller {
         $data['bom'] = $bom[0]->b_id;
 
 
-        $sql5 = "SELECT tf.tf_name,tf.tf_fol FROM type_file as tf";
+        $sql5 = "SELECT f.name,f.folder_name FROM type_file as f";
         $query = $this->db->query($sql5);
         $filea = $query->result();
         $num = 0;
         foreach($filea as $f){
-        $directory = './uploads/'.$f->tf_fol.'/';
+        $directory = './uploads/'.$f->folder_name.'/';
         $files = glob($directory . "*");
         if ($files){
         $fileall = count($files); 

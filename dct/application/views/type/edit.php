@@ -15,8 +15,8 @@
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Type name</label>
                     <div class="col-sm-6 col-md-4">
-                      <input type="text" name="tf_id" value="<?php echo $result[0]->tf_id?>" hidden>
-                    <input class="form-control" type="text" name="tf_name" value="<?php echo $result[0]->tf_name ?>">
+                      <input type="text" name="f_id" value="<?php echo $result[0]->f_id?>" hidden>
+                    <input class="form-control" type="text" name="f_name" value="<?php echo $result[0]->name ?>">
 
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
@@ -27,7 +27,7 @@
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Folder Name</label>
                     <div class="col-sm-6 col-md-4">
-                      <input class="form-control" name="tf_fol" value="<?php echo $result[0]->tf_fol ?>">
+                      <input class="form-control" name="fol_name" value="<?php echo $result[0]->folder_name ?>">
                     </span>
                     </div>
                 </div>

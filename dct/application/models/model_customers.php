@@ -20,6 +20,21 @@ public function insert_cus($cusname,$cusdes)
      return false;
 }
 
+
+public function insert_fg($fol_name)
+{
+
+     $sql ="INSERT INTO folder_group (fg_name,fg_fol) VALUES ( '$fol_name', '$fol_name' );";
+       $query = $this->db->query($sql);  
+      if($query){
+        return true;
+      }
+      else{
+        return false;
+      }
+     
+}
+
     
 public function delete_cus($id) 
 {

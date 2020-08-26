@@ -12,7 +12,7 @@ class Model_drawing extends CI_Model
   }
     public function get_type_drawing()
   {
-    $sql =  "SELECT * from type_file where delete_flag != 0 AND tf_group = 1";
+    $sql =  "SELECT * from folder where delete_flag != 0 AND fg_id = 1";
        $query = $this->db->query($sql);
       $result =  $query->result();
     return $result;
@@ -28,12 +28,12 @@ class Model_drawing extends CI_Model
   }
 
 
-  public function get_tfid($d_id)
+  public function get_fid($d_id)
   { 
-    $sql =  "SELECT tf_id FROM drawing where d_id = '$d_id'";
+    $sql =  "SELECT f_id FROM drawing where d_id = '$d_id'";
     $query = $this->db->query($sql); 
     $result= $query->result();
-    return $result[0]->tf_id;
+    return $result[0]->f_id;
       
   }
 
@@ -105,12 +105,12 @@ class Model_drawing extends CI_Model
   }
 
 
-  public function checkfolder($tf_id)
+  public function checkfolder($f_id)
   { 
-    $sql =  "SELECT tf_fol FROM type_file where delete_flag != 0 AND tf_id = '$tf_id'";
+    $sql =  "SELECT folder_name FROM folder where delete_flag != 0 AND f_id = '$f_id'";
     $query = $this->db->query($sql); 
     $result= $query->result();
-    return $result[0]->tf_fol;
+    return $result[0]->folder_name;
       
   }
 
@@ -148,11 +148,11 @@ class Model_drawing extends CI_Model
 
   }
 
- public function insert_drawing($d_no,$d_name, $dcn_id,$cus_id, $tf_id, $file,$c,$pos)
+ public function insert_drawing($d_no,$d_name, $dcn_id,$cus_id, $f_id, $file,$c,$pos)
   {
      
-   $sql ="INSERT INTO drawing (d_no,d_name,enable, dcn_id,cus_id, date_created,delete_flag,tf_id,file_name,file_code,version,pos) VALUES 
-   ( '$d_no','$d_name','1', '$dcn_id','$cus_id', CURRENT_TIMESTAMP,  '1','$tf_id','$file','$c','00','$pos');";
+   $sql ="INSERT INTO drawing (d_no,d_name,enable, dcn_id,cus_id, date_created,delete_flag,f_id,file_name,file_code,version,pos) VALUES 
+   ( '$d_no','$d_name','1', '$dcn_id','$cus_id', CURRENT_TIMESTAMP,  '1','$f_id','$file','$c','00','$pos');";
      $query = $this->db->query($sql);  
      $last_id = $this->db->insert_id();
    if($query){
@@ -237,11 +237,11 @@ public function del_img($id)
     }
 
 
-  public function save_edit_drawing($d_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$tf_id,$pos)
+  public function save_edit_drawing($d_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$f_id,$pos)
     {
    $path_file = quotemeta($path_file);
      $sql ="UPDATE drawing SET d_no = '$d_no' ,d_name = '$d_name', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id',cus_id = '$cus_id',
-     path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 1 ,tf_id = '$tf_id',pos = '$pos'
+     path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 1 ,f_id = '$f_id',pos = '$pos'
      WHERE d_id = '$d_id'";
        $query = $this->db->query($sql);  
       if($query){
@@ -263,7 +263,7 @@ public function del_img($id)
   $d_name =  $data->d_name;
   $pos =  $data->pos;
   $cus_id =  $data->cus_id;
-  $tf_id =  $data->tf_id;
+  $f_id =  $data->f_id;
   $version =  $data->version;
   $file_name =  $data->file_name;
   $path_file =  $data->path_file;
@@ -273,8 +273,8 @@ public function del_img($id)
   $path_file = quotemeta($path_file);
 
   $gg ="INSERT INTO version (d_id,d_name, d_no, cus_id, dcn_id, enable, date_created, delete_flag,
-  path_file, file_name,file_code, version,tf_id,pos) VALUES ( '$d_id','$d_name', '$d_no','$cus_id', 
-  '$dcn_id', '0', CURRENT_TIMESTAMP, '1', '$path_file', '$file_name','$file_code', '$version','$tf_id','$pos');";
+  path_file, file_name,file_code, version,f_id,pos) VALUES ( '$d_id','$d_name', '$d_no','$cus_id', 
+  '$dcn_id', '0', CURRENT_TIMESTAMP, '1', '$path_file', '$file_name','$file_code', '$version','$f_id','$pos');";
   $query = $this->db->query($gg); 
 if($query){
      return true;
@@ -286,11 +286,11 @@ if($query){
  }
 
 
- function update_version($d_id,$d_name,$cus_id, $d_no, $dcn_id, $version, $file, $path_file,$c,$tf_id,$pos)
+ function update_version($d_id,$d_name,$cus_id, $d_no, $dcn_id, $version, $file, $path_file,$c,$f_id,$pos)
  {
   $v = $version+1;
 $path_file = quotemeta($path_file);
-  $sql ="UPDATE drawing SET d_no = '$d_no' ,d_name ='$d_name',cus_id = '$cus_id', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id', version = '$v', path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 1 ,tf_id = '$tf_id',pos = '$pos' WHERE d_id = '$d_id'";
+  $sql ="UPDATE drawing SET d_no = '$d_no' ,d_name ='$d_name',cus_id = '$cus_id', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id', version = '$v', path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 1 ,f_id = '$f_id',pos = '$pos' WHERE d_id = '$d_id'";
     $query = $this->db->query($sql);  
    if($query){
      return true;
@@ -324,12 +324,12 @@ $path_file = quotemeta($path_file);
   public function drawing_search($s_dno,$s_name,$s_pno,$type)
   {
       if($type == null ){
-      $sql1 =  "SELECT tf_id from type_file where delete_flag != 0 AND tf_group = 1";
+      $sql1 =  "SELECT f_id from folder where delete_flag != 0 AND fg_id = 1";
       $query = $this->db->query($sql1);
       $result =  $query->result();
       $sum = '';
       foreach($result as $r){
-        $sum = $sum.$r->tf_id.',';
+        $sum = $sum.$r->f_id.',';
       }
       $type = rtrim($sum,',');
       
@@ -338,13 +338,13 @@ $path_file = quotemeta($path_file);
       }
       $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,c.cus_id,c.cus_name,
        d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no,dc.file_name as dcn_file,
-       dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code ,d.tf_id,d.pos
+       dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code ,d.f_id,d.pos
       from drawing as d
         left join part_drawing as pd on pd.d_id = d.d_id
         left join customers as c on c.cus_id = d.cus_id
         left join dcn as dc on dc.dcn_id = d.dcn_id
         left join part as p on p.p_id = pd.p_id
-        where d.delete_flag != 0 AND d.tf_id IN ($type) AND (d.d_no LIKE '%$s_dno%' OR d.d_name LIKE '%$s_name%' OR p.p_no LIKE '%$s_pno%')";
+        where d.delete_flag != 0 AND d.f_id IN ($type) AND (d.d_no LIKE '%$s_dno%' OR d.d_name LIKE '%$s_name%' OR p.p_no LIKE '%$s_pno%')";
 
       $query = $this->db->query($sql);
       $result =  $query->result();
@@ -356,7 +356,7 @@ $path_file = quotemeta($path_file);
   {
     $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,c.cus_id,c.cus_name,
      d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no,dc.file_name as dcn_file,
-     dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code, d.tf_id,d.pos
+     dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code, d.f_id,d.pos
           from drawing as d
             left join part_drawing as pd on pd.d_id = d.d_id
             left join customers as c on c.cus_id = d.cus_id
@@ -395,11 +395,11 @@ $path_file = quotemeta($path_file);
   }
 
 
-  public function save_edit_drawing_v($v_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$tf_id,$pos)
+  public function save_edit_drawing_v($v_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$f_id,$pos)
   {
  $path_file = quotemeta($path_file);
    $sql ="UPDATE version SET d_no = '$d_no' ,d_name = '$d_name', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id',cus_id = '$cus_id',
-   path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 0 ,tf_id = '$tf_id',pos = '$pos'
+   path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 0 ,f_id = '$f_id',pos = '$pos'
    WHERE v_id = '$v_id'";
      $query = $this->db->query($sql);  
     if($query){
