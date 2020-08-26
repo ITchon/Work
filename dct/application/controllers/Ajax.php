@@ -22,6 +22,15 @@ public function __construct()
       echo $this->model_ajax->fetch_drawing($this->input->post('pd_id'));
      }
     }
+    
+    public function fetch_folder()
+    {
+     if($this->input->post('cus_id'))
+     
+     {
+      echo $this->model_ajax->fetch_folder($this->input->post('cus_id'));
+     }
+    }
  
     public function view_pdf()
     {

@@ -41,6 +41,24 @@ class Model_ajax extends CI_Model
 
      return $output;
     }
+
+    function fetch_folder($cus_id)
+    {
+      $sql ="SELECT fg.fg_id,f.f_id,f.name as folname from customers as cus
+      inner join folder_group as fg on fg.fg_id = cus.fg_id
+      inner join folder as f on f.fg_id = fg.fg_id
+      where cus.cus_id = $cus_id";
+     $query = $this->db->query($sql); 
+
+     $output = '<optgroup label="" >';
+     foreach($query->result() as $row)
+     {
+       
+      $output .= '<option value="'.$row->f_id.'">'.$row->folname.'</option>.';
+     }
+
+     return $output;
+    }
    
 
 }

@@ -48,9 +48,9 @@ class Customers extends CI_Controller {
         $cus_name =  $this->input->post('cus_name');
         $cus_des =  $this->input->post('cus_des');
         $fol_name =  $this->input->post('fol_name');
-        $result = $this->model_customers->insert_cus($cus_name,$cus_des);
-       if($result == true){
-        $this->model_customers->insert_fg($fol_name);
+        $last_id = $this->model_customers->insert_fg($fol_name);
+       if($result != false){
+        $this->model_customers->insert_cus($cus_name,$cus_des,$last_id);
         $path = "uploads/".$fol_name;
         if(!is_dir($path)) //create the folder if it's not exists
         {
@@ -58,14 +58,11 @@ class Customers extends CI_Controller {
         } 
         redirect('customers/manage','refresh');
        }
-       if($result == false){
+       else{
         echo "<script>alert('Name already exist')</script>";
         redirect('customers/add','refresh'); 
        }
-       if($result == 3){
-        echo "<script>alert('Error')</script>";
-        redirect('customers/add','refresh'); 
-       }
+
 
     }
 

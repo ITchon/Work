@@ -13,16 +13,31 @@
               
             <form class="table form form-horizontal container" action="<?php echo base_url()?>folder/insert"  method="post" class="text-center" >
 
+
+            <div class="form-group has-feedback">
+                    <label for="fol" class="col-sm-5 col-md-4 control-label">FOLDER GROUP</label>    
+
+                <div class="col-sm-5 col-md-4">
+                   <select name="fg_id" class="form-control select2"  required>
+                   <option value="" hidden> - - - Select FOLDER- - - </option>
+                   <?php
+                   
+                      foreach($result_folg as $fg){?>
+                     <option value="<?php  echo $fg->fg_id ?>"><?php echo $fg->name ?></option>
+                    <?php
+                      }
+                      ?> 
+                   </select>
+                    </div>
+                    </div>
                  
                   <div class="form-group">
                     <label for="name-1" class="col-sm-3 col-md-4 control-label">TYPE NAME</label>
-
                     <div class="col-sm-6 col-md-4">
                     <input class="form-control" type="text" name="type_name" required>
                   </div>
                   </div>
 
-                 
                   <div class="form-group">
                     <label for="name-1" class="col-sm-3 col-md-4 control-label">FOLDER NAME</label>
 
@@ -30,6 +45,7 @@
                     <input class="form-control" type="text" name="fol_name" required>
                   </div>
                   </div>
+
 
           </div>
           <div class="form-group">

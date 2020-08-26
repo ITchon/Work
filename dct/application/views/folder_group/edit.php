@@ -8,15 +8,15 @@
             <div class="col-md-12  ">
               <div class="demo-form-wrapper card" style="padding-top:8px">
               <h2 class=" text-center text-primary">
-             EDIT TYPE
+             EDIT FOLDER GROUP
             </h2><hr>
-            <form class="table form form-horizontal container" action="<?php echo base_url()?>folder/save_edit" method="post" data-toggle="validator">
+            <form class="table form form-horizontal container" action="<?php echo base_url()?>foldergroup/save_edit" method="post" data-toggle="validator">
             
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Type name</label>
                     <div class="col-sm-6 col-md-4">
-                      <input type="text" name="f_id" value="<?php echo $result[0]->f_id?>" hidden>
-                    <input class="form-control" type="text" name="type_name" value="<?php echo $result[0]->name ?>">
+                      <input type="text" name="fg_id" value="<?php echo $result[0]->fg_id?>" hidden>
+                    <input class="form-control" type="text" name="fg_name" value="<?php echo $result[0]->name ?>">
 
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
@@ -27,7 +27,7 @@
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Folder Name</label>
                     <div class="col-sm-6 col-md-4">
-                      <input class="form-control" name="fol_name" value="<?php echo $result[0]->folder_name ?>">
+                      <input class="form-control" name="folg_name" value="<?php echo $result[0]->foldergroup_name ?>">
                     </span>
                     </div>
                 </div>

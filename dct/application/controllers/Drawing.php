@@ -475,6 +475,7 @@ public function show()
           $last_id = $this->model_drawing->insert_drawing($d_no,$d_name, $dcn_id,$cus_id, $f_id, $file,$c,$pos);
           $d_id = $last_id;
       }
+      
     $arr_count = sizeof($p_no);
     for($i=0; $i<$arr_count; $i++)
     {
