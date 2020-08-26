@@ -143,8 +143,7 @@ th, td {
                                 <?php                     
                           }
                         }
-               ?>
-            <?php  foreach($result_bom as $row){ ?>
+                   foreach($result_bom as $row){ ?>
                           <tr>  
                              <?php for($i=1;$i<=$maxlv;$i++) { 
                                if($i== $row['lv']){

@@ -168,21 +168,21 @@ class Dcn extends CI_Controller {
         }
     }
 
-    public function disable($uid){
+    // public function disable($uid){
 
-        $this->model->CheckPermission($this->session->userdata('su_id'));
-        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+    //     $this->model->CheckPermission($this->session->userdata('su_id'));
+    //     $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
-        $result = $this->model_dcn->disableDcn($uid);
-        $chk = $this->session->flashdata('chk');
+    //     $result = $this->model_dcn->disableDcn($uid);
+    //     $chk = $this->session->flashdata('chk');
 
-        if($chk!=null){
-            redirect('dcn/manage/'.$chk.'','refresh');
-        }else{
-            redirect('dcn/manage/','refresh');
+    //     if($chk!=null){
+    //         redirect('dcn/manage/'.$chk.'','refresh');
+    //     }else{
+    //         redirect('dcn/manage/','refresh');
 
-        }
-    }
+    //     }
+    // }
 
         public function upload()
     {       
