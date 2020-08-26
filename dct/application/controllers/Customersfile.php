@@ -26,9 +26,12 @@ class Customersfile extends CI_Controller {
     {	
         $this->model->CheckPermission($this->session->userdata('su_id'));
          $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-        $sql =  'SELECT * FROM customers WHERE delete_flag != 0';
+        $sql =  'SELECT cusf.cusf_id,cusf.file_name,cusf.cusf_des,cus.cus_name as cusname
+        FROM customers_file as cusf
+        inner join customers as cus on cus.cus_id = cusf.cus_id
+        where cus.delete_flag !=0 ';
         $query = $this->db->query($sql); 
-       $data['result_all'] = $query->result();
+       $data['result'] = $query->result();
         $this->load->view('customersfile/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
         
@@ -59,7 +62,7 @@ class Customersfile extends CI_Controller {
 
         $cus_id =  $this->input->post('cus_id');
         $cusf_des =  $this->input->post('cusf_des');
-        $file_name =  $this->input->post('file_name');
+        $file_name = $_FILES['file_name']['name'];
 
         $this->load->library('upload', $config);
         $this->upload->initialize($config);
@@ -73,8 +76,8 @@ class Customersfile extends CI_Controller {
             redirect('customersfile/add','refresh');   
             }
             else{
-            $res = $this->model_customersfile->insert_cusf($cus_id,$cusf_des,$file_name);
-            if($res != false){
+            $res = $this->model_customersfile->insert_cusf($cus_id,$cusf_des,$file_name,$f_id);
+            if($res != true){
             echo "<script>";
             echo 'alert(" What wrong ");';
             echo 'history.go(-1);';
