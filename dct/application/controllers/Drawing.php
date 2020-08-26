@@ -355,7 +355,6 @@ public function show()
         $path = './uploads/'.$folder.$filecode;
         $open = ("$path");
         $data = file_get_contents("$path");
-
         if($open){
         $this->model_drawing->download_record($this->session->userdata('su_id'),$this->session->userdata('username'),$filename);
         force_download($filename, $data);

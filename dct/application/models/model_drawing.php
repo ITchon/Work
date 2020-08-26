@@ -51,10 +51,10 @@ class Model_drawing extends CI_Model
   
   public function get_filecode($d_id)
   { 
-    $sql =  "SELECT file_code FROM drawing where d_id = '$d_id'";
+    $sql =  "SELECT file_name FROM drawing where d_id = '$d_id'";
     $query = $this->db->query($sql); 
     $result= $query->result();
-    return $result[0]->file_code;
+    return $result[0]->file_name;
       
   }
 

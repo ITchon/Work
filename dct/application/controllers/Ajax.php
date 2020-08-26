@@ -14,7 +14,7 @@ public function __construct()
 
     }
     
-    function fetch_drawing()
+    public function fetch_drawing()
     {
      if($this->input->post('pd_id'))
      
