@@ -66,7 +66,7 @@ public function show()
       $s_dno = $this->input->get('s_dno');  
       $s_name = $this->input->get('s_name');
       $s_pno = $this->input->get('s_pno');
-      $type = $this->input->get('type');
+      $folder = $this->input->get('folder');
 
 
           
@@ -79,8 +79,8 @@ public function show()
       $data['s_dno'] = $s_dno;
       $data['s_name'] = $s_name;
       $data['s_pno'] = $s_pno;
-      $data['type'] = $type;
-      $data['result_type']= $this->model_drawing->get_type_drawing();
+      $data['folder'] = $folder;
+      $data['result_folder']= $this->model_drawing->get_folder_drawing();
   
       if($this->input->get('s_dno') == null){
         $s_dno = 'null';
@@ -100,8 +100,8 @@ public function show()
 
       }
         
-      if($this->input->get('s_dno') != null || $this->input->get('s_name') != null || $this->input->get('s_pno') != null || $this->input->get('type') != null ){
-        $data['result'] = $this->model_drawing->drawing_search($s_dno,$s_name,$s_pno,$type);
+      if($this->input->get('s_dno') != null || $this->input->get('s_name') != null || $this->input->get('s_pno') != null || $this->input->get('folder') != null ){
+        $data['result'] = $this->model_drawing->drawing_search($s_dno,$s_name,$s_pno,$folder);
       }else{
         $data['result'] = $this->model_drawing->get_partdrawing();
       }
@@ -143,7 +143,7 @@ public function show()
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
         $data['result_dcn'] = $this->model_drawing->get_dcn();
-        $data['result_type'] = $this->model_drawing->get_type_drawing();
+        $data['result_folder'] = $this->model_drawing->get_folder_drawing();
         $data['result_cus'] = $this->model_drawing->get_customers();
         $data['result_p'] = $this->model_drawing->get_part();
 
@@ -239,7 +239,7 @@ public function show()
       $data['result'] = $this->model_drawing->get_drawing_byid($d_id);
       $data['result_dcn'] = $this->model_drawing->get_dcn();
       $data['result_cus'] = $this->model_drawing->get_customers();
-      $data['result_type']= $this->model_drawing->get_type_drawing();
+      $data['result_folder']= $this->model_drawing->get_folder_drawing();
       $this->load->view('drawing/add_version',$data);
       $this->load->view('footer');
   } 
@@ -569,7 +569,7 @@ public function show()
         $data['result'] = $this->model_drawing->get_drawing_byid($d_id);
         $data['result_dcn'] = $this->model_drawing->get_dcn();
         $data['result_cus'] = $this->model_drawing->get_customers();
-        $data['result_type'] = $this->model_drawing->get_type_drawing();
+        $data['result_folder'] = $this->model_drawing->get_folder_drawing();
         $data['result_pd'] = $this->model_drawing->get_part_drawing_byid($d_id);
         $pid = $this->model_drawing->get_pid_bypd($d_id);
         foreach($pid as $p){
@@ -755,7 +755,7 @@ public function show()
         $sql1 =  "SELECT * from customers";
         $query = $this->db->query($sql1); 
         $data['result_cus'] = $query->result(); 
-        $data['result_type'] = $this->model_drawing->get_type_drawing();
+        $data['result_folder'] = $this->model_drawing->get_folder_drawing();
         $data['result_pd'] = $this->model_drawing->get_part_drawing_byid($d_id);
         $pid = $this->model_drawing->get_pid_bypd($d_id);
         foreach($pid as $p){

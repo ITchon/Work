@@ -48,7 +48,7 @@ class Dcn extends CI_Controller {
 
         $sql = "SELECT * FROM folder where fg_id = 2";
         $query = $this->db->query($sql);
-        $data['result_type'] = $query->result(); 
+        $data['result_folder'] = $query->result(); 
 
         $this->load->view('dcn/add',$data);//bring $data to user_data 
         $this->load->view('footer');
@@ -108,7 +108,7 @@ class Dcn extends CI_Controller {
         where dcn_id = $id";
         $query = $this->db->query($sql); 
         $data['result'] = $query->result()[0]; 
-        $data['result_type'] =  $this->model_dcn->get_type_dcn($id);
+        $data['result_folder'] =  $this->model_dcn->get_folder_dcn($id);
         $this->load->view('dcn/edit',$data);
         $this->load->view('footer');
   

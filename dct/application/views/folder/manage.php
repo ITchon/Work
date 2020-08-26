@@ -30,10 +30,10 @@
                 echo "<td>".$r->name."</td>";
                 echo "<td>".$r->folder_name."</td>";
                 if($this->session->flashdata("edit")!== null )
-                echo "<td class='text-center'><a   href='".base_url()."type/edit/".$r->f_id."'  ><i class='btn-info no-border fa fa-wrench'></i></a>";
+                echo "<td class='text-center'><a   href='".base_url()."folder/edit/".$r->f_id."'  ><i class='btn-info no-border fa fa-wrench'></i></a>";
                 
                 if($this->session->flashdata("delete")!== null )
-                echo "<a  href='".base_url()."type/delete/".$r->f_id ."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a></td>";  
+                echo "<a  href='".base_url()."folder/delete/".$r->f_id ."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a></td>";  
       
                 echo "</tr>";
                 }

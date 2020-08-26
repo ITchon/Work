@@ -33,7 +33,7 @@ class Manage extends CI_Controller {
         $data['bom'] = $bom[0]->b_id;
 
 
-        $sql5 = "SELECT f.name,f.folder_name FROM type_file as f";
+        $sql5 = "SELECT f.name,f.folder_name FROM folder as f";
         $query = $this->db->query($sql5);
         $filea = $query->result();
         $num = 0;

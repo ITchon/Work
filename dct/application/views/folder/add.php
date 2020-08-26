@@ -11,7 +11,7 @@
             ADD TYPE
             </h2><hr>
               
-            <form class="table form form-horizontal container" action="<?php echo base_url()?>type/insert"  method="post" class="text-center" >
+            <form class="table form form-horizontal container" action="<?php echo base_url()?>folder/insert"  method="post" class="text-center" >
 
                  
                   <div class="form-group">

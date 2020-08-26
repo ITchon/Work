@@ -10,7 +10,7 @@ class Model_drawing extends CI_Model
       $result =  $query->result();
     return $result;
   }
-    public function get_type_drawing()
+    public function get_folder_drawing()
   {
     $sql =  "SELECT * from folder where delete_flag != 0 AND fg_id = 1";
        $query = $this->db->query($sql);
@@ -321,9 +321,9 @@ $path_file = quotemeta($path_file);
     
   }
 
-  public function drawing_search($s_dno,$s_name,$s_pno,$type)
+  public function drawing_search($s_dno,$s_name,$s_pno,$folder)
   {
-      if($type == null ){
+      if($folder == null ){
       $sql1 =  "SELECT f_id from folder where delete_flag != 0 AND fg_id = 1";
       $query = $this->db->query($sql1);
       $result =  $query->result();
@@ -331,10 +331,10 @@ $path_file = quotemeta($path_file);
       foreach($result as $r){
         $sum = $sum.$r->f_id.',';
       }
-      $type = rtrim($sum,',');
+      $folder = rtrim($sum,',');
       
       }else{
-        $type =  implode(',',array_map('intval',$type));
+        $folder =  implode(',',array_map('intval',$folder));
       }
       $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,c.cus_id,c.cus_name,
        d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no,dc.file_name as dcn_file,
@@ -344,7 +344,7 @@ $path_file = quotemeta($path_file);
         left join customers as c on c.cus_id = d.cus_id
         left join dcn as dc on dc.dcn_id = d.dcn_id
         left join part as p on p.p_id = pd.p_id
-        where d.delete_flag != 0 AND d.f_id IN ($type) AND (d.d_no LIKE '%$s_dno%' OR d.d_name LIKE '%$s_name%' OR p.p_no LIKE '%$s_pno%')";
+        where d.delete_flag != 0 AND d.f_id IN ($folder) AND (d.d_no LIKE '%$s_dno%' OR d.d_name LIKE '%$s_name%' OR p.p_no LIKE '%$s_pno%')";
 
       $query = $this->db->query($sql);
       $result =  $query->result();

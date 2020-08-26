@@ -46,7 +46,7 @@ form {
                 <div class="col-md-2"> 
                 <input type="checkbox" name="type[]" id="select_all"> <label for="select_all" style="cursor: pointer;color:#5b6572">  ALL</label> <br>
                 <?php
-                foreach($result_type as $r){ ?>
+                foreach($result_folder as $r){ ?>
                    <input type="checkbox" name="type[]" id="<?php echo $r->f_id ?>" class="days"
                    <?php
                    foreach($type as $t){ 
