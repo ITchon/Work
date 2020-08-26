@@ -11,7 +11,7 @@
              ADD CUSTERMER FILE
             </h2><hr>
             <?php echo $this->session->flashdata("success"); ?>
-            <form class="table form form-horizontal container" action="<?php echo base_url()?>customersfile/insert" method="post" data-toggle="validator">
+            <form class="table form form-horizontal container" action="<?php echo base_url()?>customersfile/insert" method="post" data-toggle="validator" enctype="multipart/form-data">
             <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">SELECT CUSTOMER </label>      
           
@@ -49,7 +49,7 @@
                     <label for="name-1" class="col-sm-3 col-md-4 control-label">CUSTOMER FILE</label>
 
                     <div class="col-sm-6 col-md-4">
-                    <input class="form-control" type="file" name="file_name" required>
+                    <input class="form-control" id="file_name" type="file" name="file_name" required>
                   </div>
                   </div>
 

@@ -28,11 +28,10 @@ public function get_customers()
       }
      
 }
-public function insert_cusf($cus_id,$cusf_des,$file_name)
+public function insert_cusf($cus_id,$cusf_des,$file_name,$f_id)
 {
-     $sql ="INSERT INTO customersfile (cusf_des,cus_id,file_name) VALUE('$cusf_des','$cus_id','$file_name')";
+     $sql ="INSERT INTO customers_file (cusf_des,cus_id,file_name,f_id) VALUE('$cusf_des','$cus_id','$file_name','$f_id')";
        $query = $this->db->query($sql);  
-       $result =  $query->result();
       if($query){
         return true;
       }
