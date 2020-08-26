@@ -128,21 +128,12 @@ form {
                     else{ 
                       echo "<td>$r->dcn_no</td>";
                        }  
-                       if($this->session->flashdata("show_version")!== null){ ?>           
-                       <td class="text-center">
-                        <form  action="<?php echo base_url()?>drawing/show_v" method="get">
-                          <input type="hidden" name="d_id" value="<?php echo $r->d_id ?>">
-      
-                          <button  type="submit"  style=" background-color: Transparent;border:none" ><a>
-                            <?php echo $r->version ?></a></button>
-                        </form>
-                     </td>
-                  <?php 
+                    if($this->session->flashdata("show_version")!== null){ echo "<td><a  href='".base_url()."drawing/show_v?d_id=".$r->d_id."'  >$r->version</a></td>";
                      }else{
                           echo "<td class='text-center'>$r->version</td>";
-                     }
-                  echo "<td class='text-center'>";
-                  echo " <a href='javascript:void(0)'  data-id='".$r->d_id."' class='view_img'><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
+                     }  
+                       echo "<td class='text-right'>";
+                  if (file_exists("uploads/A_TYPE-drawing/$r->file_name"))echo " <a href='javascript:void(0)'  data-id='".$r->d_id."' class='view_img'><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
                   if($this->session->flashdata("download")!== null ) echo "<a href='".base_url()."drawing/openfile/".$r->d_id."'  ><i class='btn-info no-border fa fa-inbox'></i></a>";
                   if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."drawing/edit/".$r->d_id."'  ><i class='btn-info no-border fa fa-wrench'></i></a>";
                   if( $this->session->flashdata("version")!== null ) echo "<a href='".base_url()."drawing/version_form/".$r->d_id."'  ><i class='btn-info no-border fa fa-plus'></i></a>";
@@ -188,7 +179,7 @@ form {
  
        $.ajax({
        type: "Post",
-       url:'<?php echo base_url() ?>ajax/view_pdf',
+       url:'<?php echo base_url() ?>ajax/view_dwg_pdf',
       data: {
        id: id
       },
@@ -247,7 +238,7 @@ $(function() {
 
 </SCRIPT>
 
-<script>
+<!-- <script>
 $(document).ready(function() { 
   var str = <?php echo $type ?>;
 
@@ -257,7 +248,7 @@ $(document).ready(function() {
     }
 
 });
-</script>
+</script> -->
      
 
 

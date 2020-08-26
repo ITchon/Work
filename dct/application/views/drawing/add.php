@@ -55,7 +55,7 @@
 
                 <div class="col-sm-5 col-md-4">
                    <select name="dcn_id" class="form-control select2" id="dcn_id">
-                   <option value="" hidden> - - - Select DCN- - - </option>
+                   <option value="" >- - - None - - - </option>
                    <?php
                    
                       foreach($result_dcn as $dcn){?>
@@ -72,7 +72,7 @@
 
                 <div class="col-sm-5 col-md-4">
                    <select name="cus_id" class="form-control select2" id="dcn_id" >
-                   <option value="" hidden> - - - Select CUSTOMERS- - - </option>
+                   <option value="" hidden> - - - None - - - </option>
                    <?php
                    
                       foreach($result_cus as $cus){?>
@@ -87,7 +87,7 @@
                 <div class="form-group">
                       <label for="email-2" class="col-sm-5 col-md-4 control-label">FILE</label>  
                       <div class="col-sm-6 col-md-4">
-                          <input type="file" name="file_name" class="form-control" id="file_name" required>
+                          <input type="file" name="file_name" class="form-control" id="file_name" required> 
                    </div>
                     </div>
 
@@ -96,7 +96,7 @@
 
                 <div class="col-sm-5 col-md-4">
                    <select name="f_id" class="form-control select2"  required>
-                   <option value="" hidden> - - - Select TYPE- - - </option>
+                   <option value="" hidden> - - - None - - - </option>
                    <?php
                    
                       foreach($result_type as $t){?>
@@ -113,7 +113,7 @@
 
                 <div class="col-sm-5 col-md-4">
                    <select name="p_id[]" class="form-control select2" id="dcn_id" multiple="multiple">
-                   <option value="" hidden> - - - Select PART- - - </option>
+                   <option value="" hidden> - - - None - - - </option>
                    <?php
                    
                       foreach($result_p as $p){?>

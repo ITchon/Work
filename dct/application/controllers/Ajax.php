@@ -23,7 +23,7 @@ public function __construct()
      }
     }
  
-    public function view_pdf()
+    public function view_dwg_pdf()
     {
         $id = $this->input->post('id');
         //$data = $this->model_issue->issue_by_id($id);

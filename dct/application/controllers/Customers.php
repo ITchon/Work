@@ -23,10 +23,10 @@ class Customers extends CI_Controller {
 	public function manage()
     {	
         $this->model->CheckPermission($this->session->userdata('su_id'));
-         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $sql =  'SELECT * FROM customers WHERE delete_flag != 0';
         $query = $this->db->query($sql); 
-       $data['result_all'] = $query->result();
+        $data['result_all'] = $query->result();
         $this->load->view('customers/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
         

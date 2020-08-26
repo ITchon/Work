@@ -5,7 +5,7 @@ class Model_dcn extends CI_Model
   
     public function get_dcn_byid($text)
     {
-        $sql =  "SELECT dc.dcn_id, dc.dcn_no,dc.file_name as dcn_file,dc.path_file as dcn_path
+        $sql =  "SELECT dc.dcn_id, dc.dcn_no,dc.file_name,dc.path_file as dcn_path
         ,dc.file_code as dcn_code,dc.enable,dc.f_id,f.folder_name
         from dcn as dc
         LEFT JOIN folder as f on f.f_id  = dc.f_id
@@ -16,24 +16,17 @@ class Model_dcn extends CI_Model
     }
 
     
-public function enableDcn($key=''){
-
-  $sqlEdt = "UPDATE dcn SET enable='1', date_updated=CURRENT_TIMESTAMP WHERE dcn_id={$key};";
-  $exc_user = $this->db->query($sqlEdt);
-  
-  if ($exc_user){
-    
-    return TRUE;  
-    
-  }else{  return FALSE; }
-  
-}
-
-public function disableDcn($key=''){
-
-  $sqlEdt = "UPDATE dcn SET enable='0', date_updated=CURRENT_TIMESTAMP WHERE dcn_id={$key};";
-  $exc_user = $this->db->query($sqlEdt);
-  
+public function enableDcn($key){
+  $query = $this->db->query("SELECT * from dcn WHERE dcn_id = $key "); 
+  $result = $query->result()[0];
+  if( $result->enable==0){
+    $sqlEdt = "UPDATE dcn SET enable='1', date_updated=CURRENT_TIMESTAMP WHERE dcn_id={$key};";
+    $exc_user = $this->db->query($sqlEdt);
+  }
+  else{
+    $sqlEdt = "UPDATE dcn SET enable='0', date_updated=CURRENT_TIMESTAMP WHERE dcn_id={$key};";
+    $exc_user = $this->db->query($sqlEdt);
+  }
   if ($exc_user){
     
     return TRUE;  
