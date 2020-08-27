@@ -102,7 +102,7 @@ class Customersfile extends CI_Controller {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
-        $this->model_customers->delete_cus($this->uri->segment('3'));
+        $this->model_customersfile->delete_cusf($this->uri->segment('3'));
         redirect('customers/manage');
     }
 
