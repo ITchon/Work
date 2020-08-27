@@ -24,7 +24,7 @@ class Folder extends CI_Controller {
     {	
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
-        $sql =  'select * from folder where delete_flag != 0';
+        $sql =  'SELECT * from folder where delete_flag != 0 AND fg_id NOT IN(1,2)';
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
         $this->load->view('folder/manage',$data);//bring $data to user_data 
@@ -99,6 +99,13 @@ class Folder extends CI_Controller {
         $f_id =  $this->input->post('f_id');
         $type_name =  $this->input->post('type_name');
         $fol_name =  $this->input->post('fol_name');
+        $res = $this->model_folder->getfolder($f_id);
+        $folderg = $res->folg;
+        $folder = $res->fol;
+
+        $oldname = './uploads/'.$folderg.'/'.$folder;
+        $newname = './uploads/' .$folderg.'/'.$fol_name;
+        rename($oldname, $newname);
 
         $this->model_folder->save_edit_f($f_id, $type_name, $fol_name);
         redirect('folder/manage');
