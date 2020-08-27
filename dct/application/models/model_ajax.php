@@ -5,9 +5,10 @@ class Model_ajax extends CI_Model
 
     public function dwg_by($id)
     {
-            $sql ="SELECT d.file_name ,f.folder_name  FROM drawing as d
+            $sql ="SELECT d.file_name ,f.folder_name,fg.foldergroup_name FROM drawing as d
             left join folder as f on f.f_id = d.f_id
-            WHERE d.d_id='$id' AND f.delete_flag != 0  ";
+            left join folder_group as fg on fg.fg_id = f.fg_id
+            WHERE d.d_id='$id' AND f.delete_flag != 0 ";
               $query = $this->db->query($sql);  
              $data = $query->result(); 
              return $data;
@@ -26,8 +27,9 @@ class Model_ajax extends CI_Model
     }
     public function dwg_by_version($id)
     {
-            $sql ="SELECT v.file_name as file_code,f.folder_name  FROM version as v
+            $sql ="SELECT v.file_name,f.folder_name,fg.foldergroup_name FROM version as v
             left join folder as f on f.f_id = v.f_id
+            left join folder_group as fg on fg.fg_id = f.fg_id
             WHERE v.v_id='$id' AND v.delete_flag != 0  ";
               $query = $this->db->query($sql);  
              $data = $query->result(); 

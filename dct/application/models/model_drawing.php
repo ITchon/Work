@@ -377,22 +377,26 @@ $path_file = quotemeta($path_file);
   public function get_drawing_ver($id)
   {
      $sql =  "SELECT d.d_id, d.d_no,d.d_name,d.cus_id,cus.cus_name, d.dcn_id, dc.dcn_no, d.enable, d.path_file, d.file_name, d.version
-     , p.p_no,p.p_id,'v_id',dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code ,d.pos
+     , p.p_no,p.p_id,'v_id',dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code ,d.pos,f.folder_name,fg.foldergroup_name,d.f_id
             from drawing as d
             left join part_drawing as pd on pd.d_id = d.d_id
             left join dcn as dc on dc.dcn_id = d.dcn_id
             left join part as p on p.p_id = pd.p_id 
             left join customers as cus on cus.cus_id = d.cus_id 
-            where d.delete_flag != 0 AND d.d_id = $id
+            inner join folder f on f.f_id = d.f_id
+            inner join folder_group fg on fg.fg_id = f.fg_id
+            where d.delete_flag != 0 AND d.d_id = 1
             UNION
                 SELECT v.d_id, v.d_no,v.d_name,v.cus_id,cus.cus_name, v.dcn_id, dc.dcn_no, v.enable, v.path_file, v.file_name, v.version
-                , p.p_no,p.p_id, v.v_id,dc.file_name as dcn_file,dc.path_file as dcn_path,v.file_code,dc.file_code as dcn_code ,v.pos
+                , p.p_no,p.p_id, v.v_id,dc.file_name as dcn_file,dc.path_file as dcn_path,v.file_code,dc.file_code as dcn_code ,v.pos,f.folder_name,fg.foldergroup_name,v.f_id
          from version as v
          left join part_drawing as pd on pd.d_id = v.d_id
          left join dcn as dc on dc.dcn_id = v.dcn_id
          left join part as p on p.p_id = pd.d_id 
          left join customers as cus on cus.cus_id = v.cus_id 
-         where v.delete_flag != 0 AND v.d_id = $id
+         inner join folder f on f.f_id = v.f_id
+         inner join folder_group fg on fg.fg_id = f.fg_id
+         where v.delete_flag != 0 AND v.d_id = 1
          ORDER by version DESC ";
       $query = $this->db->query($sql); 
       $result =  $query->result();

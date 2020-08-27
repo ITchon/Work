@@ -135,7 +135,7 @@
  
        $.ajax({
        type: "Post",
-       url:'<?php echo base_url() ?>/ajax/view_pdf',
+       url:'<?php echo base_url() ?>/ajax/view_dwg_pdf',
       data: {
        id: id
       },
@@ -148,7 +148,7 @@
       pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
       // if(res.success != false){ 
-        var path ='uploads/'+res.data[0].folder_name+res.data[0].file_name;
+        var path ='uploads/'+res.data[0].foldergroup_name+'/'+res.data[0].folder_name+'/'+res.data[0].file_name;
         console.log(path);
       pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
           
@@ -200,8 +200,8 @@
       pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
       // if(res.success != false){ 
-        var path ='uploads/'+res.data[0].folder_name+res.data[0].file_name;
-        console.log(path);
+      var path ='uploads/'+res.data[0].foldergroup_name+'/'+res.data[0].folder_name+'/'+res.data[0].file_name;
+      console.log(path);
       pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
           
   

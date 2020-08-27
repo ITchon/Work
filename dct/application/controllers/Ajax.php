@@ -89,7 +89,7 @@ public function __construct()
         //$data = $this->model_issue->issue_by_id($id);
 
         $data = $this->model_ajax->dwg_by_version($id);
-        $parts = explode('.', $data[0]->file_code);
+        $parts = explode('.', $data[0]->file_name);
         $extension = array_pop($parts);
         if($extension == 'pdf'){
         $arr = array('success' => false, 'data' => '');
