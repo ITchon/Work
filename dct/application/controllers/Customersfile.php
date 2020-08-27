@@ -130,31 +130,58 @@ class Customersfile extends CI_Controller {
     public function save_edit()
     {
         $f_id =  $this->input->post('f_id');
-        $result = $this->model_customersfile->get_folder_by($f_id);
-        $folderg = $result->folg;
-        $folder = $result->fol;
+        $resnew = $this->model_customersfile->get_folder_by($f_id);
+        $folderg = $resnew->folg;
+        $folder = $resnew->fol;
 
         $config['upload_path']           = './uploads/'.$folderg.'/'.$folder;
         $config['allowed_types']        = '*';
 
+        $fold =  $this->input->post('fold');
+        $resold = $this->model_customersfile->get_folder_by($fold);
+        $foldergold = $resold->folg;
+        $folderold = $resold->fol;
+          if ($_FILES['file_name']['name'] != null) {
+          $file_name2 =  $this->input->post('file_name2');
+          unlink('./uploads/'.$foldergold.'/'.$folderold.'/'.$file_name2);
+          $config['overwrite']            = TRUE;
+          }
+
         $cusf_id =  $this->input->post('cusf_id');
         $cus_id =  $this->input->post('cus_id');
-        $cus_des =  $this->input->post('cus_des');
-        $cus_des =  $this->input->post('cus_des');
-        $filename =  $this->input->post('file_name2');
-        $file = $_FILES['file_name']['name'];
-
-        echo $f_id."f_id<br>";
-        echo $cusf_id."cusf_id<br>";
-        echo $cus_id."cus_id<br>";
-        echo $cus_des."cus_des<br>";
-        echo $file_name."file_name<br>";
-        echo $file."file<br>";
-        exit;
+        $cusf_des =  $this->input->post('cus_des');
+        $file_name =  $this->input->post('file_name2');
         
 
-        $this->model_customers->save_edit_cus($cus_id,$cus_name, $cus_des);
-        redirect('customers/manage');
+        if($_FILES['file_name']['name'] != null){
+            $file = $_FILES['file_name']['name'];
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+              if ( !$this->upload->do_upload('file_name'))
+              {
+              echo "<script>";
+              echo 'alert(" File Failed ");';
+              echo 'history.go(-1);';
+              echo '</script>';
+        }else{
+        $this->model_customersfile->save_edit_cusf($cusf_id,$cus_id,$cusf_des,$file,$f_id);
+        $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
+        <span> แก้ไขข้อมูลเรียบร้อยเเล้ว </span>
+      </div> ');
+        }
+    }else{
+        rename('./uploads/'.$foldergold.'/'.$folderold.'/'.$file_name, './uploads/'.$folderg.'/'.$folder.'/'.$file_name);
+        $this->model_customersfile->save_edit_cusf($cusf_id,$cus_id,$cusf_des,$file_name,$f_id);
+        $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
+        <span> แก้ไขข้อมูลเรียบร้อยเเล้ว </span>
+      </div> ');
+    }
+        
+
+        
+
+        
+        redirect('customersfile/manage');
     }
 
 

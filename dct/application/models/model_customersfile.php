@@ -49,6 +49,15 @@ public function insert_cusf($cus_id,$cusf_des,$file_name,$f_id)
      
 }
 
+public function save_edit_cusf($cusf_id,$cus_id,$cusf_des,$file_name,$f_id)
+{
+   $sql1 ="UPDATE customers_file SET cusf_des = '$cusf_des',file_name = '$file_name', cus_id ='$cus_id', f_id = '$f_id',
+   date_updated = CURRENT_TIMESTAMP 
+   WHERE cusf_id = '$cusf_id'";
+  $exc_user = $this->db->query($sql1);
+  if ($exc_user ){ return true; }else{ return false; }
+}
+
 
 }
 
