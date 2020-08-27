@@ -120,7 +120,9 @@ form {
                        echo "<td class='text-center'>$r->version</td>";
                      }    
                        echo "<td><div class='text-center'>";
-                  if (file_exists("uploads/$r->folder_name/$r->file_name"))echo " <a href='javascript:void(0)'  data-id='".$r->d_id."' class='view_img '><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
+                       echo "uploads/$r->foldergroup_name/$r->folder_name/$r->file_name";
+                       exit;
+                  if (file_exists("uploads/$r->foldergroup_name/$r->folder_name/$r->file_name"))echo " <a href='javascript:void(0)'  data-id='".$r->d_id."' class='view_img '><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
                   if($this->session->flashdata("download")!== null ) echo "<a href='".base_url()."drawing/openfile/".$r->d_id."'  ><i class='btn-info no-border fa fa-inbox'></i></a>";
                   if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."drawing/edit/".$r->d_id."'  ><i class='btn-info no-border fa fa-wrench'></i></a>";
                   if($this->session->flashdata("version")!== null ) echo "<a href='".base_url()."drawing/version_form/".$r->d_id."'  ><i class='btn-info no-border fa fa-plus'></i></a>";

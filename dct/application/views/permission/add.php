@@ -29,7 +29,7 @@
                   </div>
 
                   
-                    <label for="name-1" class="col-sm-3 col-md-4 control-label">Groupsss</label>
+                    <label for="name-1" class="col-sm-3 col-md-4 control-label">Group</label>
                     <div class="col-sm-6 col-md-3">
                   <select name="spg_id" id="" class="form-control select2" required>
              <option value="" hidden >Select Group</option>

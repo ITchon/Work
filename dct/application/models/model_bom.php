@@ -179,7 +179,6 @@ public function delete_sub($id) {
     // echo $res_bom[0]->b_id ;
     // exit;
     $data= $this->model_bom->sub_bom($res_bom[0]->pd_id,$res_bom[0]->b_id) ;
-
     $bm =  $res_bom[0]->b_id;
 
      foreach($data as $r){
