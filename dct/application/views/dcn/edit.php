@@ -12,9 +12,8 @@
             </h2><hr>
             <?php echo $this->session->flashdata("success"); ?>
           
-            <form class="form form-horizontal container" action="<?php echo base_url()?>dcn/save_edit_dcn" method="post" >
-            
-
+            <form class="form form-horizontal container" action="<?php echo base_url()?>dcn/save_edit_dcn" method="post" enctype="multipart/form-data">
+          
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">DCN Number</label>
                     <div class="col-sm-6 col-md-4">
@@ -44,26 +43,14 @@
                     <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">File</label>      
                       <div class="col-sm-6 col-md-4">
-                        <?php if($result->file_name == null){ ?>
-                <input class="form-control" type="text" readonly value="Please add file">
-                <input class="form-control" type="hidden" name="path" value="<?php echo $result->path_file ?>">
-                       <?php  }else { ?>
-                <input class="form-control" type="text" readonly value="<?php echo $result->file_name ?>">
-                <input class="form-control" type="hidden" name="path" value="<?php echo $result->path_file ?>">
-                   <?php } ?>
+                <input class="form-control" readonly name="file_name2" type="text" value="<?php echo $result->file_name ?>">
                     </div>
                     </div> 
                 <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Change File</label>  
                       <div class="col-sm-6 col-md-4">
-                        <?php if($result->file_name){ ?>
-                              <input type="text" name="file_name2" id="file_name2" value="<?php echo $result->file_name ?>" hidden>
-                            <input type="hidden" name="file_code" id="file_code" hidden value="<?php echo $result->file_code ?>" class="form-control">
-                              <input type="file" name="file_name" class="form-control" id="file_name" >
-                      <?php }else{ ?>
-                          <input type="file" name="file_name" class="form-control" id="file_name" required>
+                      <input type="file" name="file_name" class="form-control" id="file_name" >
 
-                      <?php } ?>
                       </div>
                     </div>
                     </div>
