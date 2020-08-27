@@ -30,7 +30,7 @@
                     <tbody>
                     <?php
                     foreach($result_all as $r){
-            echo "<tr>";
+               echo "<tr>";
                 echo "<td>".$r->cus_name."</td>";
                 echo "<td>".$r->cus_des."</td>";
                 if($this->session->flashdata("edit")!== null )

@@ -33,7 +33,7 @@ class Dcn extends CI_Controller {
             $data['chk'] = $dcn_id;
         }
         $data['result'] = $this->model_dcn->get_dcn_byid($text); 
-        
+        $this->load->view('dcn/img_modal');//bring $data to user_data 
         $this->load->view('dcn/show',$data);//bring $data to user_data 
         $this->load->view('footer');
 
