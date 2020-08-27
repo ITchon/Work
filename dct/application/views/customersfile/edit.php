@@ -13,7 +13,7 @@
             <form class="table form form-horizontal container" action="<?php echo base_url()?>customersfile/save_edit" method="post" data-toggle="validator" enctype="multipart/form-data">
             
                       <input type="hidden" name="cusf_id" value="<?php echo $result[0]->cusf_id?>" >
-                      <input type="hidden" id="chkf" name="f_id" value="<?php echo $result[0]->f_id?>" >
+                      <input type="hidden" id="chkf" name="fold" value="<?php echo $result[0]->f_id?>" >
                       <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">SELECT CUSTOMER </label>      
           
@@ -66,7 +66,7 @@
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">NEW FILE</label>
                     <div class="col-sm-6 col-md-4">
-                      <input type="file" id="file_name2" class="form-control" name="file_name" value="<?php echo $result[0]->file_name ?>">
+                      <input type="file" id="file_name" class="form-control" name="file_name" value="<?php echo $result[0]->file_name ?>">
                     </span>
                     </div>
                 </div>
