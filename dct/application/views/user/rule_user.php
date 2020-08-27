@@ -43,12 +43,10 @@ backdrop: 'static'
               foreach($result_user as $rs ){
                     if($r ->sp_id == $rs->sp_id){
                     echo 'checked';
-                  }
-                  }?>  > 
-         <label  for="<?php echo $r->controller ?>" style="cursor: pointer;color:#5b6572"> <?php echo $r->p_name ?></label>
-              
- </div>
-            <?php
+                   }
+                } ?> > <label for="<?php echo $r->controller ?>" style="cursor: pointer;color:#5b6572"> <?php echo $r->p_name ?></label>
+              </div>
+             <?php
                   $i = $r->spg_id;  
           }
             ?>

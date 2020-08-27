@@ -66,8 +66,9 @@
                       <div class="col-sm-6 col-md-3">
                    <select name="gender" class="form-control select2" required="">
                     <option value="">Select Gender</option>
-                      <option value="male">male</option>
-                      <option value="female">female</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="etc">Etc</option>
                        
                    </select>
                     </div>

@@ -36,8 +36,9 @@
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select</label>      
                       <div class="col-sm-6 col-md-3">
                    <select id="select" name="gender" class="form-control select2" required >
-                      <option value="male">male</option>
-                      <option value="female">female</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="etc">Etc</option>
                    </select>
                     </div>
                     </div>
