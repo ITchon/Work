@@ -3,7 +3,7 @@
 class Model_customersfile extends CI_Model
 {
 
-public function checkfolder($f_id)
+public function get_folder_by($f_id)
 { 
       $sql =  "SELECT fg.foldergroup_name as folg ,f.folder_name as fol
       FROM folder as f
@@ -13,6 +13,14 @@ public function checkfolder($f_id)
       $result = $query->result()[0];
       return $result;
         
+}
+
+public function get_folder()
+{
+  $sql =  "SELECT * from folder where delete_flag != 0 AND fg_id NOT IN(1,2)";
+     $query = $this->db->query($sql);
+    $result =  $query->result();
+  return $result;
 }
 
 public function get_customers()

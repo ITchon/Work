@@ -42,7 +42,7 @@ class Model_ajax extends CI_Model
      return $output;
     }
 
-    function fetch_folder($cus_id)
+    function fetch_folder($cus_id,$f_id)
     {
       $sql ="SELECT fg.fg_id,f.f_id,f.name as folname from customers as cus
       inner join folder_group as fg on fg.fg_id = cus.fg_id
@@ -52,14 +52,17 @@ class Model_ajax extends CI_Model
 
      $output = '<optgroup label="" >';
      foreach($query->result() as $row)
-     {
+     {       
+      $selected = '';
+       if($f_id == $row->f_id){
+        $selected = 'selected';
+      }
+         $output .= '<option '.$selected.' value="'.$row->f_id.'">'.$row->folname.'</option>.';
        
-      $output .= '<option value="'.$row->f_id.'">'.$row->folname.'</option>.';
      }
 
      return $output;
     }
-   
 
 }
 

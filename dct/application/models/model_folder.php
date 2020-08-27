@@ -3,6 +3,18 @@
 class Model_folder extends CI_Model
 {
 
+  public function getfolder($f_id)
+{ 
+      $sql =  "SELECT fg.foldergroup_name as folg ,f.folder_name as fol
+      FROM folder as f
+      inner join folder_group as fg on fg.fg_id = f.fg_id
+      where f.delete_flag != 0 AND f.f_id = '$f_id'";
+      $query = $this->db->query($sql); 
+      $result = $query->result()[0];
+      return $result;
+        
+}
+
  public function get_foldergroup()
   {
    $sql ="SELECT * from folder_group where delete_flag != 0 AND hidden !=1";
@@ -15,6 +27,7 @@ class Model_folder extends CI_Model
       return false;
     }
   }
+  
  public function get_foldergroup_byid($fg_id)
   {
    $sql ="SELECT * from folder_group where delete_flag != 0 AND hidden !=1 AND fg_id = $fg_id";

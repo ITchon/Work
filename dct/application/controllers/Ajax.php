@@ -28,9 +28,20 @@ public function __construct()
      if($this->input->post('cus_id'))
      
      {
-      echo $this->model_ajax->fetch_folder($this->input->post('cus_id'));
+      echo $this->model_ajax->fetch_folder($this->input->post('cus_id'),$this->input->post('chkf'));
      }
     }
+ 
+    // public function select_type()
+    // {
+    // $cus_id = $this->input->post('cus_id')
+    // $f_id = $this->input->post('chkf')
+    //  if($this->input->post('chkf'))
+     
+    //  {
+    //   echo $this->model_ajax->select_folder($cus_id,$f_id);
+    //  }
+    // }
  
     public function view_dwg_pdf()
     {

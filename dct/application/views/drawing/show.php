@@ -37,19 +37,19 @@ form {
                 <a href="" class="btn btn-default no_print" onclick="window.history.go(-1); return false;"> Back </a>
                 </h3>
                 <?php
-                $type[] = '';
+                $folder[] = '';
                 $search = $this->session->flashdata('search');
                 $this->session->set_flashdata('search',$search);
             
                 ?>
                 <form name="search" action="<?php echo base_url()?>drawing/show" method="get">
                 <div class="col-md-2"> 
-                <input type="checkbox" name="type[]" id="select_all"> <label for="select_all" style="cursor: pointer;color:#5b6572">  ALL</label> <br>
+                <input type="checkbox" name="folder[]" id="select_all"> <label for="select_all" style="cursor: pointer;color:#5b6572">  ALL</label> <br>
                 <?php
                 foreach($result_folder as $r){ ?>
-                   <input type="checkbox" name="type[]" id="<?php echo $r->f_id ?>" class="days"
+                   <input type="checkbox" name="folder[]" id="<?php echo $r->f_id ?>" class="days"
                    <?php
-                   foreach($type as $t){ 
+                   foreach($folder as $t){ 
                      if($r->f_id == $t){
                        echo 'checked';
                      }
@@ -240,7 +240,7 @@ $(function() {
 
 <!-- <script>
 $(document).ready(function() { 
-  var str = <?php echo $type ?>;
+  var str = <?php echo $folder ?>;
 
     for (i=0; i!=str.length;i++) {
         var checkbox = $("input[type='checkbox'][value='"+str[i]+"']");
