@@ -84,7 +84,6 @@
 
       // if(res.success != false){ 
       var path ='uploads/'+res.data[0].foldergroup_name+'/'+res.data[0].folder_name+'/'+res.data[0].file_name;
-      console.log(path);
       pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
           
   
@@ -102,8 +101,6 @@
        
     },
     error: function (res) {
-    console.log(res);
-     
     alert('NO DATA');
     }
  });

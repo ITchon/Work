@@ -160,7 +160,7 @@ form {
       $(document).ready(function() {
       $('body').on('click', '.view_img', function () {
       var id = $(this).data("id");
-       console.log(id);
+
        $.ajax({
        type: "Post",
        url:'<?php echo base_url() ?>ajax/view_dwg_pdf',
@@ -175,7 +175,7 @@ form {
       pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
       // if(res.success != false){ 
       var path ='uploads/'+res.data[0].foldergroup_name+'/'+res.data[0].folder_name+'/'+res.data[0].file_name;
-      console.log(path);
+
       pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
       pdfDoc = pdfDoc_;
       document.getElementById('page_count').textContent = pdfDoc.numPages;
@@ -188,7 +188,7 @@ form {
         // }
     },
     error: function (res) {
-    console.log(res);
+
     alert('NO DATA');
     }
  });
