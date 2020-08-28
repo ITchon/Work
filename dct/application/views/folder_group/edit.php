@@ -16,6 +16,8 @@
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Folder Name</label>
                     <div class="col-sm-6 col-md-4">
+                    <input type="text" name="fg_id" value="<?php echo $result[0]->fg_id?>" hidden>
+              
                       <input class="form-control" name="folg_name" value="<?php echo $result[0]->foldergroup_name ?>">
                     </span>
                     </div>

@@ -30,13 +30,6 @@
                    </select>
                     </div>
                     </div>
-                 
-                  <div class="form-group">
-                    <label for="name-1" class="col-sm-3 col-md-4 control-label">TYPE NAME</label>
-                    <div class="col-sm-6 col-md-4">
-                    <input class="form-control" type="text" name="type_name" required>
-                  </div>
-                  </div>
 
                   <div class="form-group">
                     <label for="name-1" class="col-sm-3 col-md-4 control-label">FOLDER NAME</label>
@@ -45,7 +38,13 @@
                     <input class="form-control" type="text" name="fol_name" required>
                   </div>
                   </div>
-
+ 
+                  <div class="form-group">
+                    <label for="name-1" class="col-sm-3 col-md-4 control-label">TYPE NAME</label>
+                    <div class="col-sm-6 col-md-4">
+                    <input class="form-control" type="text" name="type_name" required>
+                  </div>
+                  </div>
 
           </div>
           <div class="form-group">

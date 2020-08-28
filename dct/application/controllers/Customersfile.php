@@ -32,7 +32,7 @@ class Customersfile extends CI_Controller {
         inner join customers as cus on cus.cus_id = cusf.cus_id
         inner join folder as f on f.f_id = cusf.f_id
         inner join folder_group as fg on fg.fg_id = f.fg_id
-        where cus.delete_flag !=0';
+        where cusf.delete_flag !=0';
         $query = $this->db->query($sql); 
         $data['result'] = $query->result();
         $this->load->view('customers_file/manage',$data);//bring $data to user_data 
@@ -76,7 +76,7 @@ class Customersfile extends CI_Controller {
             
             echo '</script>';
             exit;
-            redirect('customers_file/add','refresh');   
+            redirect('customersfile/add','refresh');   
             }
             else{
             $res = $this->model_customersfile->insert_cusf($cus_id,$cusf_des,$file_name,$f_id);
@@ -85,7 +85,7 @@ class Customersfile extends CI_Controller {
             echo 'alert(" What wrong ");';
             echo 'history.go(-1);';
             echo '</script>';
-            redirect('customers_file/add','refresh');   
+            redirect('customersfile/add','refresh');   
             }else{
                 $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
                 <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
@@ -93,7 +93,7 @@ class Customersfile extends CI_Controller {
             }
 
             }
-            redirect('customers_file/manage','refresh');   
+            redirect('customersfile/add','refresh');   
 
 
     }
@@ -105,7 +105,7 @@ class Customersfile extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
         $this->model_customersfile->delete_cusf($this->uri->segment('3'));
-        redirect('customers/manage');
+        redirect('customersfile/manage');
     }
 
 
@@ -183,7 +183,7 @@ class Customersfile extends CI_Controller {
         
 
         
-        redirect('customers_file/manage');
+        redirect('customersfile/manage');
     }
 
 

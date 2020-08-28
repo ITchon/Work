@@ -70,7 +70,6 @@ class Foldergroup extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $id = $this->uri->segment('3');
         $sql =  "SELECT * from folder_group where fg_id = $id";
-
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
 
