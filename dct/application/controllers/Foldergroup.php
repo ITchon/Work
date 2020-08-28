@@ -70,7 +70,6 @@ class Foldergroup extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $id = $this->uri->segment('3');
         $sql =  "SELECT * from folder_group where fg_id = $id";
-
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
 
@@ -82,10 +81,9 @@ class Foldergroup extends CI_Controller {
     public function save_edit()
     {
         $fg_id =  $this->input->post('fg_id');
-        $fg_name =  $this->input->post('fg_name');
         $folg_name =  $this->input->post('folg_name');
 
-        $this->model_foldergroup->save_edit_foldergroup($fg_id, $fg_name, $folg_name);
+        $this->model_foldergroup->save_edit_foldergroup($fg_id, $folg_name);
         redirect('foldergroup/manage');
 
 

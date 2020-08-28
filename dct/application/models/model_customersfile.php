@@ -3,6 +3,7 @@
 class Model_customersfile extends CI_Model
 {
 
+  
 public function get_folder_by($f_id)
 { 
       $sql =  "SELECT fg.foldergroup_name as folg ,f.folder_name as fol
@@ -57,7 +58,17 @@ public function save_edit_cusf($cusf_id,$cus_id,$cusf_des,$file_name,$f_id)
   $exc_user = $this->db->query($sql1);
   if ($exc_user ){ return true; }else{ return false; }
 }
-
+public function delete_cusf($id) 
+{
+    $sql ="UPDATE customers_file SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE cusf_id = '$id'";
+    $query = $this->db->query($sql);
+       if ($query) { 
+          return true; 
+       } 
+       else{
+      return false;
+    }
+}
 
 }
 

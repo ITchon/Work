@@ -24,7 +24,7 @@ public function insert_cus($cusname,$cusdes,$fg_id)
 public function insert_fg($fol_name)
 {
 
-     $sql ="INSERT INTO folder_group (name,foldergroup_name,hidden,delete_flag) VALUES ( '$fol_name', '$fol_name','0','1' );";
+     $sql ="INSERT INTO folder_group (foldergroup_name,hidden,delete_flag) VALUES (  '$fol_name','0','1' );";
        $query = $this->db->query($sql); 
        $last_id = $this->db->insert_id(); 
       if($query){

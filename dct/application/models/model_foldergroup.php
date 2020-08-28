@@ -25,9 +25,9 @@ class Model_foldergroup extends CI_Model
         }
         }
 
-    public function save_edit_foldergroup($f_id, $f_name,$folg_name)
+    public function save_edit_foldergroup($f_id,$folg_name)
         {
-           $sql1 ="UPDATE folder_group SET name = '$f_name',foldergroup_name = '$folg_name', date_updated = CURRENT_TIMESTAMP WHERE fg_id = '$f_id'";
+           $sql1 ="UPDATE folder_group SET foldergroup_name = '$folg_name', date_updated = CURRENT_TIMESTAMP WHERE fg_id = '$f_id'";
           $exc_user = $this->db->query($sql1);
           if ($exc_user ){ return true; }else{ return false; }
         }
