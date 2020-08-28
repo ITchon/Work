@@ -13,7 +13,7 @@
             <div class="col-xs-12">
               <div class="card">
                 <div class="card-header">              
-                  <h3>MANAGE USER</h3>
+                  <h3>MANAGE USER <i class="fa fa-user" aria-hidden="true"></i></h3>
                 </div>
                 <div class="card-body">
                 <?php echo $this->session->flashdata("success"); ?>
@@ -59,7 +59,7 @@
                   $icon = "btn-success no-border fa fa-check";
                 }
                   if($this->session->flashdata("enable")!== null ) echo "<a  href='".base_url()."user/enable/".$encrypted_id."'><i class='$icon'></i></a>";
-                  if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."user/edit_u/".$encrypted_id."'  ><i class='btn-info no-border fa fa-wrench'></i></a>";
+                  if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."user/edit_u/".$encrypted_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";
                   if($this->session->flashdata("rule")!== null ) echo "<a  href='".base_url()."user/rule/".$encrypted_id."'  ><i class='btn-info no-border fa fa-key'></i></a>";
                   if($this->session->userdata('sug_id')==1){
                   if($r->mobile!=1 ){

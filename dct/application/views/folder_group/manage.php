@@ -10,7 +10,7 @@
             <div class="col-xs-12">
               <div class="card">
                 <div class="card-header">
-                  <h3>MANAGE FOLDER GROUP</h3>
+                  <h3>MANAGE FOLDER GROUP <i class="fa fa-folder" aria-hidden="true"></i></h3>
                 </div>
                 <div class="card-body">
                   <table id="demo-datatables-buttons-1" class="table table-hover  table-bordered dataTable" cellspacing="0" width="100%">
@@ -30,7 +30,7 @@
                 echo "<td>".$r->name."</td>";
                 echo "<td>".$r->foldergroup_name."</td>";
                 if($this->session->flashdata("edit")!== null )
-                echo "<td class='text-center'><a   href='".base_url()."foldergroup/edit/".$r->fg_id."'  ><i class='btn-info no-border fa fa-wrench'></i></a>";
+                echo "<td class='text-center'><a   href='".base_url()."foldergroup/edit/".$r->fg_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";
                 
                 if($this->session->flashdata("delete")!== null )
                 echo "<a  href='".base_url()."foldergroup/delete/".$r->fg_id ."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a></td>";  

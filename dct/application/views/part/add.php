@@ -7,7 +7,7 @@
           <div class="row">
             <div class="col-md-12  ">
               <div class="demo-form-wrapper card" style="padding-top:8px">
-              <h2 class=" text-center text-primary">
+              <h2 class=" text-center text-primary"><i class="fa fa-cogs" aria-hidden="true"></i>
              ADD PART
               <?php  
                $bm = $this->uri->segment('3');

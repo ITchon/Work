@@ -7,7 +7,7 @@
           <div class="row">
             <div class="col-md-12  ">
               <div class="demo-form-wrapper card"><br> 
-              <h2 class=" text-center text-primary">
+              <h2 class=" text-center text-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
              Edit Profile
             </h2><hr>
 

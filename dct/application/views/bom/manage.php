@@ -7,9 +7,9 @@
           <div class="row">
             <div class="col-md-12  ">
               <div class="demo-form-wrapper card" style="padding-top:8px">
-              <h2 class=" text-center text-primary">
+              <h2 class=" text-center text-primary">    
          BOM
-  
+         <i class="fa fa-sitemap" aria-hidden="true"></i>
     </h2><hr>
             <?php $space = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"; ?>
             <form class="table form form-horizontal " action="<?php echo base_url()?>bom/manage" method="post" data-toggle="validator">

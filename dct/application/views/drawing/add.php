@@ -8,7 +8,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="demo-form-wrapper card" style="padding-top:8px;">
-              <h2 class=" text-center text-primary">
+              <h2 class=" text-center text-primary"><i class="fa fa-leanpub" aria-hidden="true"></i>
              ADD DRAWING
             </h2><hr>
 

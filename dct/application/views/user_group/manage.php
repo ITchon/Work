@@ -14,7 +14,7 @@
                     <button type="button" class="card-action card-reload" title="Reload"></button>
                     <button type="button" class="card-action card-remove" title="Remove"></button>
                   </div>
-                  <h3>MANAGE USERGROUP</h3>
+                  <h3>MANAGE USERGROUP <i class="fa fa-group" aria-hidden="true"></i></h3>
                 </div>
                 <div class="card-body">
                   <table id="demo-datatables-buttons-1" class="table table-hover  dataTable text-center" cellspacing="0" width="100%">
@@ -48,7 +48,7 @@
                 ?>
                 <a  onclick="javascript:window.location='<?php
                 echo base_url() . 'usergroup/edit_ug/' . $r->sug_id;
-                ?>';"><i class='btn-info no-border btn-sm fa fa-wrench'></i></a>
+                ?>';"><i class='btn-info no-border btn-sm fa fa-pencil-square-o'></i></a>
 
                  <a onclick="javascript:window.location='<?php
                 echo base_url() . 'usergroup/rule_ug/' . $r->sug_id;

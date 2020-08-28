@@ -14,7 +14,7 @@
                     <button type="button" class="card-action card-reload" title="Reload"></button>
                     <button type="button" class="card-action card-remove" title="Remove"></button>
                   </div>
-                  <h3>MANAGE CUSTOMERS</h3>
+                  <h3>MANAGE CUSTOMERS <i class="fa fa-file-pdf-o" aria-hidden="true"></i></h3>
                 </div>
                 <?php echo $this->session->flashdata("success"); ?>
                 <div class="card-body">
@@ -39,7 +39,7 @@
                 echo "<td>".$r->cusf_des."</td>";
                 echo "<td>".$r->file_name."</td>";
                 if($this->session->flashdata("edit")!== null )
-                echo "<td><a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' data-original-title='Rule' href='".base_url()."customersfile/edit/".$r->cusf_id."'  ><i class='btn-info no-border fa fa-wrench'></i></a>";
+                echo "<td><a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' data-original-title='Rule' href='".base_url()."customersfile/edit/".$r->cusf_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";
                 
                 if($this->session->flashdata("delete")!== null )
                 echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."customersfile/delete/".$r->cusf_id ."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a></td>";  

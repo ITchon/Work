@@ -7,7 +7,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="demo-form-wrapper card" style="padding-top:8px;">
-            <h2 class=" text-center text-primary">
+            <h2 class=" text-center text-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
             EDIT USER
             </h2><hr>
             <form class="table form form-horizontal container" action="<?php echo base_url()?>user/save_edit" method="post" data-toggle="validator">

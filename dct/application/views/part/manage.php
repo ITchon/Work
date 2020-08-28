@@ -9,7 +9,7 @@
               <div class="demo-form-wrapper card" style="padding-top:8px">
               <h2 class=" text-center text-primary">
          Part
-  
+         <i class="fa fa-cogs" aria-hidden="true"></i>
     </h2><hr>
             
             <form class="table form form-horizontal container" action="<?php echo base_url()?>part/manage" method="post" data-toggle="validator">

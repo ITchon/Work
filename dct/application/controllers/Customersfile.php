@@ -34,7 +34,7 @@ class Customersfile extends CI_Controller {
         where cus.delete_flag !=0';
         $query = $this->db->query($sql); 
         $data['result'] = $query->result();
-        $this->load->view('customersfile/manage',$data);//bring $data to user_data 
+        $this->load->view('customers_file/manage',$data);//bring $data to user_data 
         $this->load->view('footer');
         
     }
@@ -46,7 +46,7 @@ class Customersfile extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
         $data['result_cus'] = $this->model_customersfile->get_customers();
-        $this->load->view('customersfile/add',$data);//bring $data to user_data 
+        $this->load->view('customers_file/add',$data);//bring $data to user_data 
         $this->load->view('footer');
     }
 
@@ -74,7 +74,7 @@ class Customersfile extends CI_Controller {
             
             echo '</script>';
             exit;
-            redirect('customersfile/add','refresh');   
+            redirect('customers_file/add','refresh');   
             }
             else{
             $res = $this->model_customersfile->insert_cusf($cus_id,$cusf_des,$file_name,$f_id);
@@ -83,7 +83,7 @@ class Customersfile extends CI_Controller {
             echo 'alert(" What wrong ");';
             echo 'history.go(-1);';
             echo '</script>';
-            redirect('customersfile/add','refresh');   
+            redirect('customers_file/add','refresh');   
             }else{
                 $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
                 <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
@@ -91,7 +91,7 @@ class Customersfile extends CI_Controller {
             }
 
             }
-            redirect('customersfile/manage','refresh');   
+            redirect('customers_file/manage','refresh');   
 
 
     }
@@ -122,7 +122,7 @@ class Customersfile extends CI_Controller {
         $data['result_cus'] = $this->model_customersfile->get_customers();
         $data['result_fol'] = $this->model_customersfile->get_folder();
 
-        $this->load->view('customersfile/edit',$data);
+        $this->load->view('customers_file/edit',$data);
         $this->load->view('footer');
   
     }
@@ -181,7 +181,7 @@ class Customersfile extends CI_Controller {
         
 
         
-        redirect('customersfile/manage');
+        redirect('customers_file/manage');
     }
 
 

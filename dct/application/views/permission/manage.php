@@ -6,7 +6,7 @@
             <div class="col-xs-12">
               <div class="card">
                 <div class="card-header">
-                  <h3>MANAGE PERMISSION</h3>
+                  <h3>MANAGE PERMISSION <i class="fa fa-cog" aria-hidden="true"></i></h3>
                 </div>
                 <div class="card-body">
                   <table id="demo-datatables-buttons-1" class="table table-hover  table-bordered dataTable" cellspacing="0" width="100%">
@@ -38,7 +38,7 @@
                 }
                 ?> <a type ='button' class=' '  onclick="javascript:window.location='<?php
                 echo base_url() . 'permission/edit_permission/' . $r->sp_id;
-                ?>';"><i class='btn-info no-border btn-sm fa fa-wrench'> </i> </a>
+                ?>';"><i class='btn-info no-border btn-sm fa fa-pencil-square-o'> </i> </a>
                 <?php 
                 echo "<a  href='".base_url()."permission/deletepermission/".$r->sp_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border btn-sm fa fa-trash'></i></a></td>";  
        

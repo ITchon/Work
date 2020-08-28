@@ -70,14 +70,14 @@
                   <?php if ($r->v_id !='v_id') {
                   echo " <a href='javascript:void(0)'  data-id='".$r->v_id."' class='view_imgv'><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
                   if($this->session->flashdata("download")!== null ) echo "<a href='".base_url()."drawing/openfile_v/".$r->v_id."'  ><i class='btn-info no-border fa fa-inbox'></i></a>";
-                  if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."drawing/edit_v/".$r->v_id."'  ><i class='btn-info no-border fa fa-wrench'></i></a>";
+                  if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."drawing/edit_v/".$r->v_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";
 
                   ?>
 
                   <?php }else{ 
                   echo " <a href='javascript:void(0)'  data-id='".$r->d_id."' class='view_img'><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
                   if($this->session->flashdata("download")!== null ) echo "<a href='".base_url()."drawing/openfile/".$r->d_id."'  ><i class='btn-info no-border fa fa-inbox'></i></a>";
-                  if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."drawing/edit/".$r->d_id."'  ><i class='btn-info no-border fa fa-wrench'></i></a>";
+                  if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."drawing/edit/".$r->d_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";
                   ?>
                   <?php } ?>
 

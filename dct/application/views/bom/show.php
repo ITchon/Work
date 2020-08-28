@@ -22,11 +22,11 @@ th, td {
           <p class="title-bar-description">
           </p>
         </div>
-        <div class="card">
+        <div class="card">              
         <div class="card-header">
         <div class="col-xs-10">
           <div class="col-xs-5">
-               <span class="text-center text-primary" id="header">BOM TABLE <a href="" class="btn btn-default no_print" onclick="window.history.go(-1); return false;"> Back </a></span>
+               <span class="text-center text-primary" id="header">BOM TABLE <i class="fa fa-sitemap" aria-hidden="true"></i></span>
                   </div>            
             </div>      
           </div>
@@ -134,7 +134,7 @@ th, td {
                             echo "<td class='text-danger text-center no_print '><a type='button' href='".base_url()."bom/delete_bom/".$bm."' onclick='return confirm(\"All data in this bom will be delete are you sure?\")' ><button class='btn btn-danger btn-sm fa fa-trash  no-border' data-toggle='tooltip' data-html='true' data-placement='left' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>'></button></a>";
                             ?>
      
-                            <a type="button" href="<?php echo base_url()."bom/edit_bom/$bm"?>" ><button class="btn btn-success btn-sm fa fa-wrench  no-border" data-toggle="tooltip" data-html="true" data-placement="bottom" aria-describedby="passHelp" title="<h5>แก้ไขจำนวน</h5>"></button></a>
+                            <a type="button" href="<?php echo base_url()."bom/edit_bom/$bm"?>" ><button class="btn btn-success btn-sm fa fa-pencil-square-o  no-border" data-toggle="tooltip" data-html="true" data-placement="bottom" aria-describedby="passHelp" title="<h5>แก้ไขจำนวน</h5>"></button></a>
                             <form id="form" action="<?php echo base_url()."part/add_bom_sub/$bm" ?>" method="post">
                            <input type="hidden" name="m_id" value="<?php echo $bm_id?>" >
                             <button type="submit"  class="btn btn-primary btn-sm fa fa-plus  no-border" data-toggle="tooltip" data-html="true" data-placement="bottom" aria-describedby="passHelp" title="<h5>Add Part Lv 2</h5>"></button>
@@ -169,7 +169,7 @@ th, td {
                     <form id="form" action="<?php echo base_url()."bom/edit_part/$bm" ?>" method="post">
                     <input type="hidden" name="m_id" value="<?php echo $row['sub_id'] ?>" >
                     <input type="hidden" name="p_no" value="<?php echo $row['p_no'] ?>" >
-                    <button type="submit"  class="btn btn-success btn-sm fa fa-wrench no-border" data-toggle="tooltip" data-html="true" data-placement="bottom" aria-describedby="passHelp" title="<h5>แก้ไขจำนวน</h5>"></button>
+                    <button type="submit"  class="btn btn-success btn-sm fa fa-pencil-square-o no-border" data-toggle="tooltip" data-html="true" data-placement="bottom" aria-describedby="passHelp" title="<h5>แก้ไขจำนวน</h5>"></button>
                     </form>       
                     <form id="form" action="<?php echo base_url()."part/add_sub/$bm"?>" method="post">
                     <input type="hidden" name="sub_id" value="<?php echo $row['sub_id'] ?>" >
@@ -200,7 +200,7 @@ th, td {
                                   echo "<td class='text-danger text-center'><a type='button' href='".base_url()."bom/delete_bom/".$bm."' onclick='return confirm(\"Confirm Delete Part?\")' ><button class='btn btn-danger btn-sm fa fa-trash' data-toggle='tooltip' data-html='true' data-placement='left' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>'></button></a>";
                                   ?>
                     
-                                  <a type="button" href="<?php echo base_url()?>bom/edit_bom/$bm" ><button class="btn btn-success btn-sm fa fa-wrench" data-toggle="tooltip" data-html="true" data-placement="bottom" aria-describedby="passHelp" title="<h5>แก้ไขจำนวน</h5>"></button></a>
+                                  <a type="button" href="<?php echo base_url()?>bom/edit_bom/$bm" ><button class="btn btn-success btn-sm fa fa-pencil-square-o" data-toggle="tooltip" data-html="true" data-placement="bottom" aria-describedby="passHelp" title="<h5>แก้ไขจำนวน</h5>"></button></a>
                                   <form id="form" action="<?php echo base_url()."part/add_bom_sub/$bm" ?>" method="post">
                                   <input type="hidden" name="m_id" value="<?php echo $bm_id?>" >
                                   <button type="submit"  class="btn btn-primary btn-sm fa fa-plus" data-toggle="tooltip" data-html="true" data-placement="bottom" aria-describedby="passHelp" title="<h5>Add Part Lv 2</h5>"></button>

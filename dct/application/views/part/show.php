@@ -15,8 +15,8 @@
             <div class="col-xs-12">
               <div class="card">
                 <div class="card-header">
-            
-                  <h3>MANAGE PART</h3>
+          
+                  <h3>MANAGE PART <i class="fa fa-cogs" aria-hidden="true"></i></h3>
 
                 </div>
                 <div class="card-body">
@@ -52,7 +52,7 @@
                 }
                 ?> <a type ='button' class=' ' onclick="javascript:window.location='<?php
                 echo base_url() . 'part/edit_part/' . $r->p_id;
-                ?>';"><i class='btn-info btn-sm no-border fa fa-wrench'> </i> </a>
+                ?>';"><i class='btn-info btn-sm no-border fa fa-pencil-square-o'> </i> </a>
                 <?php 
                 echo "<a type='button' href='".base_url()."part/deletepart/".$r->p_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border btn-sm fa fa-trash'></i></a></td>";  
 

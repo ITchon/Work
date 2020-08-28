@@ -8,7 +8,7 @@
           <div class="row">
             <div class="col-md-12  ">
               <div class="demo-form-wrapper card" style="padding-top:8px">
-              <h2 class=" text-center text-primary">
+              <h2 class=" text-center text-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
              EDIT BOM
              <?php echo anchor(base_url().'bom/manage/'.$bm.'', 'Back',array('class'=>'btn btn-default ')); ?>
             </h2><hr>
