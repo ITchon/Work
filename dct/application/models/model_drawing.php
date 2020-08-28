@@ -37,10 +37,28 @@ class Model_drawing extends CI_Model
       
   }
 
+    public function get_fid_dcn($dcn_id)
+  { 
+    $sql =  "SELECT f_id FROM dcn where dcn_id = '$dcn_id'";
+    $query = $this->db->query($sql); 
+    $result= $query->result();
+    return $result[0]->f_id;
+      
+  }
+
 
   public function get_file($d_id)
   { 
     $sql =  "SELECT file_name FROM drawing where d_id = '$d_id'";
+    $query = $this->db->query($sql); 
+    $result= $query->result();
+    return $result[0]->file_name;
+      
+  }
+
+    public function get_file_dcn($dcn_id)
+  { 
+    $sql =  "SELECT file_name FROM dcn where dcn_id = '$dcn_id'";
     $query = $this->db->query($sql); 
     $result= $query->result();
     return $result[0]->file_name;
@@ -107,10 +125,12 @@ class Model_drawing extends CI_Model
 
   public function checkfolder($f_id)
   { 
-    $sql =  "SELECT folder_name FROM folder where delete_flag != 0 AND f_id = '$f_id'";
+    $sql =  "SELECT f.folder_name,fg.foldergroup_name FROM folder as f
+INNER JOIN folder_group as fg on fg.fg_id = f.fg_id
+where fg.delete_flag != 0 AND f_id = '$f_id'";
     $query = $this->db->query($sql); 
     $result= $query->result();
-    return $result[0]->folder_name;
+    return $result;
       
   }
 

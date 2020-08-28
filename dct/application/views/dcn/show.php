@@ -44,18 +44,11 @@
                     <?php
                       echo "<td><div class='text-center'>";
                       if (file_exists("uploads/$r->foldergroup_name/$r->folder_name/$r->file_name")) echo "<a href='javascript:void(0)'  data-id='".$r->dcn_id."' class='view_img '><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
-                      if($this->session->flashdata("download")!== null ){?>
+                      if($this->session->flashdata("download")!== null ){
                      
-                           <form id='form' action="<?php echo base_url()?>drawing/open_dcn" method="post">
-                           <input type="hidden" name="dcn_id" value="<?php echo $r->dcn_id ?>">
-                           <input type="hidden" name="path" value="./uploads/<?php echo $r->folder_name ?>">
-                           <input type="hidden" name="filename" value="<?php echo $r->file_name ?>">
-                           <input type="hidden" name="file" value="<?php echo $r->dcn_code ?>">
-                             <button  type="submit" style=" background-color: Transparent;border:none" data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>เปิดไฟล์</h5>' style="border:none;"><a><i class='btn-info no-border fa fa-inbox'></i>
-                              </a></button>
-                           </form>
+                           echo "<a href='".base_url()."drawing/open_dcn/".$r->dcn_id."'  ><i class='btn-info no-border fa fa-inbox'></i></a>";
                        
-                     <?php
+                     
                           }
                         if($this->session->flashdata("edit")!== null )
                         echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' data-original-title='Rule' href='".base_url()."dcn/edit_dcn/".$r->dcn_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";

@@ -350,10 +350,11 @@ public function show()
         $f_id = $this->model_drawing->get_fid($d_id);
         $filecode = $this->model_drawing->get_filecode($d_id);
         $filename = $this->model_drawing->get_file($d_id);
-        $folder = $this->model_drawing->checkfolder($f_id);
+        $res = $this->model_drawing->checkfolder($f_id);
+        $folder = $res[0]->folder_name;
+        $folderg = $res[0]->foldergroup_name;
         
-
-        $path = './uploads/'.$folder.$filecode;
+        $path = './uploads/'.$folderg.'/'.$folder.'/'.$filename ;
         $open = ("$path");
         $data = file_get_contents("$path");
         if($open){
@@ -380,10 +381,11 @@ public function show()
         $f_id = $result->f_id;
         $filecode = $result->file_code;
         $filename = $result->file_name;
-        $folder = $this->model_drawing->checkfolder($f_id);
+        $res = $this->model_drawing->checkfolder($f_id);
+        $folder = $res[0]->folder_name;
+        $folderg = $res[0]->foldergroup_name;
         
-        $path = './uploads/'.$folder.$filecode;
-
+        $path = './uploads/'.$folderg.'/'.$folder.'/'.$filename ;
         $open = ("$path");
         $data = file_get_contents("$path");
 
@@ -410,9 +412,18 @@ public function show()
         $dcn_id =  $this->input->post('dcn_id');
         $file =  $this->input->post('file');
         $filename =  $this->input->post('filename');
-        $path = $this->input->post('path');
-        $open = ("$path$file");
-        $data = file_get_contents("$path$file");
+
+        $dcn_id = $this->uri->segment('3');
+        $f_id = $this->model_drawing->get_fid_dcn($dcn_id);
+        $filename = $this->model_drawing->get_file_dcn($dcn_id);
+        $res = $this->model_drawing->checkfolder($f_id);
+        $folder = $res[0]->folder_name;
+        $folderg = $res[0]->foldergroup_name;
+
+        $path = './uploads/'.$folderg.'/'.$folder.'/'.$filename ;
+        $open = ("$path");
+
+        $data = file_get_contents("$path");
         if($open){
     $this->model_drawing->download_record($this->session->userdata('su_id'),$this->session->userdata('username'),$filename);
     force_download($filename, $data);
