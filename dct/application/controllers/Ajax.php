@@ -83,6 +83,26 @@ public function __construct()
         echo json_encode($arr);
         
     }
+    public function view_customersfile_pdf()
+    {
+        $id = $this->input->post('id');
+        //$data = $this->model_issue->issue_by_id($id);
+
+        $data = $this->model_ajax->customersfile_by($id);
+        $parts = explode('.', $data[0]->file_name);
+        $extension = array_pop($parts);
+        if($extension == 'pdf'){
+        $arr = array('success' => false, 'data' => '');
+        if($data){
+            $arr = array('success' => true, 'data' => $data);
+            }
+        }
+        else{
+            $arr = array('success' => flase, 'data' => 'lol');
+        }
+        echo json_encode($arr);
+        
+    }
     public function view_pdf2()
     {
         $id = $this->input->post('id');

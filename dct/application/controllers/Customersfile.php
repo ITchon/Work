@@ -26,7 +26,8 @@ class Customersfile extends CI_Controller {
     {	
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-        $sql =  'SELECT cusf.cusf_id,cusf.file_name,cusf.cusf_des,cus.cus_name as cusname,f.name as type
+        $sql =  'SELECT cusf.cusf_id,cusf.file_name,cusf.cusf_des,cus.cus_name as cusname
+        ,f.name as type,f.folder_name,fg.foldergroup_name
         FROM customers_file as cusf
         inner join customers as cus on cus.cus_id = cusf.cus_id
         inner join folder as f on f.f_id = cusf.f_id
@@ -35,6 +36,7 @@ class Customersfile extends CI_Controller {
         $query = $this->db->query($sql); 
         $data['result'] = $query->result();
         $this->load->view('customers_file/manage',$data);//bring $data to user_data 
+        $this->load->view('customers_file/img_modal');
         $this->load->view('footer');
         
     }

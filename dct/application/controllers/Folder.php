@@ -56,7 +56,7 @@ class Folder extends CI_Controller {
             $path = "uploads/".$path.'/'.$fol_name;
         if(!is_dir($path)) //create the folder if it's not exists
         {
-          mkdir($path,0755,TRUE);
+          mkdir($path,0777,TRUE);
         } 
         }else{
             echo "<script>";

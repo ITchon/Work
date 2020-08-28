@@ -82,14 +82,17 @@ class Foldergroup extends CI_Controller {
     public function save_edit()
     {
         $fg_id =  $this->input->post('fg_id');
-        $fg_name =  $this->input->post('fg_name');
+        $folg_old =  $this->input->post('folg_old');
         $folg_name =  $this->input->post('folg_name');
 
-        $this->model_foldergroup->save_edit_foldergroup($fg_id, $fg_name, $folg_name);
+         $oldname = './uploads/'.$folg_old;
+         $newname = './uploads/'.$folg_name;
+         rename($oldname, $newname);
+         
+
+        $this->model_foldergroup->save_edit_foldergroup($fg_id,$folg_name);
         redirect('foldergroup/manage');
 
-
-  
     }
 
 

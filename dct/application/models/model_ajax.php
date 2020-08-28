@@ -3,6 +3,17 @@
 class Model_ajax extends CI_Model
 {
 
+    public function customersfile_by($id)
+    {
+            $sql ="SELECT cusf.file_name ,f.folder_name,fg.foldergroup_name FROM customers_file as cusf
+            left join folder as f on f.f_id = cusf.f_id
+            left join folder_group as fg on fg.fg_id = f.fg_id
+            WHERE cusf.cusf_id='$id' AND f.delete_flag != 0 ";
+              $query = $this->db->query($sql);  
+             $data = $query->result(); 
+             return $data;
+    
+    }
     public function dwg_by($id)
     {
             $sql ="SELECT d.file_name ,f.folder_name,fg.foldergroup_name FROM drawing as d

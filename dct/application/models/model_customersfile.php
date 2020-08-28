@@ -38,7 +38,7 @@ public function get_customers()
 }
 public function insert_cusf($cus_id,$cusf_des,$file_name,$f_id)
 {
-     $sql ="INSERT INTO customers_file (cusf_des,cus_id,file_name,f_id) VALUE('$cusf_des','$cus_id','$file_name','$f_id')";
+     $sql ="INSERT INTO customers_file (cusf_des,cus_id,file_name,f_id,delete_flag) VALUE('$cusf_des','$cus_id','$file_name','$f_id','1')";
        $query = $this->db->query($sql);  
       if($query){
         return true;

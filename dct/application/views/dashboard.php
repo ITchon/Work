@@ -16,7 +16,29 @@
             </h1>
           </div>
           <div class="row gutter-xs">
-<div class="col-md-6 col-lg-3 col-lg-push-0">
+
+          
+          <div class="col-md-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-middle media-left">
+                      <span class="bg-primary circle sq-48">
+                        <span class="fa fa-wpforms"></span>
+                      </span>
+                    </div>
+                    <div class="media-middle media-body">
+                      <h6 class="media-heading">Customers</h6>
+                      <h3 class="media-heading">
+                        <span class="fw-l"><?php echo $cus; ?></span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+<div class="col-md-6 col-lg-3">
               <div class="card">
                 <div class="card-body">
                   <div class="media">
@@ -38,27 +60,8 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-lg-3 col-lg-push-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="media">
-                    <div class="media-middle media-left">
-                      <span class="bg-primary circle sq-48">
-                        <span class="fa fa-wpforms"></span>
-                      </span>
-                    </div>
-                    <div class="media-middle media-body">
-                      <h6 class="media-heading">File</h6>
-                      <h3 class="media-heading">
-                        <span class="fw-l"><?php echo $num;; ?></span>
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-<div class="col-md-6 col-lg-3 col-lg-pull-3">
+
+<div class="col-md-6 col-lg-3">
               <div class="card">
                 <div class="card-body">
                   <div class="media">
@@ -80,7 +83,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-lg-3 col-lg-pull-0">
+            <div class="col-md-6 col-lg-3">
               <div class="card">
                 <div class="card-body">
                   <div class="media">
@@ -103,6 +106,71 @@
                 </div>
               </div>
             </div>
+
+            
+
+            <div class="col-md-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-middle media-left">
+                      <span class="bg-primary circle sq-48">
+                        <span class="fa fa-wpforms"></span>
+                      </span>
+                    </div>
+                    <div class="media-middle media-body">
+                      <h6 class="media-heading">Drawing File</h6>
+                      <h3 class="media-heading">
+                        <span class="fw-l"><?php echo $num; ?></span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+            <?php foreach($result_cusf as $cusf){ 
+//  $count = count(glob('./uploads/'.$cusf->foldergroup_name.'/'.$f->folder_name));
+?>
+                          
+                          <div class="col-md-6 col-lg-3">
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="media">
+                                <div class="media-middle media-left">
+
+                                    <!-- <span class="fa fa-wpforms"></span> -->
+                                    <img class="img-circle" width="48" height="48" src="<?php echo base_url() ?>./uploads/pain.jpg" alt="Harry Jones">
+
+                                </div>
+                                <div class="media-middle media-body">
+                                  <h6 class="media-heading"><?php echo $cusf->foldergroup_name ?></h6>
+                                  <h3 class="media-heading">
+                                  <?php 
+                                  $num = 0;
+                                  foreach($result_f as $f){
+                                    $directory = './uploads/'.$cusf->foldergroup_name.'/'.$f->folder_name.'/';
+                                    $files = glob($directory . "*");
+                                    if ($files){
+                                    $fileall = count($files); 
+                                    $num = $fileall+$num;
+                                    }
+                                    }
+                                  ?>
+                                    <span class="fw-l"><?php echo $num; ?></span>
+                                  </h3>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+            <?php } ?>
+            
+
           </div>
         <div class="row gutter-xs">
             <div class="col-md-6">

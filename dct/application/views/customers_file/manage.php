@@ -38,8 +38,11 @@
                 echo "<td>".$r->cusname."</td>";
                 echo "<td>".$r->cusf_des."</td>";
                 echo "<td>".$r->file_name."</td>";
+                echo "<td><div class='text-center'>";
+                if (file_exists("uploads/$r->foldergroup_name/$r->folder_name/$r->file_name")) echo "<a href='javascript:void(0)'  data-id='".$r->cusf_id."' class='view_img '><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
+
                 if($this->session->flashdata("edit")!== null )
-                echo "<td><a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' data-original-title='Rule' href='".base_url()."customersfile/edit/".$r->cusf_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";
+                echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' data-original-title='Rule' href='".base_url()."customersfile/edit/".$r->cusf_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";
                 
                 if($this->session->flashdata("delete")!== null )
                 echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."customersfile/delete/".$r->cusf_id ."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a></td>";  
@@ -58,33 +61,54 @@
           </div>
         </div>
       </div>
-         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-     <script type="text/javascript">
-//      $(document).ready(function() {
-//
-//        $('#table').DataTable({
-//          dom: 'Bfrtip',
-//        buttons: [
-//            'colvis'
-//        ]
-//       
-//    });
-//
-//        
-//    $("#btn").on("click",function(){
-//      
-//        $.ajax({
-//           url: "<?php echo base_url(); ?>usergroup/insert",
-//           type: 'POST',
-//           data: $("#form").serialize(),
-//           success: function() {
-//            
-//           }
-//        });
-//       });
-//     
-//    });
-//
-//
-//</script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script type="text/javascript">
+        $(document).ready(function() {
+       $('body').on('click', '.view_img', function () {
+      var id = $(this).data("id");
+       console.log(id);
+ 
+       $.ajax({
+       type: "Post",
+       url:'<?php echo base_url() ?>ajax/view_customersfile_pdf',
+      data: {
+       id: id
+      },
+      dataType: "json",
+      success: function (res) {
+      var html = '';
+      var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+      // The workerSrc property shall be specified.
+      pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+      // if(res.success != false){ 
+      var path ='uploads/'+res.data[0].foldergroup_name+'/'+res.data[0].folder_name+'/'+res.data[0].file_name;
+      console.log(path);
+      pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
+          
+  
+      pdfDoc = pdfDoc_;
+      document.getElementById('page_count').textContent = pdfDoc.numPages;
+      // Initial/first page rendering
+      renderPage(pageNum);
+      });
+
+             $('#modal_form').modal('show'); 
+        // }else{
+
+        // alert('No PDF File');
+        // }
+       
+    },
+    error: function (res) {
+    console.log(res);
+     
+    alert('NO DATA');
+    }
+ });
+});
+
+});
+</script>
 

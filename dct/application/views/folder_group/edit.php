@@ -11,19 +11,8 @@
              EDIT FOLDER GROUP
             </h2><hr>
             <form class="table form form-horizontal container" action="<?php echo base_url()?>foldergroup/save_edit" method="post" data-toggle="validator">
-            
-                <div class="form-group has-feedback">
-                    <label for="part" class="col-sm-5 col-md-4 control-label">Type name</label>
-                    <div class="col-sm-6 col-md-4">
-                      <input type="text" name="fg_id" value="<?php echo $result[0]->fg_id?>" hidden>
-                    <input class="form-control" type="text" name="fg_name" value="<?php echo $result[0]->name ?>">
-
-                    <span class="form-control-feedback" aria-hidden="true">
-                    <span class="icon"></span>
-                    </span>
-                    </div>
-                </div>
-
+            <input type="hidden" name="fg_id" value="<?php echo $result[0]->fg_id?>" >
+            <input type="hidden" class="form-control" name="folg_old" value="<?php echo $result[0]->foldergroup_name ?>">
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Folder Name</label>
                     <div class="col-sm-6 col-md-4">

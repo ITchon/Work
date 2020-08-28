@@ -23,7 +23,7 @@
                    <?php
                    
                       foreach($result_folg as $fg){?>
-                     <option value="<?php  echo $fg->fg_id ?>"><?php echo $fg->name ?></option>
+                     <option value="<?php  echo $fg->fg_id ?>"><?php echo $fg->foldergroup_name ?></option>
                     <?php
                       }
                       ?> 

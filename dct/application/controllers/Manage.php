@@ -32,13 +32,32 @@ class Manage extends CI_Controller {
         $bom = $query->result();
         $data['bom'] = $bom[0]->b_id;
 
+        $sql4 = "SELECT COUNT(cus_id) as cus_id FROM customers";
+        $query = $this->db->query($sql4);
+        $bom = $query->result();
+        $data['cus'] = $bom[0]->cus_id;
 
-        $sql5 = "SELECT f.name,f.folder_name FROM folder as f";
+        $sql4 = "SELECT cus.cus_name,fg.foldergroup_name FROM folder_group as fg
+		inner join customers as cus on cus.fg_id = fg.fg_id
+        where fg.delete_flag != 0";
+        $query = $this->db->query($sql4);
+        $data['result_cusf'] = $query->result();
+
+        $sql4 = "SELECT cus.cus_name,fg.foldergroup_name,f.folder_name FROM folder_group as fg
+		inner join customers as cus on cus.fg_id = fg.fg_id
+		inner join folder as f on f.fg_id = fg.fg_id
+        where fg.delete_flag != 0";
+        $query = $this->db->query($sql4);
+        $data['result_f'] = $query->result();
+
+
+
+        $sql5 = "SELECT f.folder_name FROM folder as f";
         $query = $this->db->query($sql5);
         $filea = $query->result();
         $num = 0;
         foreach($filea as $f){
-        $directory = './uploads/'.$f->folder_name.'/';
+        $directory = './uploads/'.'Drawing/'.$f->folder_name.'/';
         $files = glob($directory . "*");
         if ($files){
         $fileall = count($files); 
