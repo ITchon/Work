@@ -87,7 +87,6 @@
         $(document).ready(function() {
        $('body').on('click', '.view_img', function () {
       var id = $(this).data("id");
-       console.log(id);
  
        $.ajax({
        type: "Post",
@@ -122,9 +121,7 @@
         // }
        
     },
-    error: function (res) {
-    console.log(res);
-     
+    error: function (res) { 
     alert('NO DATA');
     }
  });

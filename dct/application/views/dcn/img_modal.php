@@ -19,8 +19,7 @@
 }
 #watermark{
   opacity: 0.5;
-  padding-left: 10%;
-  padding-top: 10%
+
 }
 </style>
 <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
