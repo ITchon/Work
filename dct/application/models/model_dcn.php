@@ -2,13 +2,26 @@
 
 class Model_dcn extends CI_Model
 {
+
+  public function get_folder_by($f_id)
+{ 
+      $sql =  "SELECT fg.foldergroup_name as folg ,f.folder_name as fol
+      FROM folder as f
+      inner join folder_group as fg on fg.fg_id = f.fg_id
+      where f.delete_flag != 0 AND f.f_id = '$f_id'";
+      $query = $this->db->query($sql); 
+      $result = $query->result()[0];
+      return $result;
+        
+}
   
     public function get_dcn_byid($text)
     {
         $sql =  "SELECT dc.dcn_id, dc.dcn_no,dc.file_name,dc.path_file as dcn_path
-        ,dc.file_code as dcn_code,dc.enable,dc.f_id,f.folder_name
+        ,dc.file_code as dcn_code,dc.enable,dc.f_id,f.folder_name,fg.foldergroup_name
         from dcn as dc
         LEFT JOIN folder as f on f.f_id  = dc.f_id
+        LEFT JOIN folder_group as fg on fg.fg_id  = f.fg_id
         where dc.delete_flag != 0 $text";
          $query = $this->db->query($sql);
         $result =  $query->result();
@@ -76,9 +89,9 @@ public function get_folder_dcn()
   
     }
 
-  public function save_dcn($dcn_id,$dcn_no,$path_file,$file_name,$f_id)
+  public function save_dcn($dcn_id,$dcn_no,$file_name,$f_id)
   {
-     $sql ="UPDATE dcn SET dcn_no = '$dcn_no', path_file = '$path_file', file_name = '$file_name', date_updated = CURRENT_TIMESTAMP,f_id = '$f_id' WHERE dcn_id = '$dcn_id'";
+     $sql ="UPDATE dcn SET dcn_no = '$dcn_no', file_name = '$file_name', date_updated = CURRENT_TIMESTAMP,f_id = '$f_id' WHERE dcn_id = '$dcn_id'";
     $exc_user = $this->db->query($sql);
     if ($exc_user ){ 
       return true; 

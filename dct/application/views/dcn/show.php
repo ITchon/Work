@@ -43,7 +43,7 @@
 
                     <?php
                       echo "<td><div class='text-center'>";
-                      if (file_exists("uploads/A_TYPE-dcn/$r->file_name")) echo "<a href='javascript:void(0)'  data-id='".$r->dcn_id."' class='view_img '><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
+                      if (file_exists("uploads/$r->foldergroup_name/$r->folder_name/$r->file_name")) echo "<a href='javascript:void(0)'  data-id='".$r->dcn_id."' class='view_img '><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
                       if($this->session->flashdata("download")!== null ){?>
                      
                            <form id='form' action="<?php echo base_url()?>drawing/open_dcn" method="post">
@@ -111,7 +111,7 @@
       pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
       // if(res.success != false){ 
-      var path ='uploads/'+res.data[0].folder_name+res.data[0].file_name;
+      var path ='uploads/'+res.data[0].foldergroup_name+'/'+res.data[0].folder_name+'/'+res.data[0].file_name;
       console.log(path);
       pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
           

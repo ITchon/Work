@@ -434,9 +434,9 @@ public function show()
         $f_id =  $this->input->post('f_id');
   
         $folder = $this->model_drawing->checkfolder($f_id);
-        $config['upload_path']           = './uploads/'.$folder;
+        $config['upload_path']           = './uploads/'.'Drawing/'.$folder;
         $config['allowed_types']        = '*';
-        if (file_exists("uploads/$folder/$file")){
+        if (file_exists("uploads/.'Drawing/'.$folder/$file")){
           echo '<script language="javascript">';
           echo 'alert("File already exist!");';
           echo 'history.go(-1);';
@@ -451,7 +451,6 @@ public function show()
         $p_id =  $this->input->post('p_id');
         $p_no =  $this->input->post('p_no');
         $p_name =  $this->input->post('p_name');
-
 
 
       $num= $this->db->query("SELECT * FROM drawing where d_no = '$d_no'"); 
@@ -599,15 +598,17 @@ public function show()
     {
       $f_id =  $this->input->post('f_id');
       $folder = $this->model_drawing->checkfolder($f_id);
-      $config['upload_path']           = './uploads/'.$folder;
+      $config['upload_path']           = './uploads/'.'Drawing/'.$folder;
       $config['allowed_types']        = '*';
+      
       $fold =  $this->input->post('fold');
       $folderold = $this->model_drawing->checkfolder($fold);
         if ($_FILES['file_name']['name'] != null) {
         $file_name2 =  $this->input->post('file_name2');
-        unlink('./uploads/'.$folderold.$file_name2);
+        unlink('./uploads/'.'Drawing/'.$folderold.'/'.$file_name2);
         $config['overwrite']            = TRUE;
         }
+
         $search =  $this->session->flashdata('search');
         
         $pos =  $this->input->post('pos');
@@ -622,6 +623,7 @@ public function show()
         $path_file =  $this->input->post('path');
         $dcnid =  $this->input->post('dcnid');
         $code =  $this->input->post('file_code');
+        $file_name =  $this->input->post('file_name2');
         
         
 
@@ -686,14 +688,13 @@ public function show()
     }
   }
         }else{
-            $file =  $this->input->post('file_name2');
           if ($this->input->post('file_name2') == null)
           {
           echo "<script>";
           echo 'alert(" File Failed ");';
           echo '</script>';
           }else{
-            rename('./uploads/'.$folderold.$file, './uploads/'.$folder.$file);
+            rename('./uploads/'.'Drawing/'.$folderold.'/'.$file_name, './uploads/'.'Drawing/'.$folder.'/'.$file_name);
             $file_code =  $this->input->post('file_code');
             if($p_id != null){
               foreach($p_id as $p){
@@ -730,11 +731,11 @@ public function show()
             $this->model_drawing->del_img($id);
           }
         }
+        $file_code = base64_decode(trim($file_code));
         $file_code = base64_encode(trim($file_code));
-        $this->model_drawing->save_edit_drawing($d_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$file_code,$f_id,$pos);
+        $this->model_drawing->save_edit_drawing($d_id, $d_no, $d_name, $dcn_id, $cus_id, $file_name, $path_file,$file_code,$f_id,$pos);
           }
         }
-        
         if( strpos( $search, 'd_id' ) !== false ){
           redirect('drawing/show_v?'.$search.'','refresh');
         }else{

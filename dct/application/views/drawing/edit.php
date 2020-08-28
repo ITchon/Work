@@ -100,13 +100,8 @@ $this->session->set_flashdata('search',$search);
                                         <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">File</label>      
                       <div class="col-sm-6 col-md-4">
-                        <?php if($result->file_name == null){ ?>
-                <input class="form-control" type="text" readonly value="Please add file">
-                <input class="form-control" type="hidden" name="path" value="<?php echo $result->path_file ?>">
-                       <?php  }else { ?>
-                <input class="form-control" type="text" readonly value="<?php echo $result->file_name ?>">
-                <input class="form-control" type="hidden" name="path" value="<?php echo $result->path_file ?>">
-                   <?php } ?>
+
+                <input class="form-control" type="text" name="file_name2" readonly value="<?php echo $result->file_name ?>">
                     </div>
                     </div> 
 
@@ -131,14 +126,7 @@ $this->session->set_flashdata('search',$search);
                     <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Change File</label>  
                       <div class="col-sm-6 col-md-4">
-                        <?php if($result->file_name){ ?>
-                              <input type="text" name="file_name2" id="file_name2" value="<?php echo $result->file_name ?>" hidden>
-                            <input type="hidden" name="file_code" id="file_code" hidden value="<?php echo $result->file_code ?>" class="form-control">
                               <input type="file" name="file_name" class="form-control" id="file_name" >
-                      <?php }else{ ?>
-                          <input type="file" name="file_name" class="form-control" id="file_name" required>
-
-                      <?php } ?>
                       </div>
                     </div>
 

@@ -116,22 +116,24 @@ class Dcn extends CI_Controller {
 
     public function save_edit_dcn()
     {
-      $f_id =  $this->input->post('f_id');
-      $folder = $this->model_drawing->checkfolder($f_id);
-      $config['upload_path']           = './uploads/'.$folder;
-      $config['allowed_types']        = '*';
+        $f_id =  $this->input->post('f_id');
+        $resnew = $this->model_dcn->get_folder_by($f_id);
+        $folder = $resnew->fol;
 
-        if ($_FILES['file_name']['name'] != null) {
-        $file_code =  $this->input->post('file_code');
-        $config['file_name']            =  $file_code;
-        $config['overwrite']            = TRUE;
-        }
-    
+        $config['upload_path']           = './uploads/'.'DCN'.'/'.$folder;
+        $config['allowed_types']        = '*';
+
+        $fold =  $this->input->post('fold');
+        $resold = $this->model_dcn->get_folder_by($fold);
+        $folderold = $resold->fol;
+          if ($_FILES['file_name']['name'] != null) {
+          $file_name2 =  $this->input->post('file_name2');
+          unlink('./uploads/'.'DCN'.'/'.$folderold.'/'.$file_name2);
+          $config['overwrite']            = TRUE;
+          }
         $dcn_id =  $this->input->post('dcn_id');
         $dcn_no  =  $this->input->post('dcn_no');
-        $fold =  $this->input->post('fold');
-        $folderold = $this->model_drawing->checkfolder($fold);
-        $file_name =  $this->input->post('file_name');
+        $file_name =  $this->input->post('file_name2');
         if($_FILES['file_name']['name'] != null){
             $file = $_FILES['file_name']['name'];
              $this->load->library('upload', $config);
@@ -143,10 +145,17 @@ class Dcn extends CI_Controller {
           echo '</script>';
           redirect('drawing/edit_v/'.$d_id.'','refresh');
           }else{
-          $this->model_dcn->save_dcn($dcn_id,$dcn_no,$path_file,$file_name,$f_id);
+          $this->model_dcn->save_dcn($dcn_id,$dcn_no,$file,$f_id);
+          $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
+        <span> แก้ไขข้อมูลเรียบร้อยเเล้ว </span>
+      </div> ');
           }
         }else{
-
+         rename('./uploads/'.'DCN'.'/'.$folderold.'/'.$file_name, './uploads/'.'DCN'.'/'.$folder.'/'.$file_name);
+         $this->model_dcn->save_dcn($dcn_id,$dcn_no,$file_name,$f_id);
+         $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
+        <span> แก้ไขข้อมูลเรียบร้อยเเล้ว </span>
+      </div> ');
         }
 
         redirect('dcn/manage/'.$dcn_id.'','refresh');
@@ -188,11 +197,12 @@ class Dcn extends CI_Controller {
     {       
 
         $f_id =  $this->input->post('f_id');
-        $folder = $this->model_drawing->checkfolder($f_id);
-        $config['upload_path']           = './uploads/'.$folder.'/';
+        $result = $this->model_dcn->get_folder_by($f_id);
+        $folderg = $result->folg;
+        $folder = $result->fol;
+
+        $config['upload_path']           = './uploads/'.$folderg.'/'.$folder;
         $config['allowed_types']        = '*';
-        $config['max_size']        = '0';
-        $config['encrypt_name'] = TRUE;
         
         $dcn_no =  $this->input->post('dcn_no');
         $path =  $this->input->post('path');
