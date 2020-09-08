@@ -7,7 +7,7 @@
           <div class="row gutter-xs">
             <div class="col-md-12">
               <div class="demo-form-wrapper card" style="padding-top:8px">
-              <h2 class=" text-center text-primary"><i class="fa fa-address"></i>
+              <h2 class=" text-center text-primary"><i class="fa fa-address-book"></i>
             ADD CUSTOMER
             </h2><hr>
               

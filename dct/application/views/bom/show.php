@@ -45,10 +45,8 @@ th, td {
           </div>
 
           <form id="" class="" action="<?php echo base_url()."bom/manage/$bm "?>" style="padding-right:50px"  method="post">
-          <div class="col-md-3 col-sm-12" >
-          </div>
-          
-                      <div class="input-group" >
+          <div class="col-md-3 col-sm-12" ></div>
+                        <div class="input-group" >
                         <div class="input-group-btn">
                         <a href="" class="no_print btn btn-primary ">Clear</a> 
                         </div>
@@ -91,10 +89,7 @@ th, td {
             ?>
           </select>
                         </div>
-                        <div class="input-group-btn">
-                              
-                    <input type="hidden" name="search" value="search" hidden>
-    
+                        <div class="input-group-btn">                    
                     <input type="submit" class="btn btn-outline-primary" value="Search">
                     </div>
                     
@@ -156,7 +151,7 @@ th, td {
                                 echo "<td style='border-right: 1px groove '>".$row['p_name']."</td>";
                                 echo "<td style='border-right: 1px groove '>".$row['qty']."</td>";
                                 echo "<td style='border-right: 1px groove '>".$row['unit']."</td>";
-                                echo "<td style='border-right: 1px groove '>".$row['d_no']."</td>";
+                                echo "<td style='border-right: 1px groove '>".$row['lv']."</td>";
                          ?>
                          
                         <td class="text-center no_print">
@@ -176,6 +171,7 @@ th, td {
                     <input type="hidden" name="id" value="<?php echo $row['p_id'] ?>" >
                     <input type="hidden" name="origin" value="<?php echo $row['origin'] ?>" >
                     <input type="hidden" name="p_no" value="<?php echo $row['p_no'] ?>" >
+                    <input type="hidden" name="lv" value="<?php echo $row['lv'] ?>" >
                     <button type="submit"  class="btn btn-primary btn-sm fa fa-plus  no-border" data-toggle="tooltip" data-html="true" data-placement="bottom" aria-describedby="passHelp" title="<h5>Add Part Lv <?php echo $row['lv']+1 ?></h5>"></button>
                     </form>  
              

@@ -23,6 +23,7 @@
                       <input type="hidden" name="p_no" value="<?php echo $p_id ?>" >
                       <input type="hidden" name="sub_id" value="<?php echo $sub_id ?>" >
                       <input type="hidden" name="origin" value="<?php echo $origin ?>" >
+                      <input type="hidden" name="lv" value="<?php echo $lv ?>" >
                       <input type="text" class="form-control" name="" value="<?php echo $p_no ?>" readonly>
                     </div>
                     </div> 
