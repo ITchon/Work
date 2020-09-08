@@ -127,7 +127,7 @@
                   </a>
         
                      <ul class="sidenav-subnav collapse <?php echo($r->mg == $mg[0]->mg_id)? " ":"" ?>">
-                    <li class="sidenav-subheading "><?php echo $r->g_name ?></li>
+                    <li class="sidenav-subheading "><?php echo $r->g_name   ?></li>
               
                     <?php foreach($submenu as $s)  { 
 

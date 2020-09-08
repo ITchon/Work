@@ -130,7 +130,7 @@ class Part extends CI_Controller {
        if(isset($master)){
        $master =  $this->input->post('master');
        }
-       $result = $this->model_part->insert_part($p_no,$p_name,$master);
+       $result = $this->model_part->insert_newpart($p_no,$p_name);
 
         if($result == true){
        $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
