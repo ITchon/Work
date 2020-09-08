@@ -23,9 +23,23 @@
                   ?>
                 </div>
                 <div class="card-body">
+                <?php echo form_open('#', array('id' => 'frm_usermanagement', 'name'=>'frm_usermanagement', 'class'=>'form-horizontal'));?>
                 <table id="demo-datatables-buttons-1" class="table table-hover dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
+								    	<td colspan="12">
+                        <div id="btn_enable" class="btn  btn-success"><span class="fa fa-check"></span></div>
+									    	<div id="btn_disable" class="btn  btn-danger"><span class="fa fa-times"></span></div>
+									    	<div id="btn_delete" class="btn btn-default"><span class="fa fa-trash-o"></span></div>
+								    	</td>
+								      </tr>	
+                      <tr>
+                      <th  width="3%" class="text-center">
+															<label class="pos-rel">
+																<input type="checkbox" class="ace" />
+																<span class="lbl"></span>
+															</label>
+														</th>
                       <th>DCN no</th>
                       <th width="16%">Manage</th>
                       <th>Status</th>
@@ -36,7 +50,12 @@
                       <?php
                     foreach($result as $r){
              echo "<tr>";
-            
+             echo "<td style='text-align:center;'>
+             <label class='pos-rel'>
+                 <input type='checkbox' class='ace' name='chk_uid[]' value='$r->dcn_id'/>
+                 <span class='lbl'></span>
+               </label>
+           </td>";
              echo"<td><b>".$r->dcn_no."</b></td>" ;
           
              ?>
@@ -128,5 +147,80 @@
 });
 
 });
+$(document).ready(function() {
+var myTable = 	$('#demo-datatables-buttons-1').DataTable();
+				//.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
+         		
+				myTable.on( 'select', function ( e, dt, type, index ) {
+					if ( type === 'row' ) {
+						$( myTable.row( index ).node() ).find('input:checkbox').prop('checked', true);
+					}
+				} );
+				myTable.on( 'deselect', function ( e, dt, type, index ) {
+					if ( type === 'row' ) {
+						$( myTable.row( index ).node() ).find('input:checkbox').prop('checked', false);
+					}
+				} );
+			
+
+    $('#demo-datatables-buttons-1 > thead > tr > th input[type=checkbox], #demo-datatables-buttons-1 input[type=checkbox]').eq(0).on('click', function(){
+					var th_checked = this.checked;//checkbox inside "TH" table header
+					
+					$('#demo-datatables-buttons-1').find('tbody > tr').each(function(index ){
+						if(th_checked) $( myTable.row( index ).node() ).find('input:checkbox').prop('checked', true);
+						else  	$( myTable.row( index ).node() ).find('input:checkbox').prop('checked', false);
+					});
+				});
+				
+				//select/deselect a row when the checkbox is checked/unchecked
+				$('#demo-datatables-buttons-1').on('click', 'td input[type=checkbox]' , function(index){
+					var row = $(this).closest('tr').get(0);
+					if(this.checked) $( myTable.row( index ).node() ).find('input:checkbox').prop('checked', true);
+					else 	$( myTable.row( row ).node() ).find('input:checkbox').prop('checked', false);
+        });
+        $('#btn_enable').click(function(e) {
+		
+    if(confirm('คุณต้องการเปิดการใช้งานนี้ใช่หรือไม่')){
+      
+      $('#frm_usermanagement').attr('action', '<?php echo base_url().'user/checkall_enable'; ?>');
+      $('#frm_usermanagement').submit();
+      
+    }else{
+      
+      return false;
+    }
+    
+       
+    
+    });
+  
+  $('#btn_disable').click(function(e) {
+    
+    if(confirm('คุณต้องการระงับรายการนี้ใช่หรือไม่')){
+    
+           $('#frm_usermanagement').attr('action', '<?php echo base_url().'user/checkall_disable'; ?>');
+      $('#frm_usermanagement').submit();
+    
+    }else{
+    
+      return false;	
+    }
+    
+    });
+  
+  $('#btn_delete').click(function(e) {
+    
+    if(confirm('คุณต้องการลบรายการใช้งานนี้ใช่หรือไม่')){
+    
+          $('#frm_usermanagement').attr('action', '<?php echo base_url().'user/checkall_delete'; ?>');
+      $('#frm_usermanagement').submit();
+    
+    }else{
+      
+      return false;
+    }
+    
+    });
+    });
 </script>
 

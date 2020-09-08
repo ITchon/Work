@@ -34,7 +34,11 @@ class Bom extends CI_Controller {
         }
         if(isset($bm)){
         $array= $this->model_bom->bom($bm) ;
-
+        if($sort){
+            $sub_id = $this->input->post('sub_id');
+            $array = $this->model_bom->tree_down($sub_id,$bm) ;
+            
+        }
         $data['result_bom'] = $array;  
         $res = $this->model_bom->get_bom_by($bm) ;;
         $data['bom']=$res;
@@ -140,7 +144,7 @@ class Bom extends CI_Controller {
         $parent_id = $res[0]->pd_id;
         if($this->input->post('child_id') != null){
             foreach ($child_id as $id) {
-                $sub_id= $this->model_part->insert_sub_part($lasted_id,$parent_id,$id,$id);
+                $sub_id= $this->model_part->insert_sub_part($lasted_id,2,$parent_id,$id,$id);
                 $res= $this->model_part->update_sub_id($sub_id);
                 }
         }

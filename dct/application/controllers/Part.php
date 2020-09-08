@@ -54,6 +54,7 @@ class Part extends CI_Controller {
         $id = $this->uri->segment('3');
         $p_id =  $this->input->post('id');
         $p_no =  $this->input->post('p_no');
+        $lv =  $this->input->post('lv');
         $sub_id =  $this->input->post('sub_id');
         $origin =  $this->input->post('origin');
         $array = $this->model_part->filter($sub_id,$id);
@@ -87,6 +88,7 @@ class Part extends CI_Controller {
         $data['sub_id'] =$sub_id;
         $data['result_p'] =$res_part;
         $data['p_name'] =$res[0]->p_name;
+        $data['lv'] =$lv;
         $this->load->view('part/subpart',$data);//bring $data to user_data 
 		$this->load->view('footer');
 	}
@@ -158,9 +160,11 @@ class Part extends CI_Controller {
         $b_master =  $this->input->post('b_master');
         $p_id =  $this->input->post('p_id');
         $sub_id =  $this->input->post('sub_id');
+        $lv =  $this->input->post('lv');
         $origin =  $this->input->post('origin');
         foreach ($p_id as $p_id) {
-            $chk= $this->model_part->insert_sub_part($bm,$b_master,$p_id,$origin);
+            $lv++;
+            $chk= $this->model_part->insert_sub_part($bm,$lv,$b_master,$p_id,$origin);
            }
            redirect('bom/manage/'.$bm.'','refresh');
     }
@@ -173,7 +177,8 @@ class Part extends CI_Controller {
         $sub_id =  $this->input->post('sub_id');
 
         foreach ($p_id as $p_id) {
-            $sub_id= $this->model_part->insert_sub_part($bm,$b_master,$p_id,$bm);
+            $lv = 2 ;
+            $sub_id= $this->model_part->insert_sub_part($bm,$lv,$b_master,$p_id,$bm);
             $chk= $this->model_part->update_sub_id($sub_id);
            }
            redirect('bom/manage/'.$bm.'','refresh');

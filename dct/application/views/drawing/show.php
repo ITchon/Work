@@ -1,8 +1,5 @@
 <style>
-form {
-  display: inline-block;
 
-}
 .form-control{
   height: 38px
 }
@@ -37,7 +34,7 @@ form {
                 <input type="checkbox" name="folder[]" id="select_all"> <label for="select_all" style="cursor: pointer;color:#5b6572">  ALL</label> <br>
                 <?php
                 foreach($result_folder as $r){ ?>
-                   <input type="checkbox" name="folder[]" id="<?php echo $r->f_id ?>" class="days"
+                   <input type="checkbox" name="folder[]" id="<?php echo $r->f_id ?>" class="child"
                    <?php
                    foreach($folder as $t){ 
                      if($r->f_id == $t){
@@ -49,7 +46,7 @@ form {
                 <?php  } ?>
                 </div>
                 <br>
-                <div class="col-md-3"> 
+                <div class="col-md-3 "> 
                   <div class="input-group" >
                     <div class="input-group-btn">
                         <a href="" class=" btn btn-primary ">Part No.</a> 
@@ -83,9 +80,24 @@ form {
 
                 </div>
                 <div class="card-body">
+                <?php echo form_open('#', array('id' => 'frm_usermanagement', 'name'=>'frm_usermanagement', 'class'=>'form-horizontal'));?>
+
                 <table id="demo-datatables-buttons-1" class="table table-hover  table-nowrap dataTable" cellspacing="0" width="100%">
                   <thead>
+                  <tr>
+								    	<td colspan="12">
+                        <div id="btn_enable" class="btn  btn-success"><span class="fa fa-check"></span></div>
+									    	<div id="btn_disable" class="btn  btn-danger"><span class="fa fa-times"></span></div>
+									    	<div id="btn_delete" class="btn btn-default"><span class="fa fa-trash-o"></span></div>
+								    	</td>
+								    </tr>	
                       <tr>
+                      <th class="text-center">
+															<label class="pos-rel">
+																<input type="checkbox" class="ace" />
+																<span class="lbl"></span>
+															</label>
+														</th>
                         <th width="10%">Part No</th>
                         <th width="15%">Drawing Name</th>
                         <th width="15%">Drawing No</th>
@@ -103,7 +115,14 @@ form {
 
                       <?php
                     foreach($result as $r){
-                    echo "<tr>";?>
+                    echo "<tr>";
+                    echo "<td style='text-align:center;'>
+                            <label class='pos-rel'>
+                              <input type='checkbox' class='ace' name='chk_uid[]' value='$r->d_id'/>
+                              <span class='lbl'></span>
+                            </label>
+                          </td>";
+                     ?>
                     <td><?php echo "<b>".$r->p_no."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_no."</b>" ?></td>
@@ -145,6 +164,7 @@ form {
                     echo "</tr>";
                  }
               ?>
+                  	<?php echo form_close();?>
             
                     </tbody>
                   </table>
@@ -199,13 +219,90 @@ form {
 <SCRIPT language="javascript">
 $(function() {
   $('#select_all').on('change', function() {
-    $('.days').prop('checked', this.checked);
+    $('.child').prop('checked', this.checked);
   });
-  $('.days').on('change', function() {
-    $('#select_all').prop('checked', $('.days:checked').length===$('.days').length);
+  $('.child').on('change', function() {
+    $('#select_all').prop('checked', $('.child:checked').length===$('.child').length);
   });
 });
+$(document).ready(function() {
+var myTable = 	$('#demo-datatables-buttons-1').DataTable();
+				//.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
+         		
+				myTable.on( 'select', function ( e, dt, type, index ) {
+					if ( type === 'row' ) {
+						$( myTable.row( index ).node() ).find('input:checkbox').prop('checked', true);
+					}
+				} );
+				myTable.on( 'deselect', function ( e, dt, type, index ) {
+					if ( type === 'row' ) {
+						$( myTable.row( index ).node() ).find('input:checkbox').prop('checked', false);
+					}
+				} );
+			
+
+    $('#demo-datatables-buttons-1 > thead > tr > th input[type=checkbox], #demo-datatables-buttons-1 input[type=checkbox]').eq(0).on('click', function(){
+					var th_checked = this.checked;//checkbox inside "TH" table header
+					
+					$('#demo-datatables-buttons-1').find('tbody > tr').each(function(index ){
+						if(th_checked) $( myTable.row( index ).node() ).find('input:checkbox').prop('checked', true);
+						else  	$( myTable.row( index ).node() ).find('input:checkbox').prop('checked', false);
+					});
+				});
+				
+				//select/deselect a row when the checkbox is checked/unchecked
+				$('#demo-datatables-buttons-1').on('click', 'td input[type=checkbox]' , function(index){
+					var row = $(this).closest('tr').get(0);
+					if(this.checked) $( myTable.row( index ).node() ).find('input:checkbox').prop('checked', true);
+					else 	$( myTable.row( row ).node() ).find('input:checkbox').prop('checked', false);
+        });
+        $('#btn_enable').click(function(e) {
+		
+    if(confirm('คุณต้องการเปิดการใช้งานนี้ใช่หรือไม่')){
+      
+      $('#frm_usermanagement').attr('action', '<?php echo base_url().'user/checkall_enable'; ?>');
+      $('#frm_usermanagement').submit();
+      
+    }else{
+      
+      return false;
+    }
+    
+       
+    
+    });
+  
+  $('#btn_disable').click(function(e) {
+    
+    if(confirm('คุณต้องการระงับรายการนี้ใช่หรือไม่')){
+    
+           $('#frm_usermanagement').attr('action', '<?php echo base_url().'user/checkall_disable'; ?>');
+      $('#frm_usermanagement').submit();
+    
+    }else{
+    
+      return false;	
+    }
+    
+    });
+  
+  $('#btn_delete').click(function(e) {
+    
+    if(confirm('คุณต้องการลบรายการใช้งานนี้ใช่หรือไม่')){
+    
+          $('#frm_usermanagement').attr('action', '<?php echo base_url().'user/checkall_delete'; ?>');
+      $('#frm_usermanagement').submit();
+    
+    }else{
+      
+      return false;
+    }
+    
+    });
+    });
+
 </SCRIPT>
+
 
 <!-- <script>
 $(document).ready(function() { 
