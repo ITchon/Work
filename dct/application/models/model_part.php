@@ -47,6 +47,27 @@ class Model_part extends CI_Model
         }
     
     }
+
+
+        function insert_newpart($p_no,$p_name)
+    {
+   
+        $num= $this->db->query("SELECT * FROM part where p_no = '$p_no'"); 
+        $chk= $num->num_rows();
+        
+        if($chk < 1){
+          $sql ="INSERT INTO part (p_no,p_name,enable,date_created,delete_flag) VALUES ( '$p_no', '$p_name' 
+        ,'1',CURRENT_TIMESTAMP,'1');";
+          $query = $this->db->query($sql);  
+        if($query){
+            return true;
+        }
+        }else{
+          return false;
+        }
+    
+    }
+    
     public function update_sub_id($sub_id) {
         $sql ="UPDATE sub_part SET origin = $sub_id WHERE sub_id =$sub_id";
         $query = $this->db->query($sql);
