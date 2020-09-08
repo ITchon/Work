@@ -31,8 +31,8 @@
 								    	</td>
 								    </tr>	
                     <tr>
-                    <th  width="1%" class="text-center">
-															<label class="pos-rel">
+                    <th  width="1%" >
+															<label>
 																<input type="checkbox" class="ace" />
 																<span class="lbl"></span>
 															</label>
@@ -47,8 +47,8 @@
                     <?php
                     foreach($result as $r){
                 echo "<tr>";
-                echo "<td style='text-align:center;'>
-                <label class='pos-rel'>
+                echo "<td >
+                <label>
                   <input type='checkbox' class='ace' name='chk_uid[]' value='$r->p_id'/>
                   <span class='lbl'></span>
                 </label>

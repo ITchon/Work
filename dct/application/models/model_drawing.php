@@ -244,19 +244,6 @@ public function del_img($id)
  }
  }
 
-
-  public function delete_drawing($id) {
-    $sql ="UPDATE drawing SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE d_id = '$id'";
-    $query = $this->db->query($sql);
-       if ($query) { 
-          return true; 
-       } 
-       else{
-      return false;
-    }
-    }
-
-
   public function save_edit_drawing($d_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$f_id,$pos)
     {
    $path_file = quotemeta($path_file);
@@ -325,21 +312,40 @@ $path_file = quotemeta($path_file);
     $query = $this->db->query("SELECT * from drawing WHERE d_id = $key "); 
     $result = $query->result()[0];
     if( $result->enable==0){
-    $sqlEdt = "UPDATE drawing SET enable='1' , date_updated=CURRENT_TIMESTAMP WHERE d_id={$key};";
-    $exc_user = $this->db->query($sqlEdt);
+    $sql = "UPDATE drawing SET enable='1' , date_updated=CURRENT_TIMESTAMP WHERE d_id={$key};";
+    $exc = $this->db->query($sql);
     }
     else{
-      $sqlEdt = "UPDATE drawing SET enable='0' , date_updated=CURRENT_TIMESTAMP WHERE d_id={$key};";
-      $exc_user = $this->db->query($sqlEdt);
+      $sql = "UPDATE drawing SET enable='0' , date_updated=CURRENT_TIMESTAMP WHERE d_id={$key};";
+      $exc = $this->db->query($sql);
     }
-  
-    if ($exc_user){
-      
-      return TRUE;    
-      
-    }else{    return FALSE;   }
-    
+ 
   }
+
+  public function all_enable($key){
+    foreach($key as $id){
+      $sql = "UPDATE drawing SET enable='1' , date_updated=CURRENT_TIMESTAMP WHERE d_id={$id};";
+      $exc = $this->db->query($sql);
+    }
+  }
+  public function all_disable($key){
+    foreach($key as $id){
+      $sql = "UPDATE drawing SET enable='0' , date_updated=CURRENT_TIMESTAMP WHERE d_id={$id};";
+      $exc = $this->db->query($sql);
+    }
+  }
+
+  public function all_delete($key) {
+    foreach($key as $id){
+      $sql ="UPDATE drawing SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE d_id = '$id'";
+      $query = $this->db->query($sql);
+      }
+    }
+  public function delete_drawing($id) {
+    $sql ="UPDATE drawing SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE d_id = '$id'";
+    $query = $this->db->query($sql);
+    
+    }
 
   public function drawing_search($s_dno,$s_name,$s_pno,$folder)
   {

@@ -25,7 +25,7 @@ class Bom extends CI_Controller {
         
         $sort =  $this->input->post('sort'); 
         $data['result'] =$this->model_bom->get_bom();
-
+        $data['chk']=null;
         if( $this->input->post('bm')){
           $bm =  $this->input->post('bm'); 
           redirect('bom/manage/'.$bm.'');
@@ -36,9 +36,9 @@ class Bom extends CI_Controller {
         $array= $this->model_bom->bom($bm) ;
         if($sort){
             $sub_id = $this->input->post('sub_id');
-            $array = $this->model_bom->tree_down($sub_id,$bm) ;
-            
+            $array = $this->model_bom->tree_down($sub_id,$bm) ;   
         }
+
         $data['result_bom'] = $array;  
         $res = $this->model_bom->get_bom_by($bm) ;;
         $data['bom']=$res;

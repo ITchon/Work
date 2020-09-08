@@ -152,81 +152,43 @@ public function show()
     }
 
 
-    
-//     public function insert()
-//     {
-//         $d_no =  $this->input->post('d_no');
-//         $dcn_id =  $this->input->post('dcn_id');
-//         $p_no =  $this->input->post('p_no');
-//         $p_name =  $this->input->post('p_name');
-//         $path =  $this->input->post('path');
-//         $file =  $this->input->post('file_name');
-
-//   $num= $this->db->query("SELECT * FROM drawing where d_no = '$d_no'"); 
-//   $chk= $num->num_rows();
-//  if($chk >= 1){
-//     $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
-//           <span> ชื่อนี้ถูกใช้เเล้ว</span>
-//         </div> ');
-//         $this->session->set_flashdata('d_no',$d_no);
-      
-//  }else if($chk != 1){
-//     $num= $this->db->query("SELECT * FROM part where p_no = '$p_no'"); 
-//   $chk= $num->num_rows();
-//   if($chk>=1){
-//     $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
-//           <span> ชื่อนี้ถูกใช้เเล้ว</span>
-//         </div> ');
-//         $this->session->set_flashdata('p_no',$p_no);
-     
-//  }else{
-//     $last_id = $this->model->insert_drawing($d_no, $dcn_id, $path, $file);
-//         $d_id = $last_id;
-//         $result = $this->model->insert_part1($p_no,$p_name,$d_id);
-//         $this->session->set_flashdata('success','<div class="alert alert-succes hide-its">  
-//           <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
-//         </div> ');
-       
-// }
-    
-// }     redirect('drawing/add','refresh');    
-//     }
-
-    // public function insert2()
-    // {
-    
-    //     $d_no =  $this->input->post('d_no');
-    //     $dcn_id =  $this->input->post('dcn_id');
-    //     $file_name =  $this->input->post('file_name2');
-
-        
-    //     $result = $this->model->insert_drawing($d_no, $dcn_id, $file_name);
-
-    //     redirect('drawing/manage','refresh');
-  
-    // }
 
 
     public function enable(){
 
       $this->model->CheckPermission($this->session->userdata('su_id'));
       $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-      $d_id = $this->uri->segment('3');
+       $data = $this->uri->segment('3');
+      if($data=="ea" &&  $this->input->post('d_id')){
+        $d_id = $this->input->post('d_id');
+        $this->model_drawing->all_enable($d_id);
+      }else if($data=="da" &&  $this->input->post('d_id')){
+        $d_id = $this->input->post('d_id');
+        $this->model_drawing->all_disable($d_id);
+      }else if(is_numeric($data)){
+        $d_id = $this->uri->segment('3');
+        $this->model_drawing->enableDrawing($d_id);
+      } 
       $search = $this->session->flashdata('search');
-      
-      $result = $this->model_drawing->enableDrawing($d_id);
-
       redirect('drawing/show?'.$search.'','refresh');
       
   }
 
+  
   public function deletedrawing()
   {
       $this->model->CheckPermission($this->session->userdata('su_id'));
       $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-      $d_id = $this->uri->segment('3');
+
+      $data = $this->uri->segment('3');
+      if($data=="d" &&  $this->input->post('d_id')){
+        $d_id = $this->input->post('d_id');
+        $this->model_drawing->all_delete($d_id);
+      }else if(is_numeric($data)){
+        $d_id = $this->uri->segment('3');
+        $this->model_drawing->delete_drawing($d_id);
+      }
       $search = $this->input->post('search');
-      $this->model_drawing->delete_drawing($d_id);
       redirect('drawing/show'.$search.'','refresh');
 
   }

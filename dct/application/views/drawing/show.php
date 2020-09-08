@@ -80,7 +80,7 @@
 
                 </div>
                 <div class="card-body">
-                <?php echo form_open('#', array('id' => 'frm_usermanagement', 'name'=>'frm_usermanagement', 'class'=>'form-horizontal'));?>
+                <?php echo form_open('#', array('id' => 'frm_drawingmanagement', 'name'=>'frm_drawingmanagement', 'class'=>'form-horizontal'));?>
 
                 <table id="demo-datatables-buttons-1" class="table table-hover  table-nowrap dataTable" cellspacing="0" width="100%">
                   <thead>
@@ -92,21 +92,21 @@
 								    	</td>
 								    </tr>	
                       <tr>
-                      <th class="text-center">
-															<label class="pos-rel">
+                        <th width="1%">
+															<label>
 																<input type="checkbox" class="ace" />
 																<span class="lbl"></span>
 															</label>
-														</th>
-                        <th width="10%">Part No</th>
-                        <th width="15%">Drawing Name</th>
-                        <th width="15%">Drawing No</th>
-                        <th width="3%">POS</th>
-                        <th width="5%">Customer</th>
-                        <th width="10%">DCN</th>
-                        <th width="3%">Rev</th>
-                        <th width="10%">Manage</th>
-                        <th width="10%">Status</th>
+												</th>
+                        <th>Part No</th>
+                        <th>Drawing Name</th>
+                        <th>Drawing No</th>
+                        <th>POS</th>
+                        <th>Customer</th>
+                        <th>DCN</th>
+                        <th>Rev</th>
+                        <th>Manage</th>
+                        <th>Status</th>
                         <th>Path File</th>
 
                       </tr>
@@ -116,9 +116,9 @@
                       <?php
                     foreach($result as $r){
                     echo "<tr>";
-                    echo "<td style='text-align:center;'>
-                            <label class='pos-rel'>
-                              <input type='checkbox' class='ace' name='chk_uid[]' value='$r->d_id'/>
+                    echo "<td >
+                            <label>
+                              <input type='checkbox' class='ace' name='d_id[]' value='$r->d_id' />
                               <span class='lbl'></span>
                             </label>
                           </td>";
@@ -260,8 +260,8 @@ var myTable = 	$('#demo-datatables-buttons-1').DataTable();
 		
     if(confirm('คุณต้องการเปิดการใช้งานนี้ใช่หรือไม่')){
       
-      $('#frm_usermanagement').attr('action', '<?php echo base_url().'user/checkall_enable'; ?>');
-      $('#frm_usermanagement').submit();
+      $('#frm_drawingmanagement').attr('action', '<?php echo base_url().'drawing/enable/ea'; ?>');
+      $('#frm_drawingmanagement').submit();
       
     }else{
       
@@ -276,8 +276,8 @@ var myTable = 	$('#demo-datatables-buttons-1').DataTable();
     
     if(confirm('คุณต้องการระงับรายการนี้ใช่หรือไม่')){
     
-           $('#frm_usermanagement').attr('action', '<?php echo base_url().'user/checkall_disable'; ?>');
-      $('#frm_usermanagement').submit();
+           $('#frm_drawingmanagement').attr('action', '<?php echo base_url().'drawing/enable/da'; ?>');
+      $('#frm_drawingmanagement').submit();
     
     }else{
     
@@ -290,8 +290,8 @@ var myTable = 	$('#demo-datatables-buttons-1').DataTable();
     
     if(confirm('คุณต้องการลบรายการใช้งานนี้ใช่หรือไม่')){
     
-          $('#frm_usermanagement').attr('action', '<?php echo base_url().'user/checkall_delete'; ?>');
-      $('#frm_usermanagement').submit();
+          $('#frm_drawingmanagement').attr('action', '<?php echo base_url().'drawing/deletedrawing/d'; ?>');
+      $('#frm_drawingmanagement').submit();
     
     }else{
       
