@@ -74,7 +74,7 @@ class Model extends CI_Model
     inner join sys_users_groups_permissions as sugp ON sugp.spg_id = spg.spg_id
     inner join sys_permissions as sp on sp.controller = smg.link
     inner join sys_users_permissions as sup on sup.sp_id = sp.sp_id
-    where sug_id = '.$sug_id.' and sup.su_id = '.$su_id.'
+    where sug_id = '.$sug_id.' and smg.enable != 0 and sup.su_id = '.$su_id.'
     ORDER BY smg.order_no ASC';     
     $query = $this->db->query($sql); 
     $result = $query->result();

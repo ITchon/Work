@@ -16,6 +16,7 @@
                   <table id="demo-datatables-buttons-1" class="table table-hover  table-bordered dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
+                        <th>Main Group</th>
                         <th>Type Name</th>
                         <th>Folder Name</th>
                         <th>Status</th>
@@ -27,6 +28,7 @@
                     <?php
                     foreach($result as $r){
                 echo "<tr>";
+                echo "<td>".$r->foldergroup_name."</td>";
                 echo "<td>".$r->name."</td>";
                 echo "<td>".$r->folder_name."</td>";
                 if($this->session->flashdata("edit")!== null )

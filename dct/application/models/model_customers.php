@@ -3,12 +3,12 @@
 class Model_customers extends CI_Model
 {
 
-public function insert_cus($cusname,$cusdes,$fg_id)
+public function insert_cus($cusname,$cusdes)
 {
      $num= $this->db->query("SELECT * FROM customers where cus_name = '$cusname'"); 
      $chk= $num->num_rows();
     if($chk!=1){
-     $sql ="INSERT INTO customers (cus_name,cus_des,fg_id,date_created,delete_flag) VALUES ( '$cusname', '$cusdes','$fg_id', CURRENT_TIMESTAMP,  '1' );";
+     $sql ="INSERT INTO customers (cus_name,cus_des,date_created,delete_flag) VALUES ( '$cusname', '$cusdes', CURRENT_TIMESTAMP,  '1' );";
        $query = $this->db->query($sql);  
       if($query){
         return true;

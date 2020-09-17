@@ -70,6 +70,7 @@ $this->session->set_flashdata('search',$search);
           
                       <div class="col-sm-6 col-md-4">
                    <select id="dcn" name="dcn_id" class="form-control select2" >
+                    <option value="">- - -NONE- - -</option>
                    <?php
                       foreach($result_dcn as $rg){?>
              
@@ -86,6 +87,7 @@ $this->session->set_flashdata('search',$search);
           
                       <div class="col-sm-6 col-md-4">
                    <select id="cus" name="cus_id" class="form-control select2" >
+                    <option value="">- - -NONE- - -</option>
                    <?php
                       foreach($result_cus as $rg){?>
              

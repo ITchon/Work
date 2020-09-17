@@ -42,7 +42,6 @@
                         <th width="3%">Rev</th>
                         <th width="10%">Manage</th>
                         <th width="10%">Status</th>
-                        <th>Path File</th>
 
                       </tr>
                     </thead>
@@ -55,16 +54,16 @@
                     <td><?php echo "<b>".$r->d_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_no."</b>" ?></td>
                     <td><?php echo "<b>".$r->pos."</b>" ?></td>
-                    <td><?php echo "<b>".$r->cus_name."</b>" ?></td>
+                    <td><?php echo "<b>".$r->customer."</b>" ?></td>
                     <?php  if($this->session->flashdata("link")!== null ){ 
-                      echo "<td><a href='".base_url()."dcn/manage/".$r->dcn_id."'>$r->dcn_no</a></td>"; 
+                      echo "<td><a href='".base_url()."dcn/manage/".$r->dcn."'>$r->dcn</a></td>"; 
                     }
                     else{ 
-                      echo "<td>$r->dcn_no</td>";
+                      echo "<td>$r->dcn</td>";
                        }  ?>
 
                 <td class="text-center">
-                <?php echo $r->version ?>
+                <?php echo $r->rev ?>
                 </td>                               
                 <td>
                   <?php if ($r->v_id !='v_id') {
@@ -94,8 +93,6 @@
                   <?php
                 }
                 ?>
-
-                <td style="font-size: 14px"><?php echo $r->path_file ?> </td>
                 <?php
 
             echo "</tr>";

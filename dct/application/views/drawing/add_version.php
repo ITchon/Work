@@ -10,7 +10,7 @@
               <h2 class=" text-center text-primary">
              ADD VERSION
             </h2><hr>
-            <form name="form1" method="post" class="table form form-horizontal containe" action="<?php echo base_url()?>drawing/update_v" enctype="multipart/form-data">
+            <form name="form1" method="post" class="table form form-horizontal containe" action="<?php echo base_url()?>drawing/  " enctype="multipart/form-data">
             <?php $search =  $this->session->flashdata('search');
                   $this->session->set_flashdata('search',$search);
                  ?>
@@ -54,7 +54,7 @@
                    <?php
                       foreach($result_dcn as $rg){?>
              
-                     <option value="<?php  echo $rg->dcn_id ?>"><?php echo $rg->dcn_no ?></option>
+                     <option value="<?php  echo $rg->dcn_no ?>"><?php echo $rg->dcn_no ?></option>
                     <?php
                       }
                       ?> 
@@ -70,7 +70,7 @@
                    <?php
                       foreach($result_cus as $rg){?>
              
-                     <option value="<?php  echo $rg->cus_id ?>"><?php echo $rg->cus_name ?></option>
+                     <option value="<?php  echo $rg->cus_name ?>"><?php echo $rg->cus_name ?></option>
                     <?php
                       }
                       ?> 
@@ -96,14 +96,14 @@
                     </div> 
 
 
-                <input type="text" name="version" value="<?php echo $result->version?>" hidden>
+                <input type="text" name="version" value="<?php echo $result->rev?>" hidden>
     
                   
 
                     <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Version</label>      
                       <div class="col-sm-6 col-md-4">
-                   <input class="form-control" type="text" readonly value="<?php echo $result->version ?>">
+                   <input class="form-control" type="text" readonly value="<?php echo $result->rev ?>">
                    <input class="form-control" type="hidden" name="code" value="<?php echo $result->file_code ?>">
 
                     </div>
@@ -156,6 +156,34 @@
                    }
                 
                 ?>
+                 <table class="table text-center">
+                      <thead>
+                      <tr>
+                      
+                      </tr>
+                      </thead>
+
+                      <?php 
+                      foreach($result_pd as $r){ ?>
+                      
+                      <tbody>
+                      <td style='text-align:center;'>
+                 <label class='pos-rel'>
+                     <input type='checkbox' name='chk_uid[]' value='<?php echo $r->pd_id ?>'/>
+                     <span class='lbl'></span>
+                   </label>
+               </td>
+                      <td><?php echo $r->p_no ?></td>
+                      <input type='hidden' name='p_no[]' value='<?php echo $r->p_no ?>'>
+                  <?php
+                      }
+                       ?>
+                       <?php if($result_pd != null){ ?>
+                       <hr>
+                       <input type="button" class="btn btn-danger" id="toggle" value="delete all" onClick="do_this()" />
+                       <?php } ?>
+                      </tbody>
+                      </table>
                    </div>
                     </div> 
             </div>

@@ -126,7 +126,8 @@ public function show()
           
           $d_id = intval(preg_replace('/[^0-9]+/', '', $params), 10);
     
-          $data['result'] = $this->model_drawing->get_drawing_ver($d_id);
+          // $data['result'] = $this->model_drawing->get_drawing_ver($d_id);
+          $data['result'] = $this->model_drawing->get_revision_drawing($d_id);
           $this->load->view('drawing/img_modal');
           $this->load->view('drawing/show_v',$data);//bring $data to user_data 
           $this->load->view('footer'); 
@@ -199,6 +200,7 @@ public function show()
       $data['result_dcn'] = $this->model_drawing->get_dcn();
       $data['result_cus'] = $this->model_drawing->get_customers();
       $data['result_folder']= $this->model_drawing->get_folder_drawing();
+      $data['result_pd'] = $this->model_drawing->get_part_drawing_byid($d_id);
       $this->load->view('drawing/add_version',$data);
       $this->load->view('footer');
   } 
@@ -258,6 +260,9 @@ public function show()
         $code =  $this->input->post('file_code');
         $search =  $this->session->flashdata('search');
         $fold =  $this->input->post('fold');
+        $p_no =  $this->input->post('p_no');
+        print_r($p_no);
+        die;
         $folderold = $this->model_drawing->checkfolder($fold);
         $folderold_group = $folder[0]->foldergroup_name;
         $folderold_name = $folderold[0]->folder_name;

@@ -47,21 +47,10 @@ class Customers extends CI_Controller {
     {
         $cus_name =  $this->input->post('cus_name');
         $cus_des =  $this->input->post('cus_des');
-        $fol_name =  $this->input->post('fol_name');
-        $last_id = $this->model_customers->insert_fg($fol_name);
-       if($last_id != false){
-        $this->model_customers->insert_cus($cus_name,$cus_des,$last_id);
-        $path = "uploads/".$fol_name;
-        if(!is_dir($path)) //create the folder if it's not exists
-        {
-          mkdir($path,0755,TRUE);
-        } 
+        $this->model_customers->insert_cus($cus_name,$cus_des);
+
         redirect('customers/manage','refresh');
-       }
-       else{
-        echo "<script>alert('Name already exist')</script>";
-        redirect('customers/add','refresh'); 
-       }
+       
 
 
     }

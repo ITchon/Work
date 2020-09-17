@@ -17,7 +17,7 @@ class Model_folder extends CI_Model
 
  public function get_foldergroup()
   {
-   $sql ="SELECT * from folder_group where delete_flag != 0 AND hidden !=1";
+   $sql ="SELECT * from folder_group where delete_flag != 0";
      $query = $this->db->query($sql);  
      $result = $query->result(); 
     if($query){

@@ -98,6 +98,7 @@
 																<span class="lbl"></span>
 															</label>
 												</th>
+                        <th>Type</th>
                         <th>Part No</th>
                         <th>Drawing Name</th>
                         <th>Drawing No</th>
@@ -123,6 +124,7 @@
                             </label>
                           </td>";
                      ?>
+                    s<td><?php echo "<b>".$r->type_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->p_no."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_no."</b>" ?></td>
@@ -134,7 +136,7 @@
                     else{ 
                       echo "<td>$r->dcn_no</td>";
                        }  
-                    if($this->session->flashdata("show_version")!== null){ echo "<td><a  href='".base_url()."drawing/show_v?d_id=".$r->d_id."'  >$r->version</a></td>";
+                    if($this->session->flashdata("show_version")!== null){ echo "<td><a  href='".base_url()."drawing/show_v?d_id=".$r->d_id."'  >$r->rev</a></td>";
                      }else{
                        echo "<td class='text-center'>$r->version</td>";
                      }    

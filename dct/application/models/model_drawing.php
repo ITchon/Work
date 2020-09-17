@@ -363,8 +363,8 @@ $path_file = quotemeta($path_file);
         $folder =  implode(',',array_map('intval',$folder));
       }
       $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,c.cus_id,c.cus_name,
-       d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no,dc.file_name as dcn_file,
-       dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code ,d.f_id,d.pos,f.folder_name,fg.foldergroup_name
+       d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.rev, d.path_file, p.p_no,dc.file_name as dcn_file,
+       dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code ,d.f_id,d.pos,f.folder_name,fg.foldergroup_name,f.name as type_name
       from drawing as d
         left join part_drawing as pd on pd.d_id = d.d_id
         left join customers as c on c.cus_id = d.cus_id
@@ -383,8 +383,8 @@ $path_file = quotemeta($path_file);
   public function get_partdrawing()
   {
     $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,c.cus_id,c.cus_name,
-     d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.version, d.path_file, p.p_no,dc.file_name as dcn_file,
-     dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code, d.f_id,d.pos,f.folder_name,fg.foldergroup_name
+     d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.rev, d.path_file, p.p_no,dc.file_name as dcn_file,
+     dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code, d.f_id,d.pos,f.folder_name,f.name as type_name,fg.foldergroup_name
           from drawing as d
             left join part_drawing as pd on pd.d_id = d.d_id
             left join customers as c on c.cus_id = d.cus_id
@@ -400,9 +400,23 @@ $path_file = quotemeta($path_file);
   }
 
 
+    public function get_revision_drawing()
+  {
+    $sql =  "SELECT rev.rd_id,rev.d_no,rev.d_name,rev.pos,rev.dcn,rev.customer,rev.enable,rev.f_id,v.v_id,rev.rev,rev.p_no
+    FROM drawing as d
+    INNER join version as v on v.d_id = d.d_id
+    INNER join revision_drawing as rev on rev.rd_id = v.rd_id
+    where v.d_id = 3 AND rev.delete_flag != 0";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+
+
+
   public function get_drawing_ver($id)
   {
-     $sql =  "SELECT d.d_id, d.d_no,d.d_name,d.cus_id,cus.cus_name, d.dcn_id, dc.dcn_no, d.enable, d.path_file, d.file_name, d.version
+     $sql =  "SELECT d.d_id, d.d_no,d.d_name,d.cus_id,cus.cus_name, d.dcn_id, dc.dcn_no, d.enable, d.path_file, d.file_name, d.rev
      , p.p_no,p.p_id,'v_id',dc.file_name as dcn_file,dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code ,d.pos,f.folder_name,fg.foldergroup_name,d.f_id
             from drawing as d
             left join part_drawing as pd on pd.d_id = d.d_id
@@ -411,9 +425,9 @@ $path_file = quotemeta($path_file);
             left join customers as cus on cus.cus_id = d.cus_id 
             inner join folder f on f.f_id = d.f_id
             inner join folder_group fg on fg.fg_id = f.fg_id
-            where d.delete_flag != 0 AND d.d_id = 1
+            where d.delete_flag != 0 AND d.d_id = $id
             UNION
-                SELECT v.d_id, v.d_no,v.d_name,v.cus_id,cus.cus_name, v.dcn_id, dc.dcn_no, v.enable, v.path_file, v.file_name, v.version
+                SELECT v.d_id, v.d_no,v.d_name,v.cus_id,cus.cus_name, v.dcn_id, dc.dcn_no, v.enable, v.path_file, v.file_name, v.rev
                 , p.p_no,p.p_id, v.v_id,dc.file_name as dcn_file,dc.path_file as dcn_path,v.file_code,dc.file_code as dcn_code ,v.pos,f.folder_name,fg.foldergroup_name,v.f_id
          from version as v
          left join part_drawing as pd on pd.d_id = v.d_id
@@ -422,7 +436,7 @@ $path_file = quotemeta($path_file);
          left join customers as cus on cus.cus_id = v.cus_id 
          inner join folder f on f.f_id = v.f_id
          inner join folder_group fg on fg.fg_id = f.fg_id
-         where v.delete_flag != 0 AND v.d_id = 1
+         where v.delete_flag != 0 AND v.d_id = $id
          ORDER by version DESC ";
       $query = $this->db->query($sql); 
       $result =  $query->result();

@@ -24,7 +24,9 @@ class Folder extends CI_Controller {
     {	
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));   
         $this->model->CheckPermission($this->session->userdata('su_id'));
-        $sql =  'SELECT * from folder where delete_flag != 0 AND fg_id NOT IN(1,2)';
+        $sql =  'SELECT * from folder as f
+        inner join folder_group as fg on fg.fg_id = f.fg_id
+        where f.delete_flag != 0';
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
         $this->load->view('folder/manage',$data);//bring $data to user_data 
