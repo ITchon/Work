@@ -522,7 +522,7 @@ $path_file = quotemeta($path_file);
         left join part as p on p.p_id = pd.p_id
         inner join folder f on f.f_id = d.f_id
         inner join folder_group fg on fg.fg_id = f.fg_id
-        where d.delete_flag != 0 AND d.f_id IN ($folder) AND (d.d_no LIKE '%$s_dno%' OR d.d_name LIKE '%$s_name%' OR p.p_no LIKE '%$s_pno%') ";
+        where pd.delete_flag != 0 AND d.delete_flag != 0 AND d.f_id IN ($folder) AND (d.d_no LIKE '%$s_dno%' OR d.d_name LIKE '%$s_name%' OR p.p_no LIKE '%$s_pno%') ";
 
       $query = $this->db->query($sql);
       $result =  $query->result();

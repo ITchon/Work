@@ -30,6 +30,16 @@ public function __construct()
       echo $this->model_ajax->fetch_part_drw($this->input->post('d_id'));
      }
     }
+
+        public function fetch_part_drw_v()
+    {
+     if($this->input->post('d_id'))
+     
+     {
+      echo $this->model_ajax->fetch_part_drw_v($this->input->post('d_id'));
+     }
+    }
+
     public function fetch_pd_edit()
     {
 
@@ -52,6 +62,18 @@ public function __construct()
         ));
      }
     }
+
+    public function delete_part_drw_v()
+    {
+     if($this->input->post('rd_id'))
+     {
+        $this->model_ajax->delete_part_drw_v($this->input->post('rd_id'));   
+        echo json_encode(array(
+            "statusCode"=>200
+        ));
+     }
+    }
+
     public function fetch_folder()
     {
      if($this->input->post('cus_id'))

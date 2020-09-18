@@ -266,6 +266,7 @@ $(document).ready(function() {
     				id: id
     			},
     			success: function(data){
+            alert(id);
     				var data = JSON.parse(data);
     				if(data.statusCode==200){// what is this????
     					$ele.fadeOut().remove();

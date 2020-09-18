@@ -19,7 +19,7 @@
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Drawing Number</label>
                     <div class="col-sm-6 col-md-4">
-                    <input type="text" name="search" value="<?php echo $search ?>" >
+                    <input type="hidden" name="search" value="<?php echo $search ?>" >
                     <input hidden type="text" name="rd_id" value="<?php echo $result->rd_id ?>" >
                     <input hidden type="text" name="d_id" value="<?php echo $result->d_id ?>" >
                     <input id="part" class="form-control " type="text" name="d_no" value="<?php echo $result->d_no ?>">
@@ -272,13 +272,13 @@ $(document).ready(function() {
       var r = confirm("Confirm delete?");
       if (r == true) {
     		var $ele = $(this).parent().parent();//?????
-        var id = $(this).attr("data-id");
+        var rd_id = $(this).attr("data-id");
     		$.ajax({
-    			url: "<?php echo base_url("ajax/delete_part_drw");?>",
+    			url: "<?php echo base_url("ajax/delete_part_drw_v");?>",
     			type: "POST",
     			cache: false,
     			data:{
-    				id: id
+    				rd_id:rd_id
     			},
     			success: function(data){
     				var data = JSON.parse(data);
