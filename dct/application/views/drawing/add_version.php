@@ -14,6 +14,8 @@
             <?php $search =  $this->session->flashdata('search');
                   $this->session->set_flashdata('search',$search);
                  ?>
+                <input class="form-control" type="hidden" name="cus_name" value="<?php echo $result->cus_name ?>">
+                <input class="form-control" type="hidden" name="dcn_no" value="<?php echo $result->dcn_no ?>">
               <input hidden type="text" name="fold" value="<?php echo $result->f_id ?>" >
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Drawing Number</label>
@@ -165,7 +167,7 @@
 
                       <?php 
                       foreach($result_pd as $r){ ?>
-                      
+                      <input type='hidden' name='p_no[]' value='<?php echo $r->p_no ?>'>
                       <tbody>
                       <td style='text-align:center;'>
                  <label class='pos-rel'>
