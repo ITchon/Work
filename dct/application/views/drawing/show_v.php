@@ -33,7 +33,8 @@
                 <table id="demo-datatables-buttons-1" class="table table-hover  table-nowrap dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
-                      <th width="10%">Part No</th>
+                        <th>Type</th>
+                        <th width="10%">Part No</th>
                         <th width="15%">Drawing Name</th>
                         <th width="15%">Drawing No</th>
                         <th width="15%">POS</th>
@@ -46,43 +47,71 @@
                       </tr>
                     </thead>
                     <tbody>
-
                       <?php
-                    foreach($result as $r){
+                    foreach($result_last as $r){
              echo "<tr>";?>
+                    <td><?php echo "<b>".$r->type_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->p_no."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_no."</b>" ?></td>
                     <td><?php echo "<b>".$r->pos."</b>" ?></td>
-                    <td><?php echo "<b>".$r->customer."</b>" ?></td>
+                    <td><?php echo "<b>".$r->cus_name."</b>" ?></td>
                     <?php  if($this->session->flashdata("link")!== null ){ 
-                      echo "<td><a href='".base_url()."dcn/manage/".$r->dcn."'>$r->dcn</a></td>"; 
+                      echo "<td><a href='".base_url()."dcn/manage/".$r->dcn_id."'>$r->dcn_no</a></td>"; 
                     }
                     else{ 
-                      echo "<td>$r->dcn</td>";
+                      echo "<td>$r->dcn_no</td>";
                        }  ?>
 
                 <td class="text-center">
                 <?php echo $r->rev ?>
                 </td>                               
                 <td>
-                  <?php if ($r->v_id !='v_id') {
-                  echo " <a href='javascript:void(0)'  data-id='".$r->v_id."' class='view_imgv'><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
-                  if($this->session->flashdata("download")!== null ) echo "<a href='".base_url()."drawing/openfile_v/".$r->v_id."'  ><i class='btn-info no-border fa fa-inbox'></i></a>";
-                  if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."drawing/edit_v/".$r->v_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";
-
-                  ?>
-
-                  <?php }else{ 
+                  <?php 
                   echo " <a href='javascript:void(0)'  data-id='".$r->d_id."' class='view_img'><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
                   if($this->session->flashdata("download")!== null ) echo "<a href='".base_url()."drawing/openfile/".$r->d_id."'  ><i class='btn-info no-border fa fa-inbox'></i></a>";
                   if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."drawing/edit/".$r->d_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";
-                  ?>
-                  <?php } ?>
+
+                if($r->enable!=1 ){?>
+                  
+                  <td class="text-center"><b><font color="red">disable</font></b></td>
+                  <?php
+                }
+                else{?>
+                  <td class="text-center"><b><font color="lightgreen">active</font></b></td>                   
+                  <?php
+                }
+
+            echo "</tr>";
+        } ?>
 
 
-        
-                <?php 
+                      <?php
+                    foreach($result_rev as $r){
+             echo "<tr>";?>
+                    <td><?php echo "<b>".$r->type_name."</b>" ?></td>
+                    <td><?php echo "<b>".$r->p_no."</b>" ?></td>
+                    <td><?php echo "<b>".$r->d_name."</b>" ?></td>
+                    <td><?php echo "<b>".$r->d_no."</b>" ?></td>
+                    <td><?php echo "<b>".$r->pos."</b>" ?></td>
+                    <td><?php echo "<b>".$r->cus_name."</b>" ?></td>
+                    <?php  if($this->session->flashdata("link")!== null ){ 
+                      echo "<td><a href='".base_url()."dcn/manage/".$r->dcn_no."'>$r->dcn_no</a></td>"; 
+                    }
+                    else{ 
+                      echo "<td>$r->dcn_no</td>";
+                       }  ?>
+
+                <td class="text-center">
+                <?php echo $r->rev ?>
+                </td>
+
+                <td>
+                  <?php
+                  echo " <a href='javascript:void(0)'  data-id='".$r->rd_id."' class='view_imgv'><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
+                  if($this->session->flashdata("download")!== null ) echo "<a href='".base_url()."drawing/openfile_v/".$r->rd_id."'  ><i class='btn-info no-border fa fa-inbox'></i></a>";
+                  if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."drawing/edit_v/".$r->rd_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";
+
                 if($r->enable!=1 ){?>
                   
                   <td class="text-center"><b><font color="red">disable</font></b></td>

@@ -27,6 +27,15 @@ class Model_drawing extends CI_Model
     return $result;
   }
 
+    public function get_nopartno($p_no)
+  {
+      $p_no =  implode(',',$p_no);
+    $sql =  "SELECT * from part where delete_flag != 0 AND p_no NOT IN ($p_no)";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+
 
   public function get_fid($d_id)
   { 
@@ -151,9 +160,9 @@ class Model_drawing extends CI_Model
   }
 
 
-  public function get_did($v_id)
+  public function get_did($rd_id)
   {
-    $sql =  "SELECT * from version where v_id = $v_id";
+    $sql =  "SELECT * from revision_drawing where rd_id = $rd_id";
        $query = $this->db->query($sql);
       $result =  $query->result()[0];
     return $result;
@@ -182,11 +191,31 @@ where fg.delete_flag != 0 AND f_id = '$f_id'";
     return $result;
   }
 
+    public function get_part_rev_byid($d_id)
+  {
+    $sql =  "SELECT * from revision_drawing  as rev
+        inner join version as v on v.rd_id = rev.rd_id
+        where v.d_id = $d_id";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+
 
   public function get_pid_bypd($d_id)
   {
     $sql =  "SELECT pd.p_id from part_drawing  as pd
         where pd.d_id = $d_id";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+
+    public function get_pno_byrd($d_id)
+  {
+    $sql =  "SELECT rev.p_no from revision_drawing  as rev
+        inner join version as v on v.rd_id = rev.rd_id
+        where v.d_id = $d_id";
        $query = $this->db->query($sql);
       $result =  $query->result();
     return $result;
@@ -313,7 +342,7 @@ if($query){
 
   public function add_revision($p,$d_no,$d_name,$dcn_no,$cus_name,$pos,$rev,$file,$f_id)
  {
-  $gg ="INSERT INTO revision_drawing (p_no,d_no,d_name,pos, dcn, customer, enable, date_created, delete_flag, file_name,f_id,rev) 
+  $gg ="INSERT INTO revision_drawing (p_no,d_no,d_name,pos, dcn_no, cus_name, enable, date_created, delete_flag, file_name,f_id,rev) 
   VALUES ( '$p','$d_no', '$d_name','$pos', '$dcn_no','$cus_name', '0', CURRENT_TIMESTAMP, '1', '$file','$f_id','$rev');";
   $query = $this->db->query($gg); 
   $last_id = $this->db->insert_id();
@@ -435,13 +464,30 @@ $path_file = quotemeta($path_file);
   }
 
 
-    public function get_revision_drawing()
+    public function get_revision_drawing($d_id)
   {
-    $sql =  "SELECT rev.rd_id,rev.d_no,rev.d_name,rev.pos,rev.dcn,rev.customer,rev.enable,rev.f_id,v.v_id,rev.rev,rev.p_no
+    $sql =  "SELECT rev.rd_id,rev.d_no,rev.d_name,rev.pos,rev.dcn_no,rev.cus_name,rev.enable,rev.f_id,v.v_id,rev.rev,rev.p_no,f.folder_name,fg.foldergroup_name,f.name as type_name
+    FROM revision_drawing as rev
+    INNER join version as v on v.rd_id = rev.rd_id
+    INNER join folder as f on f.f_id = rev.f_id
+    INNER join folder_group as fg on fg.fg_id = f.fg_id
+    where v.d_id = $d_id AND rev.delete_flag != 0";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+
+      public function get_lastrev_drawing($d_id)
+  {
+    $sql =  "SELECT d.d_id,d.d_no,d.d_name,d.pos,d.dcn_id,cus.cus_name,d.enable,d.f_id,p.p_no,f.folder_name,fg.foldergroup_name,dc.dcn_no,d.rev,f.name as type_name
     FROM drawing as d
-    INNER join version as v on v.d_id = d.d_id
-    INNER join revision_drawing as rev on rev.rd_id = v.rd_id
-    where v.d_id = 3 AND rev.delete_flag != 0";
+    INNER join folder as f on f.f_id = d.f_id
+    INNER join customers as cus on cus.cus_id = d.cus_id
+    INNER join folder_group as fg on fg.fg_id = f.fg_id
+    INNER join part_drawing as pd on pd.d_id = d.d_id
+    INNER join part as p on p.p_id = pd.p_id
+    INNER join dcn as dc on dc.dcn_id = d.dcn_id
+    where d.d_id = $d_id AND d.delete_flag != 0";
        $query = $this->db->query($sql);
       $result =  $query->result();
     return $result;
