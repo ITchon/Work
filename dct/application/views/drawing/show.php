@@ -108,7 +108,6 @@
                         <th>Rev</th>
                         <th>Manage</th>
                         <th>Status</th>
-                        <th>Path File</th>
 
                       </tr>
                     </thead>
@@ -162,7 +161,6 @@
                   else{ 
                     echo "<span style='$color'>$text </span>"; }
                     echo "</div></td>";
-                    echo "<td style='font-size: 14px'>".$r->path_file.''.$r->file_name ."</td>";   
                     echo "</tr>";
                  }
               ?>
