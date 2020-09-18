@@ -38,6 +38,7 @@ $this->session->set_flashdata('search',$search);
                     <label for="part" class="col-sm-5 col-md-4 control-label">Drawing Number</label>
                     <div class="col-sm-6 col-md-4">
                     <input hidden type="text" name="d_id" value="<?php echo $result->d_id ?>" >
+                    <input hidden type="text" name="search" value="<?php echo $search ?>" >
                     <input id="part" class="form-control " type="text" name="d_no" value="<?php echo $result->d_no ?>">
 
                     <span class="form-control-feedback" aria-hidden="true">

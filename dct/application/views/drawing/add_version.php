@@ -167,6 +167,7 @@
                  
                       <tr>
                       <td style='text-align:center;'><b>Part No</b></td>
+                      <input name="p_no[]" type="hidden" readonly value="<?php echo $r->p_no ?>">
                       <td><?php echo $r->p_no ?></td>
                       </tr>
                   <?php

@@ -247,6 +247,7 @@ public function show()
         $foldername = $folder[0]->folder_name;
         $config['upload_path']           = './uploads/'.$foldergroup.'/'.$foldername;
         $config['allowed_types']        = '*';
+        $config['overwrite']  = TRUE;
   
         $pos =  $this->input->post('pos');
         $d_id =  $this->input->post('d_id');
@@ -596,9 +597,7 @@ public function show()
         unlink('./uploads/'.$folderold_group.'/'.$folderold_name.'/'.$file_name2);
         $config['overwrite']            = TRUE;
         }
-
-        $search =  $this->session->flashdata('search');
-        
+     
         $pos =  $this->input->post('pos');
         $d_id =  $this->input->post('d_id');
         $d_no =  $this->input->post('d_no');
@@ -612,6 +611,7 @@ public function show()
         $dcnid =  $this->input->post('dcnid');
         $code =  $this->input->post('file_code');
         $file_name =  $this->input->post('file_name2');
+        $search =  $this->input->post('search');
         
         
 
@@ -769,6 +769,7 @@ public function show()
           $data['result_p'] = $this->model_drawing->get_part();
         }
         $search =  $this->session->flashdata('search');
+        $data['search'] = $search;
         $this->session->set_flashdata('search',$search);
 
         $this->load->view('drawing/edit_v',$data);
@@ -808,7 +809,7 @@ public function show()
         $p_no =  $this->input->post('p_no');
         $p_name =  $this->input->post('p_name');
         $rev =  $this->input->post('rev');
-        $search =  $this->session->flashdata('search');
+        $search =  $this->input->post('search');
 
         $rd_id = $this->model_drawing->get_revision_id($d_id,$rev);
 
@@ -915,12 +916,12 @@ public function show()
                 }
               }
             }
-            if($this->input->post('chk_uid') != null){
-              $del =  $this->input->post('chk_uid');
-              foreach($del as $id){
-                $this->model_drawing->del_img($id);
-              }
-            }
+            // if($this->input->post('chk_uid') != null){
+            //   $del =  $this->input->post('chk_uid');
+            //   foreach($del as $id){
+            //     $this->model_drawing->del_img($id);
+            //   }
+            // }
         redirect('drawing/show_v?'.$search.'','refresh');   
 
           }

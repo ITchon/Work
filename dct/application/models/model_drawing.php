@@ -215,7 +215,7 @@ where fg.delete_flag != 0 AND f_id = '$f_id'";
   {
     $sql =  "SELECT rev.p_no from revision_drawing  as rev
         inner join version as v on v.rd_id = rev.rd_id
-        where v.d_id = $d_id AND rev.rev = $rev";
+        where v.d_id = $d_id AND rev.rev = $rev AND rev.delete_flag != 0";
        $query = $this->db->query($sql);
       $result =  $query->result();
     return $result;
@@ -290,7 +290,17 @@ INNER join version as v on v.rd_id = rev.rd_id
   }else{
     return false;
  }
+}else{
+  $sql ="UPDATE part_drawing SET delete_flag = '1' where d_id = '$d_id' AND p_id = '$p_id' ;";
+    $query = $this->db->query($sql);  
+    $last_id = $this->db->insert_id();
+  if($query){
+      return $last_id;
+  }else{
+    return false;
+ }
 }
+
 }
 
  public function insert_part_rev($p_no,$d_id,$rev)
@@ -315,6 +325,23 @@ where v.d_id = '$d_id' AND rev.p_no = '$p_no' AND rev.rev = '$rev'");
 
     $sql ="INSERT INTO revision_drawing (p_no,d_no,d_name,pos,dcn_no,cus_name,enable,date_created,delete_flag,file_name,f_id,rev) 
     VALUES ( '$p_no','$d_no','$d_name','$pos','$dcn_no','$cus_name','0',CURRENT_TIMESTAMP,'1','$file_name','$f_id','$rev');";
+    $query = $this->db->query($sql);  
+    $last_id = $this->db->insert_id();
+  if($query){
+      return $last_id;
+  }else{
+    return false;
+ }
+}
+else{
+   $sql1 =  "SELECT * from revision_drawing  as rev
+      inner join version as v on v.rd_id = rev.rd_id
+      where v.d_id = '$d_id' AND rev.rev = '$rev' AND rev.p_no = '$p_no'";
+      $query = $this->db->query($sql1);
+      $data =  $query->result()[0];
+      $rd_id =  $data->rd_id;
+
+  $sql ="UPDATE revision_drawing SET delete_flag = '1' where rd_id = '$rd_id' ;";
     $query = $this->db->query($sql);  
     $last_id = $this->db->insert_id();
   if($query){
@@ -384,7 +411,9 @@ if($query){
 
   public function add_revision($p,$d_id)
  {
-      $sql1 =  "SELECT * from drawing  as d
+      $sql1 =  "SELECT d.d_no,d.d_name,d.pos,dc.dcn_no,cus.cus_name,d.file_name,d.f_id,d.rev from drawing  as d
+      inner join dcn as dc on dc.dcn_id = d.dcn_id
+      inner join customers as cus on cus.cus_id = d.cus_id
       where d.d_id = $d_id";
       $query = $this->db->query($sql1);
       $data =  $query->result()[0];
