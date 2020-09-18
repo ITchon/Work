@@ -247,7 +247,7 @@ INNER join version as v on v.rd_id = rev.rd_id
  public function insert_drawing($d_no,$d_name, $dcn_id,$cus_id, $f_id, $file,$c,$pos)
   {
      
-   $sql ="INSERT INTO drawing (d_no,d_name,enable, dcn_id,cus_id, date_created,delete_flag,f_id,file_name,file_code,version,pos) VALUES 
+   $sql ="INSERT INTO drawing (d_no,d_name,enable, dcn_id,cus_id, date_created,delete_flag,f_id,file_name,file_code,rev,pos) VALUES 
    ( '$d_no','$d_name','1', '$dcn_id','$cus_id', CURRENT_TIMESTAMP,  '1','$f_id','$file','$c','00','$pos');";
      $query = $this->db->query($sql);  
      $last_id = $this->db->insert_id();
