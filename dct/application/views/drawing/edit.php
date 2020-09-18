@@ -133,9 +133,9 @@ $this->session->set_flashdata('search',$search);
                     </div>
 
                       <div class="form-group has-feedback">
-                    <label for="dcn" class="col-sm-5 col-md-4 control-label">ADD PART</label>    
+                    <label for="dcn" class="col-sm-3 col-md-4 control-label">ADD PART</label>    
 
-                <div class="col-sm-5 col-md-4">
+                <div class="col-sm-6 col-md-4">
                    <select name="p_id[]" class="form-control select2" id="dcn_id" multiple="multiple">
                    <option value="" hidden> - - - Select PART- - - </option>
                    <?php
@@ -148,7 +148,7 @@ $this->session->set_flashdata('search',$search);
                    </select>
                  
                     <table class="table table-bordered text-center" >
-                      <thead>
+                    <thead>
      
                     </thead>
 
@@ -244,12 +244,12 @@ $(document).ready(function() {
         data:{d_id:d_id},
         success:function(data)
         {
-          console.log(data);
+          // console.log(data);
          $('#part_drawing').html(data);
         
         },
         error:function(data){
-          console.log(data);
+          // console.log(data);
         }
       });
     $(document).on('click', '.delete', function() {
@@ -271,7 +271,7 @@ $(document).ready(function() {
     				}
     			},
           error:function(data){
-            console.log("error");
+            // console.log("error");
           }
     		});
       } 
