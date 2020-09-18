@@ -89,7 +89,6 @@
           
                       <div class="col-sm-6 col-md-4">
                    <select id="f" name="f_id" class="form-control select2" >
-                    <option value="">- - -NONE- - -</option>
                    <?php
                       foreach($result_folder as $f){?>
              
