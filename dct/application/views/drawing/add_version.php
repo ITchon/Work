@@ -160,28 +160,20 @@
                 ?>
                  <table class="table text-center">
                       <thead>
-                      <tr>
-                      
-                      </tr>
                       </thead>
-
+                      <tbody>
                       <?php 
                       foreach($result_pd as $r){ ?>
-                      <input type='hidden' name='p_no[]' value='<?php echo $r->p_no ?>'>
-                      <tbody>
-                      <td style='text-align:center;'>
-                 <label class='pos-rel'>
-                     <input type='checkbox' name='chk_uid[]' value='<?php echo $r->pd_id ?>'/>
-                     <span class='lbl'></span>
-                   </label>
-               </td>
+                 
+                      <tr>
+                      <td style='text-align:center;'><b>Part No</b></td>
                       <td><?php echo $r->p_no ?></td>
+                      </tr>
                   <?php
                       }
-                       ?>
-                       <?php if($result_pd != null){ ?>
+                       if($result_pd != null){ ?>
                        <hr>
-                       <input type="button" class="btn btn-danger" id="toggle" value="delete all" onClick="do_this()" />
+               
                        <?php } ?>
                       </tbody>
                       </table>

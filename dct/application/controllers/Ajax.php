@@ -30,6 +30,16 @@ public function __construct()
       echo $this->model_ajax->fetch_part_drw($this->input->post('d_id'));
      }
     }
+    public function fetch_pd_edit()
+    {
+
+     if($this->input->post('rev') !=null && $this->input->post('d_id')!=null )
+     
+     {
+      echo $this->model_ajax->fetch_pd_edit($this->input->post('rev'),$this->input->post('d_id') );
+     }
+    
+    }
     
    
     public function delete_part_drw()

@@ -143,7 +143,18 @@
                       }
                       ?> 
                    </select>
-                 
+
+                   <table class="table table-bordered text-center" >
+                      <thead>
+     
+                    </thead>
+
+                      <tbody id="part_drawing">
+
+
+                      </tbody>
+                    </table>
+
                       <button class="btn btn-outline-primary " type="button" id="add">Add NEW PART</button>
                       <div></div>
                     <button type="button" class="btn btn-outline-danger btn_remove hidden">Remove</button><br>
@@ -157,24 +168,9 @@
                       
                       </tr>
                       </thead>
-
-                      <?php 
-                      foreach($result_pd as $r){ ?>
                       
-                      <tbody>
-                      <td style='text-align:center;'>
-                 <label class='pos-rel'>
-                     <input type='checkbox' name='chk_uid[]' value='<?php echo $r->rd_id ?>'/>
-                     <span class='lbl'></span>
-                   </label>
-               </td>
-                      <td><?php echo $r->p_no ?></td>
-                  <?php
-                      }
-                       ?>
-                       <?php if($result_pd != null){ ?>
-                       <input type="button" class="btn btn-danger" id="toggle" value="delete all" onClick="do_this()" />
-                       <?php } ?>
+                      <tbody id="part_drawing">
+                 
                       </tbody>
                       </table>
                       </div>
@@ -250,6 +246,52 @@ $(document).ready(function() {
     }
   });
 });
+</script>
+<script>
+    $(document).ready(function() {
+      var d_id = <?php echo $this->uri->segment('3')?>;
+      var rev = <?php echo $this->uri->segment('4')?>;
+       $.ajax({
+        url:"<?php echo base_url(); ?>ajax/fetch_pd_edit",
+        method:"POST",
+        data:{
+          rev:rev,d_id:d_id
+        },
+        success:function(data)
+        {
+          console.log(data);
+         $('#part_drawing').html(data);
+        
+        },
+        error:function(data){
+          console.log(data);
+        }
+      });
+    $(document).on('click', '.delete', function() {
+      var r = confirm("Confirm delete?");
+      if (r == true) {
+    		var $ele = $(this).parent().parent();//?????
+        var id = $(this).attr("data-id");
+    		$.ajax({
+    			url: "<?php echo base_url("ajax/delete_part_drw");?>",
+    			type: "POST",
+    			cache: false,
+    			data:{
+    				id: id
+    			},
+    			success: function(data){
+    				var data = JSON.parse(data);
+    				if(data.statusCode==200){// what is this????
+    					$ele.fadeOut().remove();
+    				}
+    			},
+          error:function(data){
+            // console.log("error");
+          }
+    		});
+      } 
+    });
+   });
 </script>
       <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
       <script type="text/javascript">
