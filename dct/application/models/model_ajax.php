@@ -54,7 +54,7 @@ class Model_ajax extends CI_Model
     {
       $sql ="SELECT  pd.p_id,pd.pd_id,p.p_no,p.p_name,d.d_no,d.d_name from part_drawing pd
       inner join part p on p.p_id = pd.p_id 
-      inner join drawing d on d.d_id = pd.d_id where pd.p_id != $pd_id";
+      inner join drawing d on d.d_id = pd.d_id where pd.p_id != $pd_id and pd.delete_flag != 0";
      $query = $this->db->query($sql); 
 
      $output = '<optgroup  label="P/NO|DWG/NO" >';
@@ -63,6 +63,27 @@ class Model_ajax extends CI_Model
        
       $output .= '<option value="'.$row->pd_id.'">'.$row->p_no." | ".$row->d_no.'</option>';
      }
+
+     return $output;
+    }
+    function fetch_part_drw($d_id)
+    {
+
+      // <a href='".base_url()."drawing/deletedrawing/".$r->d_id ."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a>
+      $sql ="SELECT * from part_drawing  as pd
+      left join part as p on p.p_id = pd.p_id
+      where pd.d_id = $d_id and p.delete_flag != 0 and pd.delete_flag != 0";
+     $query = $this->db->query($sql); 
+     $output='';
+     
+     foreach($query->result() as $r){
+        $output .= '<tr >
+        <td>Part No</td>
+        <td>'.$r->p_no.'</td>
+        <td><a   data-id='.$r->pd_id.' class="btn btn-danger fa fa-trash delete "></a></td>
+        </tr>';
+        }
+  
 
      return $output;
     }
@@ -88,6 +109,17 @@ class Model_ajax extends CI_Model
 
      return $output;
     }
+    function delete_part_drw($id)
+	{
+      $sql ="UPDATE part_drawing SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE pd_id = '$id'";
+      $query = $this->db->query($sql);
+         if ($query) { 
+            return true; 
+         } 
+         else{
+        return false;
+      }
+	}
 
 }
 

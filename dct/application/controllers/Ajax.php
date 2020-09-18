@@ -22,7 +22,26 @@ public function __construct()
       echo $this->model_ajax->fetch_drawing($this->input->post('pd_id'));
      }
     }
+    public function fetch_part_drw()
+    {
+     if($this->input->post('d_id'))
+     
+     {
+      echo $this->model_ajax->fetch_part_drw($this->input->post('d_id'));
+     }
+    }
     
+   
+    public function delete_part_drw()
+    {
+     if($this->input->post('id'))
+     {
+        $this->model_ajax->delete_part_drw($this->input->post('id'));	
+        echo json_encode(array(
+            "statusCode"=>200
+        ));
+     }
+    }
     public function fetch_folder()
     {
      if($this->input->post('cus_id'))
@@ -32,16 +51,6 @@ public function __construct()
      }
     }
  
-    // public function select_type()
-    // {
-    // $cus_id = $this->input->post('cus_id')
-    // $f_id = $this->input->post('chkf')
-    //  if($this->input->post('chkf'))
-     
-    //  {
-    //   echo $this->model_ajax->select_folder($cus_id,$f_id);
-    //  }
-    // }
  
     public function view_dwg_pdf()
     {
