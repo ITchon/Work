@@ -87,6 +87,22 @@ class Model_ajax extends CI_Model
 
      return $output;
     }
+    function fetch_pd_edit($rev,$d_id)
+    {
+     
+      $sql = "SELECT * FROM version where rd_id = $d_id";
+      $query = $this->db->query($sql); 
+      $res = $query->result()[0];
+      $sql ="SELECT * FROM version v inner join revision_drawing rd on rd.rd_id = v.rd_id where rd.rev = $rev and rd.delete_flag != 0 and v.d_id = $res->d_id";
+     
+     $query = $this->db->query($sql); 
+     $output='';
+     
+     foreach($query->result() as $r){
+        $output .= '<tr><td>Part No</td><td>'.$r->p_no.'</td></tr>';
+        }
+     return $output;
+    }
 
     function fetch_folder($cus_id,$f_id)
     {

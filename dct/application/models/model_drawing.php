@@ -185,7 +185,7 @@ where fg.delete_flag != 0 AND f_id = '$f_id'";
   {
     $sql =  "SELECT * from part_drawing  as pd
         left join part as p on p.p_id = pd.p_id
-        where pd.d_id = $d_id";
+        where pd.d_id = $d_id and pd.delete_flag != 0";
        $query = $this->db->query($sql);
       $result =  $query->result();
     return $result;
@@ -205,7 +205,7 @@ where fg.delete_flag != 0 AND f_id = '$f_id'";
   public function get_pid_bypd($d_id)
   {
     $sql =  "SELECT pd.p_id from part_drawing  as pd
-        where pd.d_id = $d_id";
+        where pd.d_id = $d_id AND pd.delete_flag != 0";
        $query = $this->db->query($sql);
       $result =  $query->result();
     return $result;
@@ -436,7 +436,7 @@ $path_file = quotemeta($path_file);
         left join part as p on p.p_id = pd.p_id
         inner join folder f on f.f_id = d.f_id
         inner join folder_group fg on fg.fg_id = f.fg_id
-        where d.delete_flag != 0 AND d.f_id IN ($folder) AND (d.d_no LIKE '%$s_dno%' OR d.d_name LIKE '%$s_name%' OR p.p_no LIKE '%$s_pno%')";
+        where d.delete_flag != 0 AND d.f_id IN ($folder) AND (d.d_no LIKE '%$s_dno%' OR d.d_name LIKE '%$s_name%' OR p.p_no LIKE '%$s_pno%') ";
 
       $query = $this->db->query($sql);
       $result =  $query->result();
@@ -457,7 +457,7 @@ $path_file = quotemeta($path_file);
             inner join folder f on f.f_id = d.f_id
             inner join folder_group fg on fg.fg_id = f.fg_id
 
-          where d.delete_flag != 0";
+          where d.delete_flag != 0 AND pd.delete_flag != 0";
        $query = $this->db->query($sql);
       $result =  $query->result();
     return $result;
@@ -471,7 +471,7 @@ $path_file = quotemeta($path_file);
     INNER join version as v on v.rd_id = rev.rd_id
     INNER join folder as f on f.f_id = rev.f_id
     INNER join folder_group as fg on fg.fg_id = f.fg_id
-    where v.d_id = $d_id AND rev.delete_flag != 0";
+    where v.d_id = $d_id AND rev.delete_flag != 0 ";
        $query = $this->db->query($sql);
       $result =  $query->result();
     return $result;
@@ -487,7 +487,7 @@ $path_file = quotemeta($path_file);
     INNER join part_drawing as pd on pd.d_id = d.d_id
     INNER join part as p on p.p_id = pd.p_id
     INNER join dcn as dc on dc.dcn_id = d.dcn_id
-    where d.d_id = $d_id AND d.delete_flag != 0";
+    where d.d_id = $d_id AND d.delete_flag != 0 AND pd.delete_flag != 0";
        $query = $this->db->query($sql);
       $result =  $query->result();
     return $result;
@@ -506,7 +506,7 @@ $path_file = quotemeta($path_file);
             left join customers as cus on cus.cus_id = d.cus_id 
             inner join folder f on f.f_id = d.f_id
             inner join folder_group fg on fg.fg_id = f.fg_id
-            where d.delete_flag != 0 AND d.d_id = $id
+            where d.delete_flag != 0 AND d.d_id = $id AND pd.delete_flag != 0
             UNION
                 SELECT v.d_id, v.d_no,v.d_name,v.cus_id,cus.cus_name, v.dcn_id, dc.dcn_no, v.enable, v.path_file, v.file_name, v.rev
                 , p.p_no,p.p_id, v.v_id,dc.file_name as dcn_file,dc.path_file as dcn_path,v.file_code,dc.file_code as dcn_code ,v.pos,f.folder_name,fg.foldergroup_name,v.f_id
@@ -517,7 +517,7 @@ $path_file = quotemeta($path_file);
          left join customers as cus on cus.cus_id = v.cus_id 
          inner join folder f on f.f_id = v.f_id
          inner join folder_group fg on fg.fg_id = f.fg_id
-         where v.delete_flag != 0 AND v.d_id = $id
+         where v.delete_flag != 0 AND v.d_id = $id AND pd.delete_flag != 0
          ORDER by version DESC ";
       $query = $this->db->query($sql); 
       $result =  $query->result();

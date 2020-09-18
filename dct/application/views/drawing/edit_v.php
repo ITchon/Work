@@ -169,7 +169,7 @@
                       </tr>
                       </thead>
                       
-                      <tbody>
+                      <tbody id="part_drawing">
                  
                       </tbody>
                       </table>
@@ -250,18 +250,21 @@ $(document).ready(function() {
 <script>
     $(document).ready(function() {
       var d_id = <?php echo $this->uri->segment('3')?>;
+      var rev = <?php echo $this->uri->segment('4')?>;
        $.ajax({
-        url:"<?php echo base_url(); ?>ajax/fetch_part_drw",
+        url:"<?php echo base_url(); ?>ajax/fetch_pd_edit",
         method:"POST",
-        data:{d_id:d_id},
+        data:{
+          rev:rev,d_id:d_id
+        },
         success:function(data)
         {
-          // console.log(data);
+          console.log(data);
          $('#part_drawing').html(data);
         
         },
         error:function(data){
-          // console.log(data);
+          console.log(data);
         }
       });
     $(document).on('click', '.delete', function() {

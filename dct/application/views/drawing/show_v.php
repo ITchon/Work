@@ -30,7 +30,7 @@
 
                 </div>
                 <div class="card-body">
-                <table id="demo-datatables-buttons-1" class="table table-hover  table-nowrap dataTable" cellspacing="0" width="100%">
+                <table id="demo-datatables-responsive-1" class="table table-hover  table-nowrap dataTable" cellspacing="0" width="100%">
                   <thead>
                       <tr>
                         <th>Type</th>
@@ -88,7 +88,7 @@
 
                       <?php
                     foreach($result_rev as $r){
-             echo "<tr>";?>
+                 echo "<tr>";?>
                     <td><?php echo "<b>".$r->type_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->p_no."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_name."</b>" ?></td>
@@ -110,7 +110,7 @@
                   <?php
                   echo " <a href='javascript:void(0)'  data-id='".$r->rd_id."' class='view_imgv'><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
                   if($this->session->flashdata("download")!== null ) echo "<a href='".base_url()."drawing/openfile_v/".$r->rd_id."'  ><i class='btn-info no-border fa fa-inbox'></i></a>";
-                  if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."drawing/edit_v/".$r->rd_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";
+                  if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."drawing/edit_v/".$r->rd_id."/".$r->rev."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";
 
                 if($r->enable!=1 ){?>
                   
