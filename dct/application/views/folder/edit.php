@@ -12,6 +12,22 @@
             </h2><hr>
             <form class="table form form-horizontal container" action="<?php echo base_url()?>folder/save_edit" method="post" data-toggle="validator">
             
+            <div class="form-group has-feedback">
+                    <label for="fol" class="col-sm-5 col-md-4 control-label">FOLDER GROUP</label>    
+
+                <div class="col-sm-5 col-md-4">
+                   <select id="select" name="fg_id" class="form-control select2"  required>
+                   <option value="" hidden> - - - Select FOLDER- - - </option>
+                   <?php
+                   
+                      foreach($result_folg as $fg){?>
+                     <option value="<?php  echo $fg->fg_id ?>"><?php echo $fg->foldergroup_name ?></option>
+                    <?php
+                      }
+                      ?> 
+                   </select>
+                    </div>
+                    </div>
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Type name</label>
                     <div class="col-sm-6 col-md-4">
@@ -44,6 +60,7 @@
         </div>
       </div>
       <script>
+       document.getElementById('select').value = "<?php echo $result[0]->fg_id ?>";
         $(document).ready(function() {
     $('.select2').select2();
 });

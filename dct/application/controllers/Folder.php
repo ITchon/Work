@@ -90,7 +90,7 @@ class Folder extends CI_Controller {
 
         $query = $this->db->query($sql); 
         $data['result'] = $query->result(); 
-
+        $data['result_folg'] = $this->model_folder->get_foldergroup();
         $this->load->view('folder/edit',$data);
         $this->load->view('footer');
   

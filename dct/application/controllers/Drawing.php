@@ -7,7 +7,7 @@ class Drawing extends CI_Controller {
     
         parent::__construct(); 
         $this->load->library('upload');
-        $this->load->helper('download');
+        $this->load->helper('download'); 
         $this->load->helper('form');
         $this->load->database(); 
         $this->load->model('model');
