@@ -52,7 +52,7 @@
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select DCN</label>      
           
                       <div class="col-sm-6 col-md-4">
-                   <select id="dcn" name="dcn_id" class="form-control select2" >
+                   <select id="dcn" name="dcn_no" class="form-control select2" >
                    <?php
                       foreach($result_dcn as $rg){?>
              
@@ -68,7 +68,7 @@
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Customer</label>      
           
                       <div class="col-sm-6 col-md-4">
-                   <select id="cus" name="cus_id" class="form-control select2" >
+                   <select id="cus" name="cus_name" class="form-control select2" >
                    <?php
                       foreach($result_cus as $rg){?>
              
@@ -123,7 +123,7 @@
                     <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Version</label>      
                       <div class="col-sm-6 col-md-4">
-                   <input class="form-control" type="text" readonly value="<?php echo $result->rev ?>">
+                   <input class="form-control" type="text" name="rev" readonly value="<?php echo $result->rev ?>">
 
                     </div>
                     </div> 

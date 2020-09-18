@@ -191,11 +191,11 @@ where fg.delete_flag != 0 AND f_id = '$f_id'";
     return $result;
   }
 
-    public function get_part_rev_byid($d_id)
+    public function get_part_rev_byid($d_id,$rev)
   {
     $sql =  "SELECT * from revision_drawing  as rev
         inner join version as v on v.rd_id = rev.rd_id
-        where v.d_id = $d_id";
+        where v.d_id = $d_id AND rev.rev = $rev";
        $query = $this->db->query($sql);
       $result =  $query->result();
     return $result;
@@ -211,11 +211,21 @@ where fg.delete_flag != 0 AND f_id = '$f_id'";
     return $result;
   }
 
-    public function get_pno_byrd($d_id)
+    public function get_pno_byrd($d_id,$rev)
   {
     $sql =  "SELECT rev.p_no from revision_drawing  as rev
         inner join version as v on v.rd_id = rev.rd_id
-        where v.d_id = $d_id";
+        where v.d_id = $d_id AND rev.rev = $rev";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+
+      public function get_revision_id($d_id,$rev)
+  {
+    $sql =  "SELECT rev.rd_id from revision_drawing as rev
+INNER join version as v on v.rd_id = rev.rd_id
+            where rev.rev = $rev AND v.d_id = $d_id";
        $query = $this->db->query($sql);
       $result =  $query->result();
     return $result;
@@ -283,6 +293,38 @@ where fg.delete_flag != 0 AND f_id = '$f_id'";
 }
 }
 
+ public function insert_part_rev($p_no,$d_id,$rev)
+ {
+  $num= $this->db->query("SELECT * FROM revision_drawing as rev 
+inner join version as v on v.rd_id = rev.rd_id
+where v.d_id = '$d_id' AND rev.p_no = '$p_no' AND rev.rev = '$rev'"); 
+  $chk= $num->num_rows();
+  if($chk < 1){
+      $sql1 =  "SELECT * from revision_drawing  as rev
+      inner join version as v on v.rd_id = rev.rd_id
+      where v.d_id = $d_id AND rev.rev = $rev";
+      $query = $this->db->query($sql1);
+      $data =  $query->result()[0];
+      $d_no =  $data->d_no;
+      $d_name =  $data->d_name;
+      $pos =  $data->pos;
+      $dcn_no =  $data->dcn_no;
+      $cus_name =  $data->cus_name;
+      $file_name =  $data->file_name;
+      $f_id =  $data->f_id;
+
+    $sql ="INSERT INTO revision_drawing (p_no,d_no,d_name,pos,dcn_no,cus_name,enable,date_created,delete_flag,file_name,f_id,rev) 
+    VALUES ( '$p_no','$d_no','$d_name','$pos','$dcn_no','$cus_name','0',CURRENT_TIMESTAMP,'1','$file_name','$f_id','$rev');";
+    $query = $this->db->query($sql);  
+    $last_id = $this->db->insert_id();
+  if($query){
+      return $last_id;
+  }else{
+    return false;
+ }
+}
+}
+
 
 public function del_img($id)
 {
@@ -340,11 +382,25 @@ if($query){
  }
 
 
-  public function add_revision($p,$d_no,$d_name,$dcn_no,$cus_name,$pos,$rev,$file,$f_id)
+  public function add_revision($p,$d_id)
  {
-  $gg ="INSERT INTO revision_drawing (p_no,d_no,d_name,pos, dcn_no, cus_name, enable, date_created, delete_flag, file_name,f_id,rev) 
-  VALUES ( '$p','$d_no', '$d_name','$pos', '$dcn_no','$cus_name', '0', CURRENT_TIMESTAMP, '1', '$file','$f_id','$rev');";
-  $query = $this->db->query($gg); 
+      $sql1 =  "SELECT * from drawing  as d
+      where d.d_id = $d_id";
+      $query = $this->db->query($sql1);
+      $data =  $query->result()[0];
+      $d_no =  $data->d_no;
+      $d_name =  $data->d_name;
+      $pos =  $data->pos;
+      $dcn_no =  $data->dcn_no;
+      $cus_name =  $data->cus_name;
+      $file_name =  $data->file_name;
+      $f_id =  $data->f_id;
+      $rev =  $data->rev;
+
+
+  $sql ="INSERT INTO revision_drawing (p_no,d_no,d_name,pos, dcn_no, cus_name, enable, date_created, delete_flag, file_name,f_id,rev) 
+  VALUES ( '$p','$d_no', '$d_name','$pos', '$dcn_no','$cus_name', '0', CURRENT_TIMESTAMP, '1', '$file_name','$f_id','$rev');";
+  $query = $this->db->query($sql); 
   $last_id = $this->db->insert_id();
 if($query){
      return $last_id;
@@ -352,6 +408,7 @@ if($query){
    else{
      return false;
    }
+
 
  }
 
@@ -525,12 +582,21 @@ $path_file = quotemeta($path_file);
   }
 
 
-  public function save_edit_drawing_v($v_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$f_id,$pos)
+  public function save_edit_rev($rd_id, $d_no, $d_name, $dcn_no, $cus_name, $file,$f_id,$pos,$rev)
   {
- $path_file = quotemeta($path_file);
-   $sql ="UPDATE version SET d_no = '$d_no' ,d_name = '$d_name', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id',cus_id = '$cus_id',
-   path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 0 ,f_id = '$f_id',pos = '$pos'
-   WHERE v_id = '$v_id'";
+   $sql ="UPDATE revision_drawing SET 
+   d_no = '$d_no',
+   d_name = '$d_name',
+   dcn_no = '$dcn_no',
+   cus_name = '$cus_name',
+   date_updated = CURRENT_TIMESTAMP,
+   file_name = '$file',
+   enable = '0' ,
+   delete_flag = '1',
+   f_id = '$f_id',
+   pos = '$pos',
+   rev = '$rev'
+   WHERE rd_id = '$rd_id'";
      $query = $this->db->query($sql);  
     if($query){
       return true;
