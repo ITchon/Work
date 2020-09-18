@@ -150,7 +150,8 @@ class Model_drawing extends CI_Model
 
     public function get_drawing_byid_etc($d_id)
   {
-    $sql =  "SELECT d.d_id,d.d_name,d.d_no,d.enable,d.file_name,dcn.dcn_no,cus.cus_name,d.pos,d.rev,d.f_id,d.file_code,d.path_file from drawing as d
+    $sql =  "SELECT d.d_id,d.d_name,d.d_no,d.enable,d.file_name,dcn.dcn_no,d.cus_id,d.dcn_id,cus.cus_name,d.pos,d.rev,d.f_id,d.file_code,d.path_file 
+    from drawing as d
     LEFT join dcn as dcn on dcn.dcn_id = d.dcn_id
     LEFT join customers as cus on cus.cus_id = d.cus_id
     where d_id = $d_id";

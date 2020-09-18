@@ -55,11 +55,7 @@
                    <select id="dcn" name="dcn_id" class="form-control select2" >
                     <option value="">- - -NONE- - -</option>
                    <?php
-                   $chk = '';
                       foreach($result_dcn as $rg){
-                         if($result->dcn_id == $rg->dcn_id){
-                          $chk = 'selected';
-                        }
                         ?>
              
                      <option value="<?php  echo $rg->dcn_id ?>"><?php echo $rg->dcn_no ?></option>
@@ -77,15 +73,9 @@
                    <select id="cus" name="cus_id" class="form-control select2" >
                     <option value="">- - -NONE- - -</option>
                    <?php
-                   $chk = '';
-
                       foreach($result_cus as $rg){
-                        if($result->cus_id == $rg->cus_id){
-                          $chk = 'selected';
-                        }
                         ?>
-                      
-                     <option <?php echo $chk ?> value="<?php  echo $rg->cus_id ?>"><?php echo $rg->cus_name ?></option>
+                     <option value="<?php  echo $rg->cus_id ?>"><?php echo $rg->cus_name ?></option>
                     <?php
                       }
                       ?> 
@@ -99,6 +89,7 @@
           
                       <div class="col-sm-6 col-md-4">
                    <select id="f" name="f_id" class="form-control select2" >
+                    <option value="">- - -NONE- - -</option>
                    <?php
                       foreach($result_folder as $f){?>
              
@@ -209,8 +200,8 @@
             <script>
         $(document).ready(function() {
 document.getElementById('f').value = "<?php echo $result->f_id ?>";
-// document.getElementById('dcn').value = "<?php echo $result->dcn_id ?>";
-// document.getElementById('cus').value = "<?php echo $result->cus_id ?>";
+document.getElementById('dcn').value = "<?php echo $result->dcn_id ?>";
+document.getElementById('cus').value = "<?php echo $result->cus_id ?>";
 });
       </script>
       <script>
