@@ -89,7 +89,7 @@ class Model_drawing extends CI_Model
   {
     $sql =  "SELECT cus_name from customers where delete_flag != 0 AND cus_id = $id";
        $query = $this->db->query($sql);
-      $result =  $query->result();
+      $result =  $query->result()[0];
     return $result;
   }
 
@@ -126,7 +126,7 @@ class Model_drawing extends CI_Model
   {
     $sql =  "SELECT dcn_no from dcn where delete_flag != 0 AND dcn_id = $id";
        $query = $this->db->query($sql);
-      $result =  $query->result();
+      $result =  $query->result()[0];
     return $result;
   }
 
@@ -134,6 +134,17 @@ class Model_drawing extends CI_Model
   public function get_drawing_byid($d_id)
   {
     $sql =  "SELECT * from drawing where d_id = $d_id";
+       $query = $this->db->query($sql);
+      $result =  $query->result()[0];
+    return $result;
+  }
+
+    public function get_drawing_byid_etc($d_id)
+  {
+    $sql =  "SELECT d.d_id,d.d_name,d.d_no,d.enable,d.file_name,dcn.dcn_no,cus.cus_name,d.pos,d.rev,d.f_id,d.file_code,d.path_file from drawing as d
+    LEFT join dcn as dcn on dcn.dcn_id = d.dcn_id
+    LEFT join customers as cus on cus.cus_id = d.cus_id
+    where d_id = $d_id";
        $query = $this->db->query($sql);
       $result =  $query->result()[0];
     return $result;
@@ -286,28 +297,9 @@ public function del_img($id)
     }
 
     
- public function select_version($d_id,$p_no,$dcn_no,$cus_name)
+ public function add_version($d_id,$rd_id)
  {
-  $sql ="SELECT * FROM drawing WHERE d_id = $d_id ;";
-  $query = $this->db->query($sql);
-  $data = $query->result()[0];
-
-  $d_id =  $data->d_id;
-  $d_name =  $data->d_name;
-  $pos =  $data->pos;
-  $cus_id =  $data->cus_id;
-  $f_id =  $data->f_id;
-  $version =  $data->version;
-  $file_name =  $data->file_name;
-  $path_file =  $data->path_file;
-  $d_no =  $data->d_no;
-  $dcn_id =  $data->dcn_id;
-  $file_code =  $data->file_code;
-  $path_file = quotemeta($path_file);
-
-  $gg ="INSERT INTO version (d_id,d_name, d_no, cus_id, dcn_id, enable, date_created, delete_flag,
-  path_file, file_name,file_code, version,f_id,pos) VALUES ( '$d_id','$d_name', '$d_no','$cus_id', 
-  '$dcn_id', '0', CURRENT_TIMESTAMP, '1', '$path_file', '$file_name','$file_code', '$version','$f_id','$pos');";
+  $gg ="INSERT INTO version (d_id,rd_id,date_created, delete_flag) VALUES ( '$d_id','$rd_id', CURRENT_TIMESTAMP, '1');";
   $query = $this->db->query($gg); 
 if($query){
      return true;
@@ -319,12 +311,10 @@ if($query){
  }
 
 
-  public function add_revision($d_id,$p_no,$dcn_no,$cus_name)
+  public function add_revision($p,$d_no,$d_name,$dcn_no,$cus_name,$pos,$rev,$file,$f_id)
  {
-
-  $gg ="INSERT INTO revision_drawing (d_id,d_name, d_no, cus_id, dcn_id, enable, date_created, delete_flag,
-  path_file, file_name,file_code, version,f_id,pos) VALUES ( '$d_id','$d_name', '$d_no','$cus_id', 
-  '$dcn_id', '0', CURRENT_TIMESTAMP, '1', '$path_file', '$file_name','$file_code', '$version','$f_id','$pos');";
+  $gg ="INSERT INTO revision_drawing (p_no,d_no,d_name,pos, dcn, customer, enable, date_created, delete_flag, file_name,f_id,rev) 
+  VALUES ( '$p','$d_no', '$d_name','$pos', '$dcn_no','$cus_name', '0', CURRENT_TIMESTAMP, '1', '$file','$f_id','$rev');";
   $query = $this->db->query($gg); 
   $last_id = $this->db->insert_id();
 if($query){
@@ -338,11 +328,11 @@ if($query){
 
 
 
- function update_version($d_id,$d_name,$cus_id, $d_no, $dcn_id, $version, $file, $path_file,$c,$f_id,$pos)
+ function update_version($d_id,$d_name,$cus_id, $d_no, $dcn_id, $rev, $file, $path_file,$f_id,$pos)
  {
-  $v = $version+1;
+  $v = $rev+1;
 $path_file = quotemeta($path_file);
-  $sql ="UPDATE drawing SET d_no = '$d_no' ,d_name ='$d_name',cus_id = '$cus_id', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id', version = '$v', path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 1 ,f_id = '$f_id',pos = '$pos' WHERE d_id = '$d_id'";
+  $sql ="UPDATE drawing SET d_no = '$d_no' ,d_name ='$d_name',cus_id = '$cus_id', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id', rev = '$v', path_file = '$path_file', file_name = '$file',enable = 1 ,f_id = '$f_id',pos = '$pos' WHERE d_id = '$d_id'";
     $query = $this->db->query($sql);  
    if($query){
      return true;
