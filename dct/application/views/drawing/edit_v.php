@@ -19,7 +19,7 @@
                 <div class="form-group has-feedback">
                     <label for="part" class="col-sm-5 col-md-4 control-label">Drawing Number</label>
                     <div class="col-sm-6 col-md-4">
-                    <input hidden type="text" name="v_id" value="<?php echo $result->v_id ?>" >
+                    <input hidden type="text" name="rd_id" value="<?php echo $result->rd_id ?>" >
                     <input hidden type="text" name="d_id" value="<?php echo $result->d_id ?>" >
                     <input id="part" class="form-control " type="text" name="d_no" value="<?php echo $result->d_no ?>">
 
@@ -56,7 +56,7 @@
                    <?php
                       foreach($result_dcn as $rg){?>
              
-                     <option value="<?php  echo $rg->dcn_id ?>"><?php echo $rg->dcn_no ?></option>
+                     <option value="<?php  echo $rg->dcn_no ?>"><?php echo $rg->dcn_no ?></option>
                     <?php
                       }
                       ?> 
@@ -72,7 +72,7 @@
                    <?php
                       foreach($result_cus as $rg){?>
              
-                     <option value="<?php  echo $rg->cus_id ?>"><?php echo $rg->cus_name ?></option>
+                     <option value="<?php  echo $rg->cus_name ?>"><?php echo $rg->cus_name ?></option>
                     <?php
                       }
                       ?> 
@@ -85,10 +85,8 @@
                       <div class="col-sm-6 col-md-4">
                         <?php if($result->file_name == null){ ?>
                 <input class="form-control" type="text" readonly value="Please add file">
-                <input class="form-control" type="hidden" name="path" value="<?php echo $result->path_file ?>">
                        <?php  }else { ?>
                 <input class="form-control" type="text" readonly value="<?php echo $result->file_name ?>">
-                <input class="form-control" type="hidden" name="path" value="<?php echo $result->path_file ?>">
                    <?php } ?>
                     </div>
                     </div> 
@@ -113,7 +111,6 @@
                       <div class="col-sm-6 col-md-4">
                         <?php if($result->file_name){ ?>
                               <input type="text" name="file_name2" id="file_name2" value="<?php echo $result->file_name ?>" hidden>
-                            <input type="hidden" name="file_code" id="file_code" hidden value="<?php echo $result->file_code ?>" class="form-control">
                               <input type="file" name="file_name" class="form-control" id="file_name" >
                       <?php }else{ ?>
                           <input type="file" name="file_name" class="form-control" id="file_name" required>
@@ -126,8 +123,7 @@
                     <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">Version</label>      
                       <div class="col-sm-6 col-md-4">
-                   <input class="form-control" type="text" readonly value="<?php echo $result->version ?>">
-                   <input class="form-control" type="hidden" name="code" value="<?php echo $result->file_code ?>">
+                   <input class="form-control" type="text" readonly value="<?php echo $result->rev ?>">
 
                     </div>
                     </div> 
@@ -137,12 +133,12 @@
                     <label for="dcn" class="col-sm-5 col-md-4 control-label">ADD PART</label>    
 
                 <div class="col-sm-5 col-md-4">
-                   <select name="p_id[]" class="form-control select2" id="dcn_id" multiple="multiple">
+                   <select name="p_id[]" class="form-control select2" multiple="multiple">
                    <option value="" hidden> - - - Select PART- - - </option>
                    <?php
                    
                       foreach($result_p as $p){?>
-                     <option value="<?php  echo $p->p_id ?>"><?php echo $p->p_no ?></option>
+                     <option value="<?php  echo $p->p_no ?>"><?php echo $p->p_no ?></option>
                     <?php
                       }
                       ?> 
@@ -168,7 +164,7 @@
                       <tbody>
                       <td style='text-align:center;'>
                  <label class='pos-rel'>
-                     <input type='checkbox' name='chk_uid[]' value='<?php echo $r->pd_id ?>'/>
+                     <input type='checkbox' name='chk_uid[]' value='<?php echo $r->rd_id ?>'/>
                      <span class='lbl'></span>
                    </label>
                </td>
@@ -217,8 +213,8 @@ if(button.value == 'delete all'){
 }
         $(document).ready(function() {
 document.getElementById('f').value = "<?php echo $result->f_id ?>";
-document.getElementById('dcn').value = "<?php echo $result->dcn_id ?>";
-document.getElementById('cus').value = "<?php echo $result->cus_id ?>";
+document.getElementById('dcn').value = "<?php echo $result->dcn_no ?>";
+document.getElementById('cus').value = "<?php echo $result->cus_name ?>";
     $('.select2').select2();
 });
       </script>

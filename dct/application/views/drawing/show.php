@@ -124,7 +124,7 @@
                             </label>
                           </td>";
                      ?>
-                    s<td><?php echo "<b>".$r->type_name."</b>" ?></td>
+                    <td><?php echo "<b>".$r->type_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->p_no."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_no."</b>" ?></td>

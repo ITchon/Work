@@ -126,8 +126,8 @@ public function show()
           
           $d_id = intval(preg_replace('/[^0-9]+/', '', $params), 10);
     
-          // $data['result'] = $this->model_drawing->get_drawing_ver($d_id);
-          $data['result'] = $this->model_drawing->get_revision_drawing($d_id);
+          $data['result_last'] = $this->model_drawing->get_lastrev_drawing($d_id);
+          $data['result_rev'] = $this->model_drawing->get_revision_drawing($d_id);
           $this->load->view('drawing/img_modal');
           $this->load->view('drawing/show_v',$data);//bring $data to user_data 
           $this->load->view('footer'); 
@@ -320,7 +320,7 @@ public function show()
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $d_id = $this->uri->segment('3');
         $f_id = $this->model_drawing->get_fid($d_id);
-        $filecode = $this->model_drawing->get_filecode($d_id);
+        // $filecode = $this->model_drawing->get_filecode($d_id);
         $filename = $this->model_drawing->get_file($d_id);
         $res = $this->model_drawing->checkfolder($f_id);
         $folder = $res[0]->folder_name;
@@ -348,10 +348,10 @@ public function show()
     {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-        $v_id = $this->uri->segment('3');
-        $result = $this->model_drawing->get_did($v_id);
+        $rd_id = $this->uri->segment('3');
+        $result = $this->model_drawing->get_did($rd_id);
         $f_id = $result->f_id;
-        $filecode = $result->file_code;
+        // $filecode = $result->file_code;
         $filename = $result->file_name;
         $res = $this->model_drawing->checkfolder($f_id);
         $folder = $res[0]->folder_name;
@@ -625,7 +625,6 @@ public function show()
           echo "<script>";
           echo 'alert(" File Failed ");';
           echo '</script>';
-          die();
           if( strpos( $search, 'd_id' ) !== false ){
             redirect('drawing/show_v?'.$search.'','refresh');
           }else{
@@ -725,7 +724,6 @@ public function show()
         $this->model_drawing->save_edit_drawing($d_id, $d_no, $d_name, $dcn_id, $cus_id, $file_name, $path_file,$file_code,$f_id,$pos);
           }
         }
-        die();
         if( strpos( $search, 'd_id' ) !== false ){
           redirect('drawing/show_v?'.$search.'','refresh');
         }else{
@@ -741,8 +739,11 @@ public function show()
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         
-        $v_id = $this->uri->segment('3');
-        $sql =  "SELECT * from version where v_id = $v_id";
+        $rd_id = $this->uri->segment('3');
+        $sql =  "SELECT rev.rd_id,v.d_id,v.v_id,rev.d_no,rev.d_name,rev.f_id,rev.pos,rev.file_name,rev.rev,rev.dcn_no,rev.cus_name
+        from revision_drawing as rev
+        inner join version as v on v.rd_id = rev.rd_id
+        where rev.rd_id = $rd_id";
         $query = $this->db->query($sql); 
         $data['result'] = $query->result()[0]; 
         $d_id = $data['result']->d_id;
@@ -756,13 +757,13 @@ public function show()
         $query = $this->db->query($sql1); 
         $data['result_cus'] = $query->result(); 
         $data['result_folder'] = $this->model_drawing->get_folder_drawing();
-        $data['result_pd'] = $this->model_drawing->get_part_drawing_byid($d_id);
-        $pid = $this->model_drawing->get_pid_bypd($d_id);
-        foreach($pid as $p){
-          $num[] = $p->p_id;
+        $data['result_pd'] = $this->model_drawing->get_part_rev_byid($d_id);
+        $pno = $this->model_drawing->get_pno_byrd($d_id);
+        foreach($pno as $p){
+          $num[] = "'".$p->p_no."'";
         }
-        if($pid){
-          $data['result_p'] = $this->model_drawing->get_nopart($num);
+        if($pno){
+          $data['result_p'] = $this->model_drawing->get_nopartno($num);
         }else{
           $data['result_p'] = $this->model_drawing->get_part();
         }
@@ -792,7 +793,7 @@ public function show()
         $config['overwrite']            = TRUE;
         }
         
-        $v_id =  $this->input->post('v_id');
+        $rd_id =  $this->input->post('rd_id');
         $d_no =  $this->input->post('d_no');
         $d_id =  $this->input->post('d_id');
         $d_name =  $this->input->post('d_name');
@@ -859,7 +860,7 @@ public function show()
     $code = array('filename'  => $uploaded['file_name']);
     foreach ($code as $c) {
       $c = base64_encode(trim($c));
-        $this->model_drawing->save_edit_drawing_v($v_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$f_id,$pos);
+        $this->model_drawing->save_edit_drawing_v($rd_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$f_id,$pos);
         redirect('drawing/show_v?'.$search.'','refresh');   
     }
           }
@@ -910,7 +911,7 @@ public function show()
             rename('./uploads/'.'Drawing/'.$folderold_name.'/'.$file, './uploads/'.'Drawing/'.$foldername.'/'.$file);
             $c =  $this->input->post('file_code');
             $c = base64_encode(trim($c));
-        $this->model_drawing->save_edit_drawing_v($v_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$f_id,$pos);
+        $this->model_drawing->save_edit_drawing_v($rd_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$f_id,$pos);
         
         redirect('drawing/show_v?'.$search.'','refresh');   
 
