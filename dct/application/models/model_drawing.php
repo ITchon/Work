@@ -413,8 +413,8 @@ if($query){
   public function add_revision($p,$d_id)
  {
       $sql1 =  "SELECT d.d_no,d.d_name,d.pos,dc.dcn_no,cus.cus_name,d.file_name,d.f_id,d.rev from drawing  as d
-      inner join dcn as dc on dc.dcn_id = d.dcn_id
-      inner join customers as cus on cus.cus_id = d.cus_id
+      left join dcn as dc on dc.dcn_id = d.dcn_id
+      left join customers as cus on cus.cus_id = d.cus_id
       where d.d_id = $d_id";
       $query = $this->db->query($sql1);
       $data =  $query->result()[0];
@@ -555,7 +555,7 @@ $path_file = quotemeta($path_file);
   {
     $sql =  "SELECT rev.rd_id,rev.d_no,rev.d_name,rev.pos,rev.dcn_no,rev.cus_name,rev.enable,rev.f_id,v.v_id,rev.rev,rev.p_no,f.folder_name,fg.foldergroup_name,f.name as type_name
     FROM revision_drawing as rev
-    INNER join version as v on v.rd_id = rev.rd_id
+    left join version as v on v.rd_id = rev.rd_id
     INNER join folder as f on f.f_id = rev.f_id
     INNER join folder_group as fg on fg.fg_id = f.fg_id
     where v.d_id = $d_id AND rev.delete_flag != 0 ";
@@ -569,11 +569,11 @@ $path_file = quotemeta($path_file);
     $sql =  "SELECT d.d_id,d.d_no,d.d_name,d.pos,d.dcn_id,cus.cus_name,d.enable,d.f_id,p.p_no,f.folder_name,fg.foldergroup_name,dc.dcn_no,d.rev,f.name as type_name
     FROM drawing as d
     INNER join folder as f on f.f_id = d.f_id
-    INNER join customers as cus on cus.cus_id = d.cus_id
+    left join customers as cus on cus.cus_id = d.cus_id
     INNER join folder_group as fg on fg.fg_id = f.fg_id
-    INNER join part_drawing as pd on pd.d_id = d.d_id
-    INNER join part as p on p.p_id = pd.p_id
-    INNER join dcn as dc on dc.dcn_id = d.dcn_id
+    left join part_drawing as pd on pd.d_id = d.d_id
+    left join part as p on p.p_id = pd.p_id
+    left join dcn as dc on dc.dcn_id = d.dcn_id
     where d.d_id = $d_id AND d.delete_flag != 0 AND pd.delete_flag != 0";
        $query = $this->db->query($sql);
       $result =  $query->result();
