@@ -112,7 +112,7 @@
                     <label for="dcn" class="col-sm-5 col-md-4 control-label">ADD PART</label>    
 
                 <div class="col-sm-5 col-md-4">
-                   <select name="p_id[]" class="form-control select2" id="dcn_id" multiple="multiple" required>
+                   <select name="p_id[]" class="form-control select2" id="dcn_id" multiple="multiple">
                    <option value="" hidden> - - - None - - - </option>
                    <?php
                    
