@@ -17,22 +17,22 @@ class Manage extends CI_Controller {
     }
 	public function index()
 	{	
-        $sql = "SELECT COUNT(d_id) as d_id FROM Drawing";
+        $sql = "SELECT COUNT(d_id) as d_id FROM Drawing where delete_flag != 0";
         $query = $this->db->query($sql);
         $drawing = $query->result();
         $data['drawing'] = $drawing[0]->d_id;
 
-        $sql2 = "SELECT COUNT(p_id) as p_id FROM Part";
+        $sql2 = "SELECT COUNT(p_id) as p_id FROM Part where delete_flag != 0";
         $query = $this->db->query($sql2);
         $part = $query->result();
         $data['part'] = $part[0]->p_id;
 
-        $sql4 = "SELECT COUNT(b_id) as b_id FROM BOM";
+        $sql4 = "SELECT COUNT(b_id) as b_id FROM BOM where delete_flag != 0";
         $query = $this->db->query($sql4);
         $bom = $query->result();
         $data['bom'] = $bom[0]->b_id;
 
-        $sql4 = "SELECT COUNT(cus_id) as cus_id FROM customers";
+        $sql4 = "SELECT COUNT(cus_id) as cus_id FROM customers where delete_flag != 0";
         $query = $this->db->query($sql4);
         $bom = $query->result();
         $data['cus'] = $bom[0]->cus_id;

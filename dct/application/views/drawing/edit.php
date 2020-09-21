@@ -258,18 +258,21 @@ $(document).ready(function() {
       if (r == true) {
     		var $ele = $(this).parent().parent();//?????
         var id = $(this).attr("data-id");
+        var d_id = <?php echo $this->uri->segment('3')?>;
     		$.ajax({
     			url: "<?php echo base_url("ajax/delete_part_drw");?>",
     			type: "POST",
     			cache: false,
     			data:{
-    				id: id
+    				id: id,d_id:d_id
     			},
     			success: function(data){
     				var data = JSON.parse(data);
     				if(data.statusCode==200){// what is this????
     					$ele.fadeOut().remove();
-    				}
+    				}else{
+              alert('This drawing should have part at least 1')
+            }
     			},
           error:function(data){
             // console.log("error");

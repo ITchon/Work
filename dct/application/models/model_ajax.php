@@ -150,9 +150,14 @@ class Model_ajax extends CI_Model
 
      return $output;
     }
-    function delete_part_drw($id)
+    function delete_part_drw($id,$d_id)
 	{
-      $sql ="UPDATE part_drawing SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE pd_id = '$id'";
+         $num= $this->db->query("SELECT * FROM part_drawing where delete_flag != 0 AND d_id = '$d_id'"); 
+   $chk= $num->num_rows();
+   if($chk <= 1){
+    return false;
+  }else{
+          $sql ="UPDATE part_drawing SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE pd_id = '$id'";
       $query = $this->db->query($sql);
          if ($query) { 
             return true; 
@@ -160,6 +165,7 @@ class Model_ajax extends CI_Model
          else{
         return false;
       }
+    }
 	}
     function delete_part_drw_v($rd_id)
   {
