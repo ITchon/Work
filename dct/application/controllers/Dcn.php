@@ -29,7 +29,12 @@ class Dcn extends CI_Controller {
         $data['chk'] = $dcn_id;
         if($this->uri->segment('3')){
             $dcn_id = $this->uri->segment('3');
-            $text = "and dc.dcn_id = $dcn_id ";
+            $type = is_numeric($dcn_id);
+            if ($type == 1) {
+            $text = "and dc.dcn_id = '$dcn_id'";
+            }else{
+            $text = "and dc.dcn_no = '$dcn_id' ";
+            }
             $data['chk'] = $dcn_id;
         }
         $data['result'] = $this->model_dcn->get_dcn_byid($text); 
