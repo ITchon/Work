@@ -167,8 +167,17 @@ class Model_ajax extends CI_Model
       }
     }
 	}
-    function delete_part_drw_v($rd_id)
+
+    function delete_part_drw_v($rd_id,$did,$rev)
   {
+
+$num= $this->db->query("SELECT * FROM revision_drawing as rev 
+INNER JOIN version as v on v.rd_id = rev.rd_id
+where rev.delete_flag != 0 AND v.d_id = '$did' AND rev.rev = '$rev'"); 
+  $chk= $num->num_rows();
+  if($chk <= 1){
+    return false;
+  }else{
       $sql ="UPDATE revision_drawing SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE rd_id = '$rd_id'";
       $query = $this->db->query($sql);
          if ($query) { 
@@ -178,7 +187,7 @@ class Model_ajax extends CI_Model
         return false;
       }
   }
-
+}
 
 }
 

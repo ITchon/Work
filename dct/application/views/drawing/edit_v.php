@@ -21,7 +21,7 @@
                     <div class="col-sm-6 col-md-4">
                     <input type="hidden" name="search" value="<?php echo $search ?>" >
                     <input hidden type="text" name="rd_id" value="<?php echo $result->rd_id ?>" >
-                    <input hidden type="text" name="d_id" value="<?php echo $result->d_id ?>" >
+              <input hidden type="text" class="anchors" name="d_id" id="<?php echo $result->d_id ?>" value="<?php echo $result->d_id ?>" >
                     <input id="part" class="form-control " type="text" name="d_no" value="<?php echo $result->d_no ?>">
 
                     <span class="form-control-feedback" aria-hidden="true">
@@ -273,18 +273,23 @@ $(document).ready(function() {
       if (r == true) {
     		var $ele = $(this).parent().parent();//?????
         var rd_id = $(this).attr("data-id");
+        var did = document.getElementsByClassName("anchors")[0].id;
+        var rev = <?php echo $this->uri->segment('4')?>;
+
     		$.ajax({
     			url: "<?php echo base_url("ajax/delete_part_drw_v");?>",
     			type: "POST",
     			cache: false,
     			data:{
-    				rd_id:rd_id
+    				rd_id:rd_id,did:did,rev:rev
     			},
     			success: function(data){
     				var data = JSON.parse(data);
     				if(data.statusCode==200){// what is this????
     					$ele.fadeOut().remove();
-    				}
+    				}else{
+              alert('This drawing should have part at least 1')
+            }
     			},
           error:function(data){
             // console.log("error");

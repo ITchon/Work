@@ -73,10 +73,17 @@ public function __construct()
     {
      if($this->input->post('rd_id'))
      {
-        $this->model_ajax->delete_part_drw_v($this->input->post('rd_id'));   
-        echo json_encode(array(
+       $res = $this->model_ajax->delete_part_drw_v($this->input->post('rd_id'),$this->input->post('did'),$this->input->post('rev')); 
+       if($res != false){
+            echo json_encode(array(
             "statusCode"=>200
         ));
+       }else{
+            echo json_encode(array(
+            "statusCode"=>100
+        ));
+       }
+
      }
     }
 

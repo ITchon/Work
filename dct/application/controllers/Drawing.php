@@ -825,7 +825,11 @@ public function show()
           echo "<script>";
           echo 'alert(" File Failed ");';
           echo '</script>';
-          redirect('drawing/show_v?'.$search.'','refresh');   
+          if($search != null){
+            redirect('drawing/show_v?'.$search.'','refresh');   
+          }else{
+            redirect('drawing/show?','refresh');   
+          }
           }else{
           foreach ($rd_id as $rd) {
               $rd_id = $rd->rd_id;
@@ -875,7 +879,11 @@ public function show()
           echo "<script>";
           echo 'alert(" File Failed ");';
           echo '</script>';
-          redirect('drawing/show_v?'.$search.'','refresh');     
+          if($search != null){
+            redirect('drawing/show_v?'.$search.'','refresh');   
+          }else{
+            redirect('drawing/show?','refresh');   
+          }   
           }else{
             $file =  $this->input->post('file_name2');
             copy('./uploads/'.'Drawing/'.$folderold_name.'/'.$file, './uploads/'.'Drawing/'.$foldername.'/'.$file);
@@ -928,7 +936,11 @@ public function show()
 
           }
         }
-       redirect('drawing/show_v?'.$search.'','refresh');   
+       if($search != null){
+            redirect('drawing/show_v?'.$search.'','refresh');   
+          }else{
+            redirect('drawing/show?','refresh');   
+          }
   
     }
 }

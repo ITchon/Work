@@ -622,7 +622,6 @@ $path_file = quotemeta($path_file);
    date_updated = CURRENT_TIMESTAMP,
    file_name = '$file',
    enable = '0' ,
-   delete_flag = '1',
    f_id = '$f_id',
    pos = '$pos',
    rev = '$rev'
