@@ -87,7 +87,7 @@ class Part extends CI_Controller {
         $data['origin'] =$origin;
         $data['sub_id'] =$sub_id;
         $data['result_p'] =$res_part;
-        $data['p_name'] =$res[0]->p_name;
+
         $data['lv'] =$lv;
         $this->load->view('part/subpart',$data);//bring $data to user_data 
 		$this->load->view('footer');

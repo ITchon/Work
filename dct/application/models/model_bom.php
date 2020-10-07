@@ -188,6 +188,33 @@ public function delete_sub($id) {
   //   // }while($chk <= 2);
   // }
   // exit;
+//   public function bom($bm)
+//   {
+   
+//     $array=[];
+//     $res_bom= $this->model_bom->hook_bom($bm) ;
+//     // echo $res_bom[0]->pd_id ;
+//     // echo $res_bom[0]->b_id ;
+//     // exit;
+//     $data= $this->model_bom->sub_bom($res_bom[0]->pd_id,$res_bom[0]->b_id) ;
+//     $bm =  $res_bom[0]->b_id;
+//     $i=1;
+    
+//           foreach($data as $r){
+//             $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
+//            array_push($array,$a);
+//             do{
+//               foreach($data as $r){
+//                           $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;   
+//                           $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
+//                           array_push($array,$a);
+//         }
+//     }while($i>=10);
+//  } 
+      
+//     return  $array;
+  
+  // }
   public function bom($bm)
   {
    
@@ -198,78 +225,51 @@ public function delete_sub($id) {
     // exit;
     $data= $this->model_bom->sub_bom($res_bom[0]->pd_id,$res_bom[0]->b_id) ;
     $bm =  $res_bom[0]->b_id;
-    $i=1;
-    
-          foreach($data as $r){
-            $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-           array_push($array,$a);
-            do{
-              foreach($data as $r){
-                          $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;   
-                          $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-                          array_push($array,$a);
-        }
-    }while($i>=10);
- } 
+
+     foreach($data as $r){
       
+          $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
+          array_push($array,$a);
+          $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
+          foreach($data as $r){
+            $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;   
+            $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
+            array_push($array,$a);
+           foreach($data as $r){   
+            $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
+            array_push($array,$a);
+            $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
+            foreach($data as $r){
+              $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
+              array_push($array,$a);
+              $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
+              foreach($data as $r){
+                $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
+                array_push($array,$a);
+                $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
+                foreach($data as $r){
+                  $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
+                  array_push($array,$a);
+                  $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
+                  foreach($data as $r){
+                    $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
+                    array_push($array,$a);
+                    $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
+                    foreach($data as $r){
+                      $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
+                      array_push($array,$a);
+                      $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     return  $array;
   
   }
-  // public function bom($bm)
-  // {
-   
-  //   $array=[];
-  //   $res_bom= $this->model_bom->hook_bom($bm) ;
-  //   // echo $res_bom[0]->pd_id ;
-  //   // echo $res_bom[0]->b_id ;
-  //   // exit;
-  //   $data= $this->model_bom->sub_bom($res_bom[0]->pd_id,$res_bom[0]->b_id) ;
-  //   $bm =  $res_bom[0]->b_id;
-
-  //    foreach($data as $r){
-      
-  //         $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-  //         array_push($array,$a);
-  //         $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
-  //         foreach($data as $r){
-  //           $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;   
-  //           $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-  //           array_push($array,$a);
-  //          foreach($data as $r){   
-  //           $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-  //           array_push($array,$a);
-  //           $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
-  //           foreach($data as $r){
-  //             $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-  //             array_push($array,$a);
-  //             $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
-  //             foreach($data as $r){
-  //               $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-  //               array_push($array,$a);
-  //               $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
-  //               foreach($data as $r){
-  //                 $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-  //                 array_push($array,$a);
-  //                 $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
-  //                 foreach($data as $r){
-  //                   $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-  //                   array_push($array,$a);
-  //                   $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
-  //                   foreach($data as $r){
-  //                     $a=array('lv'=>$r->lv,'m_id'=>$r->parent_id,'id'=>$r->child_id,'sub_id'=>$r->sub_id,'qty'=>$r->quantity,'unit'=>$r->unit,'common_part'=>$r->common_part,'p_no'=>$r->p_no,'p_id'=>$r->child_id,'p_name'=>$r->p_name,'d_no'=>$r->d_no,'origin'=>$r->origin);
-  //                     array_push($array,$a);
-  //                     $data= $this->model_bom->sub_part($r->child_id,$bm,$r->origin) ;
-  //                   }
-  //                 }
-  //               }
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //   return  $array;
-  
-  // }
 
   public function tree_up($sub_id,$bm)
 {

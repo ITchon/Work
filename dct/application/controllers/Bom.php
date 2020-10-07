@@ -137,8 +137,6 @@ class Bom extends CI_Controller {
     {
         $pd_id =  $this->input->post('pd_id');
         $child_id =  $this->input->post('child_id');
-  
-   
         $lasted_id = $this->model_bom->insert_bom($pd_id);
         $res = $this->model_bom->hook_bom($lasted_id);
         $parent_id = $res[0]->pd_id;
