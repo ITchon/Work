@@ -13,6 +13,7 @@ class Dcn extends CI_Controller {
         $this->load->model('model');     
         $this->load->model('model_dcn');
         $this->load->model('model_drawing');
+        $this->model->CheckSession();
         $this->model->load_menu();
         $this->model->button_show($this->session->userdata('su_id'),8);
     }
@@ -24,6 +25,31 @@ class Dcn extends CI_Controller {
     {   
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+
+        $s_dcno = $this->input->get('s_dcno');  
+        $s_name = $this->input->get('s_name');
+
+        $params = $_SERVER['QUERY_STRING'];
+        
+        $this->session->set_flashdata('search',$params);
+    
+        $data['s_dcno'] = $s_dcno;
+        $data['s_name'] = $s_name;
+
+        if($this->input->get('s_dcno') == null){
+            $s_dcno = 'null';
+        }
+        
+        if($this->input->get('s_name') == null){
+          $s_name = 'null';
+        }
+        if($this->input->get('s_dcno') == null && $this->input->get('s_name') == null){
+        $s_name = '';
+        $s_dcno = '';
+
+        }
+
+
         $text = null;
         $dcn_id = null;
         $data['chk'] = $dcn_id;
@@ -37,7 +63,12 @@ class Dcn extends CI_Controller {
             }
             $data['chk'] = $dcn_id;
         }
+        if($this->input->get('s_dcno') != null || $this->input->get('s_name') != null ){
+        $data['result'] = $this->model_dcn->dcn_search($s_dcno,$s_name);
+      }else{
         $data['result'] = $this->model_dcn->get_dcn_byid($text); 
+      }
+        
         $this->load->view('dcn/img_modal');//bring $data to user_data 
         $this->load->view('dcn/show',$data);//bring $data to user_data 
         $this->load->view('footer');
@@ -54,6 +85,7 @@ class Dcn extends CI_Controller {
         $sql = "SELECT * FROM folder where fg_id = 2 AND delete_flag != 0";
         $query = $this->db->query($sql);
         $data['result_folder'] = $query->result(); 
+        $data['result_cus'] = $this->model_dcn->get_customers();
 
         $this->load->view('dcn/add',$data);//bring $data to user_data 
         $this->load->view('footer');
@@ -96,9 +128,15 @@ class Dcn extends CI_Controller {
     {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+        
+        $chk = $this->session->flashdata('chk'); 
+        if($chk == null){
+            $chk = '';
+        }
+
         $id =  $this->uri->segment('3');
         $this->model_dcn->delete_dcn($id);
-        redirect('dcn/manage/'.$id.'','refresh');
+        redirect('dcn/manage/'.$chk.'','refresh');
     }
 
 
@@ -112,8 +150,11 @@ class Dcn extends CI_Controller {
         $sql =  "SELECT * from dcn
         where dcn_id = $id";
         $query = $this->db->query($sql); 
+        $chk = $this->session->flashdata('chk'); 
+        $data['chk'] = $chk;
         $data['result'] = $query->result()[0]; 
         $data['result_folder'] =  $this->model_dcn->get_folder_dcn($id);
+        $data['result_cus'] =  $this->model_dcn->get_customers();
         $this->load->view('dcn/edit',$data);
         $this->load->view('footer');
   
@@ -127,43 +168,60 @@ class Dcn extends CI_Controller {
 
         $config['upload_path']           = './uploads/'.'DCN'.'/'.$folder;
         $config['allowed_types']        = '*';
+        $config['overwrite']            = TRUE;
 
         $fold =  $this->input->post('fold');
         $resold = $this->model_dcn->get_folder_by($fold);
         $folderold = $resold->fol;
-          if ($_FILES['file_name']['name'] != null) {
-          $file_name2 =  $this->input->post('file_name2');
-          unlink('./uploads/'.'DCN'.'/'.$folderold.'/'.$file_name2);
-          $config['overwrite']            = TRUE;
-          }
+          // if ($_FILES['file_name']['name'] != null) {
+          // $file_name2 =  $this->input->post('file_name2');
+          // unlink('./uploads/'.'DCN'.'/'.$folderold.'/'.$file_name2);
+          
+          // }
+        $chk =  $this->input->post('chk');
+        if($chk == null){
+            $chk = '';
+        }
         $dcn_id =  $this->input->post('dcn_id');
         $dcn_no  =  $this->input->post('dcn_no');
+        $dcn_name  =  $this->input->post('dcn_name');
+        $model  =  $this->input->post('model');
+        $cus_id = $this->input->post('cus_id');
+
         $file_name =  $this->input->post('file_name2');
         if($_FILES['file_name']['name'] != null){
             $file = $_FILES['file_name']['name'];
-             $this->load->library('upload', $config);
+            $remove[] = "'";
+            $remove[] = '"';
+            $remove[] = ";";
+            $remove[] = "[";
+            $remove[] = "]";
+            $remove[] = "&";
+            $file = str_replace(' ', '_', $file);
+            $file = str_replace( $remove, "", $file );
+
+        $this->load->library('upload', $config);
         $this->upload->initialize($config);
           if ( !$this->upload->do_upload('file_name'))
           {
           echo "<script>";
           echo 'alert(" File Failed ");';
           echo '</script>';
-          redirect('drawing/edit_v/'.$d_id.'','refresh');
+          redirect('drawing/edit_v/'.$chk.'','refresh');
           }else{
-          $this->model_dcn->save_dcn($dcn_id,$dcn_no,$file,$f_id);
+          $this->model_dcn->save_dcn($dcn_id,$dcn_no,$dcn_name,$model,$cus_id,$file,$f_id);
           $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
         <span> แก้ไขข้อมูลเรียบร้อยเเล้ว </span>
       </div> ');
           }
         }else{
-         rename('./uploads/'.'DCN'.'/'.$folderold.'/'.$file_name, './uploads/'.'DCN'.'/'.$folder.'/'.$file_name);
-         $this->model_dcn->save_dcn($dcn_id,$dcn_no,$file_name,$f_id);
+         copy('./uploads/'.'DCN'.'/'.$folderold.'/'.$file_name, './uploads/'.'DCN'.'/'.$folder.'/'.$file_name);
+         $this->model_dcn->save_dcn($dcn_id,$dcn_no,$dcn_name,$model,$cus_id,$file_name,$f_id);
          $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
         <span> แก้ไขข้อมูลเรียบร้อยเเล้ว </span>
       </div> ');
         }
-
-        redirect('dcn/manage/'.$dcn_id.'','refresh');
+        redirect('dcn/manage/'.$chk.'','refresh');
   
     }
 
@@ -171,6 +229,8 @@ class Dcn extends CI_Controller {
 
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+        $search = $this->session->flashdata('search');
+        $this->session->set_flashdata('search',$search);
 
         $result = $this->model_dcn->enableDcn($uid);
         $chk = $this->session->flashdata('chk');
@@ -178,7 +238,7 @@ class Dcn extends CI_Controller {
             redirect('dcn/manage/'.$chk.'','refresh');
 
         }else{
-             redirect('dcn/manage/','refresh');
+             redirect('dcn/manage?'.$search.'','refresh');
         }
     }
 
@@ -208,18 +268,30 @@ class Dcn extends CI_Controller {
 
         $config['upload_path']           = './uploads/'.$folderg.'/'.$folder;
         $config['allowed_types']        = '*';
+        $config['overwrite']            = TRUE;
+
+        
         
         $dcn_no =  $this->input->post('dcn_no');
-        $path =  $this->input->post('path');
-        $f_id =  $this->input->post('f_id');
+        $dcn_name =  $this->input->post('dcn_name');
+        $model =  $this->input->post('model');
+        $cus_id =  $this->input->post('cus_id');
         $file = $_FILES['file_name']['name'];
+            $remove[] = "'";
+            $remove[] = '"';
+            $remove[] = ";";
+            $remove[] = "[";
+            $remove[] = "]";
+            $remove[] = "&";
 
+            $file = str_replace(' ', '_', $file);
+            $file = str_replace( $remove, "", $file );
 
     $num= $this->db->query("SELECT * FROM dcn where dcn_no = '$dcn_no' AND delete_flag != 0"); 
   $chk= $num->num_rows();
  if($chk >= 1){
     $this->session->set_flashdata('success','<div class="alert alert-danger hide-it">  
-          <span> ชื่อนี้ถูกใช้เเล้ว</span>
+          <span> Numberนี้ถูกใช้เเล้ว</span>
         </div> ');
         $this->session->set_flashdata('dcn_no',$dcn_no);
       
@@ -233,7 +305,6 @@ class Dcn extends CI_Controller {
             echo 'alert(" File Failed ");';
             echo 'history.go(-1);';
             echo '</script>';
-            exit();
             redirect('dcn/add','refresh');   
             }
             else
@@ -241,7 +312,7 @@ class Dcn extends CI_Controller {
                 $uploaded = $this->upload->data();
     $code = array('filename'  => $uploaded['file_name']);
     foreach ($code as $c) {
-        $result = $this->model_dcn->insert_dcn($dcn_no,$path,$file,$c,$f_id);
+        $result = $this->model_dcn->insert_dcn($dcn_no,$dcn_name,$model,$cus_id,$file,$c,$f_id);
     }
             $this->session->set_flashdata('success','<div class="alert alert-success hide-it">  
           <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>

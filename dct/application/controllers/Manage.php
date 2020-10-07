@@ -37,6 +37,11 @@ class Manage extends CI_Controller {
         $bom = $query->result();
         $data['cus'] = $bom[0]->cus_id;
 
+        $sql4 = "SELECT COUNT(dcn_id) as dcn_id FROM dcn where delete_flag != 0";
+        $query = $this->db->query($sql4);
+        $bom = $query->result();
+        $data['dcn'] = $bom[0]->dcn_id;
+
   //       $sql4 = "SELECT cus.cus_name,fg.foldergroup_name FROM folder_group as fg
 		// inner join customers as cus on cus.fg_id = fg.fg_id
   //       where fg.delete_flag != 0";
@@ -52,7 +57,7 @@ class Manage extends CI_Controller {
 
 
 
-        $sql5 = "SELECT f.folder_name FROM folder as f";
+        $sql5 = "SELECT f.folder_name FROM folder as f where f.fg_id = 1";
         $query = $this->db->query($sql5);
         $filea = $query->result();
         $num = 0;
@@ -64,7 +69,34 @@ class Manage extends CI_Controller {
         $num = $fileall+$num;
         }
         }
-        $data['num'] = $num;
+        $data['num_drawing'] = $num;
+
+        $sql5 = "SELECT f.folder_name ,f.name as type FROM folder as f where f.fg_id = 1";
+        $query = $this->db->query($sql5);
+        $folder = $query->result();
+        
+        $data['folder_d'] = $folder;
+
+        $sql5 = "SELECT f.folder_name ,f.name as type FROM folder as f where f.fg_id = 3";
+        $query = $this->db->query($sql5);
+        $folder = $query->result();
+        
+        $data['folder_std'] = $folder;
+
+        $sql5 = "SELECT f.folder_name FROM folder as f where f.fg_id = 2";
+        $query = $this->db->query($sql5);
+        $filea = $query->result();
+        $num1 = 0;
+        foreach($filea as $f){
+        $directory = './uploads/'.'DCN/'.$f->folder_name.'/';
+        $files = glob($directory . "*");
+        if ($files){
+        $fileall = count($files); 
+        $num1 = $fileall+$num1;
+        }
+        }
+        $data['num_dcn'] = $num1;
+
 
 		$this->load->view('dashboard',$data);
 		$this->load->view('footer');

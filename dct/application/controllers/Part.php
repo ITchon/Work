@@ -13,6 +13,7 @@ class Part extends CI_Controller {
         $this->load->model('model_part');
         $this->model->CheckSession();
         $this->model->load_menu();
+        $this->model->button_show($this->session->userdata('su_id'),7);
     }
 	public function index()
     {	
@@ -24,13 +25,31 @@ class Part extends CI_Controller {
     {	
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+        
+        $s_pno =  $this->input->get('s_pno');
+        $s_pname =  $this->input->get('s_pname');
+        $data['s_pno'] = $s_pno;
+        $data['s_pname'] = $s_pname;
 
-            $p_id =  $this->input->post('p_id');
-            $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable
-            from part as p
-            where p.delete_flag != 0 ";
-        $query = $this->db->query($sql); 
-        $data['result'] = $query->result(); 
+        if($this->input->get('s_pno') == null){
+            $s_pno = 'null';
+        }
+        
+        if($this->input->get('s_pname') == null){
+          $s_pname = 'null';
+        }
+        if($this->input->get('s_pno') == null && $this->input->get('s_pname') == null){
+        $s_pname = '';
+        $s_pno = '';
+        }
+
+        if($this->input->get('s_pno') != null || $this->input->get('s_pname') != null){
+            $data['result']= $this->model_part->part_search($s_pno,$s_pname);
+        }else{
+            $data['result']= $this->model_part->get_part();
+        }
+        $data['type']= $this->model_part->get_type();
+
         $this->load->view('part/show',$data);//bring $data to user_data 
         $this->load->view('footer');
         
@@ -87,7 +106,7 @@ class Part extends CI_Controller {
         $data['origin'] =$origin;
         $data['sub_id'] =$sub_id;
         $data['result_p'] =$res_part;
-
+        
         $data['lv'] =$lv;
         $this->load->view('part/subpart',$data);//bring $data to user_data 
 		$this->load->view('footer');
@@ -201,21 +220,21 @@ class Part extends CI_Controller {
 		}
 	}
 
-	public function disable($uid){
+	// public function disable($uid){
 
-        $this->model->CheckPermission($this->session->userdata('su_id'));
-        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+ //        $this->model->CheckPermission($this->session->userdata('su_id'));
+ //        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
-		$result = $this->model_part->disablePart($uid);
+	// 	$result = $this->model_part->disablePart($uid);
 
-		if($result!=FALSE){
-            redirect('part/manage/'.$uid.'','refresh');
-		}else{
-            echo "<script>alert('Somting wrong')</script>";
-            redirect('part/manage/'.$uid.'','refresh');
+	// 	if($result!=FALSE){
+ //            redirect('part/manage/'.$uid.'','refresh');
+	// 	}else{
+ //            echo "<script>alert('Somting wrong')</script>";
+ //            redirect('part/manage/'.$uid.'','refresh');
 
-		}
-	}
+	// 	}
+	// }
 
     public function deletepart()
     {
