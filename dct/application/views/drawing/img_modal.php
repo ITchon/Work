@@ -94,7 +94,7 @@ wmContext.translate(origCanvas.width/2, origCanvas.height/2);
 wmContext.rotate(-Math.atan(origCanvas.height/origCanvas.width));
 // as the origin is now at the center, just need to center the text
 wmContext.fillText("<?php echo $this->session->userdata('fname')."  ". $this->session->userdata('lname'); ?>",-width/2,height/2);
-  
+wmContext.fillText("*Copy is Prohibite",-width/2,height/20);
 function renderPage(num) {
   pageRendering = true;
 

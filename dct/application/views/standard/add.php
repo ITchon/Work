@@ -8,10 +8,10 @@
             <div class="col-md-12">
               <div class="demo-form-wrapper card" style="padding-top:8px">
               <h2 class=" text-center text-primary"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-             ADD CUSTOMER FILE
+             ADD STANDARD
             </h2><hr>
             <?php echo $this->session->flashdata("success"); ?>
-            <form class="table form form-horizontal container" action="<?php echo base_url()?>customersfile/insert" method="post" data-toggle="validator" enctype="multipart/form-data">
+            <form class="table form form-horizontal container" action="<?php echo base_url()?>standard/insert" method="post" data-toggle="validator" enctype="multipart/form-data">
             <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">SELECT CUSTOMER </label>      
           
@@ -33,7 +33,24 @@
                    </select>
                     </div>
                     </div> 
+
+                    <div class="form-group">
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">STANDARD NUMBER</label>      
+          
+                      <div class="col-sm-6 col-md-4">
+                   <input type="text" class="form-control" name="std_no">
+                    </div>
+                    </div> 
         
+                    <div class="form-group">
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">STANDARD NAME</label>      
+          
+                      <div class="col-sm-6 col-md-4">
+                   <input type="text" class="form-control" name="std_name">
+                    </div>
+                    </div> 
+
+
                   <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">SELECT FOLDER</label>      
           
@@ -46,15 +63,15 @@
                     </div> 
 
                     <div class="form-group">
-                    <label for="name-1" class="col-sm-3 col-md-4 control-label">CUSTOMER FILE DESCRIPTION</label>
-
-                    <div class="col-sm-12 col-md-4">
-                      <textarea class="form-control" name="cusf_des" rows="5" cols="50"></textarea>
-                  </div>
-                  </div>
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">CUSTOMER REV</label>      
+          
+                      <div class="col-sm-6 col-md-4">
+                   <input type="text" class="form-control" name="cus_rev">
+                    </div>
+                    </div> 
 
                     <div class="form-group">
-                    <label for="name-1" class="col-sm-3 col-md-4 control-label">CUSTOMER FILE</label>
+                    <label for="name-1" class="col-sm-3 col-md-4 control-label">FILE</label>
 
                     <div class="col-sm-6 col-md-4">
                     <input class="form-control" id="file_name" type="file" name="file_name" required>

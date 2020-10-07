@@ -8,14 +8,14 @@
             <div class="col-md-12  ">
               <div class="demo-form-wrapper card" style="padding-top:8px">
               <h2 class=" text-center text-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-             EDIT CUSTOMERS FILE
+             EDIT STANDARD
             </h2><hr>
-            <form class="table form form-horizontal container" action="<?php echo base_url()?>customersfile/save_edit" method="post" data-toggle="validator" enctype="multipart/form-data">
+            <form class="table form form-horizontal container" action="<?php echo base_url()?>standard/save_edit" method="post" data-toggle="validator" enctype="multipart/form-data">
             
                       <input type="hidden" name="cusf_id" value="<?php echo $result[0]->cusf_id?>" >
                       <input type="hidden" id="chkf" name="fold" value="<?php echo $result[0]->f_id?>" >
                       <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">SELECT CUSTOMER </label>      
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">SELECT STANDARD </label>      
           
                       <div class="col-sm-6 col-md-4">
                    <select name="cus_id" id="cus_id" class="form-control select2"  data-placeholder=""  required>
@@ -48,7 +48,7 @@
                     </div> 
 
                       <div class="form-group has-feedback">
-                          <label for="part" class="col-sm-5 col-md-4 control-label">CUSTOMER DESCRIPTION</label>
+                          <label for="part" class="col-sm-5 col-md-4 control-label">STANDARD DESCRIPTION</label>
                           <div class="col-sm-6 col-md-4">
                             <textarea class="form-control" name="cus_des" rows="5" cols="50"><?php echo $result[0]->cusf_des ?></textarea>
                           </span>
@@ -56,7 +56,7 @@
                       </div>
 
                 <div class="form-group has-feedback">
-                    <label for="part" class="col-sm-5 col-md-4 control-label">CUSTOMER FILE</label>
+                    <label for="part" class="col-sm-5 col-md-4 control-label">STANDARD FILE</label>
                     <div class="col-sm-6 col-md-4">
                       <input type="text" readonly class="form-control" name="file_name2" value="<?php echo $result[0]->file_name ?>">
                     </span>

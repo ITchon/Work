@@ -35,7 +35,7 @@ tr{
 $this->session->set_flashdata('search',$search);
 ?>
                 <div class="form-group has-feedback">
-                    <label for="part" class="col-sm-5 col-md-4 control-label">Drawing Number</label>
+                    <label for="part" class="col-sm-5 col-md-4 control-label">DRAWING NUMBER</label>
                     <div class="col-sm-6 col-md-4">
                     <input hidden type="text" name="d_id" value="<?php echo $result->d_id ?>" >
                     <input hidden type="text" name="search" value="<?php echo $search ?>" >
@@ -46,10 +46,21 @@ $this->session->set_flashdata('search',$search);
                     </span>
                     </div>
                 </div>
+
                 <div class="form-group has-feedback">
-                    <label for="p_name" class="col-sm-3 col-md-4 control-label">Drawing Name</label>
+                    <label for="p_name" class="col-sm-3 col-md-4 control-label">DRAWING NAME</label>
                     <div class="col-sm-6 col-md-4">
                     <input id="d_name" class="form-control" type="text" name="d_name" value="<?php echo $result->d_name ?>">
+                    <span class="form-control-feedback" aria-hidden="true">
+                    <span class="icon"></span>
+                    </span>
+                    </div>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <label for="p_name" class="col-sm-3 col-md-4 control-label">MODEL</label>
+                    <div class="col-sm-6 col-md-4">
+                    <input class="form-control" type="text" name="model" value="<?php echo $result->model ?>">
                     <span class="form-control-feedback" aria-hidden="true">
                     <span class="icon"></span>
                     </span>
@@ -67,7 +78,7 @@ $this->session->set_flashdata('search',$search);
                 </div>
 
                 <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select DCN</label>      
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">DCN NUMBER</label>      
           
                       <div class="col-sm-6 col-md-4">
                    <select id="dcn" name="dcn_id" class="form-control select2" >
@@ -84,7 +95,7 @@ $this->session->set_flashdata('search',$search);
                     </div> 
 
                     <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Customer</label>      
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">CUSTOMERS</label>      
           
                       <div class="col-sm-6 col-md-4">
                    <select id="cus" name="cus_id" class="form-control select2" >
@@ -101,7 +112,7 @@ $this->session->set_flashdata('search',$search);
                     </div> 
 
                                         <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">File</label>      
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">FILE</label>      
                       <div class="col-sm-6 col-md-4">
 
                 <input class="form-control" type="text" name="file_name2" readonly value="<?php echo $result->file_name ?>">
@@ -109,7 +120,7 @@ $this->session->set_flashdata('search',$search);
                     </div> 
 
                     <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Type</label>      
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">TYPE</label>      
           
                       <div class="col-sm-6 col-md-4">
                    <select id="f" name="f_id" class="form-control select2" >
@@ -127,7 +138,7 @@ $this->session->set_flashdata('search',$search);
 
 
                     <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Change File</label>  
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">CHANGE FILE</label>  
                       <div class="col-sm-6 col-md-4">
                               <input type="file" name="file_name" class="form-control" id="file_name" >
                       </div>

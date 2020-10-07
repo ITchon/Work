@@ -18,6 +18,7 @@
                     <label for="part" class="col-sm-5 col-md-4 control-label">DCN Number</label>
                     <div class="col-sm-6 col-md-4">
                     <input type="text" name="dcn_id" value="<?php echo $result->dcn_id ?>" hidden>
+                    <input type="text" name="chk" value="<?php echo $chk ?>" hidden >
                     <input type="text" name="fold" value="<?php echo $result->f_id ?>" hidden>
                     <input id="part" class="form-control " type="text" name="dcn_no" value="<?php echo $result->dcn_no ?>">
 
@@ -26,8 +27,49 @@
                     </span>
                     </div>
                 </div>
+
+                <div class="form-group has-feedback">
+                    <label for="part" class="col-sm-5 col-md-4 control-label">DCN Number</label>
+                    <div class="col-sm-6 col-md-4">
+                    <input class="form-control " type="text" name="dcn_name" value="<?php echo $result->dcn_name ?>">
+                    <span class="form-control-feedback" aria-hidden="true">
+                    <span class="icon"></span>
+                    </span>
+                    </div>
+                </div>
+
+
+                <div class="form-group has-feedback">
+                    <label for="part" class="col-sm-5 col-md-4 control-label">Model</label>
+                    <div class="col-sm-6 col-md-4">
+                    <input class="form-control " type="text" name="model" value="<?php echo $result->model ?>">
+                    <span class="form-control-feedback" aria-hidden="true">
+                    <span class="icon"></span>
+                    </span>
+                    </div>
+                </div>
+
+
                 <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Type</label>      
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Customer</label>      
+          
+                      <div class="col-sm-6 col-md-4">
+                   <select id="cus" name="cus_id" class="form-control select2" >
+                    <option value="" hidden> - - - None- - - </option>
+                   <?php
+                      foreach($result_cus as $cus){?>
+                     <option value="<?php echo $cus->cus_id ?>"><?php echo $cus->cus_name ?></option>
+                    <?php
+                      }
+                      ?> 
+                   </select>
+                    </div>
+                    </div> 
+
+
+
+                <div class="form-group">
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Type</label>      
           
                       <div class="col-sm-6 col-md-4">
                    <select id="f" name="f_id" class="form-control select2" >
@@ -40,6 +82,7 @@
                    </select>
                     </div>
                     </div> 
+
                     <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">File</label>      
                       <div class="col-sm-6 col-md-4">
@@ -69,6 +112,7 @@
       <script>
         $(document).ready(function() {
         document.getElementById('f').value = "<?php echo $result->f_id ?>";
+        document.getElementById('cus').value = "<?php echo $result->cus_id ?>";
     $('.select2').select2();
 });
       </script>

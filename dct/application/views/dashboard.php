@@ -15,10 +15,55 @@
             
             </h1>
           </div>
-          <div class="row gutter-xs">
+          <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+              <h1>Drawing</h1>
+                <div class="card-body">
+                  
+
+
+                </div>
+              </div>
+            </div>
+
+          <div class="col-md-12">
+              <div class="card">
+              <h1>DCN</h1>
+                <div class="card-body">
+                  
+
+
+                </div>
+              </div>
+
+
+
+          <div class="col-md-12">
+              <div class="card">
+              <h1>Part</h1>
+                <div class="card-body">
+                  
+
+
+                </div>
+              </div>
+
+
+
+          <div class="col-md-12">
+              <div class="card">
+              <h1>Customer</h1>
+                <div class="card-body">
+                  
+
+
+                </div>
+              </div>
+
 
           
-          <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg-3">
               <div class="card">
                 <div class="card-body">
                   <div class="media">
@@ -67,15 +112,15 @@
                   <div class="media">
                     <div class="media-middle media-left">
                       <span class="bg-primary circle sq-48">
-                        <span class="fa fa-cogs"></span>
+                        <span class="fa fa-wpforms"></span>
                       </span>
                     </div>
                     <div class="media-middle media-body">
-                      <h6 class="media-heading">Part</h6>
+                      <h6 class="media-heading">DCN</h6>
                       <h3 class="media-heading">
                         <span class="fw-l">
                           <?php
-                      echo $part;
+                      echo $dcn;
                      ?></span>
                       </h3>
                     </div>
@@ -89,15 +134,15 @@
                   <div class="media">
                     <div class="media-middle media-left">
                       <span class="bg-primary circle sq-48">
-                        <span class="fa fa-sitemap "></span>
+                        <span class="fa fa-cogs"></span>
                       </span>
                     </div>
                     <div class="media-middle media-body">
-                      <h6 class="media-heading">BOM</h6>
+                      <h6 class="media-heading">Part</h6>
                       <h3 class="media-heading">
                         <span class="fw-l"> 
                           <?php 
-                          echo $bom;
+                          echo $part;
                           ?>
                         </span>
                       </h3>
@@ -107,6 +152,25 @@
               </div>
             </div>
 
+<div class="col-md-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-middle media-left">
+                      <span class="bg-primary circle sq-48">
+                        <span class="fa fa-sitemap "></span>
+                      </span>
+                    </div>
+                    <div class="media-middle media-body">
+                      <h6 class="media-heading">BOM</h6>
+                      <h3 class="media-heading">
+                        <span class="fw-l"><?php echo $bom; ?></span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             
 
             <div class="col-md-6 col-lg-3">
@@ -121,7 +185,80 @@
                     <div class="media-middle media-body">
                       <h6 class="media-heading">Drawing File</h6>
                       <h3 class="media-heading">
+                        <span class="fw-l"><?php echo $num_drawing; ?></span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-middle media-left">
+                      <span class="bg-primary circle sq-48">
+                        <span class="fa fa-wpforms"></span>
+                      </span>
+                    </div>
+                    <div class="media-middle media-body">
+                      <h6 class="media-heading">DCN File</h6>
+                      <h3 class="media-heading">
+                        <span class="fw-l"><?php echo $num_dcn; ?></span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+<?php 
+foreach($folder_d as $f){
+$num = 0;
+$directory = './uploads/'.'Drawing/'.$f->folder_name.'/';
+$files = glob($directory . "*");
+if ($files){
+$fileall = count($files); 
+$num = $fileall;
+}?>
+            <div class="col-md-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-middle media-left">
+                      <span class="bg-danger circle sq-48">
+                        <span class="fa fa-wpforms"></span>
+                      </span>
+                    </div>
+                    <div class="media-middle media-body">
+                      <h6 class="media-heading"><?php echo $f->type; ?></h6>
+                      <h3 class="media-heading">
                         <span class="fw-l"><?php echo $num; ?></span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+<?php
+}
+?>
+
+            <div class="col-md-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-middle media-left">
+                      <span class="bg-primary circle sq-48">
+                        <span class="fa fa-wpforms"></span>
+                      </span>
+                    </div>
+                    <div class="media-middle media-body">
+                      <h6 class="media-heading">DCN File</h6>
+                      <h3 class="media-heading">
+                        <span class="fw-l"><?php echo $num_dcn; ?></span>
                       </h3>
                     </div>
                   </div>
@@ -172,7 +309,7 @@
              -->
 
           </div>
-        <div class="row gutter-xs">
+      <!--   <div class="row gutter-xs">
             <div class="col-md-6">
               <div class="card">
                 <div class="card-body">
@@ -457,3 +594,4 @@
       ga('create', 'UA-83990101-1', 'auto');
       ga('send', 'pageview');
     </script>
+ -->

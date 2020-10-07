@@ -19,7 +19,7 @@
                 <?php $p_no = $this->session->flashdata('p_no'); ?>
 
                     <div class="form-group has-feedback">
-                    <label for="part" class="col-sm-5 col-md-4 control-label">DRAWING NO</label>
+                    <label for="part" class="col-sm-5 col-md-4 control-label">DRAWING NUMBER</label>
                     <div class="col-sm-5 col-md-4">
                     <input id="d_no" class="form-control" required type="text" value="<?php echo $d_no ?>" name="d_no">
 
@@ -40,6 +40,16 @@
                 </div>
 
                 <div class="form-group has-feedback">
+                    <label for="p_name" class="col-sm-3 col-md-4 control-label">MODEL</label>
+                    <div class="col-sm-6 col-md-4">
+                    <input class="form-control" type="text" name="model">
+                    <span class="form-control-feedback" aria-hidden="true">
+                    <span class="icon"></span>
+                    </span>
+                    </div>
+                </div>
+
+                <div class="form-group has-feedback">
                     <label for="p_name" class="col-sm-3 col-md-4 control-label">POS NUMBER</label>
                     <div class="col-sm-6 col-md-4">
                     <input type="text" name="pos" style="width:120px;" class="form-control">
@@ -51,7 +61,7 @@
 
 
                 <div class="form-group has-feedback">
-                    <label for="dcn" class="col-sm-5 col-md-4 control-label">DCN Number</label>    
+                    <label for="dcn" class="col-sm-5 col-md-4 control-label">DCN NUMBER</label>    
 
                 <div class="col-sm-5 col-md-4">
                    <select name="dcn_id" class="form-control select2" id="dcn_id">

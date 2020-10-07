@@ -1,6 +1,6 @@
 <?php
 
-class Model_customersfile extends CI_Model
+class Model_standard extends CI_Model
 {
 
   

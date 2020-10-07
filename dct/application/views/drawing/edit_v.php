@@ -17,7 +17,7 @@
 <form name="form1" method="post" class="table form form-horizontal containe" action="<?php echo base_url()?>drawing/save_edit_v" enctype="multipart/form-data">
 <input hidden type="text" name="fold" value="<?php echo $result->f_id ?>" >
                 <div class="form-group has-feedback">
-                    <label for="part" class="col-sm-5 col-md-4 control-label">Drawing Number</label>
+                    <label for="part" class="col-sm-5 col-md-4 control-label">DRAWING NUMBER</label>
                     <div class="col-sm-6 col-md-4">
                     <input type="hidden" name="search" value="<?php echo $search ?>" >
                     <input hidden type="text" name="rd_id" value="<?php echo $result->rd_id ?>" >
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="form-group has-feedback">
-                    <label for="p_name" class="col-sm-3 col-md-4 control-label">Drawing Name</label>
+                    <label for="p_name" class="col-sm-3 col-md-4 control-label">DRAWING NAME</label>
                     <div class="col-sm-6 col-md-4">
                     <input id="d_name" class="form-control" type="text" name="d_name" value="<?php echo $result->d_name ?>">
                     <span class="form-control-feedback" aria-hidden="true">
@@ -38,6 +38,17 @@
                     </span>
                     </div>
                 </div>
+
+                <div class="form-group has-feedback">
+                    <label for="p_name" class="col-sm-3 col-md-4 control-label">MODEL</label>
+                    <div class="col-sm-6 col-md-4">
+                    <input class="form-control" type="text" name="model" value="<?php echo $result->model ?>">
+                    <span class="form-control-feedback" aria-hidden="true">
+                    <span class="icon"></span>
+                    </span>
+                    </div>
+                </div>
+
 
                 <div class="form-group has-feedback">
                     <label for="p_name" class="col-sm-3 col-md-4 control-label">POS NUMBER</label>
@@ -50,7 +61,7 @@
                 </div>
 
                 <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select DCN</label>      
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">DCN NUMBER</label>      
           
                       <div class="col-sm-6 col-md-4">
                    <select id="dcn" name="dcn_no" class="form-control select2" >
@@ -66,7 +77,7 @@
                     </div> 
 
                     <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Customer</label>      
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">CUSTOMERS</label>      
           
                       <div class="col-sm-6 col-md-4">
                    <select id="cus" name="cus_name" class="form-control select2" >
@@ -82,7 +93,7 @@
                     </div> 
 
                                         <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">File</label>      
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">FILE</label>      
                       <div class="col-sm-6 col-md-4">
                         <?php if($result->file_name == null){ ?>
                 <input class="form-control" type="text" readonly value="Please add file">
@@ -93,7 +104,7 @@
                     </div> 
 
                     <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Select Type</label>      
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">TYPE</label>      
           
                       <div class="col-sm-6 col-md-4">
                    <select id="f" name="f_id" class="form-control select2" >
@@ -108,7 +119,7 @@
                     </div> 
 
                     <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Change File</label>  
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">CHANGE FILE</label>  
                       <div class="col-sm-6 col-md-4">
                         <?php if($result->file_name){ ?>
                               <input type="text" name="file_name2" id="file_name2" value="<?php echo $result->file_name ?>" hidden>
@@ -122,7 +133,7 @@
                     </div>
 
                     <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">Version</label>      
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">VERSION</label>      
                       <div class="col-sm-6 col-md-4">
                    <input class="form-control" type="text" name="rev" readonly value="<?php echo $result->rev ?>">
 

@@ -18,6 +18,35 @@
                 <div class="card-header">
   
                 <h3 class=" "><a href="<?php echo base_url()?>dcn/manage">MANAGE DCN</a> </h3>
+                                <?php
+                $search = $this->session->flashdata('search');
+                $this->session->set_flashdata('search',$search);
+            
+                ?>
+                <form name="search" action="<?php echo base_url()?>dcn/manage" method="get">
+                <br>
+                <div class="col-md-3">
+                      <div class="input-group" >
+                         <div class="input-group-btn">
+                            <a href="" class=" btn btn-primary ">DCN No.</a>
+                         </div>
+                            <input type="text" class="form-control" name="s_dcno" value="<?php echo $s_dcno; ?>">
+                      </div>
+                </div>
+
+                  <div class="col-md-3">
+                        <div class="input-group" >
+                         <div class="input-group-btn">
+                              <a href="" class=" btn btn-primary ">DCN Name</a> 
+                         </div>
+                    <input type="text" class="form-control" name="s_name" value="<?php echo $s_name; ?>">
+                   </div> 
+                 </div>
+                  
+                  <div class="col-md">
+                  <button type="submit" class="btn btn-primary" "><i class="fa fa-search"></i></button>
+                </div>
+                </form>
                   <?php
                   $this->session->set_flashdata('chk',$chk); 
                   ?>
@@ -28,9 +57,9 @@
                   <thead>
                       <tr>
 								    	<td colspan="12">
-                        <div id="btn_enable" class="btn  btn-success"><span class="fa fa-check"></span></div>
-									    	<div id="btn_disable" class="btn  btn-danger"><span class="fa fa-times"></span></div>
-									    	<div id="btn_delete" class="btn btn-default"><span class="fa fa-trash-o"></span></div>
+                        <?php if($this->session->flashdata("chkall")!== null ) echo "<div id='btn_enable' class='btn  btn-success'><span class='fa fa-check'></span></div>
+                        <div id='btn_disable' class='btn  btn-danger'><span class='fa fa-times'></span></div>
+                        <div id='btn_delete' class='btn btn-default'><span class='fa fa-trash-o'></span></div>"; ?>
 								    	</td>
 								      </tr>	
                       <tr>
@@ -40,7 +69,10 @@
 																<span class="lbl"></span>
 															</label>
 														</th>
-                      <th>DCN no</th>
+                      <th>DCN No</th>
+                      <th>DCN Name</th>
+                      <th>Model</th>
+                      <th>Customer</th>
                       <th width="16%">Manage</th>
                       <th>Status</th>
                       </tr>
@@ -57,6 +89,9 @@
                </label>
            </td>";
              echo"<td><b>".$r->dcn_no."</b></td>" ;
+             echo"<td><b>".$r->dcn_name."</b></td>" ;
+             echo"<td><b>".$r->model."</b></td>" ;
+             echo"<td><b>".$r->cus_name."</b></td>" ;
           
              ?>
 

@@ -37,6 +37,7 @@
                         <th width="10%">Part No</th>
                         <th width="15%">Drawing Name</th>
                         <th width="15%">Drawing No</th>
+                        <th width="15%">Model</th>
                         <th width="15%">POS</th>
                         <th width="5%">Customer</th>
                         <th width="10%">DCN</th>
@@ -54,6 +55,7 @@
                     <td><?php echo "<b>".$r->p_no."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_no."</b>" ?></td>
+                    <td><?php echo "<b>".$r->model."</b>" ?></td>
                     <td><?php echo "<b>".$r->pos."</b>" ?></td>
                     <td><?php echo "<b>".$r->cus_name."</b>" ?></td>
                     <?php  if($this->session->flashdata("link")!== null ){ 
@@ -93,6 +95,7 @@
                     <td><?php echo "<b>".$r->p_no."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_no."</b>" ?></td>
+                    <td><?php echo "<b>".$r->model."</b>" ?></td>
                     <td><?php echo "<b>".$r->pos."</b>" ?></td>
                     <td><?php echo "<b>".$r->cus_name."</b>" ?></td>
                     <?php  if($this->session->flashdata("link")!== null ){ 

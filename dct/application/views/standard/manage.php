@@ -14,7 +14,7 @@
                     <button type="button" class="card-action card-reload" title="Reload"></button>
                     <button type="button" class="card-action card-remove" title="Remove"></button>
                   </div>
-                  <h3>MANAGE CUSTOMERS <i class="fa fa-file-pdf-o" aria-hidden="true"></i></h3>
+                  <h3>MANAGE STANDARD <i class="fa fa-file-pdf-o" aria-hidden="true"></i></h3>
                 </div>
                 <?php echo $this->session->flashdata("success"); ?>
                 <div class="card-body">
@@ -34,11 +34,13 @@
 																<span class="lbl"></span>
 															</label>
 												</th>
-                        <th width="20%">TYPE</th>
-                        <th width="20%">Customer name</th>
-                        <th width="20%">Customer File Description</th>
-                        <th width="20%">Customer File Name</th>
-                        <th width="20%">Manage</th>
+                        <th>Customer name</th>
+                        <th>Standard No</th>
+                        <th>Standard Name</th>
+                        <th>DCN No</th>
+                        <th>Rev</th>
+                        <th>Cust Rev</th>
+                        <th>Manage</th>
                        
                       </tr>
                     </thead>
@@ -48,22 +50,24 @@
             echo "<tr>";
             echo "<td style='text-align:center;'>
             <label class='pos-rel'>
-                <input type='checkbox' class='ace' name='chk_uid[]' value='$r->cusf_id'/>
+                <input type='checkbox' class='ace' name='chk_uid[]' value='$r->std_id'/>
                 <span class='lbl'></span>
               </label>
           </td>";
-                echo "<td>".$r->type."</td>";
                 echo "<td>".$r->cusname."</td>";
-                echo "<td>".$r->cusf_des."</td>";
-                echo "<td>".$r->file_name."</td>";
+                echo "<td>".$r->std_no."</td>";
+                echo "<td>".$r->std_name."</td>";
+                echo "<td>".$r->dcn_no."</td>";
+                echo "<td>".$r->rev."</td>";
+                echo "<td>".$r->cus_rev."</td>";
                 echo "<td><div class='text-center'>";
-                if (file_exists("uploads/$r->foldergroup_name/$r->folder_name/$r->file_name")) echo "<a href='javascript:void(0)'  data-id='".$r->cusf_id."' class='view_img '><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
+                if (file_exists("uploads/$r->foldergroup_name/$r->folder_name/$r->file_name")) echo "<a href='javascript:void(0)'  data-id='".$r->std_id."' class='view_img '><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
 
                 if($this->session->flashdata("edit")!== null )
-                echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' data-original-title='Rule' href='".base_url()."customersfile/edit/".$r->cusf_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";
+                echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' data-original-title='Rule' href='".base_url()."customersfile/edit/".$r->std_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";
                 
                 if($this->session->flashdata("delete")!== null )
-                echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."customersfile/delete/".$r->cusf_id ."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a></td>";  
+                echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."customersfile/delete/".$r->std_id ."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a></td>";  
       
                 echo "</tr>";
                 }

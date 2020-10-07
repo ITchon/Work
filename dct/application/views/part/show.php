@@ -18,6 +18,30 @@
           
                   <h3>MANAGE PART <i class="fa fa-cogs" aria-hidden="true"></i></h3>
 
+                  <form name="search" action="<?php echo base_url()?>part/manage" method="get">
+                <br>
+                <div class="col-md-3">
+                      <div class="input-group" >
+                         <div class="input-group-btn">
+                            <a href="" class=" btn btn-primary ">Part No.</a>
+                         </div>
+                            <input type="text" class="form-control" name="s_pno" value="<?php echo $s_pno; ?>">
+                      </div>
+                </div>
+
+                  <div class="col-md-3">
+                        <div class="input-group" >
+                         <div class="input-group-btn">
+                              <a href="" class=" btn btn-primary ">Part Name</a> 
+                         </div>
+                    <input type="text" class="form-control" name="s_pname" value="<?php echo $s_pname; ?>">
+                   </div> 
+                 </div>
+                  
+                  <div class="col-md">
+                  <button type="submit" class="btn btn-primary" "><i class="fa fa-search"></i></button>
+                </div>
+                </form>
                 </div>
                 <div class="card-body">
                 <?php echo form_open('#', array('id' => 'frm_usermanagement', 'name'=>'frm_usermanagement', 'class'=>'form-horizontal'));?>
@@ -25,27 +49,31 @@
                   <thead>
                   <tr>
 								    	<td colspan="12">
-                        <div id="btn_enable" class="btn  btn-success"><span class="fa fa-check"></span></div>
-									    	<div id="btn_disable" class="btn  btn-danger"><span class="fa fa-times"></span></div>
-									    	<div id="btn_delete" class="btn btn-default"><span class="fa fa-trash-o"></span></div>
+                        <?php if($this->session->flashdata("chkall")!== null ) echo "<div id='btn_enable' class='btn  btn-success'><span class='fa fa-check'></span></div>
+                        <div id='btn_disable' class='btn  btn-danger'><span class='fa fa-times'></span></div>
+                        <div id='btn_delete' class='btn btn-default'><span class='fa fa-trash-o'></span></div>"; ?>
 								    	</td>
 								    </tr>	
                     <tr>
-                    <th  width="1%" >
-															<label>
+                    <th width="3%" class="text-center" >
+															<label class="pos-rel">
 																<input type="checkbox" class="ace" />
 																<span class="lbl"></span>
 															</label>
 														</th>
-                      <th width="10%">Part No</th>
-                      <th width="10%">Part Name</th>
-                      <th class="no_print" width="10%">Manage</th>
+                      <th>Part No</th>
+                      <th>Part Name</th>
+                      <?php foreach($type as $t){ ?>
+                      <th><?php echo $t->name ?></th><?php } ?> 
+                      <th>Manage</th>
+                      <th>Status</th>
                        
                       </tr>
                     </thead>
                     <tbody>
                     <?php
                     foreach($result as $r){
+                      
                 echo "<tr>";
                 echo "<td >
                 <label>
@@ -55,26 +83,35 @@
                 </td>";
                 echo "<td>".$r->p_no."</td>";
                 echo "<td>".$r->p_name."</td>";
+                foreach($type as $t){
+                  if($r->f_id == $t->f_id){
+                    $chk_dwg = $r->d_no;
+                    echo "<td>".$chk_dwg."</td>";
+                  }else{
+                    $chk_dwg = '';
+                    echo "<td>".$chk_dwg."</td>";
+                  }
+                }
+                echo "<td class='text-center'>";
+                if($this->session->flashdata("edit")!== null )
+                 echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' data-original-title='Rule' href='".base_url()."part/edit_part/".$r->p_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>"; 
                 
-                if($r->enable!=1 ){?>
-                  
-                  <td class="text-center"><a type="button"  onclick="javascript:window.location='<?php
-                  echo base_url() . 'part/enable/' . $r->p_id;
-                  ?>';"><i class='btn-danger btn-sm no-border fa fa-times'></i></a>
-                  <?php
-                }
-                else{?>
-
-                  <td class="text-center"><a type="button"  onclick="javascript:window.location='<?php
-                  echo base_url() . 'part/disable/' . $r->p_id;
-                  ?>';"><i class='btn-success btn-sm no-border fa fa-check'></i></a>                      
-                  <?php
-                }
-                ?> <a type ='button' class=' ' onclick="javascript:window.location='<?php
-                echo base_url() . 'part/edit_part/' . $r->p_id;
-                ?>';"><i class='btn-info btn-sm no-border fa fa-pencil-square-o'> </i> </a>
-                <?php 
-                echo "<a type='button' href='".base_url()."part/deletepart/".$r->p_id."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border btn-sm fa fa-trash'></i></a></td>";  
+                 if($this->session->flashdata("delete") !==null)
+                  echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."part/deletepart/".$r->p_id ."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a>";  
+                echo "</div></td>";
+                echo "<td class='text-center'>";
+                if($r->enable==1 ){  
+                          $icon = "btn-success no-border fa fa-check";
+                          $text = "ENABLE";
+                          $color = "color:#43a047";
+                          }
+                      else{ 
+                        $icon = "btn-danger no-border fa fa-close";
+                        $text = "DISABLE";
+                        $color = "color:#D50000";
+                      }
+                      if($this->session->flashdata("enable")!== null ){ echo "<a  href='".base_url()."part/enable/".$r->p_id ."'><i class='$icon'> $text</i></a></td>";}
+                      else{ echo "<span style='$color'>$text </span></td>"; }
 
             echo "</tr>";
         }
