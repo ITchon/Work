@@ -17,9 +17,10 @@ class Model_dcn extends CI_Model
   
     public function get_dcn_byid($text)
     {
-        $sql =  "SELECT dc.dcn_id, dc.dcn_no,dc.file_name,dc.path_file as dcn_path
+        $sql =  "SELECT dc.dcn_id,dc.dcn_no,dc.dcn_name,dc.model,cus.cus_name,dc.file_name,dc.path_file as dcn_path
         ,dc.file_code as dcn_code,dc.enable,dc.f_id,f.folder_name,fg.foldergroup_name
         from dcn as dc
+        LEFT JOIN customers as cus on cus.cus_id  = dc.cus_id
         LEFT JOIN folder as f on f.f_id  = dc.f_id
         LEFT JOIN folder_group as fg on fg.fg_id  = f.fg_id
         where dc.delete_flag != 0 $text";
@@ -27,6 +28,34 @@ class Model_dcn extends CI_Model
         $result =  $query->result();
       return $result;
     }
+
+      public function dcn_search($s_dno,$s_name)
+  {
+
+      $sql =  "SELECT dc.dcn_id,dc.dcn_no,dc.dcn_name,dc.model,cus.cus_name,dc.file_name,dc.path_file as dcn_path
+        ,dc.file_code as dcn_code,dc.enable,dc.f_id,f.folder_name,fg.foldergroup_name
+        from dcn as dc
+        LEFT JOIN customers as cus on cus.cus_id  = dc.cus_id
+        LEFT JOIN folder as f on f.f_id  = dc.f_id
+        LEFT JOIN folder_group as fg on fg.fg_id  = f.fg_id
+        where dc.delete_flag != 0 AND (dc.dcn_no LIKE '%$s_dno%' OR dc.dcn_name LIKE '%$s_name%') ";
+
+      $query = $this->db->query($sql);
+      $result =  $query->result();
+
+      return $result;
+  }
+
+
+    public function get_customers()
+  {
+    $sql =  "SELECT * from customers where delete_flag != 0";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+
+
 
     
 public function enableDcn($key){
@@ -70,15 +99,14 @@ public function get_folder_dcn()
       }
 
 
-    public function insert_dcn($dcn_no,$path,$file,$code,$f_id)
+    public function insert_dcn($dcn_no,$dcn_name,$model,$cus_id,$file,$c,$f_id)
     {
-      $path = quotemeta($path);
-      $num= $this->db->query("SELECT * FROM dcn where dcn_no = '$dcn_no'"); 
+      $num= $this->db->query("SELECT * FROM dcn where dcn_no = '$dcn_no' AND delete_flag != 0"); 
     $chk= $num->num_rows();
   
    if($chk < 1){
-      $sql  = "INSERT INTO dcn (dcn_no, date_created, delete_flag, enable, path_file, file_name, file_code,f_id) VALUES  
-      ('$dcn_no', CURRENT_TIMESTAMP, '1', '1','$path','$file','$code','$f_id')";
+      $sql  = "INSERT INTO dcn (dcn_no,dcn_name,model,cus_id, date_created, delete_flag, enable, file_name,f_id) VALUES  
+      ('$dcn_no','$dcn_name','$model','$cus_id', CURRENT_TIMESTAMP, '1', '1','$file','$f_id')";
     $query= $this->db->query($sql); 
     if($query){
         return true;
@@ -89,9 +117,9 @@ public function get_folder_dcn()
   
     }
 
-  public function save_dcn($dcn_id,$dcn_no,$file_name,$f_id)
+  public function save_dcn($dcn_id,$dcn_no,$dcn_name,$model,$cus_id,$file,$f_id)
   {
-     $sql ="UPDATE dcn SET dcn_no = '$dcn_no', file_name = '$file_name', date_updated = CURRENT_TIMESTAMP,f_id = '$f_id' WHERE dcn_id = '$dcn_id'";
+     $sql ="UPDATE dcn SET dcn_no = '$dcn_no', dcn_name = '$dcn_name',model = '$model', cus_id = '$cus_id', file_name = '$file', date_updated = CURRENT_TIMESTAMP,f_id = '$f_id' WHERE dcn_id = '$dcn_id'";
     $exc_user = $this->db->query($sql);
     if ($exc_user ){ 
       return true; 

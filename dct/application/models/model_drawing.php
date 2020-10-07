@@ -150,7 +150,7 @@ class Model_drawing extends CI_Model
 
     public function get_drawing_byid_etc($d_id)
   {
-    $sql =  "SELECT d.d_id,d.d_name,d.d_no,d.enable,d.file_name,dcn.dcn_no,d.cus_id,d.dcn_id,cus.cus_name,d.pos,d.rev,d.f_id,d.file_code,d.path_file 
+    $sql =  "SELECT d.d_id,d.d_name,d.model,d.d_no,d.enable,d.file_name,dcn.dcn_no,d.cus_id,d.dcn_id,cus.cus_name,d.pos,d.rev,d.f_id,d.file_code,d.path_file 
     from drawing as d
     LEFT join dcn as dcn on dcn.dcn_id = d.dcn_id
     LEFT join customers as cus on cus.cus_id = d.cus_id
@@ -245,11 +245,11 @@ INNER join version as v on v.rd_id = rev.rd_id
 
   }
 
- public function insert_drawing($d_no,$d_name, $dcn_id,$cus_id, $f_id, $file,$c,$pos)
+ public function insert_drawing($d_no, $d_name, $model, $dcn_id ,$cus_id, $f_id, $file, $c, $pos)
   {
      
-   $sql ="INSERT INTO drawing (d_no,d_name,enable, dcn_id,cus_id, date_created,delete_flag,f_id,file_name,file_code,rev,pos) VALUES 
-   ( '$d_no','$d_name','1', '$dcn_id','$cus_id', CURRENT_TIMESTAMP,  '1','$f_id','$file','$c','00','$pos');";
+   $sql ="INSERT INTO drawing (d_no,d_name,model,enable, dcn_id,cus_id, date_created,delete_flag,f_id,file_name,file_code,rev,pos) VALUES 
+   ( '$d_no','$d_name','$model','1', '$dcn_id','$cus_id', CURRENT_TIMESTAMP,  '1','$f_id','$file','$c','00','$pos');";
      $query = $this->db->query($sql);  
      $last_id = $this->db->insert_id();
    if($query){
@@ -380,10 +380,10 @@ public function del_img($id)
  }
  }
 
-  public function save_edit_drawing($d_id, $d_no, $d_name, $dcn_id, $cus_id, $file, $path_file,$c,$f_id,$pos)
+  public function save_edit_drawing($d_id, $d_no, $d_name, $model, $dcn_id, $cus_id, $file, $path_file,$c,$f_id,$pos)
     {
    $path_file = quotemeta($path_file);
-     $sql ="UPDATE drawing SET d_no = '$d_no' ,d_name = '$d_name', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id',cus_id = '$cus_id',
+     $sql ="UPDATE drawing SET d_no = '$d_no' ,d_name = '$d_name',model = '$model', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id',cus_id = '$cus_id',
      path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 1 ,f_id = '$f_id',pos = '$pos'
      WHERE d_id = '$d_id'";
        $query = $this->db->query($sql);  
@@ -412,7 +412,7 @@ if($query){
 
   public function add_revision($p,$d_id)
  {
-      $sql1 =  "SELECT d.d_no,d.d_name,d.pos,dc.dcn_no,cus.cus_name,d.file_name,d.f_id,d.rev from drawing  as d
+      $sql1 =  "SELECT d.d_no,d.d_name,d.model,d.pos,dc.dcn_no,cus.cus_name,d.file_name,d.f_id,d.rev from drawing  as d
       left join dcn as dc on dc.dcn_id = d.dcn_id
       left join customers as cus on cus.cus_id = d.cus_id
       where d.d_id = $d_id";
@@ -420,6 +420,7 @@ if($query){
       $data =  $query->result()[0];
       $d_no =  $data->d_no;
       $d_name =  $data->d_name;
+      $model =  $data->model;
       $pos =  $data->pos;
       $dcn_no =  $data->dcn_no;
       $cus_name =  $data->cus_name;
@@ -428,8 +429,8 @@ if($query){
       $rev =  $data->rev;
 
 
-  $sql ="INSERT INTO revision_drawing (p_no,d_no,d_name,pos, dcn_no, cus_name, enable, date_created, delete_flag, file_name,f_id,rev) 
-  VALUES ( '$p','$d_no', '$d_name','$pos', '$dcn_no','$cus_name', '0', CURRENT_TIMESTAMP, '1', '$file_name','$f_id','$rev');";
+  $sql ="INSERT INTO revision_drawing (p_no,d_no,d_name,model,pos, dcn_no, cus_name, enable, date_created, delete_flag, file_name,f_id,rev) 
+  VALUES ( '$p','$d_no', '$d_name','$model','$pos', '$dcn_no','$cus_name', '0', CURRENT_TIMESTAMP, '1', '$file_name','$f_id','$rev');";
   $query = $this->db->query($sql); 
   $last_id = $this->db->insert_id();
 if($query){
@@ -444,11 +445,11 @@ if($query){
 
 
 
- function update_version($d_id,$d_name,$cus_id, $d_no, $dcn_id, $rev, $file, $path_file,$f_id,$pos)
+ function update_version($d_id,$d_name,$model,$cus_id, $d_no, $dcn_id, $rev, $file, $path_file,$f_id,$pos)
  {
   $v = $rev+1;
 $path_file = quotemeta($path_file);
-  $sql ="UPDATE drawing SET d_no = '$d_no' ,d_name ='$d_name',cus_id = '$cus_id', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id', rev = '$v', path_file = '$path_file', file_name = '$file',enable = 1 ,f_id = '$f_id',pos = '$pos' WHERE d_id = '$d_id'";
+  $sql ="UPDATE drawing SET d_no = '$d_no' ,d_name ='$d_name',model = '$Model_drawing',cus_id = '$cus_id', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id', rev = '$v', path_file = '$path_file', file_name = '$file',enable = 1 ,f_id = '$f_id',pos = '$pos' WHERE d_id = '$d_id'";
     $query = $this->db->query($sql);  
    if($query){
      return true;
@@ -513,7 +514,7 @@ $path_file = quotemeta($path_file);
       }else{
         $folder =  implode(',',array_map('intval',$folder));
       }
-      $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,c.cus_id,c.cus_name,
+      $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,d.model,c.cus_id,c.cus_name,
        d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.rev, d.path_file, p.p_no,dc.file_name as dcn_file,
        dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code ,d.f_id,d.pos,f.folder_name,fg.foldergroup_name,f.name as type_name
       from drawing as d
@@ -533,7 +534,7 @@ $path_file = quotemeta($path_file);
 
   public function get_partdrawing()
   {
-    $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,c.cus_id,c.cus_name,
+    $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,d.model,c.cus_id,c.cus_name,
      d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.rev, d.path_file, p.p_no,dc.file_name as dcn_file,
      dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code, d.f_id,d.pos,f.folder_name,f.name as type_name,fg.foldergroup_name
           from drawing as d
@@ -553,7 +554,7 @@ $path_file = quotemeta($path_file);
 
     public function get_revision_drawing($d_id)
   {
-    $sql =  "SELECT rev.rd_id,rev.d_no,rev.d_name,rev.pos,rev.dcn_no,rev.cus_name,rev.enable,rev.f_id,v.v_id,rev.rev,rev.p_no,f.folder_name,fg.foldergroup_name,f.name as type_name
+    $sql =  "SELECT rev.rd_id,rev.d_no,rev.d_name,rev.model,rev.pos,rev.dcn_no,rev.cus_name,rev.enable,rev.f_id,v.v_id,rev.rev,rev.p_no,f.folder_name,fg.foldergroup_name,f.name as type_name
     FROM revision_drawing as rev
     left join version as v on v.rd_id = rev.rd_id
     INNER join folder as f on f.f_id = rev.f_id
@@ -566,7 +567,7 @@ $path_file = quotemeta($path_file);
 
       public function get_lastrev_drawing($d_id)
   {
-    $sql =  "SELECT d.d_id,d.d_no,d.d_name,d.pos,d.dcn_id,cus.cus_name,d.enable,d.f_id,p.p_no,f.folder_name,fg.foldergroup_name,dc.dcn_no,d.rev,f.name as type_name
+    $sql =  "SELECT d.d_id,d.d_no,d.d_name,d.model,d.pos,d.dcn_id,cus.cus_name,d.enable,d.f_id,p.p_no,f.folder_name,fg.foldergroup_name,dc.dcn_no,d.rev,f.name as type_name
     FROM drawing as d
     INNER join folder as f on f.f_id = d.f_id
     left join customers as cus on cus.cus_id = d.cus_id
@@ -612,11 +613,12 @@ $path_file = quotemeta($path_file);
   }
 
 
-  public function save_edit_rev($rd_id, $d_no, $d_name, $dcn_no, $cus_name, $file,$f_id,$pos,$rev)
+  public function save_edit_rev($rd_id, $d_no, $d_name,$model, $dcn_no, $cus_name, $file,$f_id,$pos,$rev)
   {
    $sql ="UPDATE revision_drawing SET 
    d_no = '$d_no',
    d_name = '$d_name',
+   model = '$model',
    dcn_no = '$dcn_no',
    cus_name = '$cus_name',
    date_updated = CURRENT_TIMESTAMP,

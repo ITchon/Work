@@ -19,7 +19,7 @@ class Model_user extends CI_Model
       {
      
      $password = base64_encode(trim($password));
-       $num= $this->db->query("SELECT * FROM sys_users where username = '$username'"); 
+       $num= $this->db->query("SELECT * FROM sys_users where username = '$username' AND delete_flag != 0"); 
        $chk= $num->result();
      
       if($chk==null){

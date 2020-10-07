@@ -9,7 +9,7 @@ class Model extends CI_Model
         FROM sys_users as u
         inner join sys_user_groups ug on u.sug_id = ug.sug_id
         
-        WHERE username='$user' and password='$pass' ";
+        WHERE username='$user' and password='$pass' AND u.delete_flag != 0 ";
       $query = $this->db->query($sql);  
     
     if($query->num_rows()!=0) {

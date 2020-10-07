@@ -17,6 +17,38 @@ class Model_part extends CI_Model
       }  
     }
 
+    public function get_type()
+    {
+      $sql =  "SELECT f.f_id,f.name from folder as f
+      where f.delete_flag != 0 AND f.fg_id = 1 ";
+         $query = $this->db->query($sql);
+        $result =  $query->result();
+      return $result;
+    }
+
+    public function get_part()
+    {
+      $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable,d.d_no,d.f_id from part as p
+      left join part_drawing as pd on pd.p_id = p.p_id
+      left join drawing as d on d.d_id = pd.d_id
+      where p.delete_flag != 0 AND pd.delete_flag != 0 ";
+         $query = $this->db->query($sql);
+        $result =  $query->result();
+      return $result;
+    }
+    
+    public function part_search($s_pno,$s_pname)
+    {
+        $sql =  "SELECT p.p_id,p.p_no,p.p_name,p.enable,d.d_no,d.f_id from part as p
+        left join part_drawing as pd on pd.p_id = p.p_id
+        left join drawing as d on d.d_id = pd.d_id
+        where p.delete_flag != 0  AND pd.delete_flag != 0 AND (p.p_no LIKE '%$s_pno%' OR p.p_name LIKE '%$s_pname%') ";
+        $query = $this->db->query($sql);
+        $result =  $query->result();
+  
+        return $result;
+    }
+
     public function get_nopart($d_id)
     {
         $d_id =  implode(',',$d_id);
@@ -94,30 +126,49 @@ class Model_part extends CI_Model
       $exc_user = $this->db->query($sql1);
       if ($exc_user ){ return true; }else{ return false; }
     }
-    public function enablePart($key=''){
+    // public function enablePart($key=''){
 
-        $sqlEdt = "UPDATE part SET enable='1', date_updated=CURRENT_TIMESTAMP WHERE p_id={$key};";
-        $exc_user = $this->db->query($sqlEdt);
+    //     $sqlEdt = "UPDATE part SET enable='1', date_updated=CURRENT_TIMESTAMP WHERE p_id={$key};";
+    //     $exc_user = $this->db->query($sqlEdt);
         
-        if ($exc_user){
+    //     if ($exc_user){
           
-          return TRUE;  
+    //       return TRUE;  
           
-        }else{  return FALSE; }
+    //     }else{  return FALSE; }
         
-    }
-    public function disablePart($key=''){
+    // }
+    // public function disablePart($key=''){
 
-        $sqlEdt = "UPDATE part SET enable='0', date_updated=CURRENT_TIMESTAMP WHERE p_id={$key};";
-        $exc_user = $this->db->query($sqlEdt);
+    //     $sqlEdt = "UPDATE part SET enable='0', date_updated=CURRENT_TIMESTAMP WHERE p_id={$key};";
+    //     $exc_user = $this->db->query($sqlEdt);
         
-        if ($exc_user){
+    //     if ($exc_user){
           
-          return TRUE;  
+    //       return TRUE;  
           
-        }else{  return FALSE; }
+    //     }else{  return FALSE; }
         
-    }
+    // }
+
+    public function enablePart($key){
+  $query = $this->db->query("SELECT * from part WHERE p_id = $key "); 
+  $result = $query->result()[0];
+  if( $result->enable==0){
+    $sqlEdt = "UPDATE part SET enable='1', date_updated=CURRENT_TIMESTAMP WHERE p_id={$key};";
+    $exc_user = $this->db->query($sqlEdt);
+  }
+  else{
+    $sqlEdt = "UPDATE part SET enable='0', date_updated=CURRENT_TIMESTAMP WHERE p_id={$key};";
+    $exc_user = $this->db->query($sqlEdt);
+  }
+  if ($exc_user){
+    
+    return TRUE;  
+    
+  }else{  return FALSE; }
+  
+}
     public function delete_part($id) {
         $sql ="UPDATE part SET delete_flag = '0' , date_deleted=CURRENT_TIMESTAMP WHERE p_id = '$id'";
         $query = $this->db->query($sql);
