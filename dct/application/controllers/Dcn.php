@@ -51,7 +51,7 @@ class Dcn extends CI_Controller {
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
 
-        $sql = "SELECT * FROM folder where fg_id = 2";
+        $sql = "SELECT * FROM folder where fg_id = 2 AND delete_flag != 0";
         $query = $this->db->query($sql);
         $data['result_folder'] = $query->result(); 
 
