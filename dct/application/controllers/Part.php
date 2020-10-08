@@ -44,9 +44,25 @@ class Part extends CI_Controller {
         }
 
         if($this->input->get('s_pno') != null || $this->input->get('s_pname') != null){
-            $data['result']= $this->model_part->part_search($s_pno,$s_pname);
+            $res = $this->model_part->part_search($s_pno,$s_pname);
+            if($res != null){
+                $data['result'] = $res;
+            }else{
+                $data['result_p'] = $this->model_part->part_search_common($s_pno,$s_pname);
+            }
+
         }else{
-            $data['result']= $this->model_part->get_part();
+            $res= $this->model_part->get_part();
+            foreach($res as $r){
+                $num[] = $r->p_id;
+              }
+              if($res){
+                $data['result_p']= $this->model_part->get_part_outdrawing($num);
+                $data['result'] = $this->model_part->get_part();
+              }else{
+                $data['result'] = $this->model_part->get_part();
+              }
+            
         }
         $data['type']= $this->model_part->get_type();
 

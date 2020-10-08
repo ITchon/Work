@@ -245,11 +245,11 @@ INNER join version as v on v.rd_id = rev.rd_id
 
   }
 
- public function insert_drawing($d_no, $d_name, $model, $dcn_id ,$cus_id, $f_id, $file, $c, $pos)
+ public function insert_drawing($d_no, $d_name, $model, $remark , $dcn_id ,$cus_id, $f_id, $file, $c, $pos)
   {
      
-   $sql ="INSERT INTO drawing (d_no,d_name,model,enable, dcn_id,cus_id, date_created,delete_flag,f_id,file_name,file_code,rev,pos) VALUES 
-   ( '$d_no','$d_name','$model','1', '$dcn_id','$cus_id', CURRENT_TIMESTAMP,  '1','$f_id','$file','$c','00','$pos');";
+   $sql ="INSERT INTO drawing (d_no,d_name,model,remark,enable, dcn_id,cus_id, date_created,delete_flag,f_id,file_name,file_code,rev,pos) VALUES 
+   ( '$d_no','$d_name','$model','$remark','1', '$dcn_id','$cus_id', CURRENT_TIMESTAMP,  '1','$f_id','$file','$c','00','$pos');";
      $query = $this->db->query($sql);  
      $last_id = $this->db->insert_id();
    if($query){
@@ -380,10 +380,10 @@ public function del_img($id)
  }
  }
 
-  public function save_edit_drawing($d_id, $d_no, $d_name, $model, $dcn_id, $cus_id, $file, $path_file,$c,$f_id,$pos)
+  public function save_edit_drawing($d_id, $d_no, $d_name, $model, $remark, $dcn_id, $cus_id, $file, $path_file,$c,$f_id,$pos)
     {
    $path_file = quotemeta($path_file);
-     $sql ="UPDATE drawing SET d_no = '$d_no' ,d_name = '$d_name',model = '$model', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id',cus_id = '$cus_id',
+     $sql ="UPDATE drawing SET d_no = '$d_no' ,d_name = '$d_name',model = '$model',remark = '$remark', date_updated=CURRENT_TIMESTAMP, dcn_id = '$dcn_id',cus_id = '$cus_id',
      path_file = '$path_file', file_name = '$file', file_code = '$c',enable = 1 ,f_id = '$f_id',pos = '$pos'
      WHERE d_id = '$d_id'";
        $query = $this->db->query($sql);  
@@ -514,7 +514,7 @@ $path_file = quotemeta($path_file);
       }else{
         $folder =  implode(',',array_map('intval',$folder));
       }
-      $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,d.model,c.cus_id,c.cus_name,
+      $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,d.model,d.remark,c.cus_id,c.cus_name,
        d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.rev, d.path_file, p.p_no,dc.file_name as dcn_file,
        dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code ,d.f_id,d.pos,f.folder_name,fg.foldergroup_name,f.name as type_name
       from drawing as d
@@ -534,7 +534,7 @@ $path_file = quotemeta($path_file);
 
   public function get_partdrawing()
   {
-    $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,d.model,c.cus_id,c.cus_name,
+    $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,d.model,d.remark,c.cus_id,c.cus_name,
      d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.rev, d.path_file, p.p_no,dc.file_name as dcn_file,
      dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code, d.f_id,d.pos,f.folder_name,f.name as type_name,fg.foldergroup_name
           from drawing as d

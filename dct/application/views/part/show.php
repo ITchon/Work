@@ -72,6 +72,48 @@
                     </thead>
                     <tbody>
                     <?php
+                    
+                    if(isset($result_p)){
+                    foreach($result_p as $r){
+                echo "<tr>";
+                echo "<td >
+                <label>
+                  <input type='checkbox' class='ace' name='chk_uid[]' value='$r->p_id'/>
+                  <span class='lbl'></span>
+                </label>
+                </td>";
+                echo "<td>".$r->p_no."</td>";
+                echo "<td>".$r->p_name."</td>";
+                echo "<td>"." "."</td>";
+                echo "<td>"." "."</td>";
+                echo "<td>"." "."</td>";
+                echo "<td>"." "."</td>";
+                
+                echo "<td class='text-center'>";
+                if($this->session->flashdata("edit")!== null )
+                 echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' data-original-title='Rule' href='".base_url()."part/edit_part/".$r->p_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>"; 
+                
+                 if($this->session->flashdata("delete") !==null)
+                  echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."part/deletepart/".$r->p_id ."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a>";  
+                echo "</div></td>";
+                echo "<td class='text-center'>";
+                if($r->enable==1 ){  
+                          $icon = "btn-success no-border fa fa-check";
+                          $text = "ENABLE";
+                          $color = "color:#43a047";
+                          }
+                      else{ 
+                        $icon = "btn-danger no-border fa fa-close";
+                        $text = "DISABLE";
+                        $color = "color:#D50000";
+                      }
+                      if($this->session->flashdata("enable")!== null ){ echo "<a  href='".base_url()."part/enable/".$r->p_id ."'><i class='$icon'> $text</i></a></td>";}
+                      else{ echo "<span style='$color'>$text </span></td>"; }
+
+            echo "</tr>";
+                    }
+                  }
+                  if(isset($result)){
                     foreach($result as $r){
                       
                 echo "<tr>";
@@ -115,6 +157,7 @@
 
             echo "</tr>";
         }
+      }
     ?>
                   
                     </tbody>

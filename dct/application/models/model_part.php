@@ -26,15 +26,36 @@ class Model_part extends CI_Model
       return $result;
     }
 
+    public function get_part_outdrawing($p_id)
+    {
+      $p_id =  implode(',',$p_id);
+      $sql =  "SELECT * from part as p
+      where p.delete_flag != 0 AND p_id NOT IN($p_id)";
+         $query = $this->db->query($sql);
+        $result =  $query->result();
+      return $result;
+    }
+    
+
     public function get_part()
     {
       $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable,d.d_no,d.f_id from part as p
       left join part_drawing as pd on pd.p_id = p.p_id
       inner join drawing as d on d.d_id = pd.d_id
-      where p.delete_flag != 0 AND pd.delete_flag != 0 ";
+      where (p.delete_flag != 0 AND pd.delete_flag != 0 AND d.delete_flag != 0) ";
          $query = $this->db->query($sql);
         $result =  $query->result();
       return $result;
+    }
+
+    public function part_search_common($s_pno,$s_pname)
+    {
+        $sql =  "SELECT * from part as p
+        where p.delete_flag != 0 AND (p.p_no LIKE '%$s_pno%' OR p.p_name LIKE '%$s_pname%') ";
+        $query = $this->db->query($sql);
+        $result =  $query->result();
+  
+        return $result;
     }
     
     public function part_search($s_pno,$s_pname)

@@ -542,6 +542,7 @@ public function show()
         $d_no =  $this->input->post('d_no');
         $d_name =  $this->input->post('d_name');
         $model =  $this->input->post('model');
+        $remark =  $this->input->post('remark');
         $pos =  $this->input->post('pos');
         $dcn_id =  $this->input->post('dcn_id');
         $cus_id =  $this->input->post('cus_id');
@@ -575,7 +576,7 @@ public function show()
         $code = array('filename'  => $uploaded['file_name']);
         foreach ($code as $c) {
           $c = base64_encode(trim($c));
-          $last_id = $this->model_drawing->insert_drawing($d_no, $d_name, $model, $dcn_id, $cus_id, $f_id, $file, $c, $pos);
+          $last_id = $this->model_drawing->insert_drawing($d_no, $d_name, $model,$remark, $dcn_id, $cus_id, $f_id, $file, $c, $pos);
           $d_id = $last_id;
       }
       
@@ -615,7 +616,7 @@ public function show()
     $code = array('filename'  => $uploaded['file_name']);
     foreach ($code as $c) {
       $c = base64_encode(trim($c));
-        $d_id = $this->model_drawing->insert_drawing($d_no, $d_name, $model, $dcn_id, $cus_id, $f_id, $file, $c, $pos);
+        $d_id = $this->model_drawing->insert_drawing($d_no, $d_name, $model, $remark, $dcn_id, $cus_id, $f_id, $file, $c, $pos);
     }  
       $this->session->set_flashdata('success','<div class="alert alert-success hide-it">
         <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
@@ -719,6 +720,7 @@ public function show()
         $p_name =  $this->input->post('p_name');
         $d_name =  $this->input->post('d_name');
         $model =  $this->input->post('model');
+        $remark =  $this->input->post('remark');
         $dcn_id =  $this->input->post('dcn_id');
         $cus_id =  $this->input->post('cus_id');
         $path_file =  $this->input->post('path');
@@ -794,7 +796,7 @@ public function show()
     $code = array('filename'  => $uploaded['file_name']);
     foreach ($code as $c) {
       $c = base64_encode(trim($c));
-        $this->model_drawing->save_edit_drawing($d_id, $d_no, $d_name, $model, $dcn_id, $cus_id, $file, $path_file,$c,$f_id,$pos);
+        $this->model_drawing->save_edit_drawing($d_id, $d_no, $d_name, $model, $remark, $dcn_id, $cus_id, $file, $path_file,$c,$f_id,$pos);
     }
   }
         }else{
@@ -844,7 +846,7 @@ public function show()
         }
         $file_code = base64_decode(trim($file_code));
         $file_code = base64_encode(trim($file_code));
-        $this->model_drawing->save_edit_drawing($d_id, $d_no, $d_name, $model, $dcn_id, $cus_id, $file_name, $path_file,$file_code,$f_id,$pos);
+        $this->model_drawing->save_edit_drawing($d_id, $d_no, $d_name, $model, $remark, $dcn_id, $cus_id, $file_name, $path_file,$file_code,$f_id,$pos);
           }
         }
         if( strpos( $search, 'd_id' ) !== false ){

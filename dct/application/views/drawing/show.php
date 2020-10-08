@@ -86,9 +86,9 @@
                   <thead>
                   <tr>
 								    	<td colspan="12">
-                        <div id="btn_enable" class="btn  btn-success"><span class="fa fa-check"></span></div>
-									    	<div id="btn_disable" class="btn  btn-danger"><span class="fa fa-times"></span></div>
-									    	<div id="btn_delete" class="btn btn-default"><span class="fa fa-trash-o"></span></div>
+                      <?php if($this->session->flashdata("chkall")!== null ) echo "<div id='btn_enable' class='btn  btn-success'><span class='fa fa-check'></span></div>
+                        <div id='btn_disable' class='btn  btn-danger'><span class='fa fa-times'></span></div>
+                        <div id='btn_delete' class='btn btn-default'><span class='fa fa-trash-o'></span></div>"; ?>
                         <a class="btn btn-outline-primary" href='<?= base_url() ?>drawing/exportCSV'>Csv</a>
 								    	</td>
 								    </tr>	
@@ -103,6 +103,8 @@
                         <th>Part No</th>
                         <th>Drawing Name</th>
                         <th>Drawing No</th>
+                        <th>MODEL</th>
+                        <th>REMARK</th>
                         <th>POS</th>
                         <th>Customer</th>
                         <th>DCN</th>
@@ -128,6 +130,8 @@
                     <td><?php echo "<b>".$r->p_no."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_no."</b>" ?></td>
+                    <td><?php echo "<b>".$r->model."</b>" ?></td>
+                    <td><?php echo "<b>".$r->remark."</b>" ?></td>
                     <td><?php echo "<b>".$r->pos."</b>" ?></td>
                     <td><?php echo "<b>".$r->cus_name."</b>" ?></td>
                     <?php  if($this->session->flashdata("link")!== null ){ 
