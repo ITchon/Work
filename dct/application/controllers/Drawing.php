@@ -286,6 +286,7 @@ public function show()
         $p_id =  $this->input->post('p_id');
         $d_name =  $this->input->post('d_name');
         $model =  $this->input->post('model');
+        $remark =  $this->input->post('remark');
         $d_no =  $this->input->post('d_no');
         $dcn_id =  $this->input->post('dcn_id');
         $cus_id =  $this->input->post('cus_id');
@@ -362,7 +363,7 @@ public function show()
     $last_id = $this->model_drawing->add_revision($p,$d_id);
     $this->model_drawing->add_version($d_id,$last_id);
     }
-    $this->model_drawing->update_version($d_id,$d_name,$model,$cus_id, $d_no, $dcn_id, $rev, $file, $path_file,$f_id,$pos);
+    $this->model_drawing->update_version($d_id,$d_name,$model,$remark,$cus_id, $d_no, $dcn_id, $rev, $file, $path_file,$f_id,$pos);
           }
         }else{
           if ($this->input->post('file_name2') == null)
@@ -406,7 +407,7 @@ public function show()
         $last_id = $this->model_drawing->add_revision($p,$d_id);
         $this->model_drawing->add_version($d_id,$last_id);
         }
-        $this->model_drawing->update_version($d_id,$d_name,$model,$cus_id, $d_no, $dcn_id, $rev, $file, $path_file,$f_id,$pos);
+        $this->model_drawing->update_version($d_id,$d_name,$model,$remark,$cus_id, $d_no, $dcn_id, $rev, $file, $path_file,$f_id,$pos);
         
         redirect('drawing/show?'.$search.'','refresh');
 
@@ -865,7 +866,7 @@ public function show()
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         
         $rd_id = $this->uri->segment('3');
-        $sql =  "SELECT rev.rd_id,v.d_id,v.v_id,rev.d_no,rev.d_name,rev.model,rev.f_id,rev.pos,rev.file_name,rev.rev,rev.dcn_no,rev.cus_name
+        $sql =  "SELECT rev.rd_id,v.d_id,v.v_id,rev.d_no,rev.d_name,rev.model,rev.remark,rev.f_id,rev.pos,rev.file_name,rev.rev,rev.dcn_no,rev.cus_name
         from revision_drawing as rev
         inner join version as v on v.rd_id = rev.rd_id
         where rev.rd_id = $rd_id";
@@ -926,6 +927,7 @@ public function show()
         $d_id =  $this->input->post('d_id');
         $d_name =  $this->input->post('d_name');
         $model =  $this->input->post('model');
+        $remark =  $this->input->post('remark');
         $dcn_no =  $this->input->post('dcn_no');
         $cus_name =  $this->input->post('cus_name');
         $path_file =  $this->input->post('path');
@@ -965,7 +967,7 @@ public function show()
           }else{
           foreach ($rd_id as $rd) {
               $rd_id = $rd->rd_id;
-              $this->model_drawing->save_edit_rev($rd_id, $d_no, $d_name, $model, $dcn_no, $cus_name, $file,$f_id,$pos,$rev);
+              $this->model_drawing->save_edit_rev($rd_id, $d_no, $d_name, $model,$remark, $dcn_no, $cus_name, $file,$f_id,$pos,$rev);
             }
             if($p_id != null){
               foreach($p_id as $p){
@@ -1021,7 +1023,7 @@ public function show()
             copy('./uploads/'.'Drawing/'.$folderold_name.'/'.$file, './uploads/'.'Drawing/'.$foldername.'/'.$file);
             foreach ($rd_id as $rd) {
               $rd_id = $rd->rd_id;
-              $this->model_drawing->save_edit_rev($rd_id, $d_no, $d_name,$model, $dcn_no, $cus_name, $file,$f_id,$pos,$rev);
+              $this->model_drawing->save_edit_rev($rd_id, $d_no, $d_name,$model,$remark, $dcn_no, $cus_name, $file,$f_id,$pos,$rev);
             }
             if($p_id != null){
               foreach($p_id as $p){

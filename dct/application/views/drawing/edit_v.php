@@ -49,6 +49,16 @@
                     </div>
                 </div>
 
+                <div class="form-group has-feedback">
+                    <label for="p_name" class="col-sm-3 col-md-4 control-label">REMARK</label>
+                    <div class="col-sm-6 col-md-4">
+                    <input class="form-control" type="text" name="remark" value="<?php echo $result->remark ?>">
+                    <span class="form-control-feedback" aria-hidden="true">
+                    <span class="icon"></span>
+                    </span>
+                    </div>
+                </div>
+
 
                 <div class="form-group has-feedback">
                     <label for="p_name" class="col-sm-3 col-md-4 control-label">POS NUMBER</label>
