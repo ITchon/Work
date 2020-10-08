@@ -12,17 +12,14 @@
             </h2><hr>
             <form class="table form form-horizontal container" action="<?php echo base_url()?>standard/save_edit" method="post" data-toggle="validator" enctype="multipart/form-data">
             
-                      <input type="hidden" name="cusf_id" value="<?php echo $result[0]->cusf_id?>" >
-                      <input type="hidden" id="chkf" name="fold" value="<?php echo $result[0]->f_id?>" >
+                      <input type="hidden" name="std_id" value="<?php echo $result->std_id?>" >
+                      <input type="hidden" id="chkf" name="fold" value="<?php echo $result->f_id?>" >
                       <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">SELECT STANDARD </label>      
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">SELECT CUSTOMER </label>      
           
                       <div class="col-sm-6 col-md-4">
                    <select name="cus_id" id="cus_id" class="form-control select2"  data-placeholder=""  required>
-                    <option></option>
-                    <optgroup style="" data-head='head'>
-                     
-              
+    
                    <?php
                       foreach($result_cus as $cus){?>
              
@@ -35,38 +32,78 @@
                    </select>
                     </div>
                     </div> 
-        
-                  <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">SELECT FOLDER</label>      
+
+                    <div class="form-group">
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">STANDARD NUMBER</label>      
           
                       <div class="col-sm-6 col-md-4">
-                   <select name="f_id" id="child" class="form-control select2" required>
+                   <input type="text" class="form-control" name="std_no" value="<?php echo $result->std_no ?>">
+                    </div>
+                    </div> 
+        
+                    <div class="form-group">
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">STANDARD NAME</label>      
           
-                   </optgroup>
-                   </select>
+                      <div class="col-sm-6 col-md-4">
+                   <input type="text" class="form-control" name="std_name" value="<?php echo $result->std_name ?>">
                     </div>
                     </div> 
 
-                      <div class="form-group has-feedback">
-                          <label for="part" class="col-sm-5 col-md-4 control-label">STANDARD DESCRIPTION</label>
-                          <div class="col-sm-6 col-md-4">
-                            <textarea class="form-control" name="cus_des" rows="5" cols="50"><?php echo $result[0]->cusf_des ?></textarea>
-                          </span>
-                          </div>
-                      </div>
+                    <div class="form-group has-feedback">
+                    <label for="dcn" class="col-sm-5 col-md-4 control-label">DCN NUMBER</label>    
+
+                <div class="col-sm-5 col-md-4">
+                   <select name="dcn_id" class="form-control select2" id="dcn">
+                   <option value="" >- - - None - - - </option>
+                   <?php
+                   
+                      foreach($result_dcn as $dcn){?>
+                     <option value="<?php  echo $dcn->dcn_id ?>"><?php echo $dcn->dcn_no ?></option>
+                    <?php
+                      }
+                      ?> 
+                   </select>
+                    </div>
+                </div>
+ 
+                    
+                    <div class="form-group has-feedback">
+                    <label for="dcn" class="col-sm-5 col-md-4 control-label">FOLDER</label>    
+
+                <div class="col-sm-5 col-md-4">
+                   <select name="f_id" class="form-control select2" id="f_id" required>
+                   <option value="" >- - - None - - - </option>
+                   <?php
+                   
+                      foreach($result_fol as $fol){?>
+                     <option value="<?php  echo $fol->f_id ?>"><?php echo $fol->name ?></option>
+                    <?php
+                      }
+                      ?> 
+                   </select>
+                    </div>
+                </div>
+
+                    <div class="form-group">
+                      <label for="email-2" class="col-sm-3 col-md-4 control-label">CUSTOMER REV</label>      
+          
+                      <div class="col-sm-6 col-md-4">
+                   <input type="text" class="form-control" name="cus_rev" value="<?php echo $result->cus_rev ?>">
+                    </div>
+                    </div> 
 
                 <div class="form-group has-feedback">
-                    <label for="part" class="col-sm-5 col-md-4 control-label">STANDARD FILE</label>
+                    <label for="part" class="col-sm-5 col-md-4 control-label">FILE</label>
                     <div class="col-sm-6 col-md-4">
-                      <input type="text" readonly class="form-control" name="file_name2" value="<?php echo $result[0]->file_name ?>">
+                      <input type="text" readonly class="form-control" name="file_name2" value="<?php echo $result->file_name ?>">
                     </span>
                     </div>
                 </div>
 
                 <div class="form-group has-feedback">
-                    <label for="part" class="col-sm-5 col-md-4 control-label">NEW FILE</label>
+                    <label for="part" class="col-sm-5 col-md-4 control-label">CHANGE FILE</label>
                     <div class="col-sm-6 col-md-4">
-                      <input type="file" id="file_name" class="form-control" name="file_name" value="<?php echo $result[0]->file_name ?>">
+                      <input type="file" id="file_name" class="form-control" name="file_name" value="<?php echo $result->file_name ?>">
                     </span>
                     </div>
                 </div>
@@ -84,8 +121,9 @@
       </div>
       <script>
         $(document).ready(function() {
-            document.getElementById('cus_id').value = "<?php echo $result[0]->cus_id ?>";
-                document.getElementById('f_id').value = "<?php echo $result[0]->f_id ?>";
+            document.getElementById('cus_id').value = "<?php echo $result->cus_id ?>";
+            document.getElementById('f_id').value = "<?php echo $result->f_id ?>";
+            document.getElementById('dcn').value = "<?php echo $result->dcn_id ?>";
 
 });
       </script>
@@ -98,7 +136,7 @@
           var r = data.text.split('|');
           var $result = $(
             '<div class="row">' +
-                '<div class="col-md-6">' + r[0] + '</div>' +
+                '<div class="col-md-6">' + r + '</div>' +
             '</div>'
         );
         return $result;

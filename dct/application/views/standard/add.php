@@ -17,10 +17,7 @@
           
                       <div class="col-sm-6 col-md-4">
                    <select name="cus_id" id="cus_id" class="form-control select2"  data-placeholder=""  required>
-                    <option></option>
-                    <optgroup style="" data-head='head'>
-                     
-              
+
                    <?php
                       foreach($result_cus as $cus){?>
              
@@ -50,17 +47,40 @@
                     </div>
                     </div> 
 
+                    <div class="form-group has-feedback">
+                    <label for="dcn" class="col-sm-5 col-md-4 control-label">DCN NUMBER</label>    
 
-                  <div class="form-group">
-                      <label for="email-2" class="col-sm-3 col-md-4 control-label">SELECT FOLDER</label>      
-          
-                      <div class="col-sm-6 col-md-4">
-                   <select name="f_id" id="child" class="form-control select2" required>
-          
-                   </optgroup>
+                <div class="col-sm-5 col-md-4">
+                   <select name="dcn_id" class="form-control select2" id="dcn_id">
+                   <option value="" >- - - None - - - </option>
+                   <?php
+                   
+                      foreach($result_dcn as $dcn){?>
+                     <option value="<?php  echo $dcn->dcn_id ?>"><?php echo $dcn->dcn_no ?></option>
+                    <?php
+                      }
+                      ?> 
                    </select>
                     </div>
-                    </div> 
+                </div>
+ 
+                    
+                    <div class="form-group has-feedback">
+                    <label for="dcn" class="col-sm-5 col-md-4 control-label">FOLDER</label>    
+
+                <div class="col-sm-5 col-md-4">
+                   <select name="f_id" class="form-control select2" id="f_id" required>
+                   <option value="" >- - - None - - - </option>
+                   <?php
+                   
+                      foreach($result_fol as $fol){?>
+                     <option value="<?php  echo $fol->f_id ?>"><?php echo $fol->name ?></option>
+                    <?php
+                      }
+                      ?> 
+                   </select>
+                    </div>
+                </div>
 
                     <div class="form-group">
                       <label for="email-2" class="col-sm-3 col-md-4 control-label">CUSTOMER REV</label>      

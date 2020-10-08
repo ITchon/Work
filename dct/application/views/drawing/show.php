@@ -142,7 +142,7 @@
                        }  
                     if($this->session->flashdata("show_version")!== null){ echo "<td><a  href='".base_url()."drawing/show_v?d_id=".$r->d_id."'  >$r->rev</a></td>";
                      }else{
-                       echo "<td class='text-center'>$r->version</td>";
+                       echo "<td class='text-center'>$r->rev</td>";
                      }    
                        echo "<td><div class='text-center'>";
                   if (file_exists("uploads/$r->foldergroup_name/$r->folder_name/$r->file_name"))echo " <a href='javascript:void(0)'  data-id='".$r->d_id."' class='view_img '><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";

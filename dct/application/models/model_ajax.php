@@ -3,12 +3,24 @@
 class Model_ajax extends CI_Model
 {
 
-    public function customersfile_by($id)
+    public function standardfile_by($id)
     {
-            $sql ="SELECT cusf.file_name ,f.folder_name,fg.foldergroup_name FROM customers_file as cusf
-            left join folder as f on f.f_id = cusf.f_id
+            $sql ="SELECT std.file_name ,f.folder_name,fg.foldergroup_name FROM standard as std
+            left join folder as f on f.f_id = std.f_id
             left join folder_group as fg on fg.fg_id = f.fg_id
-            WHERE cusf.cusf_id='$id' AND f.delete_flag != 0 ";
+            WHERE std.std_id='$id' AND f.delete_flag != 0 ";
+              $query = $this->db->query($sql);  
+             $data = $query->result(); 
+             return $data;
+    
+    }
+
+    public function standardfile_by_v($id)
+    {
+            $sql ="SELECT rs.file_name ,f.folder_name,fg.foldergroup_name FROM revision_standard as rs
+            left join folder as f on f.f_id = rs.f_id
+            left join folder_group as fg on fg.fg_id = f.fg_id
+            WHERE rs.rs_id='$id' AND f.delete_flag != 0 ";
               $query = $this->db->query($sql);  
              $data = $query->result(); 
              return $data;

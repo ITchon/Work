@@ -37,11 +37,39 @@ class Manage extends CI_Controller {
         $bom = $query->result();
         $data['cus'] = $bom[0]->cus_id;
 
-        $sql4 = "SELECT COUNT(dcn_id) as dcn_id FROM dcn where delete_flag != 0";
+        $sql4 = "SELECT COUNT(dcn_id) as dcn_id FROM dcn where delete_flag != 0 AND file_name RLIKE('DCN')";
         $query = $this->db->query($sql4);
         $bom = $query->result();
-        $data['dcn'] = $bom[0]->dcn_id;
+        $data['dcnall'] = $bom[0]->dcn_id;
 
+        $sql = "SELECT file_name FROM dcn WHERE delete_flag != 0 AND file_name RLIKE('DCN') ORDER BY file_name DESC";
+        $query = $this->db->query($sql);
+        $dcn = $query->result();
+        $arr = [];
+        foreach($dcn as $dc){
+            $name = substr($dc->file_name,0,5);
+            array_push($arr,$name);
+        }
+        $dcnyear = array_unique($arr); // Array is now (1, 2, 3)
+        $filename =  implode(',',$dcnyear);
+        $dcnyear = str_replace(' ', '', $dcnyear);
+        $dcnfile = [];
+        foreach($dcnyear as $d){
+            $sql = "SELECT COUNT(dcn_id) as dcn_id FROM dcn WHERE delete_flag != 0 AND file_name RLIKE('$d')";
+            $query = $this->db->query($sql);
+            $dcn = $query->result();
+            array_push($dcnfile,$dcn);
+            
+        }
+        $dcn =[];
+        foreach($dcnfile as $d){
+            foreach($d as $c){
+                array_push($dcn,$c->dcn_id);
+            }
+        }
+        $data['dcnyear'] = array_combine($dcnyear, $dcn);
+
+        
   //       $sql4 = "SELECT cus.cus_name,fg.foldergroup_name FROM folder_group as fg
 		// inner join customers as cus on cus.fg_id = fg.fg_id
   //       where fg.delete_flag != 0";

@@ -1,3 +1,9 @@
+<style>
+ h1{
+   padding-left : 20px;
+   padding-top : 10px;
+ }
+</style>
 <div class="layout-content">
         <div class="layout-content-body">
           <div class="title-bar">
@@ -21,7 +27,7 @@
               <h1>Drawing</h1>
                 <div class="card-body">
                   
-                <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg-3">
               <div class="card">
                 <div class="card-body">
                   <div class="media">
@@ -44,7 +50,7 @@
               </div>
             </div>
             
-            <div class="col-md-6 col-lg-3">
+            <!-- <div class="col-md-6 col-lg-3">
               <div class="card">
                 <div class="card-body">
                   <div class="media">
@@ -62,7 +68,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
             
 <?php 
 foreach($folder_d as $f){
@@ -106,7 +112,7 @@ $num = $fileall;
               <h1>DCN</h1>
                 <div class="card-body">
                   
-                <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg-3">
               <div class="card">
                 <div class="card-body">
                   <div class="media">
@@ -120,7 +126,7 @@ $num = $fileall;
                       <h3 class="media-heading">
                         <span class="fw-l">
                           <?php
-                      echo $dcn;
+                      echo $dcnall;
                      ?></span>
                       </h3>
                     </div>
@@ -128,8 +134,43 @@ $num = $fileall;
                 </div>
               </div>
             </div>
+            
+            <?php
+             foreach($dcnyear as $year => $num){ ?>
 
+            
             <div class="col-md-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-middle media-left">
+                      <span class="bg-primary circle sq-48">
+                        <span class="fa fa-wpforms"></span>
+                      </span>
+                    </div>
+                    <div class="media-middle media-body">
+                      <h6 class="media-heading"><?php
+                      
+                        echo $year;
+                      
+                     ?></h6>
+                      <h3 class="media-heading">
+                        <span class="fw-l">
+                        <?php 
+                          
+                            echo $num;
+                          
+                         ?>
+                          </span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <?php }
+         ?>
+            <!-- <div class="col-md-6 col-lg-3">
               <div class="card">
                 <div class="card-body">
                   <div class="media">
@@ -147,29 +188,13 @@ $num = $fileall;
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
-            <div class="col-md-6 col-lg-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="media">
-                    <div class="media-middle media-left">
-                      <span class="bg-primary circle sq-48">
-                        <span class="fa fa-wpforms"></span>
-                      </span>
-                    </div>
-                    <div class="media-middle media-body">
-                      <h6 class="media-heading">DCN File</h6>
-                      <h3 class="media-heading">
-                        <span class="fw-l"><?php echo $num_dcn; ?></span>
-                      </h3>
-                    </div>
-                  </div>
+
+
+
                 </div>
               </div>
-            </div>
-
-                </div>
               </div>
 
 
@@ -205,6 +230,7 @@ $num = $fileall;
 
                 </div>
               </div>
+              </div>
 
 
 
@@ -231,6 +257,7 @@ $num = $fileall;
                   </div>
                 </div>
               </div>
+            </div>
             </div>
 
 
@@ -263,6 +290,7 @@ $num = $fileall;
             </div>
 
                 </div>
+              </div>
               </div>
 
 

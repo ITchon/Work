@@ -38,8 +38,8 @@
                         <th>Standard No</th>
                         <th>Standard Name</th>
                         <th>DCN No</th>
-                        <th>Rev</th>
                         <th>Cust Rev</th>
+                        <th>Rev</th>
                         <th>Manage</th>
                        
                       </tr>
@@ -58,16 +58,20 @@
                 echo "<td>".$r->std_no."</td>";
                 echo "<td>".$r->std_name."</td>";
                 echo "<td>".$r->dcn_no."</td>";
-                echo "<td>".$r->rev."</td>";
                 echo "<td>".$r->cus_rev."</td>";
+                if($this->session->flashdata("show_version")!== null){ echo "<td><a  href='".base_url()."standard/show_v?std_id=".$r->std_id."'  >$r->rev</a></td>";
+                }else{
+                  echo "<td class='text-center'>$r->rev</td>";
+                }    
                 echo "<td><div class='text-center'>";
                 if (file_exists("uploads/$r->foldergroup_name/$r->folder_name/$r->file_name")) echo "<a href='javascript:void(0)'  data-id='".$r->std_id."' class='view_img '><i class='btn-success no-border btn-sm fa fa-search'> </i></a>";
 
                 if($this->session->flashdata("edit")!== null )
-                echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' data-original-title='Rule' href='".base_url()."customersfile/edit/".$r->std_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";
-                
+                echo "<a  data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>แก้ไขข้อมูล</h5>' data-original-title='Rule' href='".base_url()."standard/edit/".$r->std_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";
+                if($this->session->flashdata("version")!== null ) 
+                echo "<a href='".base_url()."standard/add_version/".$r->std_id."'  ><i class='btn-info no-border fa fa-plus'></i></a>";
                 if($this->session->flashdata("delete")!== null )
-                echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."customersfile/delete/".$r->std_id ."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a></td>";  
+                echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."standard/delete/".$r->std_id ."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a></td>";  
       
                 echo "</tr>";
                 }
@@ -92,7 +96,7 @@
  
        $.ajax({
        type: "Post",
-       url:'<?php echo base_url() ?>ajax/view_customersfile_pdf',
+       url:'<?php echo base_url() ?>ajax/view_standard_pdf',
       data: {
        id: id
       },
@@ -100,6 +104,7 @@
       success: function (res) {
       var html = '';
       var pdfjsLib = window['pdfjs-dist/build/pdf'];
+      console.log(res);
 
       // The workerSrc property shall be specified.
       pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
