@@ -30,7 +30,7 @@ class Model_part extends CI_Model
     {
       $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable,d.d_no,d.f_id from part as p
       left join part_drawing as pd on pd.p_id = p.p_id
-      left join drawing as d on d.d_id = pd.d_id
+      inner join drawing as d on d.d_id = pd.d_id
       where p.delete_flag != 0 AND pd.delete_flag != 0 ";
          $query = $this->db->query($sql);
         $result =  $query->result();
@@ -41,7 +41,7 @@ class Model_part extends CI_Model
     {
         $sql =  "SELECT p.p_id,p.p_no,p.p_name,p.enable,d.d_no,d.f_id from part as p
         left join part_drawing as pd on pd.p_id = p.p_id
-        left join drawing as d on d.d_id = pd.d_id
+        inner join drawing as d on d.d_id = pd.d_id
         where p.delete_flag != 0  AND pd.delete_flag != 0 AND (p.p_no LIKE '%$s_pno%' OR p.p_name LIKE '%$s_pname%') ";
         $query = $this->db->query($sql);
         $result =  $query->result();

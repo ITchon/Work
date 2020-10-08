@@ -21,69 +21,7 @@
               <h1>Drawing</h1>
                 <div class="card-body">
                   
-
-
-                </div>
-              </div>
-            </div>
-
-          <div class="col-md-12">
-              <div class="card">
-              <h1>DCN</h1>
-                <div class="card-body">
-                  
-
-
-                </div>
-              </div>
-
-
-
-          <div class="col-md-12">
-              <div class="card">
-              <h1>Part</h1>
-                <div class="card-body">
-                  
-
-
-                </div>
-              </div>
-
-
-
-          <div class="col-md-12">
-              <div class="card">
-              <h1>Customer</h1>
-                <div class="card-body">
-                  
-
-
-                </div>
-              </div>
-
-
-          
-            <div class="col-md-6 col-lg-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="media">
-                    <div class="media-middle media-left">
-                      <span class="bg-primary circle sq-48">
-                        <span class="fa fa-wpforms"></span>
-                      </span>
-                    </div>
-                    <div class="media-middle media-body">
-                      <h6 class="media-heading">Customers</h6>
-                      <h3 class="media-heading">
-                        <span class="fw-l"><?php echo $cus; ?></span>
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-<div class="col-md-6 col-lg-3">
+                <div class="col-md-6 col-lg-3">
               <div class="card">
                 <div class="card-body">
                   <div class="media">
@@ -105,74 +43,7 @@
                 </div>
               </div>
             </div>
-
-<div class="col-md-6 col-lg-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="media">
-                    <div class="media-middle media-left">
-                      <span class="bg-primary circle sq-48">
-                        <span class="fa fa-wpforms"></span>
-                      </span>
-                    </div>
-                    <div class="media-middle media-body">
-                      <h6 class="media-heading">DCN</h6>
-                      <h3 class="media-heading">
-                        <span class="fw-l">
-                          <?php
-                      echo $dcn;
-                     ?></span>
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="media">
-                    <div class="media-middle media-left">
-                      <span class="bg-primary circle sq-48">
-                        <span class="fa fa-cogs"></span>
-                      </span>
-                    </div>
-                    <div class="media-middle media-body">
-                      <h6 class="media-heading">Part</h6>
-                      <h3 class="media-heading">
-                        <span class="fw-l"> 
-                          <?php 
-                          echo $part;
-                          ?>
-                        </span>
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-<div class="col-md-6 col-lg-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="media">
-                    <div class="media-middle media-left">
-                      <span class="bg-primary circle sq-48">
-                        <span class="fa fa-sitemap "></span>
-                      </span>
-                    </div>
-                    <div class="media-middle media-body">
-                      <h6 class="media-heading">BOM</h6>
-                      <h3 class="media-heading">
-                        <span class="fw-l"><?php echo $bom; ?></span>
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
             
-
             <div class="col-md-6 col-lg-3">
               <div class="card">
                 <div class="card-body">
@@ -192,27 +63,7 @@
                 </div>
               </div>
             </div>
-
-            <div class="col-md-6 col-lg-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="media">
-                    <div class="media-middle media-left">
-                      <span class="bg-primary circle sq-48">
-                        <span class="fa fa-wpforms"></span>
-                      </span>
-                    </div>
-                    <div class="media-middle media-body">
-                      <h6 class="media-heading">DCN File</h6>
-                      <h3 class="media-heading">
-                        <span class="fw-l"><?php echo $num_dcn; ?></span>
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+            
 <?php 
 foreach($folder_d as $f){
 $num = 0;
@@ -246,6 +97,38 @@ $num = $fileall;
 }
 ?>
 
+                </div>
+              </div>
+            </div>
+
+          <div class="col-md-12">
+              <div class="card">
+              <h1>DCN</h1>
+                <div class="card-body">
+                  
+                <div class="col-md-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-middle media-left">
+                      <span class="bg-primary circle sq-48">
+                        <span class="fa fa-wpforms"></span>
+                      </span>
+                    </div>
+                    <div class="media-middle media-body">
+                      <h6 class="media-heading">DCN</h6>
+                      <h3 class="media-heading">
+                        <span class="fw-l">
+                          <?php
+                      echo $dcn;
+                     ?></span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="col-md-6 col-lg-3">
               <div class="card">
                 <div class="card-body">
@@ -265,6 +148,141 @@ $num = $fileall;
                 </div>
               </div>
             </div>
+
+            <div class="col-md-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-middle media-left">
+                      <span class="bg-primary circle sq-48">
+                        <span class="fa fa-wpforms"></span>
+                      </span>
+                    </div>
+                    <div class="media-middle media-body">
+                      <h6 class="media-heading">DCN File</h6>
+                      <h3 class="media-heading">
+                        <span class="fw-l"><?php echo $num_dcn; ?></span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+                </div>
+              </div>
+
+
+
+          <div class="col-md-12">
+              <div class="card">
+              <h1>Part</h1>
+                <div class="card-body">
+                  
+                <div class="col-md-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-middle media-left">
+                      <span class="bg-primary circle sq-48">
+                        <span class="fa fa-cogs"></span>
+                      </span>
+                    </div>
+                    <div class="media-middle media-body">
+                      <h6 class="media-heading">Part</h6>
+                      <h3 class="media-heading">
+                        <span class="fw-l"> 
+                          <?php 
+                          echo $part;
+                          ?>
+                        </span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+                </div>
+              </div>
+
+
+
+          <div class="col-md-12">
+              <div class="card">
+              <h1>Customer</h1>
+                <div class="card-body">
+                  
+                <div class="col-md-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-middle media-left">
+                      <span class="bg-primary circle sq-48">
+                        <span class="fa fa-wpforms"></span>
+                      </span>
+                    </div>
+                    <div class="media-middle media-body">
+                      <h6 class="media-heading">Customers</h6>
+                      <h3 class="media-heading">
+                        <span class="fw-l"><?php echo $cus; ?></span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+                </div>
+              </div>
+
+              <div class="col-md-12">
+              <div class="card">
+              <h1>BOM</h1>
+                <div class="card-body">
+                  
+                <div class="col-md-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-middle media-left">
+                      <span class="bg-primary circle sq-48">
+                        <span class="fa fa-sitemap "></span>
+                      </span>
+                    </div>
+                    <div class="media-middle media-body">
+                      <h6 class="media-heading">BOM</h6>
+                      <h3 class="media-heading">
+                        <span class="fw-l"><?php echo $bom; ?></span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+                </div>
+              </div>
+
+
+
+          
+
+
+
+
+
+
+
+
+            
+
+
+
+
+
+
 
 
 
