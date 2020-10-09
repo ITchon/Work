@@ -21,8 +21,8 @@
                   <thead>
                   <tr>
 								    	<td colspan="12">
-                        <a class="btn btn-outline-primary" href='<?= base_url() ?>customers/exportCSV'>Csv</a>
-								    	</td>
+                      <?php if($this->session->flashdata("csv")!== null ){?>
+                        <a class="btn btn-outline-primary" href='<?= base_url() ?>customers/exportCSV'>Csv</a><?php } ?>								    	</td>
 								    </tr>	
                       <tr>
     

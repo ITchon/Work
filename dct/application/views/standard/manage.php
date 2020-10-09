@@ -25,8 +25,8 @@
                          <div id="btn_enable" class="btn  btn-success"><span class="fa fa-check"></span></div>
 									      	<div id="btn_disable" class="btn  btn-danger"><span class="fa fa-times"></span></div>
 									    	  <div id="btn_delete" class="btn btn-default"><span class="fa fa-trash-o"></span></div>
-                          <a class="btn btn-outline-primary" href='<?= base_url() ?>standard/exportCSV'>Csv</a>
-								    	  </td>
+                          <?php if($this->session->flashdata("csv")!== null ){?>
+                        <a class="btn btn-outline-primary" href='<?= base_url() ?>standard/exportCSV'>Csv</a><?php } ?>								    	  </td>
 								      </tr>	
                       <tr>
                         <th  width="3%" class="text-center">

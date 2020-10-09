@@ -20,15 +20,13 @@
                 <option value="last_3m">Last 90 days</option>
               </select> -->
             </div>
-            <h1 class="title-bar-title">
-              <span class="d-ib">Drawing Center Detail</span>
-            
-            </h1>
-          </div>
+          
+
           <div class="row">
           <div class="col-md-12">
               <div class="card">
               <h1><span class="fa fa-leanpub"></span> Drawing</h1>
+              <hr>
                 <div class="card-body">
                   
             <div class="col-md-6 col-lg-3">
@@ -89,6 +87,7 @@ foreach($drawing_file as $h => $file){
             <div class="col-md-12">
               <div class="card">
               <h1><span class="fa fa-address-book"></span> Engineering Standard</h1>
+              <hr>
                 <div class="card-body">
                   
                 <div class="col-md-6 col-lg-3">
@@ -149,6 +148,7 @@ foreach($drawing_file as $h => $file){
           <div class="col-md-12">
               <div class="card">
               <h1><span class="fa fa-clipboard"></span> DCN</h1>
+              <hr>
                 <div class="card-body">
                   
             <div class="col-md-6 col-lg-3">
@@ -222,6 +222,7 @@ foreach($drawing_file as $h => $file){
           <div class="col-md-12">
               <div class="card">
               <h1><span class="fa fa-cogs"></span> Part</h1>
+              <hr>
                 <div class="card-body">
                   
                 <div class="col-md-6 col-lg-3">
@@ -257,6 +258,7 @@ foreach($drawing_file as $h => $file){
           <div class="col-md-12">
               <div class="card">
               <h1><span class="fa fa-address-book"></span> Customer</h1>
+              <hr>
                 <div class="card-body">
                   
                 <div class="col-md-6 col-lg-3">
@@ -287,6 +289,7 @@ foreach($drawing_file as $h => $file){
               <div class="col-md-12">
               <div class="card">
               <h1><span class="fa fa-sitemap "></span> BOM</h1>
+              <hr>
                 <div class="card-body">
                   
                 <div class="col-md-6 col-lg-3">

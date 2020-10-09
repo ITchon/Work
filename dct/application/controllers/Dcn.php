@@ -28,7 +28,7 @@ class Dcn extends CI_Controller {
         $text = null;
 
         // get data 
-        $drwdata = $this->model_user->get_dcn_byid($text);
+        $drwdata = $this->model_dcn->get_dcn_byid($text);
      
         // file creation 
         $file = fopen('php://output', 'w');
