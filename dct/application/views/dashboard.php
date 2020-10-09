@@ -3,6 +3,10 @@
    padding-left : 20px;
    padding-top : 10px;
  }
+ .media-heading{
+  /* font-weight: bold; */
+  font-size: 16px;
+ }
 </style>
 <div class="layout-content">
         <div class="layout-content-body">
@@ -24,7 +28,7 @@
           <div class="row">
           <div class="col-md-12">
               <div class="card">
-              <h1>Drawing</h1>
+              <h1><span class="fa fa-leanpub"></span> Drawing</h1>
                 <div class="card-body">
                   
             <div class="col-md-6 col-lg-3">
@@ -33,7 +37,7 @@
                   <div class="media">
                     <div class="media-middle media-left">
                       <span class="bg-primary circle sq-48">
-                        <span class="fa fa-wpforms"></span>
+                        <span class="fa fa-leanpub"></span>
                       </span>
                     </div>
                     <div class="media-middle media-body">
@@ -41,7 +45,7 @@
                       <h3 class="media-heading">
                         <span class="fw-l">
                           <?php
-                        echo $drawing;
+                         echo $drawing_all;
                         ?></span>
                       </h3>
                     </div>
@@ -50,7 +54,11 @@
               </div>
             </div>
             
-            <!-- <div class="col-md-6 col-lg-3">
+            
+<?php 
+foreach($drawing_file as $h => $file){
+?>
+            <div class="col-md-6 col-lg-3">
               <div class="card">
                 <div class="card-body">
                   <div class="media">
@@ -60,38 +68,9 @@
                       </span>
                     </div>
                     <div class="media-middle media-body">
-                      <h6 class="media-heading">Drawing File</h6>
+                      <h6 class="media-heading"><?php echo $h; ?></h6>
                       <h3 class="media-heading">
-                        <span class="fw-l"><?php echo $num_drawing; ?></span>
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-            
-<?php 
-foreach($folder_d as $f){
-$num = 0;
-$directory = './uploads/'.'Drawing/'.$f->folder_name.'/';
-$files = glob($directory . "*");
-if ($files){
-$fileall = count($files); 
-$num = $fileall;
-}?>
-            <div class="col-md-6 col-lg-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="media">
-                    <div class="media-middle media-left">
-                      <span class="bg-danger circle sq-48">
-                        <span class="fa fa-wpforms"></span>
-                      </span>
-                    </div>
-                    <div class="media-middle media-body">
-                      <h6 class="media-heading"><?php echo $f->type; ?></h6>
-                      <h3 class="media-heading">
-                        <span class="fw-l"><?php echo $num; ?></span>
+                        <span class="fw-l"><?php echo $file; ?></span>
                       </h3>
                     </div>
                   </div>
@@ -107,11 +86,36 @@ $num = $fileall;
               </div>
             </div>
 
-          <div class="col-md-12">
+            <div class="col-md-12">
               <div class="card">
-              <h1>DCN</h1>
+              <h1><span class="fa fa-address-book"></span> Engineering Standard</h1>
                 <div class="card-body">
                   
+                <div class="col-md-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-middle media-left">
+                      <span class="bg-primary circle sq-48">
+                        <span class="fa fa-address-book"></span>
+                      </span>
+                    </div>
+                    <div class="media-middle media-body">
+                      <h6 class="media-heading">Standard</h6>
+                      <h3 class="media-heading">
+                        <span class="fw-l"> 
+                          <?php 
+                          echo $standard_all;
+                          ?>
+                        </span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          <?php foreach($standard_file as $head => $file){?>
             <div class="col-md-6 col-lg-3">
               <div class="card">
                 <div class="card-body">
@@ -122,11 +126,46 @@ $num = $fileall;
                       </span>
                     </div>
                     <div class="media-middle media-body">
+                      <h6 class="media-heading"><?php echo $head ?></h6>
+                      <h3 class="media-heading">
+                        <span class="fw-l"> 
+                          <?php 
+                          echo $file;
+                          ?>
+                        </span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <?php } ?>
+            
+
+                </div>
+              </div>
+              </div>
+
+          <div class="col-md-12">
+              <div class="card">
+              <h1><span class="fa fa-clipboard"></span> DCN</h1>
+                <div class="card-body">
+                  
+            <div class="col-md-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-middle media-left">
+                      <span class="bg-primary circle sq-48">
+                        <span class="fa fa-clipboard"></span>
+                      </span>
+                    </div>
+                    <div class="media-middle media-body">
                       <h6 class="media-heading">DCN</h6>
                       <h3 class="media-heading">
                         <span class="fw-l">
                           <?php
-                      echo $dcnall;
+                      echo $dcn_all;
                      ?></span>
                       </h3>
                     </div>
@@ -170,25 +209,6 @@ $num = $fileall;
             </div>
           <?php }
          ?>
-            <!-- <div class="col-md-6 col-lg-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="media">
-                    <div class="media-middle media-left">
-                      <span class="bg-primary circle sq-48">
-                        <span class="fa fa-wpforms"></span>
-                      </span>
-                    </div>
-                    <div class="media-middle media-body">
-                      <h6 class="media-heading">DCN File</h6>
-                      <h3 class="media-heading">
-                        <span class="fw-l"><?php echo $num_dcn; ?></span>
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> -->
 
 
 
@@ -201,7 +221,7 @@ $num = $fileall;
 
           <div class="col-md-12">
               <div class="card">
-              <h1>Part</h1>
+              <h1><span class="fa fa-cogs"></span> Part</h1>
                 <div class="card-body">
                   
                 <div class="col-md-6 col-lg-3">
@@ -236,7 +256,7 @@ $num = $fileall;
 
           <div class="col-md-12">
               <div class="card">
-              <h1>Customer</h1>
+              <h1><span class="fa fa-address-book"></span> Customer</h1>
                 <div class="card-body">
                   
                 <div class="col-md-6 col-lg-3">
@@ -245,7 +265,7 @@ $num = $fileall;
                   <div class="media">
                     <div class="media-middle media-left">
                       <span class="bg-primary circle sq-48">
-                        <span class="fa fa-wpforms"></span>
+                        <span class="fa fa-address-book"></span>
                       </span>
                     </div>
                     <div class="media-middle media-body">
@@ -266,7 +286,7 @@ $num = $fileall;
 
               <div class="col-md-12">
               <div class="card">
-              <h1>BOM</h1>
+              <h1><span class="fa fa-sitemap "></span> BOM</h1>
                 <div class="card-body">
                   
                 <div class="col-md-6 col-lg-3">

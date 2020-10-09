@@ -10,120 +10,79 @@ class Manage extends CI_Controller {
         $this->load->helper('url');
         $this->load->database(); 
         $this->load->model('model');
+        $this->load->model('model_dashboard');
         $this->model->CheckSession();
-      $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $this->model->load_menu();
     }
 	public function index()
 	{	
-        $sql = "SELECT COUNT(d_id) as d_id FROM Drawing where delete_flag != 0";
+        $data['drawing_file'] = $this->model_dashboard->drawing_file();
+        
+        $sql = "SELECT COUNT(file_name) as file_name FROM drawing where delete_flag != 0";
         $query = $this->db->query($sql);
         $drawing = $query->result();
-        $data['drawing'] = $drawing[0]->d_id;
+        $data['drawing_all'] = $drawing[0]->file_name;
+        //-------------------------------------------------------------------------------
+        
+        $data['standard_file'] = $this->model_dashboard->standard_file();
+
+        $sql = "SELECT COUNT(file_name) as file_name FROM standard where delete_flag != 0";
+        $query = $this->db->query($sql);
+        $standard = $query->result();
+        $data['standard_all'] = $standard[0]->file_name;
+        //-------------------------------------------------------------------------------
 
         $sql2 = "SELECT COUNT(p_id) as p_id FROM Part where delete_flag != 0";
         $query = $this->db->query($sql2);
         $part = $query->result();
         $data['part'] = $part[0]->p_id;
+        //-------------------------------------------------------------------------------
 
         $sql4 = "SELECT COUNT(b_id) as b_id FROM BOM where delete_flag != 0";
         $query = $this->db->query($sql4);
         $bom = $query->result();
         $data['bom'] = $bom[0]->b_id;
+        //-------------------------------------------------------------------------------
 
         $sql4 = "SELECT COUNT(cus_id) as cus_id FROM customers where delete_flag != 0";
         $query = $this->db->query($sql4);
-        $bom = $query->result();
-        $data['cus'] = $bom[0]->cus_id;
+        $cus = $query->result();
+        $data['cus'] = $cus[0]->cus_id;
+        //-------------------------------------------------------------------------------
 
         $sql4 = "SELECT COUNT(dcn_id) as dcn_id FROM dcn where delete_flag != 0 AND file_name RLIKE('DCN')";
         $query = $this->db->query($sql4);
-        $bom = $query->result();
-        $data['dcnall'] = $bom[0]->dcn_id;
+        $dcn = $query->result();
+        $data['dcn_all'] = $dcn[0]->dcn_id;
 
         $sql = "SELECT file_name FROM dcn WHERE delete_flag != 0 AND file_name RLIKE('DCN') ORDER BY file_name DESC";
         $query = $this->db->query($sql);
         $dcn = $query->result();
-        $arr = [];
+        $year_name = [];
         foreach($dcn as $dc){
-            $name = substr($dc->file_name,0,5);
-            array_push($arr,$name);
+            $name = substr($dc->file_name,0,5); //cut file_name
+            array_push($year_name,$name);
         }
-        $dcnyear = array_unique($arr); // Array is now (1, 2, 3)
-        $filename =  implode(',',$dcnyear);
+        $dcnyear = array_unique($year_name); //cut same file_name
         $dcnyear = str_replace(' ', '', $dcnyear);
-        $dcnfile = [];
+
+        $total_file = [];
         foreach($dcnyear as $d){
             $sql = "SELECT COUNT(dcn_id) as dcn_id FROM dcn WHERE delete_flag != 0 AND file_name RLIKE('$d')";
             $query = $this->db->query($sql);
             $dcn = $query->result();
-            array_push($dcnfile,$dcn);
-            
+            array_push($total_file,$dcn);
         }
-        $dcn =[];
-        foreach($dcnfile as $d){
+        $dcn_file =[];
+        foreach($total_file as $d){
             foreach($d as $c){
-                array_push($dcn,$c->dcn_id);
+                array_push($dcn_file,$c->dcn_id);
             }
         }
-        $data['dcnyear'] = array_combine($dcnyear, $dcn);
-
-        
-  //       $sql4 = "SELECT cus.cus_name,fg.foldergroup_name FROM folder_group as fg
-		// inner join customers as cus on cus.fg_id = fg.fg_id
-  //       where fg.delete_flag != 0";
-  //       $query = $this->db->query($sql4);
-  //       $data['result_cusf'] = $query->result();
-
-  //       $sql4 = "SELECT cus.cus_name,fg.foldergroup_name,f.folder_name FROM folder_group as fg
-		// inner join customers as cus on cus.fg_id = fg.fg_id
-		// inner join folder as f on f.fg_id = fg.fg_id
-  //       where fg.delete_flag != 0";
-  //       $query = $this->db->query($sql4);
-  //       $data['result_f'] = $query->result();
-
-
-
-        $sql5 = "SELECT f.folder_name FROM folder as f where f.fg_id = 1";
-        $query = $this->db->query($sql5);
-        $filea = $query->result();
-        $num = 0;
-        foreach($filea as $f){
-        $directory = './uploads/'.'Drawing/'.$f->folder_name.'/';
-        $files = glob($directory . "*");
-        if ($files){
-        $fileall = count($files); 
-        $num = $fileall+$num;
-        }
-        }
-        $data['num_drawing'] = $num;
-
-        $sql5 = "SELECT f.folder_name ,f.name as type FROM folder as f where f.fg_id = 1";
-        $query = $this->db->query($sql5);
-        $folder = $query->result();
-        
-        $data['folder_d'] = $folder;
-
-        $sql5 = "SELECT f.folder_name ,f.name as type FROM folder as f where f.fg_id = 3";
-        $query = $this->db->query($sql5);
-        $folder = $query->result();
-        
-        $data['folder_std'] = $folder;
-
-        $sql5 = "SELECT f.folder_name FROM folder as f where f.fg_id = 2";
-        $query = $this->db->query($sql5);
-        $filea = $query->result();
-        $num1 = 0;
-        foreach($filea as $f){
-        $directory = './uploads/'.'DCN/'.$f->folder_name.'/';
-        $files = glob($directory . "*");
-        if ($files){
-        $fileall = count($files); 
-        $num1 = $fileall+$num1;
-        }
-        }
-        $data['num_dcn'] = $num1;
+        $data['dcnyear'] = array_combine($dcnyear, $dcn_file); //mix array name & value
+        //-------------------------------------------------------------------------------
 
 
 		$this->load->view('dashboard',$data);

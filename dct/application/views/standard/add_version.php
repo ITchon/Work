@@ -19,7 +19,7 @@
           
                       <div class="col-sm-6 col-md-4">
                    <select name="cus_id" id="cus_id" class="form-control select2"  data-placeholder=""  required>
-    
+                   <option value=" " >- - - None - - - </option>
                    <?php
                       foreach($result_cus as $cus){?>
              
