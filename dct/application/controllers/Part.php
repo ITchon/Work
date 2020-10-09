@@ -15,6 +15,38 @@ class Part extends CI_Controller {
         $this->model->load_menu();
         $this->model->button_show($this->session->userdata('su_id'),7);
     }
+
+    public function exportCSV(){ 
+        // file name 
+        $filename = 'Part '.date('Ymd').'.csv'; 
+        header("Content-Description: File Transfer"); 
+        header("Content-Disposition: attachment; filename=$filename"); 
+        header("Content-Type: application/csv; ");
+  
+        // get data 
+        $drwdata = $this->model_part->get_part();
+        $head = $this->model_part->get_type();
+        $arr = [];
+        foreach($head as $h){
+            array_push($arr,$h->name);
+        }
+        $head =  implode(',',$arr);
+        // $head = '"'.implode('","', $arr).'"';
+     
+        // file creation 
+        $file = fopen('php://output', 'w');
+        $header = array("Part No","Part Name","Status",$head); 
+        fputcsv($file, $header);
+        foreach ($drwdata as $r){ 
+          $status = ($r->enable == '1') ? "Enable" : "Disable";
+          $a = array($r->p_no,$r->p_name,$status);
+          fputcsv($file,$a); 
+        } 
+        fclose($file); 
+        exit; 
+       }
+
+
 	public function index()
     {	
     
@@ -23,6 +55,7 @@ class Part extends CI_Controller {
     
 	public function manage()
     {	
+
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         

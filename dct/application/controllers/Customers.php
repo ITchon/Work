@@ -14,6 +14,30 @@ class Customers extends CI_Controller {
         $this->model->load_menu();
         $this->model->button_show($this->session->userdata('su_id'),11);
     }
+
+    public function exportCSV(){ 
+        // file name 
+        $filename = 'Customers '.date('Ymd').'.csv'; 
+        header("Content-Description: File Transfer"); 
+        header("Content-Disposition: attachment; filename=$filename"); 
+        header("Content-Type: application/csv; ");
+  
+        // get data 
+        $drwdata = $this->model_customers->get_customers();
+     
+        // file creation 
+        $file = fopen('php://output', 'w');
+        $header = array("Customer","Customer Description"); 
+        fputcsv($file, $header);
+        foreach ($drwdata as $r){ 
+          $a = array($r->cus_name,$r->cus_des);
+          fputcsv($file,$a); 
+        } 
+        fclose($file); 
+        exit; 
+       }
+
+
 	public function index()
   {	
 

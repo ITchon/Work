@@ -14,6 +14,30 @@ class Usergroup extends CI_Controller {
         $this->model->load_menu();
         
     }
+
+    public function exportCSV(){ 
+        // file name 
+        $filename = 'UserGroup '.date('Ymd').'.csv'; 
+        header("Content-Description: File Transfer"); 
+        header("Content-Disposition: attachment; filename=$filename"); 
+        header("Content-Type: application/csv; ");
+  
+        // get data 
+        $drwdata = $this->model_usergroup->get_usergroup();
+     
+        // file creation 
+        $file = fopen('php://output', 'w');
+        $header = array("Group_Name","Status"); 
+        fputcsv($file, $header);
+        foreach ($drwdata as $r){ 
+          $status = ($r->enable == '1') ? "Enable" : "Disable";
+          $a = array($r->name,$status);
+          fputcsv($file,$a); 
+        } 
+        fclose($file); 
+        exit; 
+       }
+
 	public function index()
   {	
 

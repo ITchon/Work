@@ -4,6 +4,22 @@ class Model_standard extends CI_Model
 {
 
   
+public function get_standard()
+{ 
+      $sql =  "SELECT std.std_id,std.file_name,std.std_no,std.std_name,std.rev,std.cus_rev,dc.dcn_no,cus.cus_name as cusname
+      ,f.name as type,f.folder_name,fg.foldergroup_name,std.enable
+      FROM standard as std
+      left join customers as cus on cus.cus_id = std.cus_id
+      left join dcn as dc on dc.dcn_id = std.dcn_id
+      left join folder as f on f.f_id = std.f_id
+      left join folder_group as fg on fg.fg_id = f.fg_id
+      where std.delete_flag !=0";
+      $query = $this->db->query($sql); 
+      $result = $query->result();
+      return $result;
+        
+}
+
 public function get_folder_by($f_id)
 { 
       $sql =  "SELECT fg.foldergroup_name as folg ,f.folder_name as fol
@@ -245,6 +261,20 @@ if($query){
 }else{
   return false;
 }
+}
+
+public function enableStandard($key){
+  $query = $this->db->query("SELECT * from standard WHERE std_id = $key "); 
+  $result = $query->result()[0];
+  if( $result->enable==0){
+  $sql = "UPDATE standard SET enable='1' , date_updated=CURRENT_TIMESTAMP WHERE std_id={$key};";
+  $exc = $this->db->query($sql);
+  }
+  else{
+    $sql = "UPDATE standard SET enable='0' , date_updated=CURRENT_TIMESTAMP WHERE std_id={$key};";
+    $exc = $this->db->query($sql);
+  }
+
 }
 
 }

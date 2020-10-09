@@ -32,6 +32,11 @@
                 <div class="card-body">
                 <table id="demo-datatables-responsive-1" class="table table-hover  table-nowrap dataTable" cellspacing="0" width="100%">
                   <thead>
+                  <tr>
+								    	<td colspan="12">
+                        <a class="btn btn-outline-primary" href='<?= base_url() ?>drawing/exportCSV_v'>Csv</a>
+								    	</td>
+								    </tr>	
                       <tr>
                         <th>Type</th>
                         <th width="10%">Part No</th>

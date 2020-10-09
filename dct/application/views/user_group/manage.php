@@ -17,8 +17,13 @@
                   <h3>MANAGE USERGROUP <i class="fa fa-group" aria-hidden="true"></i></h3>
                 </div>
                 <div class="card-body">
-                  <table id="demo-datatables-buttons-1" class="table table-hover  dataTable text-center" cellspacing="0" width="100%">
+                  <table id="demo-datatables-buttons-1" class="table table-hover  dataTable" cellspacing="0" width="100%">
                   <thead>
+                  <tr>
+								    	<td colspan="12">
+                        <a class="btn btn-outline-primary" href='<?= base_url() ?>usergroup/exportCSV'>Csv</a>
+								    	</td>
+								    </tr>	
                       <tr>
     
                         <th width="20%">Group name</th>
@@ -30,7 +35,7 @@
                     <?php
                     foreach($result_all as $r){
             echo "<tr>";
-                echo "<td>".$r->name."</td>";
+                echo "<td class='text-center'>".$r->name."</td>";
                 if($r->enable!=1 ){?>
                   <!-- <td><a href='".base_url()."index.php/user/permission/".$r->user_id."' class='btn btn-danger'>Disable</a>"; -->
                   <td class="text-center"><a type="button" onclick="javascript:window.location='<?php

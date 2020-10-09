@@ -20,6 +20,11 @@
 
                   <table id="demo-datatables-buttons-1" class="table table-hover  table-bordered dataTable" cellspacing="0" width="100%">
                   <thead>
+                  <tr>
+								    	<td colspan="12">
+                        <a class="btn btn-outline-primary" href='<?= base_url() ?>user/exportCSV'>Csv</a>
+								    	</td>
+								    </tr>	
                     <tr>
                       <th>Username</th>
                       <?php if($this->session->userdata('sug_id')==1){

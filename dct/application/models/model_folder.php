@@ -3,6 +3,17 @@
 class Model_folder extends CI_Model
 {
 
+
+  public function get_folder()
+  {
+    $sql =  'SELECT fg.foldergroup_name as folg ,f.folder_name as fol,f.name FROM folder as f 
+    where f.delete_flag != 0';
+    $query = $this->db->query($sql); 
+    $result =  $query->result();
+    return $result;
+  }
+
+
   public function getfolder($f_id)
 { 
       $sql =  "SELECT fg.foldergroup_name as folg ,f.folder_name as fol

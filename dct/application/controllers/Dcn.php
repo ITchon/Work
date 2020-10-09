@@ -17,6 +17,33 @@ class Dcn extends CI_Controller {
         $this->model->load_menu();
         $this->model->button_show($this->session->userdata('su_id'),8);
     }
+
+    public function exportCSV(){ 
+        // file name 
+        $filename = 'DCN '.date('Ymd').'.csv'; 
+        header("Content-Description: File Transfer"); 
+        header("Content-Disposition: attachment; filename=$filename"); 
+        header("Content-Type: application/csv; ");
+
+        $text = null;
+
+        // get data 
+        $drwdata = $this->model_user->get_dcn_byid($text);
+     
+        // file creation 
+        $file = fopen('php://output', 'w');
+        $header = array("DCN No","DCN Name","Model","Customer","Status"); 
+        fputcsv($file, $header);
+        foreach ($drwdata as $r){ 
+          $status = ($r->enable == '1') ? "Enable" : "Disable";
+          $a = array($r->dcn_no,$r->dcn_name,$r->model,$r->cus_name,$status);
+          fputcsv($file,$a); 
+        } 
+        fclose($file); 
+        exit; 
+       }
+
+
     public function index()
     {   
 

@@ -2,6 +2,16 @@
 
 class Model_usergroup extends CI_Model
 {
+
+  public function get_usergroup()
+  {
+    $sql =  'SELECT * FROM sys_user_groups where delete_flag != 0 AND sug_id != 1';
+    $query = $this->db->query($sql); 
+    $result =  $query->result();
+    return $result;
+  }
+
+
     function insert_group($gname)
     {
      $num= $this->db->query("SELECT * FROM sys_user_groups where name = '$gname'"); 

@@ -3,6 +3,15 @@
 class Model_customers extends CI_Model
 {
 
+  public function get_customers()
+  {
+    $sql =  'SELECT * FROM customers WHERE delete_flag != 0';
+    $query = $this->db->query($sql); 
+    $result =  $query->result();
+    return $result;
+  }
+
+
 public function insert_cus($cusname,$cusdes)
 {
      $num= $this->db->query("SELECT * FROM customers where cus_name = '$cusname'"); 

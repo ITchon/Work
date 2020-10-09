@@ -16,6 +16,31 @@ class User extends CI_Controller {
         $this->model->load_menu();
 
     }
+
+    public function exportCSV(){ 
+        // file name 
+        $filename = 'User '.date('Ymd').'.csv'; 
+        header("Content-Description: File Transfer"); 
+        header("Content-Disposition: attachment; filename=$filename"); 
+        header("Content-Type: application/csv; ");
+  
+        // get data 
+        $drwdata = $this->model_user->get_user();
+     
+        // file creation 
+        $file = fopen('php://output', 'w');
+        $header = array("Username","Password","Firstname","Lastname","Gender","Email","Group","Status"); 
+        fputcsv($file, $header);
+        foreach ($drwdata as $r){ 
+          $status = ($r->enable == '1') ? "Enable" : "Disable";
+          $a = array($r->username,base64_decode($r->password),$r->firstname,$r->lastname,$r->gender,$r->email,$r->name,$status);
+          fputcsv($file,$a); 
+        } 
+        fclose($file); 
+        exit; 
+       }
+
+
     public function manage()
     {   
         $this->model->CheckPermission($this->session->userdata('su_id'));

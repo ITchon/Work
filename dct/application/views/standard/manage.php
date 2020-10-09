@@ -25,6 +25,7 @@
                          <div id="btn_enable" class="btn  btn-success"><span class="fa fa-check"></span></div>
 									      	<div id="btn_disable" class="btn  btn-danger"><span class="fa fa-times"></span></div>
 									    	  <div id="btn_delete" class="btn btn-default"><span class="fa fa-trash-o"></span></div>
+                          <a class="btn btn-outline-primary" href='<?= base_url() ?>standard/exportCSV'>Csv</a>
 								    	  </td>
 								      </tr>	
                       <tr>
@@ -41,6 +42,7 @@
                         <th>Cust Rev</th>
                         <th>Rev</th>
                         <th>Manage</th>
+                        <th>Status</th>
                        
                       </tr>
                     </thead>
@@ -72,7 +74,22 @@
                 echo "<a href='".base_url()."standard/add_version/".$r->std_id."'  ><i class='btn-info no-border fa fa-plus'></i></a>";
                 if($this->session->flashdata("delete")!== null )
                 echo "<a type='button' data-toggle='tooltip' data-html='true' data-placement='bottom' aria-describedby='passHelp' title='<h5>ลบข้อมูล</h5>' href='".base_url()."standard/delete/".$r->std_id ."' onclick='return confirm(\"Confirm Delete Item\")' ><i class='btn-default no-border fa fa-trash'></i></a></td>";  
-      
+                echo "<td class='text-center'>";
+                  if($r->enable==1 ){  
+                    $icon = "btn-success no-border fa fa-check";
+                    $text = "ENABLE";
+                    $color = "color:#43a047";
+                  }
+                  else{ 
+                    $icon = "btn-danger no-border fa fa-close";
+                    $text = "DISABLE";
+                    $color = "color:#D50000";
+                  }
+
+                  if($this->session->flashdata("enable")!== null ){ echo "<a  href='".base_url()."standard/enable/".$r->std_id ."'><i class='$icon'> $text</i></a>";}
+                  else{ 
+                    echo "<span style='$color'>$text </span>"; }
+                    echo "</div></td>";
                 echo "</tr>";
                 }
                 ?>

@@ -80,6 +80,29 @@ class Drawing extends CI_Controller {
       fclose($file); 
       exit; 
      }
+
+     public function exportCSV_v(){ 
+      // file name 
+      $filename = 'Drawing '.date('Ymd').'.csv'; 
+      header("Content-Description: File Transfer"); 
+      header("Content-Disposition: attachment; filename=$filename"); 
+      header("Content-Type: application/csv; ");
+
+      // get data 
+      $drwdata = $this->model_drawing->get_partdrawing();
+   
+      // file creation 
+      $file = fopen('php://output', 'w');
+      $header = array("Type","Part NO","Drawing Name","Drawing NO","POS","Customer","DCN","Rev","Status"); 
+      fputcsv($file, $header);
+      foreach ($drwdata as $r){ 
+        $status = ($r->enable == '1') ? "Enable" : "Disable";
+        $a = array($r->type_name,$r->p_no,$r->d_name,$r->d_no,$r->pos,$r->cus_name,$r->dcn_no,$r->rev,$status);
+        fputcsv($file,$a); 
+      } 
+      fclose($file); 
+      exit; 
+     }
    
 
 

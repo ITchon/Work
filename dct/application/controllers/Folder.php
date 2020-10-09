@@ -15,6 +15,29 @@ class Folder extends CI_Controller {
         $this->model->button_show($this->session->userdata('su_id'),12);
 
     }
+
+    public function exportCSV(){ 
+        // file name 
+        $filename = 'Folder '.date('Ymd').'.csv'; 
+        header("Content-Description: File Transfer"); 
+        header("Content-Disposition: attachment; filename=$filename"); 
+        header("Content-Type: application/csv; ");
+  
+        // get data 
+        $drwdata = $this->model_folder->get_folder();
+        // file creation 
+        $file = fopen('php://output', 'w');
+        $header = array("Main Group","Type Name","Folder name"); 
+        fputcsv($file, $header);
+        foreach ($drwdata as $r){ 
+          $a = array($r->folg,$r->name,$r->fol);
+          fputcsv($file,$a); 
+        } 
+        fclose($file); 
+        exit; 
+       }
+
+
 	public function index()
     {	
 

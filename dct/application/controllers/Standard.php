@@ -16,6 +16,30 @@ class Standard   extends CI_Controller {
         $this->model->load_menu();
         $this->model->button_show($this->session->userdata('su_id'),14);
     }
+
+    public function exportCSV(){ 
+        // file name 
+        $filename = 'Standard '.date('Ymd').'.csv'; 
+        header("Content-Description: File Transfer"); 
+        header("Content-Disposition: attachment; filename=$filename"); 
+        header("Content-Type: application/csv; ");
+  
+        // get data 
+        $drwdata = $this->model_standard->get_standard();
+     
+        // file creation 
+        $file = fopen('php://output', 'w');
+        $header = array("Customer Name","Standard No","Standard Name","DCN No","Cust Rev","Rev","Status"); 
+        fputcsv($file, $header);
+        foreach ($drwdata as $r){ 
+          $status = ($r->enable == '1') ? "Enable" : "Disable";
+          $a = array($r->cusname,$r->std_no,$r->std_name,$r->dcn_no,$r->cus_rev,$r->rev,$status);
+          fputcsv($file,$a); 
+        } 
+        fclose($file); 
+        exit; 
+       }
+
 	public function index()
   {	
 
@@ -27,7 +51,7 @@ class Standard   extends CI_Controller {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         $sql =  'SELECT std.std_id,std.file_name,std.std_no,std.std_name,std.rev,std.cus_rev,dc.dcn_no,cus.cus_name as cusname
-        ,f.name as type,f.folder_name,fg.foldergroup_name
+        ,f.name as type,f.folder_name,fg.foldergroup_name,std.enable
         FROM standard as std
         left join customers as cus on cus.cus_id = std.cus_id
         left join dcn as dc on dc.dcn_id = std.dcn_id
@@ -464,6 +488,26 @@ class Standard   extends CI_Controller {
             echo '</script>';
         }
         redirect('standard/show/','refresh');
+    }
+
+    public function enable(){
+
+        $this->model->CheckPermission($this->session->userdata('su_id'));
+        $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
+         $data = $this->uri->segment('3');
+        if($data=="ea" &&  $this->input->post('std_id')){
+          $std_id = $this->input->post('std_id');
+          $this->model_standard->all_enable($std_id);
+        }else if($data=="da" &&  $this->input->post('std_id')){
+          $std_id = $this->input->post('std_id');
+          $this->model_standard->all_disable($std_id);
+        }else if(is_numeric($data)){
+          $std_id = $this->uri->segment('3');
+          $this->model_standard->enableStandard($std_id);
+        } 
+        $search = $this->session->flashdata('search');
+        redirect('standard/manage?'.$search.'','refresh');
+        
     }
 
 

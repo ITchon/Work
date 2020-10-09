@@ -19,6 +19,11 @@
                 <div class="card-body">
                   <table id="demo-datatables-buttons-1" class="table table-hover  dataTable" cellspacing="0" width="100%">
                   <thead>
+                  <tr>
+								    	<td colspan="12">
+                        <a class="btn btn-outline-primary" href='<?= base_url() ?>customers/exportCSV'>Csv</a>
+								    	</td>
+								    </tr>	
                       <tr>
     
                         <th width="20%">Customer name</th>
