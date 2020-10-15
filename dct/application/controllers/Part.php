@@ -35,10 +35,11 @@ class Part extends CI_Controller {
      
         // file creation 
         $file = fopen('php://output', 'w');
-        $header = array("Part No","Part Name","Status");
+        $header = array("Part No","Part Name");
         foreach($head as $h){
             array_push($header,$h->name);
         } 
+        array_push($header,'Status');
         //$header = array("Part No","Part Name","Status","PRODT DWG","CUST DWG","RM DWG","TEMP DWG"); 
         fputcsv($file, $header);
         $res= $this->model_part->get_part();
@@ -46,24 +47,51 @@ class Part extends CI_Controller {
                 $num[] = $r->p_id;
               }
         $result_p = $this->model_part->get_part_outdrawing($num);
+        $th = $this->model_part->get_type();
         foreach ($result_p as $r){ 
             $status = ($r->enable == '1') ? "Enable" : "Disable";
-            $a = array($r->p_no,$r->p_name,$status);
+            $a = array($r->p_no,$r->p_name);
+            foreach($th as $t){
+                array_push($a,'');
+            }
+            array_push($a,$status);
             fputcsv($file,$a); 
-            } 
-        $th = $this->model_part->get_type();
+            }
+        $num= $this->db->query("SELECT f.f_id,f.name from folder as f
+        where f.delete_flag != 0 AND f.fg_id = 1");
+        $chk= $num->num_rows();
+
         foreach ($drwdata as $r){ 
         $status = ($r->enable == '1') ? "Enable" : "Disable";
-            $a = array($r->p_no,$r->p_name,$status);
+            $a = array($r->p_no,$r->p_name);
+            $i = 1;
             foreach($th as $t){
                 if($r->f_id == $t->f_id){
                     $chk_dwg = $r->d_no;
-                    array_push($a,$chk_dwg);
-                    fputcsv($file,$a); 
+                    array_push($a,$chk_dwg); 
+                    if($i != $chk){
+                        $sum = $chk-$i;
+                        $s = 0;
+                        foreach($th as $t){
+                            if($s != $sum){
+                            array_push($a,'');
+                            }else{
+                            array_push($a,$status);
+                            fputcsv($file,$a); 
+                            break;
+                            }
+                        $s++;
+                        }
+                    }else{
+                        array_push($a,$chk_dwg);
+                        array_push($a,$status);
+                        fputcsv($file,$a); 
+                    }
                 }else{
                     $chk_dwg = '';
                     array_push($a,$chk_dwg);
                 }
+                $i++;
                 }
         } 
         fclose($file); 
