@@ -26,21 +26,45 @@ class Part extends CI_Controller {
         // get data 
         $drwdata = $this->model_part->get_part();
         $head = $this->model_part->get_type();
-        $arr = [];
-        foreach($head as $h){
-            array_push($arr,$h->name);
-        }
-        $head =  implode(',',$arr);
+        // $arr = [];
+        // foreach($head as $h){
+        //     array_push($arr,$h->name);
+        // }
+        // $head =  implode(',',$arr);
         // $head = '"'.implode('","', $arr).'"';
      
         // file creation 
         $file = fopen('php://output', 'w');
-        $header = array("Part No","Part Name","Status",$head); 
+        $header = array("Part No","Part Name","Status");
+        foreach($head as $h){
+            array_push($header,$h->name);
+        } 
+        //$header = array("Part No","Part Name","Status","PRODT DWG","CUST DWG","RM DWG","TEMP DWG"); 
         fputcsv($file, $header);
+        $res= $this->model_part->get_part();
+            foreach($res as $r){
+                $num[] = $r->p_id;
+              }
+        $result_p = $this->model_part->get_part_outdrawing($num);
+        foreach ($result_p as $r){ 
+            $status = ($r->enable == '1') ? "Enable" : "Disable";
+            $a = array($r->p_no,$r->p_name,$status);
+            fputcsv($file,$a); 
+            } 
+        $th = $this->model_part->get_type();
         foreach ($drwdata as $r){ 
-          $status = ($r->enable == '1') ? "Enable" : "Disable";
-          $a = array($r->p_no,$r->p_name,$status);
-          fputcsv($file,$a); 
+        $status = ($r->enable == '1') ? "Enable" : "Disable";
+            $a = array($r->p_no,$r->p_name,$status);
+            foreach($th as $t){
+                if($r->f_id == $t->f_id){
+                    $chk_dwg = $r->d_no;
+                    array_push($a,$chk_dwg);
+                    fputcsv($file,$a); 
+                }else{
+                    $chk_dwg = '';
+                    array_push($a,$chk_dwg);
+                }
+                }
         } 
         fclose($file); 
         exit; 
