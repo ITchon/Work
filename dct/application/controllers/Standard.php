@@ -157,9 +157,7 @@ class Standard   extends CI_Controller {
             {
             echo "<script>";
             echo 'alert(" File Failed ");';
-            
             echo '</script>';
-            exit;
             redirect('standard/add','refresh');   
             }
             else{

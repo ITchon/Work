@@ -153,8 +153,8 @@ public function add_revision($std_id)
 {
      $sql1 =  "SELECT std.std_no,std.std_name,dc.dcn_no,cus.cus_name,std.file_name,std.f_id
      ,std.cus_rev,std.rev FROM standard as std
-     inner join dcn as dc on dc.dcn_id = std.dcn_id
-     inner join customers as cus on cus.cus_id = std.cus_id
+     left join dcn as dc on dc.dcn_id = std.dcn_id
+     left join customers as cus on cus.cus_id = std.cus_id
      where std.std_id = $std_id";
      $query = $this->db->query($sql1);
      $data =  $query->result()[0];
