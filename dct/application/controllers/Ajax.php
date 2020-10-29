@@ -107,12 +107,12 @@ public function __construct()
         $extension = array_pop($parts);
         $status = $data[0]->enable;
         if($status != 1){
-            $text = "---Obsolate data---";
+            $text = "- - - Obsolate data - - -";
         }else{
             $text = "";
         }
         if($extension == 'pdf'){
-        $arr = array('success' => false, 'data' => '');
+        $arr = array('success' => false, 'data' => '', 'text' => '');
         if($data){
             $arr = array('success' => true, 'data' => $data, 'text' => $text);
             }

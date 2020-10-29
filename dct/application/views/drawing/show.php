@@ -188,7 +188,7 @@
         </div>
       </div>
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-     
+
       <script>
       $(document).ready(function() {
       $('body').on('click', '.view_img', function () {
@@ -212,8 +212,11 @@
       pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
       pdfDoc = pdfDoc_;
 
-      wmContext.fillText(res.text,-width/2,-height/6);
-      document.getElementById('page_count').textContent = pdfDoc.numPages;
+
+      // wmContext.fillText(res.text,-width/2,-height/6);
+          document.getElementById('page_count').textContent = pdfDoc.numPages;
+          document.getElementById('status').textContent = res.text;
+ 
       // Initial/first page rendering
       renderPage(pageNum);
       });

@@ -20,6 +20,12 @@
 #watermark{
   opacity: 0.5;
 }
+#status{
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color : red;
+}
 </style>
 <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
 
@@ -28,6 +34,7 @@
     <div id="header" class="modal-dialog modal-xl" >
         <div class="modal-content" >
             <div class="modal-body  " onContextMenu="return false;">
+            
     <button type="button" class="close" data-dismiss="modal">
               <span aria-hidden="true">×</span>
               <span class="sr-only">Close</span>
@@ -39,7 +46,7 @@
   <button class=" btn-outline-default" id="zoom_in"><i class="fa fa-lg fa-search-plus"></i></button>
   <button class="btn-default" id="reset"><i class="fa fa-lg fa-refresh" aria-hidden="true"></i></button>
   <button class=" btn-outline-default" id="zoom_out"><i class="fa fa-lg fa-search-minus"></i></button>
-
+<h1 class="btn-btn-danger" id="status"></h1>
   </div>
 
              <div id="pageContainer">
@@ -68,7 +75,7 @@ var pdfDoc = null,
     var origCanvas=document.getElementById("the-canvas");
     var wmCanvas=document.createElement("canvas");
     wmCanvas.id="watermark";
-  
+
     wmCanvas.setAttribute("style","position:absolute; ")
 
 if(container.firstChild)
