@@ -188,7 +188,7 @@
         </div>
       </div>
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-
+     
       <script>
       $(document).ready(function() {
       $('body').on('click', '.view_img', function () {
@@ -208,13 +208,15 @@
       pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
       // if(res.success != false){ 
       var status = res.data[0].enable;
-
+      <?php $status = 1; ?>
+      <?php 
+  $this->session->set_flashdata('status',$status);
+?>
       var path ='uploads/'+res.data[0].foldergroup_name+'/'+res.data[0].folder_name+'/'+res.data[0].file_name;
 
       pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
       pdfDoc = pdfDoc_;
       document.getElementById('page_count').textContent = pdfDoc.numPages;
-      document.getElementById('lol').textContent = status;
       // Initial/first page rendering
       renderPage(pageNum);
       });

@@ -29,7 +29,6 @@
         <div class="modal-content" >
 
             <div class="modal-body  " onContextMenu="return false;">
-         
     <button type="button" class="close" data-dismiss="modal">
               <span aria-hidden="true">×</span>
               <span class="sr-only">Close</span>
@@ -69,7 +68,7 @@ var pdfDoc = null,
     var origCanvas=document.getElementById("the-canvas");
     var wmCanvas=document.createElement("canvas");
     wmCanvas.id="watermark";
-
+  
     wmCanvas.setAttribute("style","position:absolute; ")
 
 if(container.firstChild)
@@ -93,8 +92,13 @@ wmContext.translate(origCanvas.width/2, origCanvas.height/2);
 // rotate the context (so it's rotated around its center)
 wmContext.rotate(-Math.atan(origCanvas.height/origCanvas.width));
 // as the origin is now at the center, just need to center the text
-wmContext.fillText("<?php echo $this->session->userdata('fname')."  ". $this->session->userdata('lname'); ?>",-width/2,height/2);
-wmContext.fillText("*Copy is Prohibite",-width/2,height/20);
+wmContext.fillText("<?php echo $this->session->userdata('fname')."  ". $this->session->userdata('lname'); ?>",-width/3,height/2);
+<?php $status = $this->session->flashdata('status'); ?>
+<?php if($status != 1){ ?>
+  // wmContext.fillText("*Obsolate data",-width/2,-height/10);
+  wmContext.fillText("---Obsolate data---",-width/2,-height/10);
+<?php } ?>
+wmContext.fillText("*Copy is Prohibite",-width/2.5,height/5);
 function renderPage(num) {
   pageRendering = true;
 

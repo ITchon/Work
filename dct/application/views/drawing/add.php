@@ -40,6 +40,23 @@
                 </div>
 
                 <div class="form-group has-feedback">
+                    <label for="dcn" class="col-sm-5 col-md-4 control-label">PREVIOUS DRAWING</label>    
+
+                <div class="col-sm-5 col-md-4">
+                   <select name="dcn_id" class="form-control select2" id="dcn_id">
+                   <option value="" >- - - None - - - </option>
+                   <?php
+                   
+                      foreach($result_d as $d){?>
+                     <option value="<?php  echo $d->d_no ?>"><?php echo $d->d_no ?></option>
+                    <?php
+                      }
+                      ?> 
+                   </select>
+                    </div>
+                </div>
+
+                <div class="form-group has-feedback">
                     <label for="p_name" class="col-sm-3 col-md-4 control-label">MODEL</label>
                     <div class="col-sm-6 col-md-4">
                     <input class="form-control" type="text" name="model">
