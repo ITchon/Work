@@ -105,10 +105,16 @@ public function __construct()
         $data = $this->model_ajax->dwg_by($id);
         $parts = explode('.', $data[0]->file_name);
         $extension = array_pop($parts);
+        $status = $data[0]->enable;
+        if($status != 1){
+            $text = "---Obsolate data---";
+        }else{
+            $text = "";
+        }
         if($extension == 'pdf'){
         $arr = array('success' => false, 'data' => '');
         if($data){
-            $arr = array('success' => true, 'data' => $data);
+            $arr = array('success' => true, 'data' => $data, 'text' => $text);
             }
         }
         else{

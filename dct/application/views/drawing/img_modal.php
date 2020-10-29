@@ -27,7 +27,6 @@
   <div class="modal fade text-center " id="modal_form" role="dialog">
     <div id="header" class="modal-dialog modal-xl" >
         <div class="modal-content" >
-
             <div class="modal-body  " onContextMenu="return false;">
     <button type="button" class="close" data-dismiss="modal">
               <span aria-hidden="true">×</span>
@@ -50,6 +49,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 </div>
+
 
 
 <script type="text/javascript">
@@ -93,11 +93,6 @@ wmContext.translate(origCanvas.width/2, origCanvas.height/2);
 wmContext.rotate(-Math.atan(origCanvas.height/origCanvas.width));
 // as the origin is now at the center, just need to center the text
 wmContext.fillText("<?php echo $this->session->userdata('fname')."  ". $this->session->userdata('lname'); ?>",-width/3,height/2);
-<?php $status = $this->session->flashdata('status'); ?>
-<?php if($status != 1){ ?>
-  // wmContext.fillText("*Obsolate data",-width/2,-height/10);
-  wmContext.fillText("---Obsolate data---",-width/2,-height/10);
-<?php } ?>
 wmContext.fillText("*Copy is Prohibite",-width/2.5,height/5);
 function renderPage(num) {
   pageRendering = true;

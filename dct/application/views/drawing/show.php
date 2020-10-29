@@ -207,15 +207,12 @@
       // The workerSrc property shall be specified.
       pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
       // if(res.success != false){ 
-      var status = res.data[0].enable;
-      <?php $status = 1; ?>
-      <?php 
-  $this->session->set_flashdata('status',$status);
-?>
       var path ='uploads/'+res.data[0].foldergroup_name+'/'+res.data[0].folder_name+'/'+res.data[0].file_name;
-
+      
       pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
       pdfDoc = pdfDoc_;
+
+      wmContext.fillText(res.text,-width/2,-height/6);
       document.getElementById('page_count').textContent = pdfDoc.numPages;
       // Initial/first page rendering
       renderPage(pageNum);
