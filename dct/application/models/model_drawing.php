@@ -552,6 +552,25 @@ $path_file = quotemeta($path_file);
     return $result;
   }
 
+  public function get_partdrawing_by($d_id)
+  {
+    $sql =  "SELECT d.d_id,p.p_id,pd.p_id as pd_pid,pd.d_id as pd_did,d.d_no,d.d_name,d.model,d.remark,c.cus_id,c.cus_name,
+     d.dcn_id, dc.dcn_no, d.enable, d.file_name, d.rev, d.path_file, p.p_no,dc.file_name as dcn_file,
+     dc.path_file as dcn_path,d.file_code,dc.file_code as dcn_code, d.f_id,d.pos,f.folder_name,f.name as type_name,fg.foldergroup_name
+          from drawing as d
+            left join part_drawing as pd on pd.d_id = d.d_id
+            left join customers as c on c.cus_id = d.cus_id
+            left join dcn as dc on dc.dcn_id = d.dcn_id
+            left join part as p on p.p_id = pd.p_id
+            inner join folder f on f.f_id = d.f_id
+            inner join folder_group fg on fg.fg_id = f.fg_id
+
+          where d.d_id = $d_id AND d.delete_flag != 0 AND pd.delete_flag != 0";
+       $query = $this->db->query($sql);
+      $result =  $query->result();
+    return $result;
+  }
+
 
     public function get_revision_drawing($d_id)
   {

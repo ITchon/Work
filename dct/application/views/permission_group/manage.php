@@ -28,17 +28,16 @@
             echo "<tr>";
                 echo "<td>".$r->name."</td>";
                 if($r->enable!=1 ){?>
-                  
-                  <td class="text-center"><a  onclick="javascript:window.location='<?php
-                  echo base_url() . 'permissiongroup/enable/' . $r->spg_id;
-                  ?>';"><i class='btn-danger no-border btn-sm fa fa-times'></i></a>
                   <?php
+                  echo "<td class='text-center'>";
+                  echo "<a  href='".base_url()."permissiongroup/enable/".$r->spg_id."' onclick='return confirm(\"Confirm Enable Item\")' >
+                  <i class='btn-danger no-border btn-sm fa fa-times'></i></a>";
                 }
-                else{?>
-                  <td class="text-center"><a  onclick="javascript:window.location='<?php
-                  echo base_url() . 'permissiongroup/disable/' . $r->spg_id;
-                  ?>';"><i class='btn-success no-border btn-sm fa fa-check'></i></a>                      
+                else{?>                  
                   <?php
+                   echo "<td class='text-center'>";
+                   echo "<a  href='".base_url()."permissiongroup/disable/".$r->spg_id."' onclick='return confirm(\"Confirm Disable Item\")' >
+                   <i class='btn-success no-border btn-sm fa fa-check'></i></a>";
                 }
                 ?> <a onclick="javascript:window.location='<?php
                 echo base_url() . 'permissiongroup/edit_pg/' . $r->spg_id;

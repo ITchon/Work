@@ -50,16 +50,33 @@ class Standard   extends CI_Controller {
     {	
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
-        $sql =  'SELECT std.std_id,std.file_name,std.std_no,std.std_name,std.rev,std.cus_rev,dc.dcn_no,cus.cus_name as cusname
-        ,f.name as type,f.folder_name,fg.foldergroup_name,std.enable
-        FROM standard as std
-        left join customers as cus on cus.cus_id = std.cus_id
-        left join dcn as dc on dc.dcn_id = std.dcn_id
-        left join folder as f on f.f_id = std.f_id
-        left join folder_group as fg on fg.fg_id = f.fg_id
-        where std.delete_flag !=0';
-        $query = $this->db->query($sql); 
-        $data['result'] = $query->result();
+
+
+        $params = $_SERVER['QUERY_STRING'];
+        $this->session->set_flashdata('search',$params);
+
+        $s_no =  $this->input->get('s_no');
+        $s_name =  $this->input->get('s_name');
+        $data['s_no'] = $s_no;
+        $data['s_name'] = $s_name;
+
+        if($this->input->get('s_no') == null){
+            $s_no = 'null';
+        }
+        
+        if($this->input->get('s_name') == null){
+          $s_name = 'null';
+        }
+        if($this->input->get('s_no') == null && $this->input->get('s_name') == null){
+        $s_name = '';
+        $s_no = '';
+        }
+
+        if($this->input->get('s_no') != null || $this->input->get('s_name') != null){
+            $data['result'] = $this->model_standard->standard_search($s_no,$s_name);
+        }else{      
+            $data['result'] = $this->model_standard->get_standard();
+        }
         
         $this->load->view('standard/manage',$data);//bring $data to user_data 
         $this->load->view('standard/img_modal');
@@ -72,9 +89,6 @@ class Standard   extends CI_Controller {
               $this->model->CheckPermission($this->session->userdata('su_id'));
               $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
               $std_id =  $this->input->get('std_id');
-      
-              
-              
     
               $params = $_SERVER['QUERY_STRING'];
               $this->session->set_flashdata('search',$params);

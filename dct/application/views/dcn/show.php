@@ -28,7 +28,7 @@
                 <div class="col-md-3">
                       <div class="input-group" >
                          <div class="input-group-btn">
-                            <a href="" class=" btn btn-primary ">DCN No.</a>
+                            <a class=" btn btn-primary ">DCN No.</a>
                          </div>
                             <input type="text" class="form-control" name="s_dcno" value="<?php echo $s_dcno; ?>">
                       </div>
@@ -37,7 +37,7 @@
                   <div class="col-md-3">
                         <div class="input-group" >
                          <div class="input-group-btn">
-                              <a href="" class=" btn btn-primary ">DCN Name</a> 
+                              <a class=" btn btn-primary ">DCN Name</a> 
                          </div>
                     <input type="text" class="form-control" name="s_name" value="<?php echo $s_name; ?>">
                    </div> 
@@ -57,9 +57,9 @@
                   <thead>
                       <tr>
 								    	<td colspan="12">
-                        <?php if($this->session->flashdata("chkall")!== null ) echo "<div id='btn_enable' class='btn  btn-success'><span class='fa fa-check'></span></div>
+                        <!-- <?php if($this->session->flashdata("chkall")!== null ) echo "<div id='btn_enable' class='btn  btn-success'><span class='fa fa-check'></span></div>
                         <div id='btn_disable' class='btn  btn-danger'><span class='fa fa-times'></span></div>
-                        <div id='btn_delete' class='btn btn-default'><span class='fa fa-trash-o'></span></div>"; ?>
+                        <div id='btn_delete' class='btn btn-default'><span class='fa fa-trash-o'></span></div>"; ?> -->
                         <?php if($this->session->flashdata("csv")!== null ){?>
                         <a class="btn btn-outline-primary" href='<?= base_url() ?>dcn/exportCSV'>Csv</a><?php } ?>                      </td>
 								      </tr>	
@@ -115,13 +115,15 @@
                           $icon = "btn-success no-border fa fa-check";
                           $text = "ENABLE";
                           $color = "color:#43a047";
+                          $toggle = "Disable";
                           }
                       else{ 
                         $icon = "btn-danger no-border fa fa-close";
                         $text = "DISABLE";
                         $color = "color:#D50000";
+                        $toggle = "Enable";
                       }
-                      if($this->session->flashdata("enable")!== null ){ echo "<a  href='".base_url()."dcn/enable/".$r->dcn_id ."'><i class='$icon'> $text</i></a></td>";}
+                      if($this->session->flashdata("enable")!== null ){ echo "<a  href='".base_url()."dcn/enable/".$r->dcn_id ."' onclick='return confirm(\"Confirm $toggle Item\")'><i class='$icon'> $text</i></a></td>";}
                       else{ echo "<span style='$color'>$text </span>"; }
                       echo "</td>";
                       echo "</tr>";

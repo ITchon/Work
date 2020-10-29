@@ -15,6 +15,36 @@
                     <button type="button" class="card-action card-remove" title="Remove"></button>
                   </div>
                   <h3>MANAGE STANDARD <i class="fa fa-file-pdf-o" aria-hidden="true"></i></h3>
+                  <?php
+                $search = $this->session->flashdata('search');
+                $this->session->set_flashdata('search',$search);
+                ?>
+                  <form name="search" action="<?php echo base_url()?>standard/manage" method="get">
+
+                <br>
+
+                  <div class="col-md-3">
+                      <div class="input-group" >
+                         <div class="input-group-btn">
+                            <a class=" btn btn-primary ">Standard No.</a> 
+                         </div>
+                    <input type="text" class="form-control" name="s_no" value="<?php echo $s_no ?>">
+                   </div> 
+                 </div>
+
+                <div class="col-md-3">
+                      <div class="input-group" >
+                         <div class="input-group-btn">
+                            <a class=" btn btn-primary ">Standard Name</a> 
+                         </div>
+                            <input type="text" class="form-control" name="s_name" value="<?php echo $s_name ?>">
+                    </div>
+                </div>
+                  
+                  <div class="col-md">
+                  <button type="submit" class="btn btn-primary" "><i class="fa fa-search"></i></button>
+                </div>
+                </form>
                 </div>
                 <?php echo $this->session->flashdata("success"); ?>
                 <div class="card-body">
@@ -22,9 +52,9 @@
                   <thead>
                       <tr>
                         <td colspan="12">
-                         <div id="btn_enable" class="btn  btn-success"><span class="fa fa-check"></span></div>
+                         <!-- <div id="btn_enable" class="btn  btn-success"><span class="fa fa-check"></span></div>
 									      	<div id="btn_disable" class="btn  btn-danger"><span class="fa fa-times"></span></div>
-									    	  <div id="btn_delete" class="btn btn-default"><span class="fa fa-trash-o"></span></div>
+									    	  <div id="btn_delete" class="btn btn-default"><span class="fa fa-trash-o"></span></div> -->
                           <?php if($this->session->flashdata("csv")!== null ){?>
                         <a class="btn btn-outline-primary" href='<?= base_url() ?>standard/exportCSV'>Csv</a><?php } ?>								    	  </td>
 								      </tr>	
@@ -59,7 +89,12 @@
                 echo "<td>".$r->cusname."</td>";
                 echo "<td>".$r->std_no."</td>";
                 echo "<td>".$r->std_name."</td>";
-                echo "<td>".$r->dcn_no."</td>";
+                if($this->session->flashdata("link")!== null ){ 
+                  echo "<td><a href='".base_url()."dcn/manage/".$r->dcn_id."'>$r->dcn_no</a></td>"; 
+                }
+                else{ 
+                  echo "<td>$r->dcn_no</td>";
+                   } 
                 echo "<td>".$r->cus_rev."</td>";
                 if($this->session->flashdata("show_version")!== null){ echo "<td><a  href='".base_url()."standard/show_v?std_id=".$r->std_id."'  >$r->rev</a></td>";
                 }else{
@@ -79,14 +114,16 @@
                     $icon = "btn-success no-border fa fa-check";
                     $text = "ENABLE";
                     $color = "color:#43a047";
+                    $toggle = "Disable";
                   }
                   else{ 
                     $icon = "btn-danger no-border fa fa-close";
                     $text = "DISABLE";
                     $color = "color:#D50000";
+                    $toggle = "Enable";
                   }
 
-                  if($this->session->flashdata("enable")!== null ){ echo "<a  href='".base_url()."standard/enable/".$r->std_id ."'><i class='$icon'> $text</i></a>";}
+                  if($this->session->flashdata("enable")!== null ){ echo "<a  href='".base_url()."standard/enable/".$r->std_id ."' onclick='return confirm(\"Confirm $toggle Item\")'><i class='$icon'> $text</i></a>";}
                   else{ 
                     echo "<span style='$color'>$text </span>"; }
                     echo "</div></td>";

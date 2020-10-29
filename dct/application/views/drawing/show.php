@@ -49,7 +49,7 @@
                 <div class="col-md-3 "> 
                   <div class="input-group" >
                     <div class="input-group-btn">
-                        <a href="" class=" btn btn-primary ">Part No.</a> 
+                        <a class=" btn btn-primary ">Part No.</a> 
                     </div>
                     <input type="text" name="s_pno" class="form-control" value="<?php echo $s_pno ?>">
                   </div>
@@ -58,7 +58,7 @@
                   <div class="col-md-3">
                              <div class="input-group" >
                          <div class="input-group-btn">
-                              <a href="" class=" btn btn-primary ">Drawing Name</a> 
+                              <a class=" btn btn-primary ">Drawing Name</a> 
                          </div>
                     <input type="text" class="form-control" name="s_name" value="<?php echo $s_name; ?>">
                    </div> 
@@ -67,7 +67,7 @@
                 <div class="col-md-3">
                       <div class="input-group" >
                          <div class="input-group-btn">
-                            <a href="" class=" btn btn-primary ">Drawing No.</a> 
+                            <a class=" btn btn-primary ">Drawing No.</a> 
                          </div>
                             <input type="text" class="form-control" name="s_dno" value="<?php echo $s_dno; ?>">
                       </div>
@@ -86,9 +86,9 @@
                   <thead>
                   <tr>
 								    	<td colspan="12">
-                      <?php if($this->session->flashdata("chkall")!== null ) echo "<div id='btn_enable' class='btn  btn-success'><span class='fa fa-check'></span></div>
+                      <!-- <?php if($this->session->flashdata("chkall")!== null ) echo "<div id='btn_enable' class='btn  btn-success'><span class='fa fa-check'></span></div>
                         <div id='btn_disable' class='btn  btn-danger'><span class='fa fa-times'></span></div>
-                        <div id='btn_delete' class='btn btn-default'><span class='fa fa-trash-o'></span></div>"; ?>
+                        <div id='btn_delete' class='btn btn-default'><span class='fa fa-trash-o'></span></div>"; ?> -->
                         <?php if($this->session->flashdata("csv")!== null ){?>
                         <a class="btn btn-outline-primary" href='<?= base_url() ?>drawing/exportCSV'>Csv</a><?php } ?>
 								    	</td>
@@ -128,7 +128,12 @@
                           </td>";
                      ?>
                     <td><?php echo "<b>".$r->type_name."</b>" ?></td>
-                    <td><?php echo "<b>".$r->p_no."</b>" ?></td>
+                    <?php  if($this->session->flashdata("link")!== null ){ 
+                      echo "<td><a href='".base_url()."part/manage/".$r->p_id."'>$r->p_no</a></td>"; 
+                    }
+                    else{ 
+                      echo "<td>$r->p_no</td>";
+                       } ?>
                     <td><?php echo "<b>".$r->d_name."</b>" ?></td>
                     <td><?php echo "<b>".$r->d_no."</b>" ?></td>
                     <td><?php echo "<b>".$r->model."</b>" ?></td>
@@ -156,14 +161,16 @@
                     $icon = "btn-success no-border fa fa-check";
                     $text = "ENABLE";
                     $color = "color:#43a047";
+                    $toggle = "Disable"; 
                   }
                   else{ 
                     $icon = "btn-danger no-border fa fa-close";
                     $text = "DISABLE";
                     $color = "color:#D50000";
+                    $toggle = "Enable"; 
                   }
 
-                  if($this->session->flashdata("enable")!== null ){ echo "<a  href='".base_url()."drawing/enable/".$r->d_id ."'><i class='$icon'> $text</i></a>";}
+                  if($this->session->flashdata("enable")!== null ){ echo "<a  href='".base_url()."drawing/enable/".$r->d_id ."' onclick='return confirm(\"Confirm $toggle Item\")'><i class='$icon'> $text</i></a>";}
                   else{ 
                     echo "<span style='$color'>$text </span>"; }
                     echo "</div></td>";
@@ -200,11 +207,14 @@
       // The workerSrc property shall be specified.
       pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
       // if(res.success != false){ 
+      var status = res.data[0].enable;
+
       var path ='uploads/'+res.data[0].foldergroup_name+'/'+res.data[0].folder_name+'/'+res.data[0].file_name;
 
       pdfjsLib.getDocument('<?php echo base_url()?>'+path).promise.then(function(pdfDoc_) {
       pdfDoc = pdfDoc_;
       document.getElementById('page_count').textContent = pdfDoc.numPages;
+      document.getElementById('lol').textContent = status;
       // Initial/first page rendering
       renderPage(pageNum);
       });

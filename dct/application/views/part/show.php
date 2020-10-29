@@ -17,13 +17,17 @@
                 <div class="card-header">
           
                   <h3>MANAGE PART <i class="fa fa-cogs" aria-hidden="true"></i></h3>
+                <?php
+                $search = $this->session->flashdata('search');
+                $this->session->set_flashdata('search',$search);
+                ?>
 
                   <form name="search" action="<?php echo base_url()?>part/manage" method="get">
                 <br>
                 <div class="col-md-3">
                       <div class="input-group" >
                          <div class="input-group-btn">
-                            <a href="" class=" btn btn-primary ">Part No.</a>
+                            <a class=" btn btn-primary ">Part No.</a>
                          </div>
                             <input type="text" class="form-control" name="s_pno" value="<?php echo $s_pno; ?>">
                       </div>
@@ -32,7 +36,7 @@
                   <div class="col-md-3">
                         <div class="input-group" >
                          <div class="input-group-btn">
-                              <a href="" class=" btn btn-primary ">Part Name</a> 
+                              <a class=" btn btn-primary ">Part Name</a> 
                          </div>
                     <input type="text" class="form-control" name="s_pname" value="<?php echo $s_pname; ?>">
                    </div> 
@@ -49,9 +53,9 @@
                   <thead>
                   <tr>
 								    	<td colspan="12">
-                        <?php if($this->session->flashdata("chkall")!== null ) echo "<div id='btn_enable' class='btn  btn-success'><span class='fa fa-check'></span></div>
+                        <!-- <?php if($this->session->flashdata("chkall")!== null ) echo "<div id='btn_enable' class='btn  btn-success'><span class='fa fa-check'></span></div>
                         <div id='btn_disable' class='btn  btn-danger'><span class='fa fa-times'></span></div>
-                        <div id='btn_delete' class='btn btn-default'><span class='fa fa-trash-o'></span></div>"; ?>
+                        <div id='btn_delete' class='btn btn-default'><span class='fa fa-trash-o'></span></div>"; ?> -->
                         <?php if($this->session->flashdata("csv")!== null ){?>
                         <a class="btn btn-outline-primary" href='<?= base_url() ?>part/exportCSV'>Csv</a><?php } ?>                      </td>
 								    </tr>	
@@ -102,13 +106,15 @@
                           $icon = "btn-success no-border fa fa-check";
                           $text = "ENABLE";
                           $color = "color:#43a047";
+                          $toggle = "Disable";
                           }
                       else{ 
                         $icon = "btn-danger no-border fa fa-close";
                         $text = "DISABLE";
                         $color = "color:#D50000";
+                        $toggle = "Enable";
                       }
-                      if($this->session->flashdata("enable")!== null ){ echo "<a  href='".base_url()."part/enable/".$r->p_id ."'><i class='$icon'> $text</i></a></td>";}
+                      if($this->session->flashdata("enable")!== null ){ echo "<a  href='".base_url()."part/enable/".$r->p_id ."' onclick='return confirm(\"Confirm $toggle Item\")'><i class='$icon'> $text</i></a></td>";}
                       else{ echo "<span style='$color'>$text </span></td>"; }
 
             echo "</tr>";
@@ -129,10 +135,20 @@
                 foreach($type as $t){
                   if($r->f_id == $t->f_id){
                     $chk_dwg = $r->d_no;
-                    echo "<td>".$chk_dwg."</td>";
+                    if($this->session->flashdata("link")!== null ){ 
+                      echo "<td><a href='".base_url()."drawing/show/".$r->d_id."'>$chk_dwg</a></td>"; 
+                    }
+                    else{ 
+                      echo "<td>$chk_dwg</td>";
+                       } 
                   }else{
                     $chk_dwg = '';
-                    echo "<td>".$chk_dwg."</td>";
+                     if($this->session->flashdata("link")!== null ){ 
+                      echo "<td><a href='".base_url()."drawing/show/".$r->d_id."'>$chk_dwg</a></td>"; 
+                    }
+                    else{ 
+                      echo "<td>$chk_dwg</td>";
+                       } 
                   }
                 }
                 echo "<td class='text-center'>";
@@ -147,13 +163,15 @@
                           $icon = "btn-success no-border fa fa-check";
                           $text = "ENABLE";
                           $color = "color:#43a047";
+                          $toggle = "Disable";
                           }
                       else{ 
                         $icon = "btn-danger no-border fa fa-close";
                         $text = "DISABLE";
                         $color = "color:#D50000";
+                        $toggle = "Enable";
                       }
-                      if($this->session->flashdata("enable")!== null ){ echo "<a  href='".base_url()."part/enable/".$r->p_id ."'><i class='$icon'> $text</i></a></td>";}
+                      if($this->session->flashdata("enable")!== null ){ echo "<a  href='".base_url()."part/enable/".$r->p_id ."' onclick='return confirm(\"Confirm $toggle Item\")'><i class='$icon'> $text</i></a></td>";}
                       else{ echo "<span style='$color'>$text </span></td>"; }
 
             echo "</tr>";

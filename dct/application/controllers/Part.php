@@ -111,6 +111,9 @@ class Part extends CI_Controller {
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
         
+        $params = $_SERVER['QUERY_STRING'];
+        $this->session->set_flashdata('search',$params);
+
         $s_pno =  $this->input->get('s_pno');
         $s_pname =  $this->input->get('s_pname');
         $data['s_pno'] = $s_pno;
@@ -127,6 +130,8 @@ class Part extends CI_Controller {
         $s_pname = '';
         $s_pno = '';
         }
+        
+        
 
         if($this->input->get('s_pno') != null || $this->input->get('s_pname') != null){
             $res = $this->model_part->part_search($s_pno,$s_pname);
@@ -141,7 +146,10 @@ class Part extends CI_Controller {
             foreach($res as $r){
                 $num[] = $r->p_id;
               }
-              if($res){
+            if($this->uri->segment('3')){
+               $p_id = $this->uri->segment('3');
+                $data['result'] = $this->model_part->get_part_by($p_id);
+            }else if($res){
                 $data['result_p']= $this->model_part->get_part_outdrawing($num);
                 $data['result'] = $this->model_part->get_part();
               }else{
@@ -257,7 +265,7 @@ class Part extends CI_Controller {
           <span> เพิ่มข้อมูลเรียบร้อยเเล้ว </span>
         </div> ');
 
-        redirect('part/manage','refresh'); 
+        redirect('part/add','refresh'); 
        }
        else if($result == false){
         //echo "<script>alert('Username already exist')</script>";
@@ -268,7 +276,7 @@ class Part extends CI_Controller {
         $this->session->set_flashdata('p_no',$p_no);
         $this->session->set_flashdata('p_name',$p_name);
         $this->session->set_flashdata('d_id',$d_id);
-        redirect('part/manage','refresh'); 
+        redirect('part/add','refresh'); 
        }
        
   
@@ -305,19 +313,21 @@ class Part extends CI_Controller {
     }
 
 
-    public function enable($uid){
+    public function enable(){
 
         $this->model->CheckPermission($this->session->userdata('su_id'));
         $this->model->CheckPermissionGroup($this->session->userdata('sug_id'));
 
+        $uid = $this->uri->segment('3');
 		$result = $this->model_part->enablePart($uid);
 
+        $search = $this->session->flashdata('search');
 		if($result!=FALSE){
-            redirect('part/manage/'.$uid.'','refresh');
+            redirect('part/manage?'.$search.'','refresh');
 
 		}else{
 		    echo "<script>alert('Somting wrong')</script>";
-         redirect('part/manage/'.$uid.'','refresh');
+         redirect('part/manage?'.$search.'','refresh');
 		}
 	}
 

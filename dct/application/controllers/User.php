@@ -88,7 +88,7 @@ class User extends CI_Controller {
             inner join sys_users_groups_permissions sugp ON sugp.spg_id = sp.spg_id 
             inner join sys_permission_groups spg on spg.spg_id = sp.spg_id 
             inner join sys_menu_groups smg on smg.mg_id = spg.mg_id
-            where sugp.sug_id= '.$data['result_name'][0]->sug_id.' ORDER BY smg.order_no ASC , sp.name';
+            where sp.enable != 0 AND sugp.sug_id= '.$data['result_name'][0]->sug_id.' ORDER BY smg.order_no ASC , sp.name';
             $query = $this->db->query($sql); 
             $data['result_group'] = $query->result();
      

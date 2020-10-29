@@ -38,17 +38,17 @@
                 echo "<td class='text-center'>".$r->name."</td>";
                 if($r->enable!=1 ){?>
                   <!-- <td><a href='".base_url()."index.php/user/permission/".$r->user_id."' class='btn btn-danger'>Disable</a>"; -->
-                  <td class="text-center"><a type="button" onclick="javascript:window.location='<?php
-                  echo base_url() . 'usergroup/enable/' . $r->sug_id;
-                  ?>';"><i class='btn-danger no-border btn-sm fa fa-times'></i></a>
                   <?php
+                 echo "<td class='text-center'>";
+                 echo "<a  href='".base_url()."usergroup/enable/".$r->sug_id."' onclick='return confirm(\"Confirm Enable Item\")' >
+                 <i class='btn-danger no-border btn-sm fa fa-times'></i></a>";
                 }
                 else{?>
-                  <!-- echo "<td><a href='".base_url()."index.php/user/permission/".$r->user_id."' class='btn btn-success'>Enable</a>"; -->
-                  <td class="text-center"><a type="button"  onclick="javascript:window.location='<?php
-                  echo base_url() . 'usergroup/disable/' . $r->sug_id;
-                  ?>';"><i class='btn-success no-border btn-sm fa fa-check'></i></a>                      
+                  <!-- echo "<td><a href='".base_url()."index.php/user/permission/".$r->user_id."' class='btn btn-success'>Enable</a>"; -->                   
                   <?php
+                  echo "<td class='text-center'>";
+                  echo "<a  href='".base_url()."usergroup/disable/".$r->sug_id."' onclick='return confirm(\"Confirm Disable Item\")' >
+                  <i class='btn-success no-border btn-sm fa fa-check'></i></a>";
                 }
                 ?>
                 <a  onclick="javascript:window.location='<?php

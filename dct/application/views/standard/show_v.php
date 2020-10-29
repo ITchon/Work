@@ -52,7 +52,12 @@
                 echo "<td>".$r->cus_name."</td>";
                 echo "<td>".$r->std_no."</td>";
                 echo "<td>".$r->std_name."</td>";
-                echo "<td>".$r->dcn_no."</td>";
+                if($this->session->flashdata("link")!== null ){ 
+                  echo "<td><a href='".base_url()."dcn/manage/".$r->dcn_id."'>$r->dcn_no</a></td>"; 
+                }
+                else{ 
+                  echo "<td>$r->dcn_no</td>";
+                   } 
                 echo "<td>".$r->cus_rev."</td>";
                 
                 echo "<td class='text-center'>$r->rev</td>";
@@ -84,7 +89,12 @@
                         echo "<td>".$r->cus_name."</td>";
                         echo "<td>".$r->std_no."</td>";
                         echo "<td>".$r->std_name."</td>";
-                        echo "<td>".$r->dcn_no."</td>";
+                        if($this->session->flashdata("link")!== null ){ 
+                          echo "<td><a href='".base_url()."dcn/manage/".$r->dcn_no."'>$r->dcn_no</a></td>"; 
+                        }
+                        else{ 
+                          echo "<td>$r->dcn_no</td>";
+                           } 
                         echo "<td>".$r->cus_rev."</td>";
 
                           echo "<td class='text-center'>$r->rev</td>";

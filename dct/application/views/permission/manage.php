@@ -23,18 +23,16 @@
             echo "<tr>";
                 echo "<td>".$r->name."</td>";
                  if($r->enable!=1 ){?>
-                  
-                  <td class="text-center"><a type="button"  onclick="javascript:window.location='<?php
-                  echo base_url() . 'permission/enable/' . $r->sp_id;
-                  ?>';"><i class='btn-danger no-border btn-sm fa fa-times'></i></a>
                   <?php
+                  echo "<td class='text-center'>";
+                  echo "<a  href='".base_url()."permission/enable/".$r->sp_id."' onclick='return confirm(\"Confirm Enable Item\")' >
+                  <i class='btn-danger no-border btn-sm fa fa-times'></i></a>";
                 }
-                else{?>
-
-                  <td class="text-center"><a   onclick="javascript:window.location='<?php
-                  echo base_url() . 'permission/disable/' . $r->sp_id;
-                  ?>';"><i class='btn-success no-border btn-sm fa fa-check'></i></a>                      
+                else{?>            
                   <?php
+                  echo "<td class='text-center'>";
+                  echo "<a  href='".base_url()."permission/disable/".$r->sp_id."' onclick='return confirm(\"Confirm Disable Item\")' >
+                  <i class='btn-success no-border btn-sm fa fa-check'></i></a>";
                 }
                 ?> <a type ='button' class=' '  onclick="javascript:window.location='<?php
                 echo base_url() . 'permission/edit_permission/' . $r->sp_id;

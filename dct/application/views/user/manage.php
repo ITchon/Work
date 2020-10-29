@@ -59,11 +59,13 @@
                 if($r->name == "MEMBER" || $this->session->userdata('sug_id')==1){
                   if($r->enable!=1 ){               
                   $icon = "btn-danger no-border fa fa-close";
+                  $toggle = "Enable";
                       }
                 else{ 
                   $icon = "btn-success no-border fa fa-check";
+                  $toggle = "Disable";
                 }
-                  if($this->session->flashdata("enable")!== null ) echo "<a  href='".base_url()."user/enable/".$encrypted_id."'><i class='$icon'></i></a>";
+                  if($this->session->flashdata("enable")!== null ) echo "<a  href='".base_url()."user/enable/".$encrypted_id."' onclick='return confirm(\"Confirm $toggle Item\")'><i class='$icon'></i></a>";
                   if($this->session->flashdata("edit")!== null ) echo "<a  href='".base_url()."user/edit_u/".$encrypted_id."'  ><i class='btn-info no-border fa fa-pencil-square-o'></i></a>";
                   if($this->session->flashdata("rule")!== null ) echo "<a  href='".base_url()."user/rule/".$encrypted_id."'  ><i class='btn-info no-border fa fa-key'></i></a>";
                   if($this->session->userdata('sug_id')==1){

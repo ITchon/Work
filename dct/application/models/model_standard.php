@@ -6,14 +6,30 @@ class Model_standard extends CI_Model
   
 public function get_standard()
 { 
-      $sql =  "SELECT std.std_id,std.file_name,std.std_no,std.std_name,std.rev,std.cus_rev,dc.dcn_no,cus.cus_name as cusname
+      $sql =  "SELECT std.std_id,std.file_name,std.std_no,std.std_name,std.rev,std.cus_rev,dc.dcn_id,dc.dcn_no,cus.cus_name as cusname
       ,f.name as type,f.folder_name,fg.foldergroup_name,std.enable
       FROM standard as std
       left join customers as cus on cus.cus_id = std.cus_id
       left join dcn as dc on dc.dcn_id = std.dcn_id
       left join folder as f on f.f_id = std.f_id
       left join folder_group as fg on fg.fg_id = f.fg_id
-      where std.delete_flag !=0";
+      where std.delete_flag !=0 ORDER BY cus.cus_name ASC";
+      $query = $this->db->query($sql); 
+      $result = $query->result();
+      return $result;
+        
+}
+
+public function standard_search($s_no,$s_name)
+{ 
+      $sql =  "SELECT std.std_id,std.file_name,std.std_no,std.std_name,std.rev,std.cus_rev,dc.dcn_id,dc.dcn_no,cus.cus_name as cusname
+      ,f.name as type,f.folder_name,fg.foldergroup_name,std.enable
+      FROM standard as std
+      left join customers as cus on cus.cus_id = std.cus_id
+      left join dcn as dc on dc.dcn_id = std.dcn_id
+      left join folder as f on f.f_id = std.f_id
+      left join folder_group as fg on fg.fg_id = f.fg_id
+      where std.delete_flag !=0 AND (std.std_no LIKE '%$s_no%' OR std.std_name LIKE '%$s_name%') ORDER BY cus.cus_name ASC";
       $query = $this->db->query($sql); 
       $result = $query->result();
       return $result;
@@ -214,7 +230,7 @@ function update_version($std_id,$cus_id,$std_no,$std_name,$dcn_id,$cus_rev,$rev,
 
 function get_lastrev_standard($std_id)
 {
-  $sql =  "SELECT std.std_id,std.file_name,std.std_no,std.std_name,std.rev,std.cus_rev,dc.dcn_no,cus.cus_name
+  $sql =  "SELECT std.std_id,std.file_name,std.std_no,std.std_name,std.rev,std.cus_rev,dc.dcn_id,dc.dcn_no,cus.cus_name
   ,f.name as type,std.enable,f.folder_name,fg.foldergroup_name
   FROM standard as std
   left join customers as cus on cus.cus_id = std.cus_id

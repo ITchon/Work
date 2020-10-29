@@ -39,10 +39,21 @@ class Model_part extends CI_Model
 
     public function get_part()
     {
-      $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable,d.d_no,d.f_id from part as p
+      $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable,d.d_no,d.f_id,d.d_id from part as p
       left join part_drawing as pd on pd.p_id = p.p_id
       inner join drawing as d on d.d_id = pd.d_id
       where (p.delete_flag != 0 AND pd.delete_flag != 0 AND d.delete_flag != 0) ";
+         $query = $this->db->query($sql);
+        $result =  $query->result();
+      return $result;
+    }
+
+    public function get_part_by($p_id)
+    {
+      $sql =  "SELECT p.p_id, p.p_no, p.p_name, p.enable,d.d_no,d.f_id,d.d_id from part as p
+      left join part_drawing as pd on pd.p_id = p.p_id
+      inner join drawing as d on d.d_id = pd.d_id
+      where p.p_id = $p_id AND (p.delete_flag != 0 AND pd.delete_flag != 0 AND d.delete_flag != 0) ";
          $query = $this->db->query($sql);
         $result =  $query->result();
       return $result;
@@ -60,10 +71,10 @@ class Model_part extends CI_Model
     
     public function part_search($s_pno,$s_pname)
     {
-        $sql =  "SELECT p.p_id,p.p_no,p.p_name,p.enable,d.d_no,d.f_id from part as p
+        $sql =  "SELECT p.p_id,p.p_no,p.p_name,p.enable,d.d_no,d.f_id,d.d_id from part as p
         left join part_drawing as pd on pd.p_id = p.p_id
         inner join drawing as d on d.d_id = pd.d_id
-        where p.delete_flag != 0  AND pd.delete_flag != 0 AND (p.p_no LIKE '%$s_pno%' OR p.p_name LIKE '%$s_pname%') ";
+        where (p.delete_flag != 0 AND d.delete_flag != 0) AND (p.p_no LIKE '%$s_pno%' OR p.p_name LIKE '%$s_pname%') ";
         $query = $this->db->query($sql);
         $result =  $query->result();
   
@@ -105,7 +116,7 @@ class Model_part extends CI_Model
         function insert_newpart($p_no,$p_name)
     {
    
-        $num= $this->db->query("SELECT * FROM part where p_no = '$p_no'"); 
+        $num= $this->db->query("SELECT * FROM part where p_no = '$p_no' AND delete_flag !=0"); 
         $chk= $num->num_rows();
         
         if($chk < 1){

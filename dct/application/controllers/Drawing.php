@@ -147,6 +147,9 @@ public function show()
         
       if($this->input->get('s_dno') != null || $this->input->get('s_name') != null || $this->input->get('s_pno') != null || $this->input->get('folder') != null ){
         $data['result'] = $this->model_drawing->drawing_search($s_dno,$s_name,$s_pno,$folder);
+      }else if($this->uri->segment('3')){
+        $d_id = $this->uri->segment('3');
+        $data['result'] = $this->model_drawing->get_partdrawing_by($d_id);
       }else{
         $data['result'] = $this->model_drawing->get_partdrawing();
       }
